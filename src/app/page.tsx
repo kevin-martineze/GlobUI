@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui"
+import { Button, Input, PhoneInput } from "@/components/ui"
 
 export default function Home() {
   return (
@@ -28,6 +28,28 @@ export default function Home() {
           <Button size="icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="M12 5l7 7-7 7" /></svg>
           </Button>
+        </div>
+      </section>
+
+      <section className="flex flex-col items-center gap-4">
+        <h2 className="text-sm font-semibold uppercase tracking-widest text-glob-muted">Input</h2>
+        <div className="flex w-full max-w-sm flex-col gap-3">
+          <Input placeholder="Default input" />
+          <Input size="sm" placeholder="Small" />
+          <Input size="lg" placeholder="Large" />
+          <Input placeholder="Disabled" disabled />
+          <Input placeholder="With value" defaultValue="Hello GlobUI" />
+        </div>
+      </section>
+
+      <section className="flex flex-col items-center gap-4">
+        <h2 className="text-sm font-semibold uppercase tracking-widest text-glob-muted">Phone Input</h2>
+        <div className="flex w-full max-w-sm flex-col gap-3">
+          <PhoneInput placeholder="Phone number" />
+          <PhoneInput size="sm" placeholder="Small" />
+          <PhoneInput size="lg" placeholder="Large" />
+          <PhoneInput placeholder="Disabled" disabled />
+          <PhoneInput country="MX" placeholder="Default MX" />
         </div>
       </section>
 
