@@ -1,6 +1,15 @@
-import { Button, Input, PhoneInput } from "@/components/ui"
+"use client"
+
+import { useState } from "react"
+import { Button, Input, PhoneInput, Select, MultiSelect } from "@/components/ui"
 
 export default function Home() {
+  const [framework, setFramework] = useState("react")
+  const [ghostFramework, setGhostFramework] = useState("react")
+  const [frameworks, setFrameworks] = useState(["react", "vue"])
+  const [languages, setLanguages] = useState(["ts"])
+  const [multiOptions, setMultiOptions] = useState<string[]>([])
+
   return (
     <div className="flex flex-col items-center justify-center gap-12 p-12">
       <div className="text-center">
@@ -50,6 +59,89 @@ export default function Home() {
           <PhoneInput size="lg" placeholder="Large" />
           <PhoneInput placeholder="Disabled" disabled />
           <PhoneInput country="MX" placeholder="Default MX" />
+        </div>
+      </section>
+
+      <section className="flex flex-col items-center gap-4">
+        <h2 className="text-sm font-semibold uppercase tracking-widest text-glob-muted">Select</h2>
+        <div className="flex w-full max-w-sm flex-col gap-3">
+          <Select
+            options={[
+              { value: "react", label: "React" },
+              { value: "vue", label: "Vue" },
+              { value: "svelte", label: "Svelte" },
+              { value: "solid", label: "Solid" },
+            ]}
+            value={framework}
+            onChange={setFramework}
+          />
+          <Select
+            variant="ghost"
+            options={[
+              { value: "react", label: "React" },
+              { value: "vue", label: "Vue" },
+              { value: "svelte", label: "Svelte" },
+            ]}
+            value={ghostFramework}
+            onChange={setGhostFramework}
+          />
+          <Select
+            variant="outline"
+            size="sm"
+            options={[
+              { value: "xs", label: "Extra Small" },
+              { value: "sm", label: "Small" },
+              { value: "md", label: "Medium" },
+            ]}
+            value="sm"
+            onChange={() => {}}
+          />
+          <Select
+            options={[
+              { value: "1", label: "Option 1" },
+              { value: "2", label: "Option 2" },
+            ]}
+            placeholder="Disabled..."
+            disabled
+          />
+        </div>
+      </section>
+
+      <section className="flex flex-col items-center gap-4">
+        <h2 className="text-sm font-semibold uppercase tracking-widest text-glob-muted">Multi Select</h2>
+        <div className="flex w-full max-w-sm flex-col gap-4">
+          <MultiSelect
+            options={[
+              { value: "react", label: "React" },
+              { value: "vue", label: "Vue" },
+              { value: "angular", label: "Angular" },
+              { value: "svelte", label: "Svelte" },
+              { value: "solid", label: "Solid" },
+              { value: "qwik", label: "Qwik" },
+            ]}
+            value={frameworks}
+            onChange={setFrameworks}
+          />
+          <MultiSelect
+            size="sm"
+            options={[
+              { value: "js", label: "JavaScript" },
+              { value: "ts", label: "TypeScript" },
+              { value: "rust", label: "Rust" },
+            ]}
+            value={languages}
+            onChange={setLanguages}
+          />
+          <MultiSelect
+            options={[
+              { value: "1", label: "Option 1" },
+              { value: "2", label: "Option 2" },
+              { value: "3", label: "Option 3" },
+            ]}
+            value={multiOptions}
+            onChange={setMultiOptions}
+            placeholder="Choose frameworks..."
+          />
         </div>
       </section>
 
