@@ -1,0 +1,9 @@
+{
+  "name": "@glob-ui/styles",
+  "version": "0.1.0",
+  "private": true,
+  "exports": {
+    ".": "./glob-ui.css"
+  },
+  "files": ["glob-ui.css"]
+}
