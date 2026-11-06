@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "tsup"
+    "build": "tsup",
+    "dev": "tsup --watch --no-clean"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -29,7 +30,13 @@
     "@glob-ui/phone-input": "workspace:*",
     "@glob-ui/segmented": "workspace:*",
     "@glob-ui/select": "workspace:*",
-    "@glob-ui/utils": "workspace:*"
+    "@glob-ui/utils": "workspace:*",
+    "@glob-ui/label": "workspace:*",
+    "@glob-ui/textarea": "workspace:*",
+    "@glob-ui/checkbox": "workspace:*",
+    "@glob-ui/radio-group": "workspace:*",
+    "@glob-ui/switch": "workspace:*",
+    "@glob-ui/field": "workspace:*"
   },
   "devDependencies": {
     "tsup": "^8.5.1"

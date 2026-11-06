@@ -24,6 +24,12 @@ export default defineConfig({
     "@glob-ui/multi-select",
     "@glob-ui/segmented",
     "@glob-ui/phone-input",
+    "@glob-ui/label",
+    "@glob-ui/textarea",
+    "@glob-ui/checkbox",
+    "@glob-ui/radio-group",
+    "@glob-ui/switch",
+    "@glob-ui/field",
   ],
   splitting: false,
 })

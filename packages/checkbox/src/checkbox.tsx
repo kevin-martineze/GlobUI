@@ -1,0 +1,108 @@
+"use client"
+
+import { forwardRef, useEffect, useId, useImperativeHandle, useRef } from "react"
+import { cva, type VariantProps } from "class-variance-authority"
+import { cn } from "@glob-ui/utils"
+
+const checkboxVariants = cva(
+  "peer shrink-0 cursor-pointer appearance-none rounded-glob-sm border border-glob-border bg-glob-surface transition-colors checked:border-glob-primary checked:bg-glob-primary indeterminate:border-glob-primary indeterminate:bg-glob-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50 aria-[invalid=true]:border-glob-danger",
+  {
+    variants: {
+      size: {
+        sm: "h-4 w-4",
+        md: "h-5 w-5",
+        lg: "h-6 w-6",
+      },
+    },
+    defaultVariants: {
+      size: "md",
+    },
+  }
+)
+
+const labelSize = {
+  sm: "text-xs",
+  md: "text-sm",
+  lg: "text-base",
+}
+
+export interface CheckboxProps
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "size">,
+    VariantProps<typeof checkboxVariants> {
+  /** Shows a dash instead of a check. Not a checked state; the browser clears it on click. */
+  indeterminate?: boolean
+  label?: React.ReactNode
+}
+
+const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
+  ({ className, size, indeterminate = false, label, id, disabled, ...props }, ref) => {
+    const innerRef = useRef<HTMLInputElement>(null)
+    useImperativeHandle(ref, () => innerRef.current as HTMLInputElement)
+
+    // `indeterminate` only exists as a DOM property, not an HTML attribute.
+    useEffect(() => {
+      if (innerRef.current) innerRef.current.indeterminate = indeterminate
+    }, [indeterminate])
+
+    const autoId = useId()
+    const inputId = id ?? autoId
+    const s = size ?? "md"
+
+    const control = (
+      <span className="relative inline-flex shrink-0">
+        <input
+          ref={innerRef}
+          type="checkbox"
+          id={inputId}
+          disabled={disabled}
+          className={cn(checkboxVariants({ size, className }))}
+          {...props}
+        />
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="pointer-events-none absolute inset-0 m-auto hidden h-3/4 w-3/4 text-white peer-[:checked:not(:indeterminate)]:block"
+        >
+          <path d="M5 12l5 5 9-10" />
+        </svg>
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="3"
+          strokeLinecap="round"
+          className="pointer-events-none absolute inset-0 m-auto hidden h-3/4 w-3/4 text-white peer-indeterminate:block"
+        >
+          <path d="M6 12h12" />
+        </svg>
+      </span>
+    )
+
+    if (!label) return control
+
+    return (
+      <span className="inline-flex items-center gap-2">
+        {control}
+        <label
+          htmlFor={inputId}
+          className={cn(
+            "cursor-pointer text-glob-text",
+            labelSize[s],
+            disabled && "cursor-not-allowed opacity-50"
+          )}
+        >
+          {label}
+        </label>
+      </span>
+    )
+  }
+)
+Checkbox.displayName = "Checkbox"
+
+export { Checkbox, checkboxVariants }

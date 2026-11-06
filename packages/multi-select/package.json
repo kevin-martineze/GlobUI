@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "tsup"
+    "build": "tsup",
+    "dev": "tsup --watch --no-clean"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

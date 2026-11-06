@@ -10,7 +10,7 @@ export interface SelectOption {
 }
 
 const selectVariants = cva(
-  "flex w-full items-center justify-between rounded-glob-md border bg-glob-surface px-3 py-2 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50",
+  "flex w-full items-center justify-between rounded-glob-md border bg-glob-surface px-3 py-2 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50 aria-[invalid=true]:border-glob-danger aria-[invalid=true]:focus-visible:ring-glob-danger",
   {
     variants: {
       variant: {
@@ -31,7 +31,12 @@ const selectVariants = cva(
   }
 )
 
-export interface SelectProps extends VariantProps<typeof selectVariants> {
+export interface SelectProps
+  extends VariantProps<typeof selectVariants>,
+    Pick<
+      React.ButtonHTMLAttributes<HTMLButtonElement>,
+      "id" | "aria-invalid" | "aria-describedby" | "aria-labelledby"
+    > {
   options: SelectOption[]
   value?: string
   onChange?: (value: string) => void
@@ -49,6 +54,7 @@ export function Select({
   size = "md",
   disabled,
   className,
+  ...triggerProps
 }: SelectProps) {
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState("")
@@ -91,6 +97,7 @@ export function Select({
       <button
         type="button"
         disabled={disabled}
+        {...triggerProps}
         onClick={() => setOpen(!open)}
         className={cn(
           selectVariants({ variant, size }),

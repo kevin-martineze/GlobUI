@@ -1,61 +1,12 @@
 @import "tailwindcss";
+@import "@glob-ui/styles";
 
-:root {
-  --glob-primary: #FF6B35;
-  --glob-primary-hover: #E55A2B;
-  --glob-primary-light: #FFF0EB;
-  --glob-surface: #FFFFFF;
-  --glob-surface-hover: #F5F5F5;
-  --glob-surface-secondary: #FAFAFA;
-  --glob-border: #E5E5E5;
-  --glob-border-light: #F0F0F0;
-  --glob-text: #171717;
-  --glob-text-secondary: #737373;
-  --glob-muted: #A3A3A3;
-  --glob-ring: #FF6B35;
-  --glob-radius-sm: 4px;
-  --glob-radius-md: 8px;
-  --glob-radius-lg: 12px;
-  --glob-shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-  --glob-shadow-md: 0 4px 6px rgba(0,0,0,0.07);
-}
+/* Tailwind 4 skips node_modules and gitignored dist, so scan the package sources directly.
+   The glob must end in a file pattern; a bare "src" directory segment after a wildcard matches nothing. */
+@source "../../../../packages/*/src/**/*.{ts,tsx}";
 
 @theme inline {
-  --color-glob-primary: var(--glob-primary);
-  --color-glob-primary-hover: var(--glob-primary-hover);
-  --color-glob-primary-light: var(--glob-primary-light);
-  --color-glob-surface: var(--glob-surface);
-  --color-glob-surface-hover: var(--glob-surface-hover);
-  --color-glob-surface-secondary: var(--glob-surface-secondary);
-  --color-glob-border: var(--glob-border);
-  --color-glob-border-light: var(--glob-border-light);
-  --color-glob-text: var(--glob-text);
-  --color-glob-text-secondary: var(--glob-text-secondary);
-  --color-glob-muted: var(--glob-muted);
-  --color-glob-ring: var(--glob-ring);
-  --radius-glob-sm: var(--glob-radius-sm);
-  --radius-glob-md: var(--glob-radius-md);
-  --radius-glob-lg: var(--glob-radius-lg);
-  --shadow-glob-sm: var(--glob-shadow-sm);
-  --shadow-glob-md: var(--glob-shadow-md);
   --font-sans: var(--font-glob-sans);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --glob-primary: #FF8C5A;
-    --glob-primary-hover: #FF6B35;
-    --glob-primary-light: #2A1A10;
-    --glob-surface: #0A0A0A;
-    --glob-surface-hover: #1A1A1A;
-    --glob-surface-secondary: #141414;
-    --glob-border: #2A2A2A;
-    --glob-border-light: #1F1F1F;
-    --glob-text: #F5F5F5;
-    --glob-text-secondary: #A3A3A3;
-    --glob-muted: #666666;
-    --glob-ring: #FF8C5A;
-  }
 }
 
 body {

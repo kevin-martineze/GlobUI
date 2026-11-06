@@ -35,6 +35,7 @@ export interface ButtonProps
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
+    // TODO: implement Slot (asChild should merge props into the child element, not swap to a span)
     const Comp = asChild ? "span" : "button"
     return (
       <Comp
