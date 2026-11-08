@@ -24,6 +24,8 @@
     "react-dom": "^19"
   },
   "dependencies": {
+    "@glob-ui/hooks": "workspace:*",
+    "@glob-ui/slot": "workspace:*",
     "@glob-ui/utils": "workspace:*"
   },
   "devDependencies": {
