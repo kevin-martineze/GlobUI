@@ -1,0 +1,26 @@
+---
+title: "Spinner"
+description: "A loading indicator with three sizes."
+---
+
+<PackageInfo pkg="spinner" exports="Spinner, spinnerVariants" />
+
+## Preview
+
+<ComponentPreview name="spinner/default" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### SpinnerProps
+
+<ApiTable pkg="spinner" name="SpinnerProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Screen readers | `role="status"` with an `aria-label` (default "Loading"). Change it to describe what is loading. |
+
+**ARIA.** Spinners need a label that says what is loading. Set `aria-label`, for example "Saving changes".

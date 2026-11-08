@@ -43,3 +43,7 @@ next-env.d.ts
 
 # Vitest browser-mode failure screenshots and attachments
 .vitest/
+
+# docs: generated at dev/build time
+apps/docs/.source/
+apps/docs/examples/registry.ts

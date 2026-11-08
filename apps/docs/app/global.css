@@ -1,0 +1,60 @@
+@import "tailwindcss";
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
+@import "@glob-ui/styles";
+
+/*
+ * Scan the built packages the way a consumer does (see content/docs/installation.mdx),
+ * plus this site's own content and examples.
+ */
+@source "../node_modules/@glob-ui/*/dist/**/*.{js,mjs}";
+@source "../content";
+@source "../examples";
+@source "../components";
+
+/*
+ * Fumadocs lists this utility in its generated inline sources. Lightning CSS does not accept the
+ * ::highlight() pseudo-element yet, so the build warns. Search highlighting still works through
+ * Fumadocs' own stylesheet; this only removes the generated utility.
+ */
+@source not inline("[&_::highlight(fd-search)]:text-fd-primary [&_::highlight(fd-search)]:underline");
+
+@theme inline {
+  --font-sans: var(--font-glob-sans);
+}
+
+/*
+ * Fumadocs colours come from --color-fd-* variables. Point them at the GlobUI tokens, so one
+ * data-theme attribute switches both. Declared after the Fumadocs palette, with the same
+ * specificity, so these win. `.dark #nd-sidebar` is repeated because Fumadocs overrides the
+ * sidebar there.
+ */
+:root,
+.dark #nd-sidebar {
+  --color-fd-background: var(--glob-surface);
+  --color-fd-foreground: var(--glob-text);
+  --color-fd-muted: var(--glob-surface-secondary);
+  --color-fd-muted-foreground: var(--glob-text-secondary);
+  --color-fd-popover: var(--glob-surface);
+  --color-fd-popover-foreground: var(--glob-text);
+  --color-fd-card: var(--glob-surface);
+  --color-fd-card-foreground: var(--glob-text);
+  --color-fd-border: var(--glob-border);
+  --color-fd-primary: var(--glob-primary);
+  --color-fd-primary-foreground: var(--glob-primary-foreground);
+  --color-fd-secondary: var(--glob-surface-hover);
+  --color-fd-secondary-foreground: var(--glob-text);
+  --color-fd-accent: var(--glob-surface-hover);
+  --color-fd-accent-foreground: var(--glob-text);
+  --color-fd-ring: var(--glob-ring);
+  --color-fd-overlay: var(--glob-overlay);
+  --color-fd-info: var(--glob-info);
+  --color-fd-warning: var(--glob-warning);
+  --color-fd-error: var(--glob-danger);
+  --color-fd-success: var(--glob-success);
+}
+
+body {
+  font-family: var(--font-glob-sans), system-ui, sans-serif;
+}
+

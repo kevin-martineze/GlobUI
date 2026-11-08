@@ -1,0 +1,48 @@
+---
+title: "Accordion"
+description: "Sections that open and close. Single or multiple open at once, optionally collapsible."
+---
+
+<PackageInfo pkg="accordion" exports="Accordion, AccordionItem, AccordionTrigger, AccordionContent" />
+
+## Preview
+
+<ComponentPreview name="accordion/single" />
+
+## Examples
+
+### Multiple
+
+`type="multiple"` lets several items stay open.
+
+<ComponentPreview name="accordion/multiple" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### Accordion
+
+<ApiTable pkg="accordion" name="AccordionProps" />
+
+### AccordionItem
+
+<ApiTable pkg="accordion" name="AccordionItemProps" />
+
+### AccordionTrigger
+
+<ApiTable pkg="accordion" name="AccordionTriggerProps" />
+
+### AccordionContent
+
+<ApiTable pkg="accordion" name="AccordionContentProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Enter, Space on a header | Opens or closes the section. With `type="single"` and not `collapsible`, the open section cannot be closed. |
+| ArrowDown, ArrowUp, Home, End | Move between headers. The list loops. Disabled headers are skipped. |
+| Closed content | Inert and hidden from assistive technology. |
+
+**ARIA.** Each header is a button with `aria-expanded` and `aria-controls`. Each panel is `role="region"` labelled by its header. `headingLevel` sets the heading tag around the button.

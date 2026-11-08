@@ -1,0 +1,35 @@
+---
+title: Server and client components
+description: Which GlobUI components are Server Components, which are Client Components, and why.
+---
+
+React Server Components render on the server and send no JavaScript for themselves. A component that uses state, effects, or event handlers has to run in the browser, so it starts with `"use client"`.
+
+GlobUI marks each package by its first statement. Each component page shows a badge computed from the source, so the badge cannot drift from the code.
+
+| Kind | Components | Why |
+| --- | --- | --- |
+| Server | Alert, Badge, Button, Card, Field, Input, Label, Skeleton, Slot, Spinner, Textarea, cn | No state. They only render props. Field clones its child, and that works on the server. |
+| Client | Accordion, Avatar, Checkbox, Dialog, Dropdown menu, Multi-select, Phone input, Popover, Radio group, Segmented, Select, Switch, Tabs, Toast (Toaster), Tooltip | Open/close state, selection, focus management, or positioning in the browser. |
+
+## Using them
+
+A Server Component can render a Server-kind component directly. For a Client-kind component, import it from a Server Component and it works: the import crosses the boundary. Passing a function prop (an `onClick`) from a Server Component into a Client component does not work, so put the handler in a Client Component.
+
+```tsx title="app/page.tsx"
+import { Button } from "@glob-ui/button" // server
+import { Select } from "@glob-ui/select" // client, fine to import here
+
+export default function Page() {
+  return (
+    <>
+      <Button>Server-safe</Button>
+      <Select aria-label="Country" options={[{ value: "mx", label: "Mexico" }]} />
+    </>
+  )
+}
+```
+
+## Toast
+
+`toast()` can be called from anywhere, including server code, where it does nothing. The `<Toaster />` that shows the toasts is a Client Component: mount it once, in your root layout.

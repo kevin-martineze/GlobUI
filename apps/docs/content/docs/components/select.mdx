@@ -1,0 +1,50 @@
+---
+title: "Select"
+description: "A single-choice dropdown that follows the WAI-ARIA select-only combobox pattern, with search above eight options."
+---
+
+<PackageInfo pkg="select" exports="Select, selectVariants" />
+
+## Preview
+
+<ComponentPreview name="select/default" />
+
+## Examples
+
+### Search
+
+More than eight options show a search field at the top of the list.
+
+<ComponentPreview name="select/search" />
+
+### In a form
+
+`name` writes a hidden input, so a native form submits the value.
+
+<ComponentPreview name="select/form" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### SelectProps
+
+<ApiTable pkg="select" name="SelectProps" />
+
+### Option
+
+<ApiTable pkg="select" name="SelectOption" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Enter, Space, ArrowDown, ArrowUp | Opens the list. It opens on the selected option. |
+| Arrow keys, Home, End | Move the active option, skipping disabled options. The list scrolls to keep it visible. |
+| Letters | Typeahead: jumps to the next option that starts with the typed letters. |
+| Enter, Space | Selects the active option and closes the list. Focus stays on the trigger. |
+| Escape | Closes without changing the value. |
+| Tab | Selects the active option, closes the list and moves focus on. |
+| Search field (more than 8 options) | Focus moves into the search. Arrow keys move the active option within the filtered list (`aria-activedescendant`). Enter selects. |
+
+**ARIA.** The trigger is `role="combobox"` with `aria-haspopup="listbox"` and `aria-expanded`. The list is `role="listbox"` and each option is `role="option"` with `aria-selected` and `aria-disabled`. Name it with `aria-label` or a Field. The list opens in the top layer, so cards with `overflow: hidden` do not clip it.

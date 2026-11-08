@@ -1,0 +1,55 @@
+---
+title: "Dialog"
+description: "A modal dialog on the native `<dialog>` element. Focus moves in, Escape closes it, and focus returns to the trigger."
+---
+
+<PackageInfo pkg="dialog" exports="Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose" />
+
+## Preview
+
+<ComponentPreview name="dialog/default" />
+
+## Examples
+
+### Controlled
+
+Controlled with `open` and `onOpenChange`. `closeOnOutsideClick={false}` keeps the dialog open on a backdrop click.
+
+<ComponentPreview name="dialog/controlled" />
+
+### Sizes
+
+`size` is `sm`, `md` or `lg`.
+
+<ComponentPreview name="dialog/sizes" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### Dialog
+
+<ApiTable pkg="dialog" name="DialogProps" />
+
+### DialogTrigger
+
+<ApiTable pkg="dialog" name="DialogTriggerProps" />
+
+### DialogContent
+
+<ApiTable pkg="dialog" name="DialogContentProps" />
+
+### DialogClose
+
+<ApiTable pkg="dialog" name="DialogCloseProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Enter, Space on the trigger | Opens the dialog. Focus moves to the first focusable element inside. |
+| Tab, Shift+Tab | Cycle inside the dialog. Background content is inert. |
+| Escape | Closes the dialog and returns focus to the trigger. |
+| Backdrop click | Closes the dialog, unless `closeOnOutsideClick` is `false`. |
+
+**ARIA.** The dialog is named by `DialogTitle` (`aria-labelledby`) and described by `DialogDescription` (`aria-describedby`). Always include a title.

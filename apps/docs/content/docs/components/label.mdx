@@ -1,0 +1,26 @@
+---
+title: "Label"
+description: "A styled `<label>`, with an optional required marker."
+---
+
+<PackageInfo pkg="label" exports="Label, labelVariants" />
+
+## Preview
+
+<ComponentPreview name="label/default" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### LabelProps
+
+<ApiTable pkg="label" name="LabelProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Click on the label | Focuses the control it points to (`htmlFor`). |
+
+**ARIA.** The label's text is the control's accessible name. Set `htmlFor` to the control's `id`. For a Field, use `Field` instead, which sets this up for you.

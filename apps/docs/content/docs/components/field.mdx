@@ -1,0 +1,36 @@
+---
+title: "Field"
+description: "Wraps one form control with a label, a description and an error, and wires their ARIA attributes to it."
+---
+
+<PackageInfo pkg="field" exports="Field" />
+
+## Preview
+
+<ComponentPreview name="field/default" />
+
+## Examples
+
+### Error
+
+An `error` marks the control `aria-invalid` and links the message with `aria-describedby`. `required` shows the asterisk and sets `required` on the control.
+
+<ComponentPreview name="field/error" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### FieldProps
+
+<ApiTable pkg="field" name="FieldProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Label | The control's accessible name (`aria-labelledby` or `htmlFor`). |
+| description | Read after the name, linked with `aria-describedby`. |
+| error | Sets `aria-invalid="true"` and is linked with `aria-describedby`, so it is announced with the control. |
+
+**ARIA.** Field passes its ids to the child with `cloneElement`. A child's own `aria-describedby` is kept and extended, not replaced.

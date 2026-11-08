@@ -1,0 +1,42 @@
+---
+title: "Multi-select"
+description: "Pick several options. The selected options show as removable chips."
+---
+
+<PackageInfo pkg="multi-select" exports="MultiSelect" />
+
+## Preview
+
+<ComponentPreview name="multi-select/default" />
+
+## Examples
+
+### Maximum
+
+`max` disables the other options once the limit is reached. Removing a chip enables them again.
+
+<ComponentPreview name="multi-select/max" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### MultiSelectProps
+
+<ApiTable pkg="multi-select" name="MultiSelectProps" />
+
+### Option
+
+<ApiTable pkg="multi-select" name="MultiSelectOption" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Enter, Space | Toggles the active option. The list stays open, so several options can be chosen. |
+| Arrow keys, Home, End, letters | As in Select: move the active option, typeahead. |
+| Escape, Tab | Close the list. |
+| Remove chip button | Removes that option. Each button is named `Remove <label>` and reachable with Tab. |
+| Backspace in an empty search | Removes the last chip. |
+
+**ARIA.** The list is `role="listbox"` with `aria-multiselectable="true"`. Options show `aria-selected`. Disabled options (including those past `max`) have `aria-disabled`.

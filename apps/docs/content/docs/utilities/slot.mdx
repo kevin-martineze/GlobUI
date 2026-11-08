@@ -1,0 +1,34 @@
+---
+title: "Slot"
+description: "Renders its single child with the props, className, handlers and ref merged in. It is how `asChild` works."
+---
+
+<PackageInfo pkg="slot" exports="Slot, composeRefs, mergeProps" />
+
+## Preview
+
+<ComponentPreview name="slot/default" />
+
+## Merge rules
+
+- **Handlers** (`onClick` and other `on*`): the child runs first, then the slot. If the child calls `event.preventDefault()`, the slot's handler does not run.
+- **className**: `cn(slot, child)`, so the child's classes win on conflicts.
+- **style**: shallow merge, the child wins.
+- **Other props**: the child's defined values win. An `undefined` child prop does not erase a slot prop.
+- **ref**: both refs are set, with `composeRefs`.
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### SlotProps
+
+<ApiTable pkg="slot" name="SlotProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Handlers | The child's handler runs first. The slot's handler runs unless the child calls `preventDefault()`. |
+
+**ARIA.** Slot adds no ARIA of its own. Attributes pass through, so the child's roles and labels are the ones that count.

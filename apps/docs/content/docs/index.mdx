@@ -1,0 +1,14 @@
+---
+title: Introduction
+description: What GlobUI is, and how its pieces fit together.
+---
+
+GlobUI is a React component library. Every component is its own package (`@glob-ui/button`, `@glob-ui/dialog`, ...), so you install only what you use. Shared pieces live in internal packages: design tokens (`@glob-ui/styles`), a class merger (`@glob-ui/utils`), `Slot` for `asChild`, and hooks for focus and positioning.
+
+The goals, in order:
+
+1. **Accessible.** Composite widgets follow the WAI-ARIA Authoring Practices. Keyboard behaviour and focus are verified in a real browser, and axe-core runs on the main states.
+2. **Server-friendly.** Presentational components have no `"use client"` and render in Server Components. Components with state carry the directive; each page says which.
+3. **Themeable.** Colours, radii and shadows are `--glob-*` tokens. Override them in CSS, or switch to dark mode with one attribute.
+
+Next: [installation](/docs/installation) and [theming](/docs/theming).

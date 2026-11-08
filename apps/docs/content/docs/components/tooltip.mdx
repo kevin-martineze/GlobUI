@@ -1,0 +1,37 @@
+---
+title: "Tooltip"
+description: "A short description that appears on hover or keyboard focus. It stays open while the pointer is over it."
+---
+
+<PackageInfo pkg="tooltip" exports="Tooltip" />
+
+## Preview
+
+<ComponentPreview name="tooltip/default" />
+
+## Examples
+
+### Placement
+
+`placement` takes `top`, `bottom`, `left` or `right`, with `-start` and `-end` variants. `arrow` adds a pointer.
+
+<ComponentPreview name="tooltip/placement" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### TooltipProps
+
+<ApiTable pkg="tooltip" name="TooltipProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Hover | Opens after `delayDuration` (500 ms by default). Touch input does not open it. |
+| Keyboard focus | Opens at once, on focus-visible only. |
+| Escape | Closes it. |
+| Pointer moves onto the tooltip | Stays open. It closes `closeDelay` (150 ms) after the pointer leaves both the trigger and the tooltip. |
+
+**ARIA.** The trigger gets `aria-describedby` pointing at the tooltip, which has `role="tooltip"`. Put the essential information in the visible text, not only in the tooltip, because touch users may not see it.

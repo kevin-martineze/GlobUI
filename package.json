@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "pnpm build:packages && pnpm dev:watch",
     "dev:watch": "pnpm -r --parallel --filter \"./packages/*\" --filter showcase run dev",
-    "build": "pnpm build:packages && pnpm check:directives && pnpm build:showcase",
+    "build": "pnpm build:packages && pnpm check:directives && pnpm build:showcase && pnpm build:docs",
     "build:packages": "pnpm -r --filter @glob-ui/* run build",
     "build:showcase": "pnpm --filter showcase build",
     "lint": "eslint .",
@@ -13,7 +13,10 @@
     "test": "vitest run",
     "test:unit": "vitest run --project unit",
     "test:browser": "vitest run --project browser",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "dev:docs": "pnpm build:packages && pnpm -r --parallel --filter \"./packages/*\" --filter docs run dev",
+    "build:docs": "pnpm --filter docs build && node apps/docs/scripts/check-docs.mjs",
+    "check:docs": "node apps/docs/scripts/check-docs.mjs"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.5",

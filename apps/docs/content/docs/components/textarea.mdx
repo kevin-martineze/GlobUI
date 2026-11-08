@@ -1,0 +1,35 @@
+---
+title: "Textarea"
+description: "A multi-line text field with the same sizes and states as Input."
+---
+
+<PackageInfo pkg="textarea" exports="Textarea, textareaVariants" />
+
+## Preview
+
+<ComponentPreview name="textarea/default" />
+
+## Examples
+
+### With a Field
+
+Description text is linked to the textarea with `aria-describedby`.
+
+<ComponentPreview name="textarea/with-field" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### TextareaProps
+
+<ApiTable pkg="textarea" name="TextareaProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Tab | Focuses the textarea. |
+| Enter | Inserts a line break (native behaviour). |
+
+**ARIA.** A native `<textarea>`. Give it a name with `Field` or `aria-label`.

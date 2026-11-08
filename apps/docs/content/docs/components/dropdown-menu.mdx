@@ -1,0 +1,56 @@
+---
+title: "Dropdown menu"
+description: "A menu of actions, checkbox items and radio items, opened from a trigger."
+---
+
+<PackageInfo pkg="dropdown-menu" exports="DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuCheckboxItem, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut" />
+
+## Preview
+
+<ComponentPreview name="dropdown-menu/default" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### DropdownMenu
+
+<ApiTable pkg="dropdown-menu" name="DropdownMenuProps" />
+
+### DropdownMenuTrigger
+
+<ApiTable pkg="dropdown-menu" name="DropdownMenuTriggerProps" />
+
+### DropdownMenuContent
+
+<ApiTable pkg="dropdown-menu" name="DropdownMenuContentProps" />
+
+### DropdownMenuItem
+
+<ApiTable pkg="dropdown-menu" name="DropdownMenuItemProps" />
+
+### DropdownMenuCheckboxItem
+
+<ApiTable pkg="dropdown-menu" name="DropdownMenuCheckboxItemProps" />
+
+### DropdownMenuRadioGroup
+
+<ApiTable pkg="dropdown-menu" name="DropdownMenuRadioGroupProps" />
+
+### DropdownMenuRadioItem
+
+<ApiTable pkg="dropdown-menu" name="DropdownMenuRadioItemProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Enter, Space, ArrowDown on the trigger | Opens the menu and focuses the first item. ArrowUp focuses the last item. |
+| Arrow keys, Home, End | Move between items, looping at the ends. Disabled items are skipped. |
+| Letters | Typeahead. |
+| Enter, Space on an item | Runs `onSelect`, then closes. Checkbox and radio items stay open. Call `preventDefault()` in `onSelect` to keep the menu open. |
+| Escape | Closes and returns focus to the trigger. |
+| Tab | Closes the menu and moves focus on. |
+| Pointer hover | Moves focus to the hovered item. |
+
+**ARIA.** The trigger has `aria-haspopup="menu"` and `aria-expanded`. The content is `role="menu"`, named by the trigger. Items are `menuitem`, `menuitemcheckbox` (with `aria-checked`) or `menuitemradio`.

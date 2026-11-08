@@ -1,0 +1,30 @@
+---
+title: "Card"
+description: "A surface that groups related content: header, body and footer."
+---
+
+<PackageInfo pkg="card" exports="Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter" />
+
+## Preview
+
+<ComponentPreview name="card/default" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### Card
+
+<ApiTable pkg="card" name="CardProps" />
+
+### CardTitle
+
+<ApiTable pkg="card" name="CardTitleProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Structure | No ARIA roles. `CardTitle` renders a heading; set `as` to choose the level (for example `h2`). |
+
+**ARIA.** Use a heading level that fits the page outline. A card is not a landmark. Wrap a clickable card's content in a link rather than making the whole card a button.

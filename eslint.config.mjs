@@ -25,6 +25,8 @@ const eslintConfig = defineConfig([
     "**/dist/**",
     "**/node_modules/**",
     "**/next-env.d.ts",
+    // Fumadocs writes these files from source.config.ts; they are not hand-written.
+    "**/.source/**",
   ]),
 ]);
 

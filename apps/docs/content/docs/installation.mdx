@@ -1,0 +1,52 @@
+---
+title: Installation
+description: Install GlobUI packages and set up Tailwind so the components are styled.
+---
+
+<Callout type="warn" title="Not on npm yet">
+  Packages are not published to npm yet. The commands below are what they will be once they are. To use them now, depend on the workspace packages of this repository.
+</Callout>
+
+<Tabs items={["npm", "Copy code"]}>
+  <Tab value="npm">
+
+Install one package per component, or everything at once:
+
+```bash
+pnpm add @glob-ui/button
+# or every component
+pnpm add @glob-ui/all
+```
+
+Then set up Tailwind v4 once, in the global stylesheet. The first line brings in the design tokens. The `@source` line makes Tailwind generate the classes the packages use. Tailwind skips `node_modules` by default, so this line is required.
+
+```css title="app/globals.css"
+@import "tailwindcss";
+@import "@glob-ui/styles";
+
+@source "../node_modules/@glob-ui/*/dist/**/*.{js,mjs}";
+```
+
+Adjust the `@source` path to where `node_modules` is relative to this CSS file.
+
+  </Tab>
+  <Tab value="Copy code">
+
+A copy-paste registry (components as source files you own, like shadcn/ui) is planned. It is not available yet.
+
+  </Tab>
+</Tabs>
+
+## Use a component
+
+```tsx
+import { Button } from "@glob-ui/button"
+
+export default function Page() {
+  return <Button variant="primary">Save</Button>
+}
+```
+
+## Why the `@source` line works
+
+Tailwind scans the files it is told about and generates a CSS rule for every class it finds. The packages ship compiled JavaScript in `dist/`, and that output contains the class strings (`bg-glob-primary`, `rounded-glob-md`). The glob `node_modules/@glob-ui/*/dist` matches each package's built output, so every class a component uses is generated. This site uses the same line in its own `app/global.css`.
