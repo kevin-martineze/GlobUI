@@ -122,7 +122,7 @@ export function CountrySelect({ value, onChange, size = "md", disabled }: Countr
         <span className="text-base leading-none" aria-hidden="true">{selected.flag}</span>
         <span className="text-glob-text-secondary">{selected.code}</span>
         <svg
-          className={cn("h-3 w-3 text-glob-muted transition-transform", open && "rotate-180")}
+          className={cn("h-3 w-3 text-glob-text-secondary transition-transform", open && "rotate-180")}
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"

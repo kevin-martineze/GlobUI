@@ -3,13 +3,19 @@ title: Theming
 description: The design tokens, light and dark mode, and how to override them.
 ---
 
-Every colour, radius and shadow in GlobUI is a CSS custom property with the `--glob-` prefix. The components use only the `glob-*` utilities (`bg-glob-surface`, `text-glob-muted`), so changing a token changes every component.
+Every colour, radius and shadow in GlobUI is a CSS custom property with the `--glob-` prefix. The components use only the `glob-*` utilities (`bg-glob-surface`, `text-glob-text-secondary`), so changing a token changes every component.
 
 ## Tokens
 
 Light values are the default. Dark values apply when `data-theme="dark"` is set on `<html>`, or when the user prefers a dark colour scheme and has not chosen a theme. The values below are read from `packages/styles/glob-ui.css` at build time.
 
 <TokenTable />
+
+## Which token for which text
+
+Use `--glob-text` for body text and `--glob-text-secondary` for helper text, placeholders, and icons that carry meaning (a chevron that shows an open list, for example). Both pass WCAG AA on every surface GlobUI uses, in light and dark.
+
+`--glob-muted` is for decorative use only (dividers, purely visual icons) and is not used for text. Its light value fails 4.5:1 on white, so it must not carry information.
 
 ## Light and dark
 

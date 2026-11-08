@@ -203,7 +203,7 @@ export function Select({
       >
         <span className="truncate">{selected ? selected.label : placeholder}</span>
         <svg
-          className={cn("h-4 w-4 shrink-0 text-glob-muted transition-transform", open && "rotate-180")}
+          className={cn("h-4 w-4 shrink-0 text-glob-text-secondary transition-transform", open && "rotate-180")}
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"

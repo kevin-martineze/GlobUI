@@ -233,7 +233,7 @@ export function MultiSelect({
         >
           {selectedItems.length === 0 ? <span className="text-glob-text-secondary">{placeholder}</span> : <span className="sr-only">{selectedItems.length} selected</span>}
           <svg
-            className={cn("ml-auto h-4 w-4 shrink-0 text-glob-muted transition-transform", open && "rotate-180")}
+            className={cn("ml-auto h-4 w-4 shrink-0 text-glob-text-secondary transition-transform", open && "rotate-180")}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"

@@ -162,7 +162,7 @@ const AccordionTrigger = forwardRef<HTMLButtonElement, AccordionTriggerProps>(
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
-            className="h-4 w-4 shrink-0 text-glob-muted transition-transform duration-200 group-data-[state=open]:rotate-180 motion-reduce:transition-none"
+            className="h-4 w-4 shrink-0 text-glob-text-secondary transition-transform duration-200 group-data-[state=open]:rotate-180 motion-reduce:transition-none"
           >
             <path d="M6 9l6 6 6-6" />
           </svg>

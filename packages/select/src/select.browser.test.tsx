@@ -4,6 +4,7 @@ import { page, userEvent } from "vitest/browser"
 import { Select } from "./select"
 import { Card, CardContent } from "../../card/src/card"
 import { expectNoA11yViolations } from "../../../tests/browser/a11y"
+import { expectPlaceholderContrast, withTheme } from "../../../tests/browser/contrast"
 
 const FRUITS = [
   { value: "apple", label: "Apple" },
@@ -202,4 +203,18 @@ describe("Select: layout and forms", () => {
     await userEvent.keyboard("{ArrowUp}{Enter}")
     expect(new FormData(form).get("fruit")).toBe("banana")
   })
+})
+
+describe("Select search placeholder contrast", () => {
+  for (const theme of ["light", "dark"] as const) {
+    it(`meets 4.5:1 in ${theme}`, async () => {
+      await withTheme(theme, async () => {
+        await render(<Select options={FRUITS} defaultValue="apple" aria-label="Fruit" />)
+        await trigger().element().focus()
+        await userEvent.keyboard("{Enter}")
+        const search = page.getByRole("textbox", { name: "Search options" }).element()
+        await expectPlaceholderContrast(search, `Select search (${theme})`)
+      })
+    })
+  }
 })
