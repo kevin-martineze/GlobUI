@@ -109,6 +109,12 @@ export function MultiSelect({
     [setTrigger]
   )
 
+  /** Closes the list and clears the search, so the next open starts from the full list. */
+  function closeList() {
+    setOpen(false)
+    setSearch("")
+  }
+
   function openList() {
     if (disabled) return
     listbox.setActiveKey(selectedItems[0]?.value ?? null)
@@ -141,9 +147,9 @@ export function MultiSelect({
       if (listbox.activeItem) toggle(listbox.activeItem.value)
     } else if (e.key === "Escape") {
       e.preventDefault()
-      setOpen(false)
+      closeList()
     } else if (e.key === "Tab") {
-      setOpen(false)
+      closeList()
     } else if (isPrintable(e)) {
       e.preventDefault()
       listbox.typeahead(e.key)
@@ -157,9 +163,9 @@ export function MultiSelect({
       if (listbox.activeItem) toggle(listbox.activeItem.value)
     } else if (e.key === "Escape") {
       e.preventDefault()
-      setOpen(false)
+      closeList()
     } else if (e.key === "Tab") {
-      setOpen(false)
+      closeList()
     } else if (e.key === "Backspace" && search === "" && current.length > 0) {
       // Empty search + Backspace removes the last chip.
       e.preventDefault()

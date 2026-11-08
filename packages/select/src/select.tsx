@@ -109,6 +109,12 @@ export function Select({
     onShow: () => searchRef.current?.focus({ preventScroll: true }),
   })
 
+  /** Closes the list and clears the search, so the next open starts from the full list. */
+  function closeList() {
+    setOpen(false)
+    setSearch("")
+  }
+
   function openList() {
     if (disabled) return
     // Start on the selected option, or the first enabled one.
@@ -118,7 +124,7 @@ export function Select({
 
   function commit(next: string) {
     setCurrent(next)
-    setOpen(false)
+    closeList()
   }
 
   function onTriggerKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
@@ -138,14 +144,14 @@ export function Select({
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault()
       if (listbox.activeItem) commit(listbox.activeItem.value)
-      else setOpen(false)
+      else closeList()
     } else if (e.key === "Escape") {
       e.preventDefault()
-      setOpen(false)
+      closeList()
     } else if (e.key === "Tab") {
       // APG: Tab selects the active option and moves focus on (no preventDefault).
       if (listbox.activeItem) setCurrent(listbox.activeItem.value)
-      setOpen(false)
+      closeList()
     } else if (isPrintable(e)) {
       e.preventDefault()
       listbox.typeahead(e.key)
@@ -160,10 +166,10 @@ export function Select({
       if (listbox.activeItem) commit(listbox.activeItem.value)
     } else if (e.key === "Escape") {
       e.preventDefault()
-      setOpen(false)
+      closeList()
     } else if (e.key === "Tab") {
       if (listbox.activeItem) setCurrent(listbox.activeItem.value)
-      setOpen(false)
+      closeList()
     }
   }
 

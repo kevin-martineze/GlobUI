@@ -55,6 +55,12 @@ export function CountrySelect({ value, onChange, size = "md", disabled }: Countr
     onShow: () => searchRef.current?.focus({ preventScroll: true }),
   })
 
+  /** Closes the list and clears the search, so the next open starts from the full list. */
+  function closeList() {
+    setOpen(false)
+    setSearch("")
+  }
+
   function openList() {
     if (disabled) return
     listbox.setActiveKey(value)
@@ -63,7 +69,7 @@ export function CountrySelect({ value, onChange, size = "md", disabled }: Countr
 
   function commit(iso: string) {
     onChange(iso)
-    setOpen(false)
+    closeList()
   }
 
   function onTriggerKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
@@ -81,10 +87,10 @@ export function CountrySelect({ value, onChange, size = "md", disabled }: Countr
       if (listbox.activeItem) commit(listbox.activeItem.iso)
     } else if (e.key === "Escape") {
       e.preventDefault()
-      setOpen(false)
+      closeList()
     } else if (e.key === "Tab") {
       if (listbox.activeItem) onChange(listbox.activeItem.iso)
-      setOpen(false)
+      closeList()
     }
   }
 

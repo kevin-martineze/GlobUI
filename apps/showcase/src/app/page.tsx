@@ -938,6 +938,9 @@ export default function Home() {
           >
             Fire 5 (queue)
           </Button>
+          <Button variant="outline" onClick={() => toast("Plain string title", { description: "toast(title, options) form." })}>
+            String form
+          </Button>
           <Button variant="ghost" onClick={() => toast.dismiss()}>
             Dismiss all
           </Button>
