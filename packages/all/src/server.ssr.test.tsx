@@ -42,10 +42,10 @@ describe("SSR smoke", () => {
   it("renders Slot with Button asChild as the child element", () => {
     const html = renderToString(
       <Button asChild>
-        <a href="/docs">Docs</a>
+        <a href="#docs">Docs</a>
       </Button>
     )
-    expect(html).toMatch(/^<a[^>]*href="\/docs"/)
+    expect(html).toMatch(/^<a[^>]*href="#docs"/)
     expect(html).not.toContain("<button")
   })
 

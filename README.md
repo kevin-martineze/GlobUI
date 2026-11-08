@@ -1,24 +1,29 @@
 # GlobUI
 
-A React component library. Next.js 16 (showcase), React 19, TypeScript, Tailwind CSS 4, pnpm workspaces.
+A React component library. Next.js 16 (docs site), React 19, TypeScript, Tailwind CSS 4, pnpm workspaces.
 
-The packages are not published yet (`"private": true`). Consume them from this workspace for now.
+The packages are not published to npm yet. Releasing and publishing: [RELEASING.md](RELEASING.md). Deploying the docs site: [DEPLOY.md](DEPLOY.md).
 
 ## Install and develop
 
 ```bash
 pnpm install
-pnpm dev          # builds every package once, then watches packages and runs the showcase
+pnpm dev          # builds every package once, then watches the packages and runs the docs site
 ```
 
-Open http://localhost:3000 for the component showcase.
+Open http://localhost:3000 for the docs site: the component pages are the reference, with live examples.
 
 | Script | What it does |
 | --- | --- |
 | `pnpm dev` | Builds packages, then runs `dev:watch` |
-| `pnpm dev:watch` | Runs `tsup --watch --no-clean` in every package plus `next dev` in the showcase |
+| `pnpm dev:watch` | Runs `tsup --watch --no-clean` in every package plus `next dev` in apps/docs |
 | `pnpm build:packages` | Builds every `@glob-ui/*` package into its `dist/` |
-| `pnpm build` | Builds packages, then the showcase |
+| `pnpm build` | Builds packages, runs the directive check, then builds the docs site and checks it |
+| `pnpm build:docs` | Builds the docs site (MDX, examples, copy-code registry) and runs `check:docs` |
+| `pnpm check:docs` | Every public package has a page; no broken internal link in the built site |
+| `pnpm check:packages` | publint and attw on every package tarball, plus release metadata |
+| `pnpm sync:packages` | Writes each package's LICENSE copy, README and release metadata |
+| `pnpm changeset` | Adds a changeset (a note for the next release) |
 | `pnpm lint` | ESLint over the whole repo (must print nothing) |
 | `pnpm test` | Runs the unit and browser test projects once |
 | `pnpm test:unit` | Node tests only (pure logic and SSR smoke) |
@@ -26,7 +31,7 @@ Open http://localhost:3000 for the component showcase.
 | `pnpm test:watch` | Vitest in watch mode |
 | `pnpm check:directives` | Asserts `"use client"` is present in client builds and absent from server builds (runs in `pnpm build`) |
 
-Packages are consumed through `dist/`. The showcase reads `dist/`, so keep `dev:watch` running while you edit a package, or rebuild it.
+Packages are consumed through `dist/`. The docs site reads `dist/`, so keep `dev:watch` running while you edit a package, or rebuild it.
 
 ### Adding a package
 
@@ -34,7 +39,7 @@ Packages are consumed through `dist/`. The showcase reads `dist/`, so keep `dev:
 2. Name it `@glob-ui/<name>` and add `"private": true`.
 3. Declare every workspace dependency as `"workspace:*"`. Put React in `peerDependencies`.
 4. List every dependency in the tsup `external` array.
-5. Register it in three places: `packages/all` (dependency, `external`, re-export in `src/index.ts`), `apps/showcase/package.json`, and a section in `apps/showcase/src/app/page.tsx`.
+5. Register it in `packages/all` (dependency, `external`, re-export in `src/index.ts`), add it to `apps/docs/package.json`, and add its page: an entry in `apps/docs/scripts/docs-data.mjs`, then `node apps/docs/scripts/write-component-pages.mjs` and `pnpm sync:packages`. Examples go in `apps/docs/examples/<component>/`.
 6. Run `pnpm install`, then `pnpm build` and `pnpm lint`.
 
 ## Architecture
@@ -98,7 +103,7 @@ Dark values are set in two places in `packages/styles/glob-ui.css`:
 - `:root[data-theme="dark"]`, for an explicit choice.
 - `@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { ... } }`, when the user has no explicit choice.
 
-Set `data-theme="light"` or `data-theme="dark"` on `<html>` to force a theme. The showcase does this from a stored choice, with an inline script in `<head>` so there is no flash. Colour values use plain `var()` values instead of `light-dark()` because Safari 17.5 lacks it.
+Set `data-theme="light"` or `data-theme="dark"` on `<html>` to force a theme. The docs site does this from a stored choice, with an inline script in `<head>` so there is no flash. Colour values use plain `var()` values instead of `light-dark()` because Safari 17.5 lacks it.
 
 ### Tailwind setup for consumers
 
@@ -175,6 +180,6 @@ toast.dismiss()
 - **Client boundary.** Add `"use client"` to a component only when it uses state, effects or handlers. Keep the banner in `tsup.config.ts` for every client package.
 - **Verification before you send a change.**
   1. `pnpm build` and `pnpm lint` both pass with no output from lint.
-  2. In the showcase, check the component with the keyboard alone: Tab in, arrows, Enter/Space, Escape, Tab out.
+  2. In the docs site, check the component with the keyboard alone: Tab in, arrows, Enter/Space, Escape, Tab out.
   3. Check it in both themes.
   4. For form controls, submit a native form and confirm `FormData` contains the named values.

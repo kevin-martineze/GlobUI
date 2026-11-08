@@ -9,7 +9,7 @@ const eslintConfig = defineConfig([
     settings: {
       // Monorepo: tell @next/eslint-plugin-next where the Next app lives.
       next: {
-        rootDir: "apps/showcase/",
+        rootDir: "apps/docs/",
       },
       // The root has no react package, so "detect" cannot resolve it.
       react: {

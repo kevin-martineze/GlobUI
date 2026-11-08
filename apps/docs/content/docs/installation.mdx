@@ -32,7 +32,15 @@ Adjust the `@source` path to where `node_modules` is relative to this CSS file.
   </Tab>
   <Tab value="Copy code">
 
-A copy-paste registry (components as source files you own, like shadcn/ui) is planned. It is not available yet.
+The copy-code registry is shadcn-compatible: each component is copied into your project as source, so you own the code. The first command sets up shadcn for your project (one time). The second adds a component; it also adds the GlobUI theme tokens and the components it depends on.
+
+```bash
+npx shadcn@latest init
+```
+
+<RegistryCommand name="button" />
+
+Replace `button` with any component name. The command for each component is on its page.
 
   </Tab>
 </Tabs>

@@ -6,6 +6,7 @@ import { ComponentPreview } from "@/components/component-preview"
 import { PackageInfo } from "@/components/package-info"
 import { ApiTable } from "@/components/api-table"
 import { TokenTable } from "@/components/token-table"
+import { InstallTabs, RegistryCommand } from "@/components/install-tabs"
 
 export function getMDXComponents(components?: MDXComponents): MDXComponents {
   return {
@@ -17,6 +18,8 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     PackageInfo,
     ApiTable,
     TokenTable,
+    InstallTabs,
+    RegistryCommand,
     ...components,
   }
 }

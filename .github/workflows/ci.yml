@@ -50,9 +50,23 @@ jobs:
       - name: Lint
         run: pnpm lint
 
-      # Builds every package, then asserts client/server "use client" banners, then builds the showcase.
+      # Builds every package, then asserts client/server "use client" banners, then builds the docs site.
       - name: Build
         run: pnpm build
+
+      - name: Check docs (every package has a page, no broken links)
+        run: pnpm check:docs
+
+      - name: Check packages (publint, attw, metadata)
+        run: pnpm check:packages
+
+      # Installs the packed tarballs into fresh Next and Vite apps (outside the repo) and builds them.
+      - name: Consumer smoke test (Next and Vite, tarballs)
+        run: node scripts/consumer-smoke.mjs
+
+      # Serves the docs registry and installs items with the shadcn CLI into a fresh Next app.
+      - name: shadcn registry end-to-end
+        run: node scripts/shadcn-e2e.mjs
 
       - name: Test
         run: pnpm test

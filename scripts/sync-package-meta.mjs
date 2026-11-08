@@ -1,0 +1,89 @@
+// Sets the release metadata of every @glob-ui/* package, copies the root LICENSE into it, and
+// writes its README from the docs table. Run it after editing the table, and check it with
+// `pnpm check:packages` (the check fails if a copy has drifted).
+//
+// Why copies and not a prepack script: pnpm, npm and changesets all pack the package folder as
+// it is on disk. A committed copy needs no lifecycle hook, so `pnpm pack` and CI behave the same.
+import { readFileSync, readdirSync, writeFileSync, copyFileSync, existsSync } from "node:fs"
+import path from "node:path"
+import { fileURLToPath } from "node:url"
+import { components, utilities } from "../apps/docs/scripts/docs-data.mjs"
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
+const REPO = "https://github.com/kevin-martineze/GlobUI"
+const DOCS = `${REPO}/tree/main/apps/docs/content/docs`
+
+// Docs entry for each package: components/<slug>.mdx, or a utility page.
+const docEntry = new Map()
+for (const c of components) docEntry.set(c.pkg, { title: c.title, description: c.description, page: `components/${c.slug}.mdx` })
+for (const u of utilities) docEntry.set(u.pkg, { title: u.title, description: u.description, page: `utilities/${u.slug}.mdx` })
+
+const extra = {
+  all: { description: "Every GlobUI component in one package.", keywords: ["bundle"] },
+  styles: { description: "GlobUI design tokens (CSS custom properties) and the Tailwind theme mapping.", keywords: ["tokens", "tailwind", "theme"] },
+  hooks: { description: "Internal hooks used by GlobUI components.", internal: true },
+  utils: { description: "Internal class-name helper used by GlobUI components.", internal: true },
+}
+
+const packagesDir = path.join(root, "packages")
+for (const dir of readdirSync(packagesDir)) {
+  const pkgPath = path.join(packagesDir, dir, "package.json")
+  if (!existsSync(pkgPath)) continue
+  const pkg = JSON.parse(readFileSync(pkgPath, "utf8"))
+  const name = dir
+  const doc = docEntry.get(name)
+  const info = extra[name] ?? {}
+  const description = doc?.description ?? info.description
+  const isStyles = name === "styles"
+  const isInternal = Boolean(info.internal)
+  const keywords = ["react", "glob-ui", ...(isStyles ? ["tokens", "tailwind"] : ["components", "accessible", "tailwind"]), ...(info.keywords ?? []), name]
+
+  delete pkg.private
+  pkg.description = description
+  pkg.keywords = [...new Set(keywords)]
+  pkg.license = "MIT"
+  pkg.author = "Kevin Martínez E"
+  pkg.repository = { type: "git", url: "git+https://github.com/kevin-martineze/GlobUI.git", directory: `packages/${name}` }
+  pkg.homepage = `${REPO}#readme`
+  pkg.bugs = { url: `${REPO}/issues` }
+  pkg.publishConfig = { access: "public", provenance: true }
+  pkg.sideEffects = isStyles ? ["*.css"] : false
+  pkg.files = isStyles ? ["glob-ui.css", "LICENSE", "README.md"] : ["dist/", "LICENSE", "README.md"]
+  // Conditional exports with one types file per module format (.d.mts for import, .d.ts for require),
+  // so ESM consumers get ESM types. Without this, attw reports FalseCJS.
+  if (isStyles) {
+    pkg.exports = { ".": "./glob-ui.css", "./package.json": "./package.json" }
+  } else {
+    pkg.exports = {
+      ".": {
+        import: { types: "./dist/index.d.mts", default: "./dist/index.mjs" },
+        require: { types: "./dist/index.d.ts", default: "./dist/index.js" },
+      },
+      "./package.json": "./package.json",
+    }
+    pkg.type = "commonjs"
+    pkg.engines = { node: ">=18.18" }
+  }
+  writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + "\n")
+
+  copyFileSync(path.join(root, "LICENSE"), path.join(packagesDir, dir, "LICENSE"))
+
+  const install = `\`\`\`bash\npnpm add ${pkg.name}\n\`\`\``
+  const lines = [`# ${pkg.name}`, "", description, ""]
+  if (isInternal) {
+    lines.push(
+      "> **Internal API.** This package is used by the other GlobUI packages. Its exports can change in any release, so depend on the component packages instead.",
+      ""
+    )
+  }
+  if (doc) {
+    lines.push("## Install", "", install, "", "## Documentation", "", `Full docs, examples and the accessibility table: [${doc.title}](${DOCS}/${doc.page}).`, "")
+  } else if (isStyles) {
+    lines.push("## Install", "", install, "", "In your global stylesheet (see the [installation guide](" + `${DOCS}/installation.mdx` + ")):", "", "```css", '@import "tailwindcss";', '@import "@glob-ui/styles";', "```", "")
+  } else if (name === "all") {
+    lines.push("## Install", "", install, "", "Every component is also available as its own package, for example `@glob-ui/button`.", "")
+  }
+  lines.push("## License", "", "MIT. See [LICENSE](./LICENSE).", "")
+  writeFileSync(path.join(packagesDir, dir, "README.md"), lines.join("\n"))
+}
+console.log("package metadata, LICENSE and README synced")
