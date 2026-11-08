@@ -20,6 +20,11 @@ Open http://localhost:3000 for the component showcase.
 | `pnpm build:packages` | Builds every `@glob-ui/*` package into its `dist/` |
 | `pnpm build` | Builds packages, then the showcase |
 | `pnpm lint` | ESLint over the whole repo (must print nothing) |
+| `pnpm test` | Runs the unit and browser test projects once |
+| `pnpm test:unit` | Node tests only (pure logic and SSR smoke) |
+| `pnpm test:browser` | Browser tests only (Chromium, headless) |
+| `pnpm test:watch` | Vitest in watch mode |
+| `pnpm check:directives` | Asserts `"use client"` is present in client builds and absent from server builds (runs in `pnpm build`) |
 
 Packages are consumed through `dist/`. The showcase reads `dist/`, so keep `dev:watch` running while you edit a package, or rebuild it.
 
@@ -43,6 +48,34 @@ Packages are consumed through `dist/`. The showcase reads `dist/`, so keep `dev:
   - `@glob-ui/styles`: the design tokens and the Tailwind theme mapping.
 - **Client and server.** Components that hold state or handlers start with `"use client"`. esbuild drops module-level directives when it bundles, so each client package's `tsup.config.ts` sets `banner: { js: '"use client"' }`. Without it, Next treats the component as server code and breaks. Server-only packages have no banner.
 - **Toast is split.** `toast()` works from server code (it is a no-op there). `Toaster` is a separate client module, built as `dist/toaster.*`.
+
+
+## Tests
+
+Tests use Vitest 5 with two projects, configured in `vitest.config.mts`:
+
+- **unit** (Node): pure logic (`cn`, `mergeProps`, `composeRefs`, the toast store) and SSR smoke tests (`renderToString` must not throw for server-safe components).
+- **browser** (Vitest browser mode, Chromium via `@vitest/browser-playwright`): every interactive component, with real keyboard and focus through `userEvent`, and axe-core checks through `tests/browser/a11y.ts`. Components need a real browser: jsdom has no `<dialog>` modal, popover API or layout.
+
+Tests import package sources (`@glob-ui/<pkg>` resolves to `packages/<pkg>/src/index.ts`), so `pnpm test` does not need a build. Test files sit next to the code:
+
+| File | Project |
+| --- | --- |
+| `src/<name>.test.ts` | unit |
+| `src/<name>.ssr.test.tsx` | unit (SSR) |
+| `src/<name>.browser.test.tsx` | browser |
+
+Install the Chromium binary once per machine (CI does this too):
+
+```bash
+pnpm exec playwright install chromium
+# Linux only, if the browser fails to start for missing system libraries:
+pnpm exec playwright install-deps chromium
+```
+
+Write tests against roles and accessible names (`getByRole`), not CSS classes, and avoid snapshots and sleeps. For delays use fake timers and drive React with `flush()` (see `packages/tooltip/src/tooltip.browser.test.tsx`).
+
+CI (`.github/workflows/ci.yml`) runs install (frozen lockfile), lint, build (with the directive check), and test on every push and pull request.
 
 ## Tokens
 

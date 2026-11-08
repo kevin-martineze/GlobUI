@@ -4,19 +4,31 @@
   "scripts": {
     "dev": "pnpm build:packages && pnpm dev:watch",
     "dev:watch": "pnpm -r --parallel --filter \"./packages/*\" --filter showcase run dev",
-    "build": "pnpm build:packages && pnpm build:showcase",
+    "build": "pnpm build:packages && pnpm check:directives && pnpm build:showcase",
     "build:packages": "pnpm -r --filter @glob-ui/* run build",
     "build:showcase": "pnpm --filter showcase build",
     "lint": "eslint .",
-    "start": "pnpm --filter showcase start"
+    "start": "pnpm --filter showcase start",
+    "check:directives": "node scripts/check-client-directives.mjs",
+    "test": "vitest run",
+    "test:unit": "vitest run --project unit",
+    "test:browser": "vitest run --project browser",
+    "test:watch": "vitest"
   },
   "devDependencies": {
+    "@tailwindcss/vite": "^4.3.5",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitest/browser-playwright": "^5.1.0",
+    "axe-core": "^4.14.0",
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
+    "playwright": "^1.65.0",
     "tailwindcss": "^4",
-    "typescript": "^5"
-  }
+    "typescript": "^5",
+    "vitest": "^5.1.0",
+    "vitest-browser-react": "^2.3.0"
+  },
+  "packageManager": "pnpm@12.11.2"
 }
