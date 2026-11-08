@@ -38,7 +38,7 @@ const SEARCH_THRESHOLD = 8
 
 export interface SelectProps
   extends VariantProps<typeof selectVariants>,
-    Pick<React.HTMLAttributes<HTMLDivElement>, "id" | "aria-invalid" | "aria-describedby" | "aria-labelledby"> {
+    Pick<React.HTMLAttributes<HTMLDivElement>, "id" | "aria-invalid" | "aria-describedby" | "aria-labelledby" | "aria-label"> {
   options: SelectOption[]
   /** Controlled value. */
   value?: string
@@ -67,6 +67,7 @@ export function Select({
   "aria-invalid": ariaInvalid,
   "aria-describedby": ariaDescribedBy,
   "aria-labelledby": ariaLabelledBy,
+  "aria-label": ariaLabel,
 }: SelectProps) {
   const baseId = useId()
   const triggerId = id ?? `${baseId}-trigger`
@@ -188,6 +189,7 @@ export function Select({
         aria-invalid={ariaInvalid}
         aria-describedby={ariaDescribedBy}
         aria-labelledby={ariaLabelledBy}
+        aria-label={ariaLabel}
         onPointerDown={() => {
           if (!disabled) triggerHandlers.onPointerDown()
         }}
@@ -197,7 +199,7 @@ export function Select({
           triggerHandlers.onClick()
         }}
         onKeyDown={onTriggerKeyDown}
-        className={cn(selectVariants({ variant, size }), !selected && "text-glob-muted")}
+        className={cn(selectVariants({ variant, size }), !selected && "text-glob-text-secondary")}
       >
         <span className="truncate">{selected ? selected.label : placeholder}</span>
         <svg
@@ -238,7 +240,7 @@ export function Select({
               aria-autocomplete="list"
               aria-activedescendant={listbox.activeDescendant}
               autoComplete="off"
-              className="w-full rounded-glob-sm border border-glob-border bg-glob-surface-secondary px-2 py-1.5 text-sm text-glob-text placeholder:text-glob-muted outline-none focus:ring-1 focus:ring-glob-ring"
+              className="w-full rounded-glob-sm border border-glob-border bg-glob-surface-secondary px-2 py-1.5 text-sm text-glob-text placeholder:text-glob-text-secondary outline-none focus:ring-1 focus:ring-glob-ring"
             />
           </div>
         )}
@@ -270,7 +272,8 @@ export function Select({
                   "flex w-full items-center gap-2 rounded-glob-sm px-2 py-2 text-left text-sm select-none",
                   option.disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer",
                   isActive && !option.disabled && "bg-glob-surface-hover",
-                  isSelected && "text-glob-primary font-medium"
+                  // The filled indicator shows the selection; orange text on white fails contrast.
+                  isSelected && "font-medium"
                 )}
               >
                 <span
@@ -288,7 +291,7 @@ export function Select({
           })}
         </div>
         {filtered.length === 0 && (
-          <div role="status" className="px-3 py-4 text-center text-sm text-glob-muted">
+          <div role="status" className="px-3 py-4 text-center text-sm text-glob-text-secondary">
             No results found
           </div>
         )}

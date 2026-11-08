@@ -14,7 +14,7 @@ export interface MultiSelectOption {
 const SEARCH_THRESHOLD = 8
 
 export interface MultiSelectProps
-  extends Pick<React.HTMLAttributes<HTMLDivElement>, "id" | "aria-invalid" | "aria-describedby" | "aria-labelledby"> {
+  extends Pick<React.HTMLAttributes<HTMLDivElement>, "id" | "aria-invalid" | "aria-describedby" | "aria-labelledby" | "aria-label"> {
   options: MultiSelectOption[]
   /** Controlled selection. */
   value?: string[]
@@ -60,6 +60,7 @@ export function MultiSelect({
   "aria-invalid": ariaInvalid,
   "aria-describedby": ariaDescribedBy,
   "aria-labelledby": ariaLabelledBy,
+  "aria-label": ariaLabel,
 }: MultiSelectProps) {
   const baseId = useId()
   const listId = `${baseId}-listbox`
@@ -218,6 +219,7 @@ export function MultiSelect({
           aria-invalid={ariaInvalid}
           aria-describedby={ariaDescribedBy}
           aria-labelledby={ariaLabelledBy}
+          aria-label={ariaLabel}
           onPointerDown={() => {
             if (!disabled) triggerHandlers.onPointerDown()
           }}
@@ -229,7 +231,7 @@ export function MultiSelect({
           onKeyDown={onComboKeyDown}
           className="flex min-h-6 min-w-16 flex-1 cursor-pointer items-center justify-between gap-2 outline-none"
         >
-          {selectedItems.length === 0 ? <span className="text-glob-muted">{placeholder}</span> : <span className="sr-only">{selectedItems.length} selected</span>}
+          {selectedItems.length === 0 ? <span className="text-glob-text-secondary">{placeholder}</span> : <span className="sr-only">{selectedItems.length} selected</span>}
           <svg
             className={cn("ml-auto h-4 w-4 shrink-0 text-glob-muted transition-transform", open && "rotate-180")}
             viewBox="0 0 24 24"
@@ -269,7 +271,7 @@ export function MultiSelect({
               aria-autocomplete="list"
               aria-activedescendant={listbox.activeDescendant}
               autoComplete="off"
-              className="w-full rounded-glob-sm border border-glob-border bg-glob-surface-secondary px-2 py-1.5 text-sm text-glob-text placeholder:text-glob-muted outline-none focus:ring-1 focus:ring-glob-ring"
+              className="w-full rounded-glob-sm border border-glob-border bg-glob-surface-secondary px-2 py-1.5 text-sm text-glob-text placeholder:text-glob-text-secondary outline-none focus:ring-1 focus:ring-glob-ring"
             />
           </div>
         )}
@@ -302,7 +304,7 @@ export function MultiSelect({
                   "flex w-full items-center gap-2 rounded-glob-sm px-2 py-2 text-left text-sm select-none",
                   isDisabled ? "cursor-not-allowed opacity-50" : "cursor-pointer",
                   isActive && !isDisabled && "bg-glob-surface-hover",
-                  isSelected && "text-glob-primary"
+                  // The check mark shows the selection; orange text on white fails contrast.
                 )}
               >
                 <span
@@ -324,7 +326,7 @@ export function MultiSelect({
           })}
         </div>
         {filtered.length === 0 && (
-          <div role="status" className="px-3 py-4 text-center text-sm text-glob-muted">
+          <div role="status" className="px-3 py-4 text-center text-sm text-glob-text-secondary">
             No results found
           </div>
         )}
