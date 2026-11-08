@@ -23,6 +23,8 @@
     "react": "^19"
   },
   "dependencies": {
+    "@glob-ui/slot": "workspace:*",
+    "@glob-ui/spinner": "workspace:*",
     "@glob-ui/utils": "workspace:*",
     "class-variance-authority": "^0.7.1"
   },
