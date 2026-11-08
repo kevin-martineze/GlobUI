@@ -36,7 +36,22 @@
     "@glob-ui/checkbox": "workspace:*",
     "@glob-ui/radio-group": "workspace:*",
     "@glob-ui/switch": "workspace:*",
-    "@glob-ui/field": "workspace:*"
+    "@glob-ui/field": "workspace:*",
+    "@glob-ui/badge": "workspace:*",
+    "@glob-ui/spinner": "workspace:*",
+    "@glob-ui/alert": "workspace:*",
+    "@glob-ui/card": "workspace:*",
+    "@glob-ui/avatar": "workspace:*",
+    "@glob-ui/skeleton": "workspace:*",
+    "@glob-ui/slot": "workspace:*",
+    "@glob-ui/dialog": "workspace:*",
+    "@glob-ui/popover": "workspace:*",
+    "@glob-ui/tooltip": "workspace:*",
+    "@glob-ui/tabs": "workspace:*",
+    "@glob-ui/accordion": "workspace:*",
+    "@glob-ui/hooks": "workspace:*",
+    "@glob-ui/dropdown-menu": "workspace:*",
+    "@glob-ui/toast": "workspace:*"
   },
   "devDependencies": {
     "tsup": "^8.5.1"

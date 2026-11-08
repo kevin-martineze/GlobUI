@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@glob-ui/utils"
 
 const switchVariants = cva(
-  "group inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent bg-glob-border transition-colors data-[state=checked]:bg-glob-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50 aria-[invalid=true]:border-glob-danger",
+  "group inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent bg-glob-border-strong transition-colors data-[state=checked]:bg-glob-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50 aria-[invalid=true]:border-glob-danger",
   {
     variants: {
       size: {

@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@glob-ui/utils"
 
 const checkboxVariants = cva(
-  "peer shrink-0 cursor-pointer appearance-none rounded-glob-sm border border-glob-border bg-glob-surface transition-colors checked:border-glob-primary checked:bg-glob-primary indeterminate:border-glob-primary indeterminate:bg-glob-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50 aria-[invalid=true]:border-glob-danger",
+  "peer shrink-0 cursor-pointer appearance-none rounded-glob-sm border border-glob-border-strong bg-glob-surface transition-colors checked:border-glob-primary checked:bg-glob-primary indeterminate:border-glob-primary indeterminate:bg-glob-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50 aria-[invalid=true]:border-glob-danger",
   {
     variants: {
       size: {
@@ -35,7 +35,19 @@ export interface CheckboxProps
 }
 
 const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
-  ({ className, size, indeterminate = false, label, id, disabled, ...props }, ref) => {
+  (
+    {
+      className,
+      size,
+      indeterminate = false,
+      label,
+      id,
+      disabled,
+      "aria-labelledby": labelledByProp,
+      ...props
+    },
+    ref
+  ) => {
     const innerRef = useRef<HTMLInputElement>(null)
     useImperativeHandle(ref, () => innerRef.current as HTMLInputElement)
 
@@ -46,6 +58,10 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 
     const autoId = useId()
     const inputId = id ?? autoId
+    const labelId = `${inputId}-label`
+    // aria-labelledby (e.g. from Field) replaces the native <label for> name. Append our own
+    // label so the name stays "Field label + checkbox label", like several <label for> would.
+    const labelledBy = labelledByProp && label ? `${labelledByProp} ${labelId}` : labelledByProp
     const s = size ?? "md"
 
     const control = (
@@ -55,6 +71,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           type="checkbox"
           id={inputId}
           disabled={disabled}
+          aria-labelledby={labelledBy}
           className={cn(checkboxVariants({ size, className }))}
           {...props}
         />
@@ -66,7 +83,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           strokeWidth="3"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="pointer-events-none absolute inset-0 m-auto hidden h-3/4 w-3/4 text-white peer-[:checked:not(:indeterminate)]:block"
+          className="pointer-events-none absolute inset-0 m-auto hidden h-3/4 w-3/4 text-glob-primary-foreground peer-[:checked:not(:indeterminate)]:block"
         >
           <path d="M5 12l5 5 9-10" />
         </svg>
@@ -77,7 +94,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           stroke="currentColor"
           strokeWidth="3"
           strokeLinecap="round"
-          className="pointer-events-none absolute inset-0 m-auto hidden h-3/4 w-3/4 text-white peer-indeterminate:block"
+          className="pointer-events-none absolute inset-0 m-auto hidden h-3/4 w-3/4 text-glob-primary-foreground peer-indeterminate:block"
         >
           <path d="M6 12h12" />
         </svg>
@@ -90,6 +107,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       <span className="inline-flex items-center gap-2">
         {control}
         <label
+          id={labelId}
           htmlFor={inputId}
           className={cn(
             "cursor-pointer text-glob-text",

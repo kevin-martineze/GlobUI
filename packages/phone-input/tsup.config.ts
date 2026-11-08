@@ -15,7 +15,7 @@ export default defineConfig({
   },
   sourcemap: true,
   clean: true,
-  external: ["react", "react-dom", "@glob-ui/utils", "class-variance-authority"],
+  external: ["react", "react-dom", "@glob-ui/hooks", "@glob-ui/utils", "class-variance-authority"],
   splitting: false,
   // esbuild drops module-level directives when bundling; re-add it so RSC treats this as a client module.
   banner: { js: '"use client"' },

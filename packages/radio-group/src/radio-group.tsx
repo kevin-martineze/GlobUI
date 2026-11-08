@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@glob-ui/utils"
 
 const radioVariants = cva(
-  "peer shrink-0 cursor-pointer appearance-none rounded-full border border-glob-border bg-glob-surface transition-colors checked:border-glob-primary checked:bg-glob-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50",
+  "peer shrink-0 cursor-pointer appearance-none rounded-full border border-glob-border-strong bg-glob-surface transition-colors checked:border-glob-primary checked:bg-glob-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50",
   {
     variants: {
       size: {
@@ -163,7 +163,7 @@ const RadioGroupItem = forwardRef<HTMLInputElement, RadioGroupItemProps>(
           <span
             aria-hidden="true"
             className={cn(
-              "pointer-events-none absolute inset-0 m-auto hidden rounded-full bg-white peer-checked:block",
+              "pointer-events-none absolute inset-0 m-auto hidden rounded-full bg-glob-primary-foreground peer-checked:block",
               dotSize[ctx.size]
             )}
           />

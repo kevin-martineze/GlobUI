@@ -15,6 +15,6 @@ export default defineConfig({
   },
   sourcemap: true,
   clean: true,
-  external: ["react", "@glob-ui/utils", "class-variance-authority"],
+  external: ["react", "@glob-ui/slot", "@glob-ui/spinner", "@glob-ui/utils", "class-variance-authority"],
   splitting: false,
 })

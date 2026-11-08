@@ -23,6 +23,7 @@
     "react": "^19"
   },
   "dependencies": {
+    "@glob-ui/hooks": "workspace:*",
     "@glob-ui/utils": "workspace:*"
   },
   "devDependencies": {

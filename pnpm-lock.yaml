@@ -32,15 +32,39 @@ importers:
 
   apps/showcase:
     dependencies:
+      '@glob-ui/accordion':
+        specifier: workspace:*
+        version: link:../../packages/accordion
+      '@glob-ui/alert':
+        specifier: workspace:*
+        version: link:../../packages/alert
+      '@glob-ui/avatar':
+        specifier: workspace:*
+        version: link:../../packages/avatar
+      '@glob-ui/badge':
+        specifier: workspace:*
+        version: link:../../packages/badge
       '@glob-ui/button':
         specifier: workspace:*
         version: link:../../packages/button
+      '@glob-ui/card':
+        specifier: workspace:*
+        version: link:../../packages/card
       '@glob-ui/checkbox':
         specifier: workspace:*
         version: link:../../packages/checkbox
+      '@glob-ui/dialog':
+        specifier: workspace:*
+        version: link:../../packages/dialog
+      '@glob-ui/dropdown-menu':
+        specifier: workspace:*
+        version: link:../../packages/dropdown-menu
       '@glob-ui/field':
         specifier: workspace:*
         version: link:../../packages/field
+      '@glob-ui/hooks':
+        specifier: workspace:*
+        version: link:../../packages/hooks
       '@glob-ui/input':
         specifier: workspace:*
         version: link:../../packages/input
@@ -53,6 +77,9 @@ importers:
       '@glob-ui/phone-input':
         specifier: workspace:*
         version: link:../../packages/phone-input
+      '@glob-ui/popover':
+        specifier: workspace:*
+        version: link:../../packages/popover
       '@glob-ui/radio-group':
         specifier: workspace:*
         version: link:../../packages/radio-group
@@ -62,15 +89,33 @@ importers:
       '@glob-ui/select':
         specifier: workspace:*
         version: link:../../packages/select
+      '@glob-ui/skeleton':
+        specifier: workspace:*
+        version: link:../../packages/skeleton
+      '@glob-ui/slot':
+        specifier: workspace:*
+        version: link:../../packages/slot
+      '@glob-ui/spinner':
+        specifier: workspace:*
+        version: link:../../packages/spinner
       '@glob-ui/styles':
         specifier: workspace:*
         version: link:../../packages/styles
       '@glob-ui/switch':
         specifier: workspace:*
         version: link:../../packages/switch
+      '@glob-ui/tabs':
+        specifier: workspace:*
+        version: link:../../packages/tabs
       '@glob-ui/textarea':
         specifier: workspace:*
         version: link:../../packages/textarea
+      '@glob-ui/toast':
+        specifier: workspace:*
+        version: link:../../packages/toast
+      '@glob-ui/tooltip':
+        specifier: workspace:*
+        version: link:../../packages/tooltip
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../../packages/utils
@@ -103,17 +148,73 @@ importers:
         specifier: ^5
         version: 5.9.3
 
+  packages/accordion:
+    dependencies:
+      '@glob-ui/hooks':
+        specifier: workspace:*
+        version: link:../hooks
+      '@glob-ui/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react:
+        specifier: ^19
+        version: 19.2.4
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.15)(supports-color@7.2.0)(typescript@5.9.3)
+
+  packages/alert:
+    dependencies:
+      '@glob-ui/utils':
+        specifier: workspace:*
+        version: link:../utils
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
+      react:
+        specifier: ^19
+        version: 19.2.4
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.15)(supports-color@7.2.0)(typescript@5.9.3)
+
   packages/all:
     dependencies:
+      '@glob-ui/accordion':
+        specifier: workspace:*
+        version: link:../accordion
+      '@glob-ui/alert':
+        specifier: workspace:*
+        version: link:../alert
+      '@glob-ui/avatar':
+        specifier: workspace:*
+        version: link:../avatar
+      '@glob-ui/badge':
+        specifier: workspace:*
+        version: link:../badge
       '@glob-ui/button':
         specifier: workspace:*
         version: link:../button
+      '@glob-ui/card':
+        specifier: workspace:*
+        version: link:../card
       '@glob-ui/checkbox':
         specifier: workspace:*
         version: link:../checkbox
+      '@glob-ui/dialog':
+        specifier: workspace:*
+        version: link:../dialog
+      '@glob-ui/dropdown-menu':
+        specifier: workspace:*
+        version: link:../dropdown-menu
       '@glob-ui/field':
         specifier: workspace:*
         version: link:../field
+      '@glob-ui/hooks':
+        specifier: workspace:*
+        version: link:../hooks
       '@glob-ui/input':
         specifier: workspace:*
         version: link:../input
@@ -126,6 +227,9 @@ importers:
       '@glob-ui/phone-input':
         specifier: workspace:*
         version: link:../phone-input
+      '@glob-ui/popover':
+        specifier: workspace:*
+        version: link:../popover
       '@glob-ui/radio-group':
         specifier: workspace:*
         version: link:../radio-group
@@ -135,12 +239,30 @@ importers:
       '@glob-ui/select':
         specifier: workspace:*
         version: link:../select
+      '@glob-ui/skeleton':
+        specifier: workspace:*
+        version: link:../skeleton
+      '@glob-ui/slot':
+        specifier: workspace:*
+        version: link:../slot
+      '@glob-ui/spinner':
+        specifier: workspace:*
+        version: link:../spinner
       '@glob-ui/switch':
         specifier: workspace:*
         version: link:../switch
+      '@glob-ui/tabs':
+        specifier: workspace:*
+        version: link:../tabs
       '@glob-ui/textarea':
         specifier: workspace:*
         version: link:../textarea
+      '@glob-ui/toast':
+        specifier: workspace:*
+        version: link:../toast
+      '@glob-ui/tooltip':
+        specifier: workspace:*
+        version: link:../tooltip
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -155,7 +277,7 @@ importers:
         specifier: ^8.5.1
         version: 8.5.1(jiti@2.7.0)(postcss@8.5.15)(supports-color@7.2.0)(typescript@5.9.3)
 
-  packages/button:
+  packages/avatar:
     dependencies:
       '@glob-ui/utils':
         specifier: workspace:*
@@ -163,6 +285,57 @@ importers:
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
+      react:
+        specifier: ^19
+        version: 19.2.4
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.15)(supports-color@7.2.0)(typescript@5.9.3)
+
+  packages/badge:
+    dependencies:
+      '@glob-ui/utils':
+        specifier: workspace:*
+        version: link:../utils
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
+      react:
+        specifier: ^19
+        version: 19.2.4
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.15)(supports-color@7.2.0)(typescript@5.9.3)
+
+  packages/button:
+    dependencies:
+      '@glob-ui/slot':
+        specifier: workspace:*
+        version: link:../slot
+      '@glob-ui/spinner':
+        specifier: workspace:*
+        version: link:../spinner
+      '@glob-ui/utils':
+        specifier: workspace:*
+        version: link:../utils
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
+      react:
+        specifier: ^19
+        version: 19.2.4
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.15)(supports-color@7.2.0)(typescript@5.9.3)
+
+  packages/card:
+    dependencies:
+      '@glob-ui/utils':
+        specifier: workspace:*
+        version: link:../utils
       react:
         specifier: ^19
         version: 19.2.4
@@ -187,6 +360,53 @@ importers:
         specifier: ^8.5.1
         version: 8.5.1(jiti@2.7.0)(postcss@8.5.15)(supports-color@7.2.0)(typescript@5.9.3)
 
+  packages/dialog:
+    dependencies:
+      '@glob-ui/hooks':
+        specifier: workspace:*
+        version: link:../hooks
+      '@glob-ui/slot':
+        specifier: workspace:*
+        version: link:../slot
+      '@glob-ui/utils':
+        specifier: workspace:*
+        version: link:../utils
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
+      react:
+        specifier: ^19
+        version: 19.2.4
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.15)(supports-color@7.2.0)(typescript@5.9.3)
+
+  packages/dropdown-menu:
+    dependencies:
+      '@glob-ui/hooks':
+        specifier: workspace:*
+        version: link:../hooks
+      '@glob-ui/slot':
+        specifier: workspace:*
+        version: link:../slot
+      '@glob-ui/utils':
+        specifier: workspace:*
+        version: link:../utils
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
+      react:
+        specifier: ^19
+        version: 19.2.4
+      react-dom:
+        specifier: ^19
+        version: 19.2.4(react@19.2.4)
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.15)(supports-color@7.2.0)(typescript@5.9.3)
+
   packages/field:
     dependencies:
       '@glob-ui/label':
@@ -198,6 +418,22 @@ importers:
       react:
         specifier: ^19
         version: 19.2.4
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.15)(supports-color@7.2.0)(typescript@5.9.3)
+
+  packages/hooks:
+    dependencies:
+      '@floating-ui/react-dom':
+        specifier: ^2.1.9
+        version: 2.1.9(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      react:
+        specifier: ^19
+        version: 19.2.4
+      react-dom:
+        specifier: ^19
+        version: 19.2.4(react@19.2.4)
     devDependencies:
       tsup:
         specifier: ^8.5.1
@@ -237,6 +473,12 @@ importers:
 
   packages/multi-select:
     dependencies:
+      '@glob-ui/hooks':
+        specifier: workspace:*
+        version: link:../hooks
+      '@glob-ui/slot':
+        specifier: workspace:*
+        version: link:../slot
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -253,12 +495,37 @@ importers:
 
   packages/phone-input:
     dependencies:
+      '@glob-ui/hooks':
+        specifier: workspace:*
+        version: link:../hooks
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
+      react:
+        specifier: ^19
+        version: 19.2.4
+      react-dom:
+        specifier: ^19
+        version: 19.2.4(react@19.2.4)
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.15)(supports-color@7.2.0)(typescript@5.9.3)
+
+  packages/popover:
+    dependencies:
+      '@glob-ui/hooks':
+        specifier: workspace:*
+        version: link:../hooks
+      '@glob-ui/slot':
+        specifier: workspace:*
+        version: link:../slot
+      '@glob-ui/utils':
+        specifier: workspace:*
+        version: link:../utils
       react:
         specifier: ^19
         version: 19.2.4
@@ -288,6 +555,9 @@ importers:
 
   packages/segmented:
     dependencies:
+      '@glob-ui/hooks':
+        specifier: workspace:*
+        version: link:../hooks
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -301,6 +571,12 @@ importers:
 
   packages/select:
     dependencies:
+      '@glob-ui/hooks':
+        specifier: workspace:*
+        version: link:../hooks
+      '@glob-ui/slot':
+        specifier: workspace:*
+        version: link:../slot
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -318,10 +594,74 @@ importers:
         specifier: ^8.5.1
         version: 8.5.1(jiti@2.7.0)(postcss@8.5.15)(supports-color@7.2.0)(typescript@5.9.3)
 
+  packages/skeleton:
+    dependencies:
+      '@glob-ui/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react:
+        specifier: ^19
+        version: 19.2.4
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.15)(supports-color@7.2.0)(typescript@5.9.3)
+
+  packages/slot:
+    dependencies:
+      '@glob-ui/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react:
+        specifier: ^19
+        version: 19.2.4
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.15)(supports-color@7.2.0)(typescript@5.9.3)
+
+  packages/spinner:
+    dependencies:
+      '@glob-ui/utils':
+        specifier: workspace:*
+        version: link:../utils
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
+      react:
+        specifier: ^19
+        version: 19.2.4
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.15)(supports-color@7.2.0)(typescript@5.9.3)
+
   packages/styles: {}
 
   packages/switch:
     dependencies:
+      '@glob-ui/utils':
+        specifier: workspace:*
+        version: link:../utils
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
+      react:
+        specifier: ^19
+        version: 19.2.4
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.15)(supports-color@7.2.0)(typescript@5.9.3)
+
+  packages/tabs:
+    dependencies:
+      '@glob-ui/hooks':
+        specifier: workspace:*
+        version: link:../hooks
+      '@glob-ui/slot':
+        specifier: workspace:*
+        version: link:../slot
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -347,6 +687,47 @@ importers:
       react:
         specifier: ^19
         version: 19.2.4
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.15)(supports-color@7.2.0)(typescript@5.9.3)
+
+  packages/toast:
+    dependencies:
+      '@glob-ui/alert':
+        specifier: workspace:*
+        version: link:../alert
+      '@glob-ui/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react:
+        specifier: ^19
+        version: 19.2.4
+      react-dom:
+        specifier: ^19
+        version: 19.2.4(react@19.2.4)
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.15)(supports-color@7.2.0)(typescript@5.9.3)
+
+  packages/tooltip:
+    dependencies:
+      '@glob-ui/hooks':
+        specifier: workspace:*
+        version: link:../hooks
+      '@glob-ui/slot':
+        specifier: workspace:*
+        version: link:../slot
+      '@glob-ui/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react:
+        specifier: ^19
+        version: 19.2.4
+      react-dom:
+        specifier: ^19
+        version: 19.2.4(react@19.2.4)
     devDependencies:
       tsup:
         specifier: ^8.5.1
@@ -641,6 +1022,21 @@ packages:
     resolution: {integrity: sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
+  '@floating-ui/core@1.8.0':
+    resolution: {integrity: sha512-0CIZ5itps/8x7BG8dEIhs53BvCUH2PCoogtakwRTut+Arm58sJooJ0AuZhLw2HJYIR5cMLNPBSS728sPho2khQ==}
+
+  '@floating-ui/dom@1.8.0':
+    resolution: {integrity: sha512-yXSrzeHZBTZadLOlfyhCkJHNeLJnHRnRInwdZ40L7ZiaAtrBwoYlsDrX3v5zB1Utk7CLfzcOVnVVWoXEky7Ceg==}
+
+  '@floating-ui/react-dom@2.1.9':
+    resolution: {integrity: sha512-JDjEFGCpImxDCA7JJKviA0M9+RtmJdj0m/NVU5IMgBK+AmZouAQQ7/+2GLH0GXXY0YMw9oXPB8hKdbPYg5QLYg==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+
+  '@floating-ui/utils@0.2.12':
+    resolution: {integrity: sha512-HpCo8tmWzLVad5s2d19EhAz5zqrrQ6s69qd6moPMQvkOuSwDT1YgRfWSVuc4ennqrgv3OHppiOGMQ7oC13yIww==}
+
   '@humanfs/core@0.19.2':
     resolution: {integrity: sha512-UhXNm+CFMWcbChXywFwkmhqjs3PRCmcSa/hfBgLIb7oQ5HNb1wS0icWsGtSAUNgefHeI+eBrA8I1fxmbHsGdvA==}
     engines: {node: '>=18.18.0'}
@@ -924,66 +1320,79 @@ packages:
     resolution: {integrity: sha512-n1GJHPOvpIfhi3TmrCeh6S6URt9BFCt0KQE3qvexyGCTAKpR4Lg+eWvNZEqu7epxwus/8ElT3hacYEucm49SZg==}
     cpu: [arm]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-arm-musleabihf@4.62.2':
     resolution: {integrity: sha512-JqgflS8wEB+UXV/vS1RpRbifGBeN4D5lz8D8oOFbFZw4vedvdOgCFAjfBmIMdW3yL10XpQQ0Ambepw6MXrhOnA==}
     cpu: [arm]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-linux-arm64-gnu@4.62.2':
     resolution: {integrity: sha512-wnFJkogWvN4jm/hQRF2UBaeUmk20j5+DmHvoyWii2b8HJDyvz1MF2OU/6ynXt2KR63rbZLWkFpoytpdc/yBuSA==}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-arm64-musl@4.62.2':
     resolution: {integrity: sha512-HVu2bp0zhvJ8xHEV9+UUs7S90VadmBSY3LcIMvozbPo4AuMGDWlz3ymHLHZPX4hR67TKTt8Qp5PJ5RBg/i+RMQ==}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-linux-loong64-gnu@4.62.2':
     resolution: {integrity: sha512-mQqqAV8QaoSgr9I2fKDLY2BAVvmKjWoGiu/cSYQonsLvtqwEn1E4QYfnCOcp5zoEqNhsDYin1s6jx/VJmrxlZg==}
     cpu: [loong64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-loong64-musl@4.62.2':
     resolution: {integrity: sha512-IxKLoxCQ2IWi6bT2akyDUBGsOImDKB+sPp4EsTmwFQ/fMwpCKm8uLSSgP/Kx/QYUgKis6SEZ5/Nlhup0DIA0PQ==}
     cpu: [loong64]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-linux-ppc64-gnu@4.62.2':
     resolution: {integrity: sha512-Mk5ha2RQSgyFfmYYLkBpPnUk8D8FriBxesO1u9O75X0mHgXL1UQcH5Itl2lurWL2tj0RxV9b9tJgipac0hRY9A==}
     cpu: [ppc64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-ppc64-musl@4.62.2':
     resolution: {integrity: sha512-CjvEnqJL/0/TQ3TXX3OPIJ/kmBellrWd4heXUmHeJlTnmwjKpSJzoehLaL6Xk0ZnMHBu9dZuFADNOrtjF4v+2w==}
     cpu: [ppc64]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-linux-riscv64-gnu@4.62.2':
     resolution: {integrity: sha512-1SiZbzwdkaDURsew/tSOrooKiYy7EQGT6m8ufavAi9NEyQb/6VuIxFXAL1fqa4iZe3g4NbNk4P7J32z2tw5Mgg==}
     cpu: [riscv64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-riscv64-musl@4.62.2':
     resolution: {integrity: sha512-nQts12zJ3NQRoE6uYljOH89v7szzLDvG2JD/vsX+vGXU8w/At1GowTZ5/7qeFQ8m7L55rpR8Okugnuo5bgjy2Q==}
     cpu: [riscv64]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-linux-s390x-gnu@4.62.2':
     resolution: {integrity: sha512-E9/ll019jhPIJgpzfZoIkBGhcz+kKNgVWYRY0zr9srBdPPFVpvOKW8VaJKUbeK+eZXyQF9ltME+Kk6affeaPgg==}
     cpu: [s390x]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-x64-gnu@4.62.2':
     resolution: {integrity: sha512-5BqxR/pshjey51iliyzTD5Xi3EN0aLmQ2lZ3lvefVV9c82BvrLo2/6OT55iifpWBufs6kdwWbuOKS841DrmK9A==}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-x64-musl@4.62.2':
     resolution: {integrity: sha512-uNN83XxQrRAh/w0/pmAfibcwyb6YWt4gP+dpnQKPVJshAloQ785ii8CT8ZCIxkGg9opVsvAlGhFitSm6D1Jjpg==}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-openbsd-x64@4.62.2':
     resolution: {integrity: sha512-srjEIxSH3LRnJN6THczDHWQplqEMFiAJrTab0msUryh9kwNpkICf3Ea6q6MN/2cZwRFUNx5w+h6Hpi4QuHS6Zg==}
@@ -2945,6 +3354,23 @@ snapshots:
     dependencies:
       '@eslint/core': 0.17.0
       levn: 0.4.1
+
+  '@floating-ui/core@1.8.0':
+    dependencies:
+      '@floating-ui/utils': 0.2.12
+
+  '@floating-ui/dom@1.8.0':
+    dependencies:
+      '@floating-ui/core': 1.8.0
+      '@floating-ui/utils': 0.2.12
+
+  '@floating-ui/react-dom@2.1.9(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+    dependencies:
+      '@floating-ui/dom': 1.8.0
+      react: 19.2.4
+      react-dom: 19.2.4(react@19.2.4)
+
+  '@floating-ui/utils@0.2.12': {}
 
   '@humanfs/core@0.19.2':
     dependencies:

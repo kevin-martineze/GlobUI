@@ -1,13 +1,15 @@
 import { forwardRef } from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@glob-ui/utils"
+import { Spinner } from "@glob-ui/spinner"
+import { Slot } from "@glob-ui/slot"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 rounded-glob-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center gap-2 rounded-glob-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50",
   {
     variants: {
       variant: {
-        primary: "bg-glob-primary text-white hover:bg-glob-primary-hover",
+        primary: "bg-glob-primary text-glob-primary-foreground hover:bg-glob-primary-hover",
         secondary: "bg-glob-text text-glob-surface hover:opacity-80",
         ghost: "text-glob-text hover:bg-glob-surface-hover",
         outline: "border border-glob-border text-glob-text hover:bg-glob-surface-hover",
@@ -30,19 +32,52 @@ const buttonVariants = cva(
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
+  /** Render the single child (e.g. an <a>) with the button's styles and props instead of a <button>. */
   asChild?: boolean
+  /**
+   * Shows a spinner over the content, disables the button and sets aria-busy. Width stays the same.
+   * With asChild only aria-busy/aria-disabled are set: the child is rendered as is.
+   */
+  loading?: boolean
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
-    // TODO: implement Slot (asChild should merge props into the child element, not swap to a span)
-    const Comp = asChild ? "span" : "button"
+  ({ className, variant, size, asChild = false, loading = false, disabled, children, ...props }, ref) => {
+    if (asChild) {
+      // Links and other elements have no disabled attribute; aria-disabled carries the state and style.
+      return (
+        <Slot
+          className={cn(buttonVariants({ variant, size, className }))}
+          ref={ref}
+          aria-disabled={disabled || loading || undefined}
+          aria-busy={loading || undefined}
+          {...props}
+        >
+          {children}
+        </Slot>
+      )
+    }
+
     return (
-      <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
+      <button
+        className={cn(buttonVariants({ variant, size, className }), loading && "relative")}
         ref={ref}
+        disabled={disabled || loading}
+        aria-busy={loading || undefined}
         {...props}
-      />
+      >
+        {loading ? (
+          <>
+            {/* opacity-0 (not invisible) keeps the width and keeps the label in the accessible name. */}
+            <span className="inline-flex items-center gap-2 opacity-0">{children}</span>
+            <span className="absolute inset-0 flex items-center justify-center">
+              <Spinner size={size === "lg" ? "md" : "sm"} />
+            </span>
+          </>
+        ) : (
+          children
+        )}
+      </button>
     )
   }
 )
