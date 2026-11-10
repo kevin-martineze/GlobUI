@@ -44,6 +44,8 @@ export default defineConfig({
     "@glob-ui/progress",
     "@glob-ui/slider",
     "@glob-ui/toggle",
+    "@glob-ui/combobox",
+    "@glob-ui/command",
     "@glob-ui/popover",
     "@glob-ui/tooltip",
     "@glob-ui/tabs",

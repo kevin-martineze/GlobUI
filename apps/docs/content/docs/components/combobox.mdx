@@ -1,0 +1,57 @@
+---
+title: "Combobox"
+description: "A text input with a filtered list: type to search, arrows to move, Enter to choose. The API mirrors Select."
+---
+
+<PackageInfo pkg="combobox" exports="Combobox" />
+
+<InstallTabs pkg="combobox" />
+
+## Preview
+
+<ComponentPreview name="combobox/default" />
+
+## Examples
+
+### Custom value
+
+`allowCustomValue` commits the typed text (Enter, or blur). The list shows a `Use "..."` row when nothing matches exactly.
+
+<ComponentPreview name="combobox/custom-value" />
+
+### Async search
+
+`filter={false}` with `inputValue` and `onInputChange`: you filter on the server. `loading` shows a spinner row.
+
+<ComponentPreview name="combobox/async" />
+
+### Descriptions and disabled options
+
+`description` adds a muted second line (searched too). A `disabled` option is shown but cannot be chosen.
+
+<ComponentPreview name="combobox/descriptions" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### ComboboxProps
+
+<ApiTable pkg="combobox" name="ComboboxProps" />
+
+### ComboboxOption
+
+<ApiTable pkg="combobox" name="ComboboxOption" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Typing | Opens the list and filters it. The first enabled match becomes active. |
+| ArrowDown, ArrowUp | Open the list, then move the active option. Disabled options are skipped. |
+| Alt+ArrowDown | Opens the list without moving. |
+| Enter | Chooses the active option. With `allowCustomValue`, commits the text when no option is active. |
+| Escape | Closes the list. A second Escape clears the text and the value. |
+| Tab, click outside | Closes the list. The field shows the selected label again unless the text was committed. |
+
+**ARIA.** The input is `role="combobox"` with `aria-expanded`, `aria-controls` and `aria-activedescendant`. The list is `role="listbox"`. Loading and empty states are announced in a live region. Name the field with a `Field` or `aria-label`.

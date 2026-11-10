@@ -1,0 +1,58 @@
+---
+title: "Command"
+description: "A command palette: a search field over grouped, filtered, keyboard-driven actions. Items are plain JSX, so icons and shortcuts are free."
+---
+
+<PackageInfo pkg="command" exports="Command, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem, CommandSeparator, CommandShortcut, CommandDialog" />
+
+<InstallTabs pkg="command" />
+
+## Preview
+
+<ComponentPreview name="command/default" />
+
+## Examples
+
+### Dialog with a shortcut
+
+`CommandDialog` opens with ⌘K (Ctrl+K off macOS) by default and closes after a selection. This example uses `shortcut="mod+j"` (⌘J), because ⌘K opens this site's search. `shortcut={false}` turns the shortcut off, and `closeOnSelect={false}` keeps it open.
+
+<ComponentPreview name="command/dialog" />
+
+### Async results
+
+`filter={false}` with your own `search` state: you decide what the list shows, and show a loading row while you wait.
+
+<ComponentPreview name="command/async" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### Command
+
+<ApiTable pkg="command" name="CommandProps" />
+
+### CommandItem
+
+<ApiTable pkg="command" name="CommandItemProps" />
+
+### CommandGroup
+
+<ApiTable pkg="command" name="CommandGroupProps" />
+
+### CommandDialog
+
+<ApiTable pkg="command" name="CommandDialogProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Typing | Filters the items. Groups and separators with nothing left to show are hidden. The first visible enabled item becomes active. |
+| ArrowDown, ArrowUp, Home, End | Move the active item. Disabled items are skipped. `loop` wraps at the ends. |
+| Enter | Selects the active item (calls `onSelect`). |
+| Mouse hover, click | Hover activates an item; click selects it. Focus stays in the search field. |
+| Escape (dialog) | Closes the dialog and returns focus to the element that opened it. |
+
+**ARIA.** The search field is `role="combobox"` with `aria-activedescendant`; the list is `role="listbox"`, items are `role="option"`, groups are `role="group"` named by their heading. `CommandDialog` is a modal named by a visually hidden title (its `label`). Put `CommandEmpty` outside `CommandList`.

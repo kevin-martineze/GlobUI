@@ -1,5 +1,5 @@
 // End-to-end test of the copy-code registry: serves the docs (dev server) with the registry generated
-// for this local address, installs six items into a fresh Next 16 app with the shadcn CLI in
+// for this local address, installs eight items into a fresh Next 16 app with the shadcn CLI in
 // non-interactive mode, then runs `next build` on that app.
 // Usage: node scripts/shadcn-e2e.mjs   (SMOKE_DIR overrides the work folder, PORT the docs port)
 import { spawn, spawnSync } from "node:child_process"
@@ -43,10 +43,11 @@ try {
   log("shadcn init: OK")
 
   // 3. Add items from the registry, non-interactively. alert-dialog pulls dialog and button as
-  // registry dependencies; progress needs the theme's keyframes.
-  const items = ["button", "dialog", "select", "toast", "alert-dialog", "progress"].map((n) => `${site}/r/${n}.json`)
+  // registry dependencies; progress needs the theme's keyframes; combobox and command
+  // need both utils files (cn and the text matching).
+  const items = ["button", "dialog", "select", "toast", "alert-dialog", "progress", "combobox", "command"].map((n) => `${site}/r/${n}.json`)
   sh("npx", ["--yes", "shadcn@4.23.0", "add", ...items, "--yes"], { cwd: app })
-  log("shadcn add button dialog select toast alert-dialog progress: OK")
+  log(`shadcn add ${items.length} items: OK`)
   const globals = readFileSync(path.join(app, "src/app/globals.css"), "utf8")
   if (!/@keyframes glob-indeterminate/.test(globals)) throw new Error("globals.css is missing @keyframes glob-indeterminate from the theme item")
   log("theme keyframes in globals.css: OK")
@@ -58,6 +59,8 @@ try {
 import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription } from "@/components/glob-ui/dialog"
 import { Select } from "@/components/glob-ui/select"
 import { Toaster } from "@/components/glob-ui/toast"
+import { Combobox } from "@/components/glob-ui/combobox"
+import { Command, CommandInput, CommandList, CommandItem, CommandEmpty } from "@/components/glob-ui/command"
 import { Progress } from "@/components/glob-ui/progress"
 import {
   AlertDialog,
@@ -84,6 +87,14 @@ export default function Home() {
         </DialogContent>
       </Dialog>
       <Select aria-label="Plain select" options={[{ value: "a", label: "Alpha" }]} defaultValue="a" />
+      <Combobox aria-label="Framework" options={[{ value: "next", label: "Next.js" }]} />
+      <Command>
+        <CommandInput placeholder="Search" />
+        <CommandList>
+          <CommandItem value="Canción">Canción</CommandItem>
+        </CommandList>
+        <CommandEmpty />
+      </Command>
       <Progress aria-label="Server progress" value={40} />
       <Progress aria-label="Loading" />
       <AlertDialog>

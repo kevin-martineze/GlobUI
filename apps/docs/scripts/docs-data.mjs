@@ -474,6 +474,49 @@ export const components = [
     ],
     aria: "Each toggle is an `aria-pressed` button. An icon-only toggle or item needs an `aria-label`, for example \"Bold\".",
   },
+  {
+    group: "Forms", slug: "combobox", title: "Combobox", pkg: "combobox", exports: "Combobox",
+    description: "A text input with a filtered list: type to search, arrows to move, Enter to choose. The API mirrors Select.",
+    main: "combobox/default",
+    examples: [
+      { title: "Custom value", name: "combobox/custom-value", text: "`allowCustomValue` commits the typed text (Enter, or blur). The list shows a `Use \"...\"` row when nothing matches exactly." },
+      { title: "Async search", name: "combobox/async", text: "`filter={false}` with `inputValue` and `onInputChange`: you filter on the server. `loading` shows a spinner row." },
+      { title: "Descriptions and disabled options", name: "combobox/descriptions", text: "`description` adds a muted second line (searched too). A `disabled` option is shown but cannot be chosen." },
+    ],
+    api: [{ name: "ComboboxProps" }, { name: "ComboboxOption", label: "ComboboxOption" }],
+    a11y: [
+      ["Typing", "Opens the list and filters it. The first enabled match becomes active."],
+      ["ArrowDown, ArrowUp", "Open the list, then move the active option. Disabled options are skipped."],
+      ["Alt+ArrowDown", "Opens the list without moving."],
+      ["Enter", "Chooses the active option. With `allowCustomValue`, commits the text when no option is active."],
+      ["Escape", "Closes the list. A second Escape clears the text and the value."],
+      ["Tab, click outside", "Closes the list. The field shows the selected label again unless the text was committed."],
+    ],
+    aria: "The input is `role=\"combobox\"` with `aria-expanded`, `aria-controls` and `aria-activedescendant`. The list is `role=\"listbox\"`. Loading and empty states are announced in a live region. Name the field with a `Field` or `aria-label`.",
+  },
+  {
+    group: "Overlays", slug: "command", title: "Command", pkg: "command", exports: "Command, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem, CommandSeparator, CommandShortcut, CommandDialog",
+    description: "A command palette: a search field over grouped, filtered, keyboard-driven actions. Items are plain JSX, so icons and shortcuts are free.",
+    main: "command/default",
+    examples: [
+      { title: "Dialog with a shortcut", name: "command/dialog", text: "`CommandDialog` opens with ⌘K (Ctrl+K off macOS) by default and closes after a selection. This example uses `shortcut=\"mod+j\"` (⌘J), because ⌘K opens this site's search. `shortcut={false}` turns the shortcut off, and `closeOnSelect={false}` keeps it open." },
+      { title: "Async results", name: "command/async", text: "`filter={false}` with your own `search` state: you decide what the list shows, and show a loading row while you wait." },
+    ],
+    api: [
+      { name: "CommandProps", label: "Command" },
+      { name: "CommandItemProps", label: "CommandItem" },
+      { name: "CommandGroupProps", label: "CommandGroup" },
+      { name: "CommandDialogProps", label: "CommandDialog" },
+    ],
+    a11y: [
+      ["Typing", "Filters the items. Groups and separators with nothing left to show are hidden. The first visible enabled item becomes active."],
+      ["ArrowDown, ArrowUp, Home, End", "Move the active item. Disabled items are skipped. `loop` wraps at the ends."],
+      ["Enter", "Selects the active item (calls `onSelect`)."],
+      ["Mouse hover, click", "Hover activates an item; click selects it. Focus stays in the search field."],
+      ["Escape (dialog)", "Closes the dialog and returns focus to the element that opened it."],
+    ],
+    aria: "The search field is `role=\"combobox\"` with `aria-activedescendant`; the list is `role=\"listbox\"`, items are `role=\"option\"`, groups are `role=\"group\"` named by their heading. `CommandDialog` is a modal named by a visually hidden title (its `label`). Put `CommandEmpty` outside `CommandList`.",
+  },
 ]
 
 export const utilities = [

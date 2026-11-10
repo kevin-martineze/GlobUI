@@ -241,6 +241,12 @@ importers:
       '@glob-ui/checkbox':
         specifier: workspace:*
         version: link:../../packages/checkbox
+      '@glob-ui/combobox':
+        specifier: workspace:*
+        version: link:../../packages/combobox
+      '@glob-ui/command':
+        specifier: workspace:*
+        version: link:../../packages/command
       '@glob-ui/dialog':
         specifier: workspace:*
         version: link:../../packages/dialog
@@ -449,6 +455,12 @@ importers:
       '@glob-ui/checkbox':
         specifier: workspace:*
         version: link:../checkbox
+      '@glob-ui/combobox':
+        specifier: workspace:*
+        version: link:../combobox
+      '@glob-ui/command':
+        specifier: workspace:*
+        version: link:../command
       '@glob-ui/dialog':
         specifier: workspace:*
         version: link:../dialog
@@ -613,6 +625,47 @@ importers:
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
+      react:
+        specifier: ^19
+        version: 19.2.4
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.32)(supports-color@7.2.0)(typescript@5.9.3)(yaml@2.9.1)
+
+  packages/combobox:
+    dependencies:
+      '@glob-ui/hooks':
+        specifier: workspace:*
+        version: link:../hooks
+      '@glob-ui/input':
+        specifier: workspace:*
+        version: link:../input
+      '@glob-ui/spinner':
+        specifier: workspace:*
+        version: link:../spinner
+      '@glob-ui/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react:
+        specifier: ^19
+        version: 19.2.4
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.32)(supports-color@7.2.0)(typescript@5.9.3)(yaml@2.9.1)
+
+  packages/command:
+    dependencies:
+      '@glob-ui/dialog':
+        specifier: workspace:*
+        version: link:../dialog
+      '@glob-ui/hooks':
+        specifier: workspace:*
+        version: link:../hooks
+      '@glob-ui/utils':
+        specifier: workspace:*
+        version: link:../utils
       react:
         specifier: ^19
         version: 19.2.4
