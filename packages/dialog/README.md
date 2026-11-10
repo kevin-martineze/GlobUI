@@ -1,6 +1,6 @@
 # @glob-ui/dialog
 
-A modal dialog on the native `<dialog>` element. Focus moves in, Escape closes it, and focus returns to the trigger.
+A modal dialog on the native `<dialog>` element. Focus moves in, Escape closes it, and focus returns to the trigger. Build your own modal on the same behaviour with `DialogContentBase`.
 
 ## Install
 

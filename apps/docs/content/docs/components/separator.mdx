@@ -1,0 +1,29 @@
+---
+title: "Separator"
+description: "A thin line that divides content, horizontal or vertical."
+---
+
+<PackageInfo pkg="separator" exports="Separator" />
+
+<InstallTabs pkg="separator" />
+
+## Preview
+
+<ComponentPreview name="separator/default" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### SeparatorProps
+
+<ApiTable pkg="separator" name="SeparatorProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Decorative (default) | `role="none"`: screen readers skip it. |
+| decorative={false} | `role="separator"` with `aria-orientation`: announced as a boundary between sections. |
+
+**ARIA.** Most separators are visual, so they are decorative by default. Set `decorative={false}` only when the line separates content that a screen reader user should hear as a change.

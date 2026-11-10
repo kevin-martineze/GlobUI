@@ -11,6 +11,7 @@ const buttonVariants = cva(
       variant: {
         primary: "bg-glob-primary text-glob-primary-foreground hover:bg-glob-primary-hover",
         secondary: "bg-glob-text text-glob-surface hover:opacity-80",
+        danger: "bg-glob-danger text-glob-surface hover:opacity-90",
         ghost: "text-glob-text hover:bg-glob-surface-hover",
         outline: "border border-glob-border text-glob-text hover:bg-glob-surface-hover",
         link: "text-glob-primary underline-offset-4 hover:underline",

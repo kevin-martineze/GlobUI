@@ -223,6 +223,9 @@ importers:
       '@glob-ui/alert':
         specifier: workspace:*
         version: link:../../packages/alert
+      '@glob-ui/alert-dialog':
+        specifier: workspace:*
+        version: link:../../packages/alert-dialog
       '@glob-ui/avatar':
         specifier: workspace:*
         version: link:../../packages/avatar
@@ -265,6 +268,9 @@ importers:
       '@glob-ui/popover':
         specifier: workspace:*
         version: link:../../packages/popover
+      '@glob-ui/progress':
+        specifier: workspace:*
+        version: link:../../packages/progress
       '@glob-ui/radio-group':
         specifier: workspace:*
         version: link:../../packages/radio-group
@@ -274,9 +280,18 @@ importers:
       '@glob-ui/select':
         specifier: workspace:*
         version: link:../../packages/select
+      '@glob-ui/separator':
+        specifier: workspace:*
+        version: link:../../packages/separator
+      '@glob-ui/sheet':
+        specifier: workspace:*
+        version: link:../../packages/sheet
       '@glob-ui/skeleton':
         specifier: workspace:*
         version: link:../../packages/skeleton
+      '@glob-ui/slider':
+        specifier: workspace:*
+        version: link:../../packages/slider
       '@glob-ui/slot':
         specifier: workspace:*
         version: link:../../packages/slot
@@ -298,6 +313,9 @@ importers:
       '@glob-ui/toast':
         specifier: workspace:*
         version: link:../../packages/toast
+      '@glob-ui/toggle':
+        specifier: workspace:*
+        version: link:../../packages/toggle
       '@glob-ui/tooltip':
         specifier: workspace:*
         version: link:../../packages/tooltip
@@ -383,6 +401,28 @@ importers:
         specifier: ^8.5.1
         version: 8.5.1(jiti@2.7.0)(postcss@8.5.32)(supports-color@7.2.0)(typescript@5.9.3)(yaml@2.9.1)
 
+  packages/alert-dialog:
+    dependencies:
+      '@glob-ui/button':
+        specifier: workspace:*
+        version: link:../button
+      '@glob-ui/dialog':
+        specifier: workspace:*
+        version: link:../dialog
+      '@glob-ui/utils':
+        specifier: workspace:*
+        version: link:../utils
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
+      react:
+        specifier: ^19
+        version: 19.2.4
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.32)(supports-color@7.2.0)(typescript@5.9.3)(yaml@2.9.1)
+
   packages/all:
     dependencies:
       '@glob-ui/accordion':
@@ -391,6 +431,9 @@ importers:
       '@glob-ui/alert':
         specifier: workspace:*
         version: link:../alert
+      '@glob-ui/alert-dialog':
+        specifier: workspace:*
+        version: link:../alert-dialog
       '@glob-ui/avatar':
         specifier: workspace:*
         version: link:../avatar
@@ -433,6 +476,9 @@ importers:
       '@glob-ui/popover':
         specifier: workspace:*
         version: link:../popover
+      '@glob-ui/progress':
+        specifier: workspace:*
+        version: link:../progress
       '@glob-ui/radio-group':
         specifier: workspace:*
         version: link:../radio-group
@@ -442,9 +488,18 @@ importers:
       '@glob-ui/select':
         specifier: workspace:*
         version: link:../select
+      '@glob-ui/separator':
+        specifier: workspace:*
+        version: link:../separator
+      '@glob-ui/sheet':
+        specifier: workspace:*
+        version: link:../sheet
       '@glob-ui/skeleton':
         specifier: workspace:*
         version: link:../skeleton
+      '@glob-ui/slider':
+        specifier: workspace:*
+        version: link:../slider
       '@glob-ui/slot':
         specifier: workspace:*
         version: link:../slot
@@ -463,6 +518,9 @@ importers:
       '@glob-ui/toast':
         specifier: workspace:*
         version: link:../toast
+      '@glob-ui/toggle':
+        specifier: workspace:*
+        version: link:../toggle
       '@glob-ui/tooltip':
         specifier: workspace:*
         version: link:../tooltip
@@ -740,6 +798,25 @@ importers:
         specifier: ^8.5.1
         version: 8.5.1(jiti@2.7.0)(postcss@8.5.32)(supports-color@7.2.0)(typescript@5.9.3)(yaml@2.9.1)
 
+  packages/progress:
+    dependencies:
+      '@glob-ui/utils':
+        specifier: workspace:*
+        version: link:../utils
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
+      react:
+        specifier: ^19
+        version: 19.2.4
+    devDependencies:
+      react-dom:
+        specifier: ^19
+        version: 19.2.4(react@19.2.4)
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.32)(supports-color@7.2.0)(typescript@5.9.3)(yaml@2.9.1)
+
   packages/radio-group:
     dependencies:
       '@glob-ui/utils':
@@ -797,11 +874,65 @@ importers:
         specifier: ^8.5.1
         version: 8.5.1(jiti@2.7.0)(postcss@8.5.32)(supports-color@7.2.0)(typescript@5.9.3)(yaml@2.9.1)
 
+  packages/separator:
+    dependencies:
+      '@glob-ui/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react:
+        specifier: ^19
+        version: 19.2.4
+    devDependencies:
+      react-dom:
+        specifier: ^19
+        version: 19.2.4(react@19.2.4)
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.32)(supports-color@7.2.0)(typescript@5.9.3)(yaml@2.9.1)
+
+  packages/sheet:
+    dependencies:
+      '@glob-ui/dialog':
+        specifier: workspace:*
+        version: link:../dialog
+      '@glob-ui/utils':
+        specifier: workspace:*
+        version: link:../utils
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
+      react:
+        specifier: ^19
+        version: 19.2.4
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.32)(supports-color@7.2.0)(typescript@5.9.3)(yaml@2.9.1)
+
   packages/skeleton:
     dependencies:
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
+      react:
+        specifier: ^19
+        version: 19.2.4
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.32)(supports-color@7.2.0)(typescript@5.9.3)(yaml@2.9.1)
+
+  packages/slider:
+    dependencies:
+      '@glob-ui/hooks':
+        specifier: workspace:*
+        version: link:../hooks
+      '@glob-ui/utils':
+        specifier: workspace:*
+        version: link:../utils
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
       react:
         specifier: ^19
         version: 19.2.4
@@ -909,6 +1040,25 @@ importers:
       react-dom:
         specifier: ^19
         version: 19.2.4(react@19.2.4)
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.32)(supports-color@7.2.0)(typescript@5.9.3)(yaml@2.9.1)
+
+  packages/toggle:
+    dependencies:
+      '@glob-ui/hooks':
+        specifier: workspace:*
+        version: link:../hooks
+      '@glob-ui/utils':
+        specifier: workspace:*
+        version: link:../utils
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
+      react:
+        specifier: ^19
+        version: 19.2.4
     devDependencies:
       tsup:
         specifier: ^8.5.1

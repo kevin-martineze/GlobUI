@@ -1,0 +1,44 @@
+---
+title: "Slider"
+description: "A range input with a visible fill. It is the native `<input type=\"range\">`, so keyboard, forms and screen readers work as usual."
+---
+
+<PackageInfo pkg="slider" exports="Slider, sliderVariants" />
+
+<InstallTabs pkg="slider" />
+
+## Preview
+
+<ComponentPreview name="slider/default" />
+
+## Examples
+
+### Steps
+
+`step` sets the increments. Arrow keys move one step; PageUp and PageDown move ten.
+
+<ComponentPreview name="slider/steps" />
+
+### Disabled
+
+`disabled` removes the slider from the tab order and dims it.
+
+<ComponentPreview name="slider/disabled" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### SliderProps
+
+<ApiTable pkg="slider" name="SliderProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Left, Right, Down, Up | Change the value by one step. |
+| Home, End | Go to `min` and `max`. |
+| PageUp, PageDown | Change the value by a larger amount. |
+
+**ARIA.** Name the slider with a `Label` or `Field` (the Field wires the label and description). Two-thumb ranges are not part of this package yet.

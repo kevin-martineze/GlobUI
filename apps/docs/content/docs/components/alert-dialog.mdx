@@ -1,0 +1,51 @@
+---
+title: "Alert dialog"
+description: "A modal that asks the user to confirm a decision. The backdrop does not close it; the user answers with Cancel or the action."
+---
+
+<PackageInfo pkg="alert-dialog" exports="AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction" />
+
+<InstallTabs pkg="alert-dialog" />
+
+## Preview
+
+<ComponentPreview name="alert-dialog/default" />
+
+## Examples
+
+### Async action
+
+Call `preventDefault()` in the action's `onClick` to keep the dialog open while work runs, then close it yourself with a controlled `open`.
+
+<ComponentPreview name="alert-dialog/async" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### AlertDialog
+
+<ApiTable pkg="alert-dialog" name="AlertDialogProps" />
+
+### AlertDialogContent
+
+<ApiTable pkg="alert-dialog" name="AlertDialogContentProps" />
+
+### AlertDialogCancel
+
+<ApiTable pkg="alert-dialog" name="AlertDialogCancelProps" />
+
+### AlertDialogAction
+
+<ApiTable pkg="alert-dialog" name="AlertDialogActionProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Focus on open | Starts on Cancel, the safe option. |
+| Escape | Closes the dialog, as the alertdialog pattern allows. Cancel is the same as Escape. |
+| Backdrop click | Does nothing. The user must choose an option. |
+| Tab, Shift+Tab | Cycle between Cancel and the action. |
+
+**ARIA.** Uses `role="alertdialog"`, named by `AlertDialogTitle` and described by `AlertDialogDescription`. Use it only for a decision that needs an answer; for anything else use Dialog. `variant="danger"` marks a destructive action.

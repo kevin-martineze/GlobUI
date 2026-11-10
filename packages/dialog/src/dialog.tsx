@@ -53,7 +53,7 @@ const DialogContext = createContext<DialogContextValue | null>(null)
 
 function useDialogContext(part: string) {
   const ctx = useContext(DialogContext)
-  if (!ctx) throw new Error(`${part} must be used inside Dialog`)
+  if (!ctx) throw new Error(`${part} must be used inside Dialog, Sheet or AlertDialog`)
   return ctx
 }
 
@@ -113,7 +113,7 @@ const DialogTrigger = forwardRef<HTMLButtonElement, DialogTriggerProps>(
 )
 DialogTrigger.displayName = "DialogTrigger"
 
-const dialogVariants = cva(
+export const dialogVariants = cva(
   [
     "m-auto max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] overflow-visible rounded-glob-lg border border-glob-border bg-glob-surface p-0 text-glob-text shadow-glob-md",
     // Enter/exit. @starting-style animates the entry; allow-discrete keeps display/overlay alive
@@ -138,18 +138,15 @@ const dialogVariants = cva(
   }
 )
 
-export interface DialogContentProps
-  extends React.DialogHTMLAttributes<HTMLDialogElement>,
-    VariantProps<typeof dialogVariants> {
-  /** Shows an X button in the top-right corner. */
-  showCloseButton?: boolean
-}
+export type DialogContentBaseProps = React.DialogHTMLAttributes<HTMLDialogElement>
 
-const DialogContent = forwardRef<HTMLDialogElement, DialogContentProps>(
-  (
-    { className, size, showCloseButton = true, children, onCancel, onClose, onPointerDown, onClick, ...props },
-    ref
-  ) => {
+/**
+ * The modal behaviour of Dialog with no styles and no layout: showModal, the shared scroll lock,
+ * Esc, backdrop click (see closeOnOutsideClick), focus return and aria-labelledby/describedby.
+ * Build your own modal on the same behaviour. Sheet and AlertDialog are built on it.
+ */
+const DialogContentBase = forwardRef<HTMLDialogElement, DialogContentBaseProps>(
+  ({ className, children, onCancel, onClose, onPointerDown, onClick, ...props }, ref) => {
     const ctx = useDialogContext("DialogContent")
     const { open, setOpen, titleId, descriptionId, closeOnOutsideClick } = ctx
     const innerRef = useRef<HTMLDialogElement>(null)
@@ -186,7 +183,7 @@ const DialogContent = forwardRef<HTMLDialogElement, DialogContentProps>(
       <dialog
         ref={mergedRef}
         id={ctx.contentId}
-        className={cn(dialogVariants({ size, className }))}
+        className={cn(className)}
         // Esc: keep React state as the source of truth (controlled dialogs may refuse to close).
         onCancel={(e) => {
           onCancel?.(e)
@@ -216,24 +213,57 @@ const DialogContent = forwardRef<HTMLDialogElement, DialogContentProps>(
         }}
         {...props}
       >
-        <div className="relative flex max-h-[calc(100dvh-2rem)] flex-col gap-4 overflow-y-auto p-6">
-          {children}
-          {showCloseButton && (
-            <button
-              type="button"
-              aria-label="Close"
-              onClick={() => setOpen(false)}
-              className="absolute right-4 top-4 inline-flex h-8 w-8 items-center justify-center rounded-glob-sm text-glob-text-secondary transition-colors hover:bg-glob-surface-hover hover:text-glob-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring"
-            >
-              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
-                <path d="M18 6L6 18M6 6l12 12" />
-              </svg>
-            </button>
-          )}
-        </div>
+        {children}
       </dialog>
     )
   }
+)
+DialogContentBase.displayName = "DialogContentBase"
+
+export type DialogCloseIconProps = React.ButtonHTMLAttributes<HTMLButtonElement>
+
+/** The X button in the top-right corner. Closes the surrounding Dialog, Sheet or AlertDialog. */
+const DialogCloseIcon = forwardRef<HTMLButtonElement, DialogCloseIconProps>(({ className, onClick, ...props }, ref) => {
+  const ctx = useDialogContext("DialogCloseIcon")
+  return (
+    <button
+      ref={ref}
+      type="button"
+      aria-label="Close"
+      onClick={(e) => {
+        onClick?.(e)
+        if (!e.defaultPrevented) ctx.setOpen(false)
+      }}
+      className={cn(
+        "absolute right-4 top-4 inline-flex h-8 w-8 items-center justify-center rounded-glob-sm text-glob-text-secondary transition-colors hover:bg-glob-surface-hover hover:text-glob-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring",
+        className
+      )}
+      {...props}
+    >
+      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
+        <path d="M18 6L6 18M6 6l12 12" />
+      </svg>
+    </button>
+  )
+})
+DialogCloseIcon.displayName = "DialogCloseIcon"
+
+export interface DialogContentProps
+  extends React.DialogHTMLAttributes<HTMLDialogElement>,
+    VariantProps<typeof dialogVariants> {
+  /** Shows an X button in the top-right corner. */
+  showCloseButton?: boolean
+}
+
+const DialogContent = forwardRef<HTMLDialogElement, DialogContentProps>(
+  ({ className, size, showCloseButton = true, children, ...props }, ref) => (
+    <DialogContentBase ref={ref} className={cn(dialogVariants({ size, className }))} {...props}>
+      <div className="relative flex max-h-[calc(100dvh-2rem)] flex-col gap-4 overflow-y-auto p-6">
+        {children}
+        {showCloseButton && <DialogCloseIcon />}
+      </div>
+    </DialogContentBase>
+  )
 )
 DialogContent.displayName = "DialogContent"
 
@@ -303,6 +333,8 @@ export {
   Dialog,
   DialogTrigger,
   DialogContent,
+  DialogContentBase,
+  DialogCloseIcon,
   DialogHeader,
   DialogTitle,
   DialogDescription,

@@ -6,7 +6,7 @@ export const components = [
     description: "A button that can render as a link, and shows a loading state without changing its width.",
     main: "button/default",
     examples: [
-      { title: "Variants", name: "button/variants", text: "`primary`, `secondary`, `outline` and `ghost`." },
+      { title: "Variants", name: "button/variants", text: "`primary`, `secondary`, `outline` and `ghost`. Use `danger` for destructive actions (delete, remove)." },
       { title: "Sizes", name: "button/sizes", text: "`sm`, `md` (default) and `lg`." },
       { title: "States", name: "button/states", text: "`disabled` is not focusable. `loading` keeps the label width, sets `aria-busy` and disables the button." },
       { title: "As a link", name: "button/as-child", text: "`asChild` renders the single child (here an `<a>`) with the button styles and props." },
@@ -170,7 +170,7 @@ export const components = [
   },
   {
     group: "Overlays", slug: "dialog", title: "Dialog", pkg: "dialog", exports: "Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose",
-    description: "A modal dialog on the native `<dialog>` element. Focus moves in, Escape closes it, and focus returns to the trigger.",
+    description: "A modal dialog on the native `<dialog>` element. Focus moves in, Escape closes it, and focus returns to the trigger. Build your own modal on the same behaviour with `DialogContentBase`.",
     main: "dialog/default",
     examples: [
       { title: "Controlled", name: "dialog/controlled", text: "Controlled with `open` and `onOpenChange`. `closeOnOutsideClick={false}` keeps the dialog open on a backdrop click." },
@@ -366,6 +366,113 @@ export const components = [
       ["Closed content", "Inert and hidden from assistive technology."],
     ],
     aria: "Each header is a button with `aria-expanded` and `aria-controls`. Each panel is `role=\"region\"` labelled by its header. `headingLevel` sets the heading tag around the button.",
+  },
+  {
+    group: "Overlays", slug: "sheet", title: "Sheet", pkg: "sheet", exports: "Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetFooter, SheetClose",
+    description: "A panel that slides in from an edge. It is a Dialog: same focus handling, Escape, backdrop and scroll lock.",
+    main: "sheet/default",
+    examples: [
+      { title: "Sides", name: "sheet/sides", text: "`side` is `right` (default), `left`, `top` or `bottom`. Top and bottom are full width." },
+      { title: "Sizes", name: "sheet/sizes", text: "`size` is `sm`, `md` (default) or `lg` for `left` and `right`. It does not apply to `top` and `bottom`." },
+    ],
+    api: [
+      { name: "SheetProps", label: "Sheet" },
+      { name: "SheetTriggerProps", label: "SheetTrigger" },
+      { name: "SheetContentProps", label: "SheetContent" },
+      { name: "SheetCloseProps", label: "SheetClose" },
+    ],
+    a11y: [
+      ["Enter, Space on the trigger", "Opens the sheet. Focus moves inside."],
+      ["Tab, Shift+Tab", "Cycle inside the sheet. The page behind is inert."],
+      ["Escape", "Closes the sheet and returns focus to the trigger."],
+      ["Backdrop click", "Closes the sheet."],
+    ],
+    aria: "The sheet is a modal dialog named by `SheetTitle` and described by `SheetDescription`. Always include a title. Build your own modal on the same behaviour with `DialogContentBase` from `@glob-ui/dialog`.",
+  },
+  {
+    group: "Overlays", slug: "alert-dialog", title: "Alert dialog", pkg: "alert-dialog", exports: "AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction",
+    description: "A modal that asks the user to confirm a decision. The backdrop does not close it; the user answers with Cancel or the action.",
+    main: "alert-dialog/default",
+    examples: [
+      { title: "Async action", name: "alert-dialog/async", text: "Call `preventDefault()` in the action's `onClick` to keep the dialog open while work runs, then close it yourself with a controlled `open`." },
+    ],
+    api: [
+      { name: "AlertDialogProps", label: "AlertDialog" },
+      { name: "AlertDialogContentProps", label: "AlertDialogContent" },
+      { name: "AlertDialogCancelProps", label: "AlertDialogCancel" },
+      { name: "AlertDialogActionProps", label: "AlertDialogAction" },
+    ],
+    a11y: [
+      ["Focus on open", "Starts on Cancel, the safe option."],
+      ["Escape", "Closes the dialog, as the alertdialog pattern allows. Cancel is the same as Escape."],
+      ["Backdrop click", "Does nothing. The user must choose an option."],
+      ["Tab, Shift+Tab", "Cycle between Cancel and the action."],
+    ],
+    aria: "Uses `role=\"alertdialog\"`, named by `AlertDialogTitle` and described by `AlertDialogDescription`. Use it only for a decision that needs an answer; for anything else use Dialog. `variant=\"danger\"` marks a destructive action.",
+  },
+  {
+    group: "Display", slug: "separator", title: "Separator", pkg: "separator", exports: "Separator",
+    description: "A thin line that divides content, horizontal or vertical.",
+    main: "separator/default",
+    examples: [],
+    api: [{ name: "SeparatorProps" }],
+    a11y: [
+      ["Decorative (default)", "`role=\"none\"`: screen readers skip it."],
+      ["decorative={false}", "`role=\"separator\"` with `aria-orientation`: announced as a boundary between sections."],
+    ],
+    aria: "Most separators are visual, so they are decorative by default. Set `decorative={false}` only when the line separates content that a screen reader user should hear as a change.",
+  },
+  {
+    group: "Feedback", slug: "progress", title: "Progress", pkg: "progress", exports: "Progress, progressVariants",
+    description: "A progress bar, determinate with a value or indeterminate while the length is unknown.",
+    main: "progress/default",
+    examples: [
+      { title: "Tones", name: "progress/tones", text: "`tone` is `primary` (default), `success`, `warning` or `danger`. `size` is `sm`, `md` (default) or `lg`." },
+      { title: "Indeterminate", name: "progress/indeterminate", text: "Pass `value={null}` (or leave it out) when the length is unknown. The bar slides; with reduced motion it pulses." },
+    ],
+    api: [{ name: "ProgressProps" }],
+    a11y: [
+      ["Screen readers", "`role=\"progressbar\"` with `aria-valuemin`, `aria-valuemax`, `aria-valuenow` and `aria-valuetext`."],
+      ["Indeterminate", "No `aria-valuenow`: the state is announced without a number."],
+      ["Values", "Clamped to 0 through `max`."],
+    ],
+    aria: "A progress bar needs a name: pass `aria-label`, or `aria-labelledby` pointing at a visible label. `getValueLabel` changes the text read instead of the number, for example \"2 of 5 files\".",
+  },
+  {
+    group: "Forms", slug: "slider", title: "Slider", pkg: "slider", exports: "Slider, sliderVariants",
+    description: "A range input with a visible fill. It is the native `<input type=\"range\">`, so keyboard, forms and screen readers work as usual.",
+    main: "slider/default",
+    examples: [
+      { title: "Steps", name: "slider/steps", text: "`step` sets the increments. Arrow keys move one step; PageUp and PageDown move ten." },
+      { title: "Disabled", name: "slider/disabled", text: "`disabled` removes the slider from the tab order and dims it." },
+    ],
+    api: [{ name: "SliderProps" }],
+    a11y: [
+      ["Left, Right, Down, Up", "Change the value by one step."],
+      ["Home, End", "Go to `min` and `max`."],
+      ["PageUp, PageDown", "Change the value by a larger amount."],
+    ],
+    aria: "Name the slider with a `Label` or `Field` (the Field wires the label and description). Two-thumb ranges are not part of this package yet.",
+  },
+  {
+    group: "Forms", slug: "toggle", title: "Toggle", pkg: "toggle", exports: "Toggle, ToggleGroup, ToggleGroupItem, toggleVariants",
+    description: "A button with a pressed state, and a group of them with single or multiple selection.",
+    main: "toggle/default",
+    examples: [
+      { title: "Single selection", name: "toggle/group-single", text: "`type=\"single\"`: pressing an item releases the others. Pressing it again clears the choice." },
+      { title: "Multiple selection", name: "toggle/group-multiple", text: "`type=\"multiple\"`: several items stay pressed. `value` is a list of values." },
+    ],
+    api: [
+      { name: "ToggleProps", label: "Toggle" },
+      { name: "ToggleGroupProps", label: "ToggleGroup" },
+      { name: "ToggleGroupItemProps", label: "ToggleGroupItem" },
+    ],
+    a11y: [
+      ["Enter, Space", "Presses or releases the toggle. `aria-pressed` changes."],
+      ["Tab", "Moves into the group once, then out. Only one item is in the tab order."],
+      ["Arrow keys", "Move focus between items in the group. Disabled items are skipped."],
+    ],
+    aria: "Each toggle is an `aria-pressed` button. An icon-only toggle or item needs an `aria-label`, for example \"Bold\".",
   },
 ]
 

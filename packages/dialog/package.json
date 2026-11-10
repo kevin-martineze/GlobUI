@@ -38,7 +38,7 @@
   "devDependencies": {
     "tsup": "^8.5.1"
   },
-  "description": "A modal dialog on the native `<dialog>` element. Focus moves in, Escape closes it, and focus returns to the trigger.",
+  "description": "A modal dialog on the native `<dialog>` element. Focus moves in, Escape closes it, and focus returns to the trigger. Build your own modal on the same behaviour with `DialogContentBase`.",
   "keywords": [
     "react",
     "glob-ui",

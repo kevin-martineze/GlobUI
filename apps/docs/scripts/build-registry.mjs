@@ -99,6 +99,18 @@ const themeVars = {
   ),
 }
 
+// Animations from the @theme block (--animate-glob-*) and their @keyframes, so copied components
+// that use them (Progress) animate the same way as the npm packages.
+for (const m of tokensCss.matchAll(/--animate-(glob-[a-z-]+):\s*([^;]+);/g)) themeVars.theme[`animate-${m[1]}`] = m[2].trim()
+const keyframesCss = {}
+for (const m of tokensCss.matchAll(/@keyframes\s+(glob-[a-z-]+)\s*\{([\s\S]*?\})\s*\}/g)) {
+  const frames = {}
+  for (const f of m[2].matchAll(/([^{}]+?)\s*\{([^}]*)\}/g)) {
+    frames[f[1].trim()] = Object.fromEntries([...f[2].matchAll(/([a-z-]+):\s*([^;]+);/g)].map((d) => [d[1], d[2].trim()]))
+  }
+  keyframesCss[`@keyframes ${m[1]}`] = frames
+}
+
 const items = []
 
 items.push({
@@ -108,6 +120,7 @@ items.push({
   title: "GlobUI theme",
   description: "GlobUI design tokens (--glob-*) in light and dark, and the Tailwind colour, radius and shadow utilities.",
   cssVars: themeVars,
+  ...(Object.keys(keyframesCss).length > 0 ? { css: keyframesCss } : {}),
 })
 
 // utils, hooks: internal items, shared by the components.

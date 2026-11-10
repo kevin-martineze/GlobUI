@@ -1,0 +1,52 @@
+---
+title: "Toggle"
+description: "A button with a pressed state, and a group of them with single or multiple selection."
+---
+
+<PackageInfo pkg="toggle" exports="Toggle, ToggleGroup, ToggleGroupItem, toggleVariants" />
+
+<InstallTabs pkg="toggle" />
+
+## Preview
+
+<ComponentPreview name="toggle/default" />
+
+## Examples
+
+### Single selection
+
+`type="single"`: pressing an item releases the others. Pressing it again clears the choice.
+
+<ComponentPreview name="toggle/group-single" />
+
+### Multiple selection
+
+`type="multiple"`: several items stay pressed. `value` is a list of values.
+
+<ComponentPreview name="toggle/group-multiple" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### Toggle
+
+<ApiTable pkg="toggle" name="ToggleProps" />
+
+### ToggleGroup
+
+<ApiTable pkg="toggle" name="ToggleGroupProps" />
+
+### ToggleGroupItem
+
+<ApiTable pkg="toggle" name="ToggleGroupItemProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Enter, Space | Presses or releases the toggle. `aria-pressed` changes. |
+| Tab | Moves into the group once, then out. Only one item is in the tab order. |
+| Arrow keys | Move focus between items in the group. Disabled items are skipped. |
+
+**ARIA.** Each toggle is an `aria-pressed` button. An icon-only toggle or item needs an `aria-label`, for example "Bold".
