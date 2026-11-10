@@ -1,0 +1,226 @@
+{
+  "layouts": {
+    "AppShellLayout": {
+      "title": "AppShellLayout",
+      "pkg": "app-shell-layout",
+      "scrollMode": "app",
+      "areas": [
+        "header header",
+        "sidebar main"
+      ],
+      "columns": "minmax(0, 0.34fr) minmax(0, 1fr)",
+      "rows": "auto minmax(0, 1fr)",
+      "slots": [
+        {
+          "name": "header",
+          "element": "<header>",
+          "scroll": "fixed",
+          "note": "Brand, the navigation trigger on small screens, account.",
+          "prop": "header"
+        },
+        {
+          "name": "sidebar",
+          "element": "<nav>",
+          "scroll": "fixed",
+          "note": "Navigation. Hidden below `lg`, where it moves into a Sheet. Its list is the only scroller inside it.",
+          "prop": "sidebar"
+        },
+        {
+          "name": "main",
+          "element": "<main>",
+          "scroll": "scroll",
+          "note": "The page. The one region that scrolls. It has no padding: put a `PageLayout` in it.",
+          "prop": "children"
+        }
+      ]
+    },
+    "PageLayout": {
+      "title": "PageLayout",
+      "pkg": "page-layout",
+      "scrollMode": "inside",
+      "areas": [
+        "header aside",
+        "content aside"
+      ],
+      "columns": "minmax(0, 1fr) minmax(0, 0.42fr)",
+      "rows": "auto minmax(0, 1fr)",
+      "slots": [
+        {
+          "name": "header",
+          "element": "<div>",
+          "scroll": "fixed",
+          "note": "Sticks to the top of the nearest scroll region while the content scrolls.",
+          "prop": "header"
+        },
+        {
+          "name": "content",
+          "element": "<div>",
+          "scroll": "scroll",
+          "note": "Moves with the scroll region that contains the page.",
+          "prop": "children"
+        },
+        {
+          "name": "aside",
+          "element": "<aside>",
+          "scroll": "fixed",
+          "note": "Sticks from `lg`. Below `lg` it stacks under the content.",
+          "prop": "aside"
+        }
+      ]
+    },
+    "StackedLayout": {
+      "title": "StackedLayout",
+      "pkg": "stacked-layout",
+      "scrollMode": "document",
+      "areas": [
+        "header",
+        "main",
+        "footer"
+      ],
+      "columns": "minmax(0, 1fr)",
+      "rows": "auto minmax(0, 1fr) auto",
+      "slots": [
+        {
+          "name": "header",
+          "element": "<header>",
+          "scroll": "fixed",
+          "note": "Sticks to the top of the document.",
+          "prop": "header"
+        },
+        {
+          "name": "main",
+          "element": "<main>",
+          "scroll": "scroll",
+          "note": "The page, in document flow. The document is the scroller. It has no padding: put a `PageLayout` in it.",
+          "prop": "children"
+        },
+        {
+          "name": "footer",
+          "element": "<footer>",
+          "scroll": "fixed",
+          "note": "At the end of the document. It is not a scroller.",
+          "prop": "footer"
+        }
+      ]
+    }
+  },
+  "templates": {
+    "dashboard": {
+      "slug": "dashboard",
+      "title": "Dashboard template",
+      "name": "dashboard-template",
+      "layout": "AppShellLayout",
+      "fills": [
+        {
+          "layout": "AppShellLayout",
+          "slot": "header",
+          "kind": "fixed",
+          "what": "brand, user menu, navigation trigger on small screens"
+        },
+        {
+          "layout": "AppShellLayout",
+          "slot": "sidebar",
+          "kind": "fixed",
+          "what": "navigation, with aria-current on the active link"
+        },
+        {
+          "layout": "AppShellLayout",
+          "slot": "sidebar",
+          "kind": "prop",
+          "what": "activeHref"
+        },
+        {
+          "layout": "AppShellLayout",
+          "slot": "main",
+          "kind": "fixed",
+          "what": "a PageLayout (page structure)",
+          "nested": {
+            "layout": "PageLayout",
+            "fills": [
+              {
+                "slot": "header",
+                "kind": "prop",
+                "what": "title, description, breadcrumbs, actions"
+              },
+              {
+                "slot": "content",
+                "kind": "prop",
+                "what": "children"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "list-page": {
+      "slug": "list-page",
+      "title": "List page template",
+      "name": "list-page-template",
+      "layout": "PageLayout",
+      "fills": [
+        {
+          "layout": "PageLayout",
+          "slot": "header",
+          "kind": "fixed",
+          "what": "header layout"
+        },
+        {
+          "layout": "PageLayout",
+          "slot": "header",
+          "kind": "prop",
+          "what": "title, description, actions"
+        },
+        {
+          "layout": "PageLayout",
+          "slot": "content",
+          "kind": "fixed",
+          "what": "DataTable: sorting, search, pagination, empty and loading states"
+        },
+        {
+          "layout": "PageLayout",
+          "slot": "content",
+          "kind": "prop",
+          "what": "columns, data, filters, state"
+        }
+      ]
+    },
+    "detail-page": {
+      "slug": "detail-page",
+      "title": "Detail page template",
+      "name": "detail-page-template",
+      "layout": "PageLayout",
+      "fills": [
+        {
+          "layout": "PageLayout",
+          "slot": "header",
+          "kind": "fixed",
+          "what": "breadcrumbs, back link"
+        },
+        {
+          "layout": "PageLayout",
+          "slot": "header",
+          "kind": "prop",
+          "what": "title, actions"
+        },
+        {
+          "layout": "PageLayout",
+          "slot": "content",
+          "kind": "prop",
+          "what": "children"
+        },
+        {
+          "layout": "PageLayout",
+          "slot": "aside",
+          "kind": "fixed",
+          "what": "card frame"
+        },
+        {
+          "layout": "PageLayout",
+          "slot": "aside",
+          "kind": "prop",
+          "what": "facts about the item"
+        }
+      ]
+    }
+  }
+}

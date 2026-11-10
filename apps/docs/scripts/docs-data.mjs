@@ -672,6 +672,7 @@ export const layouts = [
   {
     slug: "app-shell", title: "AppShellLayout", pkg: "app-shell-layout", exports: "AppShellLayout",
     scrollMode: "app",
+    grid: { areas: ["header header", "sidebar main"], columns: "minmax(0, 0.34fr) minmax(0, 1fr)", rows: "auto minmax(0, 1fr)", props: { header: "header", sidebar: "sidebar", main: "children" } },
     description: "An app shell for dashboards and admin apps. The viewport never scrolls: the header and sidebar stay in place, and only the main region scrolls.",
     demo: "layouts/app-shell/default",
     slots: [
@@ -700,6 +701,7 @@ Put \`LayoutNavTrigger\` in the \`header\`. It hides itself at \`lg\` and up, wh
   {
     slug: "page", title: "PageLayout", pkg: "page-layout", exports: "PageLayout, PageHeader",
     scrollMode: "inside",
+    grid: { areas: ["header aside", "content aside"], columns: "minmax(0, 1fr) minmax(0, 0.42fr)", rows: "auto minmax(0, 1fr)", props: { header: "header", content: "children", aside: "aside" } },
     description: "A page inside a layout: a sticky header, the content, and an optional aside that sticks from `lg`. It owns the page padding, sets no height and no overflow, and it is server-safe.",
     demo: "layouts/page/default",
     slots: [
@@ -725,6 +727,7 @@ The shells (\`AppShellLayout\`, \`StackedLayout\`) give their \`main\` region no
   {
     slug: "stacked", title: "StackedLayout", pkg: "stacked-layout", exports: "StackedLayout",
     scrollMode: "document",
+    grid: { areas: ["header", "main", "footer"], columns: "minmax(0, 1fr)", rows: "auto minmax(0, 1fr) auto", props: { header: "header", main: "children", footer: "footer" } },
     description: "A document layout: the page scrolls as a document, and the header stays visible. Use it for simple apps, portals and docs.",
     demo: "layouts/stacked/default",
     slots: [
@@ -750,6 +753,21 @@ export const templates = [
     demo: "templates/dashboard/default",
     fixed: ["Brand", "Navigation with `aria-current`", "User menu", "Navigation trigger on small screens"],
     props: ["`title`, `description`, `breadcrumbs`, `actions`", "`activeHref`: the current page", "`children`: the page content"],
+    fills: [
+      { layout: "AppShellLayout", slot: "header", kind: "fixed", what: "brand, user menu, navigation trigger on small screens" },
+      { layout: "AppShellLayout", slot: "sidebar", kind: "fixed", what: "navigation, with aria-current on the active link" },
+      { layout: "AppShellLayout", slot: "sidebar", kind: "prop", what: "activeHref" },
+      {
+        layout: "AppShellLayout", slot: "main", kind: "fixed", what: "a PageLayout (page structure)",
+        nested: {
+          layout: "PageLayout",
+          fills: [
+            { slot: "header", kind: "prop", what: "title, description, breadcrumbs, actions" },
+            { slot: "content", kind: "prop", what: "children" },
+          ],
+        },
+      },
+    ],
     controls: [
       { name: "title", label: "Title", type: "text", value: "Orders" },
       { name: "description", label: "Description", type: "text", value: "Every order this month." },
@@ -763,6 +781,12 @@ export const templates = [
     demo: "templates/list-page/default",
     fixed: ["Header layout", "Toolbar position for filters", "Empty state", "Loading state"],
     props: ["`title`, `description`, `actions`, `filters`", "`columns`, `data`, `loading`, `manual`, `rowCount`", "`state` and the change handlers"],
+    fills: [
+      { layout: "PageLayout", slot: "header", kind: "fixed", what: "header layout" },
+      { layout: "PageLayout", slot: "header", kind: "prop", what: "title, description, actions" },
+      { layout: "PageLayout", slot: "content", kind: "fixed", what: "DataTable: sorting, search, pagination, empty and loading states" },
+      { layout: "PageLayout", slot: "content", kind: "prop", what: "columns, data, filters, state" },
+    ],
     controls: [
       { name: "title", label: "Title", type: "text", value: "Invoices" },
       { name: "loading", label: "Loading", type: "boolean", value: false },
@@ -776,6 +800,13 @@ export const templates = [
     demo: "templates/detail-page/default",
     fixed: ["Header layout with breadcrumbs and back link", "Aside card frame"],
     props: ["`title`, `breadcrumbs`, `backHref`, `actions`", "`children`", "`aside`: the facts in the card"],
+    fills: [
+      { layout: "PageLayout", slot: "header", kind: "fixed", what: "breadcrumbs, back link" },
+      { layout: "PageLayout", slot: "header", kind: "prop", what: "title, actions" },
+      { layout: "PageLayout", slot: "content", kind: "prop", what: "children" },
+      { layout: "PageLayout", slot: "aside", kind: "fixed", what: "card frame" },
+      { layout: "PageLayout", slot: "aside", kind: "prop", what: "facts about the item" },
+    ],
     controls: [
       { name: "title", label: "Title", type: "text", value: "Order 1042" },
       { name: "aside", label: "Show aside", type: "boolean", value: true },

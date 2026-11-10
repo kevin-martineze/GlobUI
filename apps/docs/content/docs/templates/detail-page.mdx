@@ -7,9 +7,23 @@ A template renders `PageLayout`, fixes part of it, and exposes props for the res
 
 ## Preview
 
-**Anatomy** colours the fixed parts, the props, and the scroll region. The panel changes the props live; the fixed parts stay.
+**Anatomy** names each slot and what fills it. The panel changes the props live; the fixed parts stay.
 
 <LayoutPreview slug="templates/detail-page/default" kind="template" controls={"[{\"name\":\"title\",\"label\":\"Title\",\"type\":\"text\",\"value\":\"Order 1042\"},{\"name\":\"aside\",\"label\":\"Show aside\",\"type\":\"boolean\",\"value\":true}]"} codeFiles="../../templates/detail-page/detail-page-template.tsx,examples/templates/detail-page/default.tsx" />
+
+## How it uses the layout
+
+The template fills these slots of `PageLayout`. Each slot is fixed by the template, filled by a prop, or not used.
+
+<SlotMap layout="PageLayout" template="detail-page" />
+
+| Layout slot | Filled with | Fixed or prop |
+| --- | --- | --- |
+| `PageLayout.header` | breadcrumbs, back link | fixed |
+| `PageLayout.header` | title, actions | prop |
+| `PageLayout.content` | children | prop |
+| `PageLayout.aside` | card frame | fixed |
+| `PageLayout.aside` | facts about the item | prop |
 
 ## Fixed and variable
 

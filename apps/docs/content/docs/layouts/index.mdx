@@ -46,6 +46,10 @@ Every layout renders its landmarks (`header`, `nav`, `main`, `aside`, `footer`),
 
 A template renders a layout and fixes what does not change between pages. The page sets only what varies.
 
+The dashboard shows the three layers: the layout is the grid, the template fills its slots, and the page fills the template's props.
+
+<SlotMap layout="AppShellLayout" template="dashboard" />
+
 ```tsx
 // templates/dashboard/dashboard-template.tsx (yours to edit)
 export function DashboardTemplate({ title, actions, activeHref, children }: DashboardTemplateProps) {
