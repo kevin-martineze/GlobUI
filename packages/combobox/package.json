@@ -1,0 +1,70 @@
+{
+  "name": "@glob-ui/combobox",
+  "version": "0.1.0",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch --no-clean"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/",
+    "LICENSE",
+    "README.md"
+  ],
+  "peerDependencies": {
+    "react": "^19"
+  },
+  "dependencies": {
+    "@glob-ui/hooks": "workspace:*",
+    "@glob-ui/input": "workspace:*",
+    "@glob-ui/spinner": "workspace:*",
+    "@glob-ui/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.1"
+  },
+  "description": "A text input with a filtered list: type to search, arrows to move, Enter to choose. The API mirrors Select.",
+  "keywords": [
+    "react",
+    "glob-ui",
+    "components",
+    "accessible",
+    "tailwind",
+    "combobox"
+  ],
+  "license": "MIT",
+  "author": "Kevin Martínez E",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevin-martineze/GlobUI.git",
+    "directory": "packages/combobox"
+  },
+  "homepage": "https://github.com/kevin-martineze/GlobUI#readme",
+  "bugs": {
+    "url": "https://github.com/kevin-martineze/GlobUI/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "sideEffects": false,
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18.18"
+  }
+}

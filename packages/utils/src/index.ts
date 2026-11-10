@@ -15,3 +15,4 @@ const twMerge = extendTailwindMerge({
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
+export { normalizeText, matchesSearch } from "./text"

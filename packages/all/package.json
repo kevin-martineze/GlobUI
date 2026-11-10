@@ -39,6 +39,8 @@
     "@glob-ui/button": "workspace:*",
     "@glob-ui/card": "workspace:*",
     "@glob-ui/checkbox": "workspace:*",
+    "@glob-ui/combobox": "workspace:*",
+    "@glob-ui/command": "workspace:*",
     "@glob-ui/dialog": "workspace:*",
     "@glob-ui/dropdown-menu": "workspace:*",
     "@glob-ui/field": "workspace:*",
