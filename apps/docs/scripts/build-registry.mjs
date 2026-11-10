@@ -133,11 +133,12 @@ items.push({
   description: "cn(): class names merged with the GlobUI radius and shadow scales.",
   dependencies: npmDependencies(readJson(path.join(utilsDir, "package.json"))),
   registryDependencies: [`${SITE}/r/glob-ui-theme.json`],
+  // index.ts is the entry (cn and the re-exports); every other file keeps its name next to it.
   files: sourceFiles(path.join(utilsDir, "src")).map((file) => ({
     path: path.relative(repo, file),
     type: "registry:lib",
-    target: "@lib/glob-ui/utils.ts",
-    content: rewriteImports(readFileSync(file, "utf8")),
+    target: path.basename(file) === "index.ts" ? "@lib/glob-ui/utils.ts" : `@lib/glob-ui/${path.basename(file)}`,
+    content: rewriteImports(readFileSync(file, "utf8")).replace(/from "\.\/([a-z-]+)"/g, 'from "@/lib/glob-ui/$1"'),
   })),
 })
 
