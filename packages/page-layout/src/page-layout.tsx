@@ -3,6 +3,7 @@ import { cva } from "class-variance-authority"
 import { cn } from "@glob-ui/utils"
 
 // Server-safe: no hooks and no client code. It lives inside a scroll region (an app shell's main, or a stacked layout).
+// It owns the page padding: the shells' main regions have none, so a page never adds a wrapper with spacing.
 
 const contentVariants = cva("flex min-w-0 flex-1 flex-col gap-6", {
   variants: {
@@ -15,7 +16,7 @@ const contentVariants = cva("flex min-w-0 flex-1 flex-col gap-6", {
   defaultVariants: { width: "default" },
 })
 
-const asideVariants = cva("flex min-w-0 shrink-0 flex-col gap-4 lg:sticky lg:top-0 lg:self-start", {
+const asideVariants = cva("flex min-w-0 shrink-0 flex-col gap-4 lg:sticky lg:top-6 lg:self-start", {
   variants: {
     asideWidth: {
       sm: "lg:w-64",
@@ -38,27 +39,28 @@ export interface PageLayoutProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /**
- * A page inside a layout. It is not a scroll owner: it sets no height and no overflow. The header
- * is sticky, and the aside is sticky from `lg`.
+ * A page inside a layout. It is not a scroll owner: it sets no height and no overflow. It owns the
+ * page padding. The header is sticky, and the aside is sticky from `lg`.
  */
 export const PageLayout = forwardRef<HTMLDivElement, PageLayoutProps>(
   ({ header, children, aside, asideWidth, width, className, ...props }, ref) => (
     <div
       ref={ref}
       data-layout="page"
-      className={cn("mx-auto flex w-full min-w-0 flex-col gap-6 lg:flex-row lg:items-start lg:gap-8", className)}
+      className={cn("mx-auto flex w-full min-w-0 flex-col gap-6 px-4 pb-6 md:px-6 md:pb-8 lg:flex-row lg:items-start lg:gap-8", !header && "pt-4 md:pt-6", className)}
       {...props}
     >
       <div data-slot="content" data-scroll="scroll" className={contentVariants({ width })}>
         {header ? (
-          <div data-slot="header" data-scroll="fixed" className="sticky top-0 z-10 -mx-4 bg-glob-surface px-4 py-3 md:-mx-6 md:px-6">
+          <div data-slot="header" data-scroll="fixed" className="sticky top-0 z-10 bg-glob-surface pb-3 pt-4 md:pt-6">
             {header}
           </div>
         ) : null}
         {children}
       </div>
       {aside ? (
-        <aside data-slot="aside" data-scroll="fixed" className={asideVariants({ asideWidth })}>
+        // With a header, the aside starts level with the header text (the header has top padding).
+        <aside data-slot="aside" data-scroll="fixed" className={cn(asideVariants({ asideWidth }), header && "lg:mt-6")}>
           {aside}
         </aside>
       ) : null}

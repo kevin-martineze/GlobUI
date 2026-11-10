@@ -1,10 +1,12 @@
+import { AppShellLayout } from "@glob-ui/app-shell-layout"
 import { PageLayout, PageHeader } from "@glob-ui/page-layout"
 
 const ITEMS = Array.from({ length: 16 }, (_, i) => `Item ${i + 1}`)
 
+// PageLayout lives inside a shell's main region. The page passes content only: no wrapper, padding or height.
 export default function PageDefault() {
   return (
-    <div className="p-4 md:p-6">
+    <AppShellLayout header={<strong>Acme</strong>}>
       <PageLayout
         header={<PageHeader title="Invoices" description="Open and paid, this month" actions={<span className="rounded-md border px-3 py-1.5 text-sm">New invoice</span>} />}
         aside={
@@ -22,6 +24,6 @@ export default function PageDefault() {
           ))}
         </ul>
       </PageLayout>
-    </div>
+    </AppShellLayout>
   )
 }

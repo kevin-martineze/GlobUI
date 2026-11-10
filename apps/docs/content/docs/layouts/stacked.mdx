@@ -15,10 +15,14 @@ Each slot declares its scroll behaviour. Switch on **Anatomy** to see them, and 
 
 ## Slots
 
+The layout is a grid of slots. A prop fills each slot, and each slot is fixed or scroll.
+
+<SlotMap layout="StackedLayout" />
+
 | Slot | Element | Scroll | Notes |
 | --- | --- | --- | --- |
 | `header` | `<header>` | fixed | Sticks to the top of the document. |
-| `main` | `<main>` | scroll | The page, in document flow. The document is the scroller. |
+| `main` | `<main>` | scroll | The page, in document flow. The document is the scroller. It has no padding: put a `PageLayout` in it. |
 | `footer` | `<footer>` | fixed | At the end of the document. It is not a scroller. |
 
 - **fixed**: the slot never scrolls. It stays in place, or sticks.

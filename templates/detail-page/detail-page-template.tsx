@@ -24,8 +24,8 @@ export function DetailPageTemplate({ title, breadcrumbs, backHref, actions, chil
     <PageLayout
       aside={
         aside ? (
-          <div data-template-part="prop">
-            <Card data-template-part="fixed">
+          <div data-template-part="prop" data-template-name="facts about the item">
+            <Card data-template-part="fixed" data-template-name="card frame">
               <CardHeader>
                 <CardTitle as="h2">{ASIDE_TITLE}</CardTitle>
               </CardHeader>
@@ -35,9 +35,9 @@ export function DetailPageTemplate({ title, breadcrumbs, backHref, actions, chil
         ) : undefined
       }
       header={
-        <div data-template-part="fixed">
+        <div data-template-part="fixed" data-template-name="breadcrumbs, back link">
           <PageHeader
-            title={<span data-template-part="prop">{title}</span>}
+            title={<span data-template-part="prop" data-template-name="title">{title}</span>}
             breadcrumbs={
               backHref || breadcrumbs ? (
                 <div className="flex flex-col gap-1">
@@ -50,12 +50,12 @@ export function DetailPageTemplate({ title, breadcrumbs, backHref, actions, chil
                 </div>
               ) : undefined
             }
-            actions={actions ? <div data-template-part="prop">{actions}</div> : undefined}
+            actions={actions ? <div data-template-part="prop" data-template-name="actions">{actions}</div> : undefined}
           />
         </div>
       }
     >
-      <div data-template-part="prop" className="flex min-w-0 flex-col gap-6">
+      <div data-template-part="prop" data-template-name="children" className="flex min-w-0 flex-col gap-6">
         {children}
       </div>
     </PageLayout>

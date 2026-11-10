@@ -7,9 +7,25 @@ A template renders `AppShellLayout`, fixes part of it, and exposes props for the
 
 ## Preview
 
-**Anatomy** colours the fixed parts, the props, and the scroll region. The panel changes the props live; the fixed parts stay.
+**Anatomy** names each slot and what fills it. The panel changes the props live; the fixed parts stay.
 
 <LayoutPreview slug="templates/dashboard/default" kind="template" controls={"[{\"name\":\"title\",\"label\":\"Title\",\"type\":\"text\",\"value\":\"Orders\"},{\"name\":\"description\",\"label\":\"Description\",\"type\":\"text\",\"value\":\"Every order this month.\"},{\"name\":\"activeHref\",\"label\":\"Current page\",\"type\":\"select\",\"value\":\"/orders\",\"options\":[\"/\",\"/orders\",\"/customers\",\"/settings\"]}]"} codeFiles="../../templates/dashboard/dashboard-template.tsx,examples/templates/dashboard/default.tsx" />
+
+## How it uses the layout
+
+The template fills these slots of `AppShellLayout`. Each slot is fixed by the template, filled by a prop, or not used.
+
+<SlotMap layout="AppShellLayout" template="dashboard" />
+
+| Layout slot | Filled with | Fixed or prop |
+| --- | --- | --- |
+| `AppShellLayout.header` | brand, user menu, navigation trigger on small screens | fixed |
+| `AppShellLayout.sidebar` | navigation, with aria-current on the active link | fixed |
+| `AppShellLayout.sidebar` | activeHref | prop |
+| `AppShellLayout.main` | a PageLayout (page structure) | fixed |
+| `PageLayout.header` (in `AppShellLayout.main`) | title, description, breadcrumbs, actions | prop |
+| `PageLayout.content` (in `AppShellLayout.main`) | children | prop |
+| `PageLayout.aside` (in `AppShellLayout.main`) | not used | – |
 
 ## Fixed and variable
 

@@ -21,6 +21,7 @@ const LEGEND_LAYOUT = [
   { label: "scroll", color: "var(--glob-success)" },
 ]
 const LEGEND_TEMPLATE = [
+  { label: "layout slot", color: "var(--glob-primary)" },
   { label: "fixed by the template", color: "var(--glob-info)" },
   { label: "prop (variable)", color: "var(--glob-warning)" },
   { label: "scroll region", color: "var(--glob-success)" },

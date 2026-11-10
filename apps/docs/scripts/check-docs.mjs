@@ -1,6 +1,7 @@
 // Verifies the docs site after `next build`:
 //  1. every public package has a page (components/<pkg>.mdx, or utilities for slot and utils);
-//  2. every internal link in the prerendered HTML points at a page that exists.
+//  2. every internal link in the prerendered HTML points at a page that exists;
+//  3. layout and template demos, and the templates, leave structure and scroll to the layouts.
 // Exits 1 with the list of problems.
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs"
 import path from "node:path"
@@ -77,6 +78,40 @@ if (!existsSync(out)) {
   }
   check(out)
   console.log(`links: ${links} internal links checked against ${pages.size} pages`)
+}
+
+// 3. Pages and templates never decide structure or scroll (the layouts methodology). The layout and template demos
+// are pages, and a template's own markup sits above a page: none of them sets heights, overflow or sticky, and
+// none wraps its content in an element with page padding or a height (PageLayout owns the padding).
+const FORBIDDEN_CLASS = /(^|\s)(?:[a-z]+:)*(h-screen|h-dvh|h-svh|min-h-screen|min-h-dvh|overflow-(?:auto|scroll|hidden|y-auto|x-auto|y-scroll)|sticky|fixed)(?=\s|$)|100d?vh/
+const WRAPPER_SPACING = /(^|\s)(?:[a-z]+:)*(?:p|px|py|pt|pb|h|min-h|max-h)-/
+const methodologyFiles = [
+  ...["layouts", "templates"].flatMap((dir) => tsxFiles(path.join(docs, "examples", dir))),
+  ...tsxFiles(path.resolve(docs, "../../templates")).filter((f) => !/\.test\./.test(f)),
+]
+for (const file of methodologyFiles) {
+  const source = readFileSync(file, "utf8")
+  const rel = path.relative(path.resolve(docs, "../.."), file)
+  for (const m of source.matchAll(/className=(?:"([^"]*)"|\{`([^`]*)`\})/g)) {
+    const classes = m[1] ?? m[2]
+    if (FORBIDDEN_CLASS.test(classes)) problems.push(`${rel}: "${classes}" decides height, overflow or sticky; that belongs to a layout`)
+  }
+  // The outer element of each exported page or template (inner helpers, like an empty state, may have spacing).
+  for (const m of source.matchAll(/export (?:default )?function \w+[^]*?return \(\s*<(\w+)(?:\s+className="([^"]*)")?/g)) {
+    if (m[1] === "div" && m[2] && WRAPPER_SPACING.test(m[2])) {
+      problems.push(`${rel}: the page wraps its content in <div className="${m[2]}">; put the content in a layout slot (PageLayout owns the padding)`)
+    }
+  }
+}
+console.log(`methodology: ${methodologyFiles.length} demo and template files checked`)
+
+function tsxFiles(dir) {
+  if (!existsSync(dir)) return []
+  return readdirSync(dir).flatMap((entry) => {
+    const full = path.join(dir, entry)
+    if (statSync(full).isDirectory()) return entry === "node_modules" ? [] : tsxFiles(full)
+    return entry.endsWith(".tsx") ? [full] : []
+  })
 }
 
 if (problems.length) {

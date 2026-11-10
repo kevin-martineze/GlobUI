@@ -4,6 +4,7 @@ import { Tabs, Tab } from "fumadocs-ui/components/tabs"
 import { Callout } from "fumadocs-ui/components/callout"
 import { ComponentPreview } from "@/components/component-preview"
 import { LayoutPreview } from "@/components/layout-preview"
+import { SlotMap } from "@/components/slot-map"
 import { PackageInfo } from "@/components/package-info"
 import { ApiTable } from "@/components/api-table"
 import { TokenTable } from "@/components/token-table"
@@ -17,6 +18,7 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     Callout,
     ComponentPreview,
     LayoutPreview,
+    SlotMap,
     PackageInfo,
     ApiTable,
     TokenTable,

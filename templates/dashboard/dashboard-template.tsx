@@ -38,7 +38,7 @@ export function DashboardTemplate({ title, description, breadcrumbs, actions, ac
       header={
         <>
           <LayoutNavTrigger />
-          <div data-template-part="fixed" className="flex min-w-0 flex-1 items-center justify-between gap-4">
+          <div data-template-part="fixed" data-template-name="BRAND, user menu" className="flex min-w-0 flex-1 items-center justify-between gap-4">
             <a href={BRAND.href} className="truncate font-semibold text-glob-text no-underline">
               {BRAND.name}
             </a>
@@ -58,7 +58,7 @@ export function DashboardTemplate({ title, description, breadcrumbs, actions, ac
         </>
       }
       sidebar={
-        <div data-template-part="fixed" className="flex flex-col gap-1">
+        <div data-template-part="fixed" data-template-name="navigation" className="flex flex-col gap-1">
           {NAV_ITEMS.map((item) => (
             <a
               key={item.href}
@@ -74,12 +74,12 @@ export function DashboardTemplate({ title, description, breadcrumbs, actions, ac
     >
       <PageLayout
         header={
-          <div data-template-part="prop">
+          <div data-template-part="prop" data-template-name="title, description, breadcrumbs, actions">
             <PageHeader title={title} description={description} breadcrumbs={breadcrumbs} actions={actions} />
           </div>
         }
       >
-        <div data-template-part="prop" className="flex min-w-0 flex-col gap-6">
+        <div data-template-part="prop" data-template-name="children" className="flex min-w-0 flex-col gap-6">
           {children}
         </div>
       </PageLayout>

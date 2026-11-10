@@ -56,14 +56,14 @@ export function ListPageTemplate<TData extends RowData>({
   return (
     <PageLayout
       header={
-        <div data-template-part="fixed">
-          <div data-template-part="prop">
+        <div data-template-part="fixed" data-template-name="header layout">
+          <div data-template-part="prop" data-template-name="title, description, actions">
             <PageHeader title={title} description={description} actions={actions} />
           </div>
         </div>
       }
     >
-      <div data-template-part="prop" className="min-w-0">
+      <div data-template-part="prop" data-template-name="columns, data, filters, state" className="min-w-0">
         <DataTable
           aria-label={ariaLabel}
           columns={columns}

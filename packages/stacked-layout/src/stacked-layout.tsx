@@ -7,7 +7,7 @@ import { LayoutSlot, LayoutNavProvider, LayoutMobileNav, SkipLink } from "@glob-
 export interface StackedLayoutProps extends React.HTMLAttributes<HTMLDivElement> {
   /** The top navigation. It stays visible while the document scrolls. */
   header?: React.ReactNode
-  /** The page. It is in document flow, so the document scrolls. */
+  /** The page. It is in document flow, so the document scrolls. It has no padding: put a `PageLayout` in it. */
   children?: React.ReactNode
   footer?: React.ReactNode
   /** The navigation for small screens. When set, `LayoutNavTrigger` in the header opens it in a Sheet. */
@@ -44,7 +44,7 @@ export const StackedLayout = forwardRef<HTMLDivElement, StackedLayoutProps>(
             </LayoutSlot>
           ) : null}
           {/* The document is the scroller here, so main sets no overflow: it is a plain flow element. */}
-          <main id={mainId} tabIndex={-1} data-slot="main" data-scroll="scroll" className="flex-1 p-4 focus:outline-none md:p-6">
+          <main id={mainId} tabIndex={-1} data-slot="main" data-scroll="scroll" className="flex-1 focus:outline-none">
             {children}
           </main>
           {footer ? (

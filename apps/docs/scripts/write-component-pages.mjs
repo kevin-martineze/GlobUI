@@ -40,7 +40,76 @@ const pageMdx = (p) => {
   return lines.join("\n")
 }
 
-// Layout pages: anatomy preview, slot table, props, accessibility. The methodology page (layouts/index.mdx) is written by hand.
+// The layout data (grids, slots, fills) is checked first, then written to lib/layout-data.json for the SlotMap
+// component. The slot tables and the maps are generated from the same data, so they cannot disagree.
+const slotNames = (l) => l.slots.map(([name]) => name)
+function checkLayoutData() {
+  const problems = []
+  const byTitle = new Map(layouts.map((l) => [l.title, l]))
+  for (const l of layouts) {
+    const areaNames = new Set(l.grid.areas.join(" ").split(/\s+/))
+    const names = new Set(slotNames(l))
+    for (const area of areaNames) if (!names.has(area)) problems.push(`${l.title}: grid area "${area}" has no slot`)
+    for (const name of names) {
+      if (!areaNames.has(name)) problems.push(`${l.title}: slot "${name}" is not placed in the grid`)
+      if (!(name in l.grid.props)) problems.push(`${l.title}: slot "${name}" has no prop in grid.props`)
+    }
+  }
+  const checkFill = (layoutTitle, fill, where) => {
+    const layout = byTitle.get(layoutTitle)
+    if (!layout) {
+      problems.push(`${where}: unknown layout ${layoutTitle}`)
+      return
+    }
+    if (!slotNames(layout).includes(fill.slot)) problems.push(`${where}: ${layoutTitle} has no slot "${fill.slot}"`)
+    if (!["fixed", "prop"].includes(fill.kind)) problems.push(`${where}: kind must be fixed or prop, not "${fill.kind}"`)
+    if (!fill.what) problems.push(`${where}: "what" is empty for ${layoutTitle}.${fill.slot}`)
+  }
+  for (const t of templates) {
+    const where = `template ${t.slug}`
+    if (!byTitle.has(t.layout)) problems.push(`${where}: unknown layout ${t.layout}`)
+    for (const fill of t.fills) {
+      if (fill.layout !== t.layout) problems.push(`${where}: fill for ${fill.layout}, but the template uses ${t.layout}`)
+      checkFill(fill.layout, fill, where)
+      if (fill.nested) {
+        if (!byTitle.has(fill.nested.layout)) problems.push(`${where}: unknown nested layout ${fill.nested.layout}`)
+        for (const inner of fill.nested.fills) checkFill(fill.nested.layout, inner, `${where} (in ${fill.nested.layout})`)
+      }
+    }
+  }
+  if (problems.length) throw new Error("layout data:\n  " + problems.join("\n  "))
+}
+
+function layoutDataJson() {
+  return {
+    layouts: Object.fromEntries(
+      layouts.map((l) => [
+        l.title,
+        {
+          title: l.title,
+          pkg: l.pkg,
+          scrollMode: l.scrollMode,
+          areas: l.grid.areas,
+          columns: l.grid.columns,
+          rows: l.grid.rows,
+          slots: l.slots.map(([name, element, scroll, note]) => ({
+            name,
+            element: element.replace(/`/g, ""),
+            scroll,
+            note,
+            prop: l.grid.props[name],
+          })),
+        },
+      ])
+    ),
+    templates: Object.fromEntries(
+      templates.map((t) => [t.slug, { slug: t.slug, title: t.title, name: t.name, layout: t.layout, fills: t.fills }])
+    ),
+  }
+}
+
+// Layout pages: anatomy preview, the slot map, the slot table, props, accessibility. The methodology page
+// (layouts/index.mdx) is written by hand.
 const layoutPageMdx = (l) => {
   const lines = []
   lines.push("---", `title: ${JSON.stringify(l.title)}`, `description: ${JSON.stringify(l.description)}`, "---", "")
@@ -48,7 +117,9 @@ const layoutPageMdx = (l) => {
   lines.push(`<InstallTabs pkg="${l.pkg}" />`, "")
   lines.push("## Anatomy", "", "Each slot declares its scroll behaviour. Switch on **Anatomy** to see them, and **Fill with content** to see which region scrolls.", "")
   lines.push(`<LayoutPreview slug="${l.demo}" kind="layout" codeFiles="examples/${l.demo}.tsx" />`, "")
-  lines.push("## Slots", "", "| Slot | Element | Scroll | Notes |", "| --- | --- | --- | --- |")
+  lines.push("## Slots", "", "The layout is a grid of slots. A prop fills each slot, and each slot is fixed or scroll.", "")
+  lines.push(`<SlotMap layout="${l.title}" />`, "")
+  lines.push("| Slot | Element | Scroll | Notes |", "| --- | --- | --- | --- |")
   for (const [slot, el, scroll, note] of l.slots) lines.push(`| \`${slot}\` | ${el} | ${scroll} | ${note} |`)
   lines.push("")
   lines.push(`- **fixed**: the slot never scrolls. It stays in place, or sticks.`, `- **scroll**: the one region that scrolls for this part of the screen.`, "")
@@ -61,13 +132,30 @@ const layoutPageMdx = (l) => {
   return lines.join("\n")
 }
 
-// Template pages: preview with the three-colour anatomy and the props panel, the fixed parts, and the code in two files.
+// Template pages: the preview with its anatomy and props panel, how the template uses its layout (the slot map and a
+// table generated from the fills), the fixed parts, and the code in two files.
 const templatePageMdx = (t) => {
+  const layout = byTitle(t.layout)
   const lines = []
   lines.push("---", `title: ${JSON.stringify(t.title)}`, `description: ${JSON.stringify(t.description)}`, "---", "")
   lines.push(`A template renders \`${t.layout}\`, fixes part of it, and exposes props for the rest. It is copy-code: the file is yours to edit.`, "")
-  lines.push("## Preview", "", "**Anatomy** colours the fixed parts, the props, and the scroll region. The panel changes the props live; the fixed parts stay.", "")
+  lines.push("## Preview", "", "**Anatomy** names each slot and what fills it. The panel changes the props live; the fixed parts stay.", "")
   lines.push(`<LayoutPreview slug="${t.demo}" kind="template" controls={${JSON.stringify(JSON.stringify(t.controls))}} codeFiles="../../templates/${t.file},examples/${t.demo}.tsx" />`, "")
+  lines.push("## How it uses the layout", "", `The template fills these slots of \`${t.layout}\`. Each slot is fixed by the template, filled by a prop, or not used.`, "")
+  lines.push(`<SlotMap layout="${t.layout}" template="${t.slug}" />`, "")
+  lines.push("| Layout slot | Filled with | Fixed or prop |", "| --- | --- | --- |")
+  const usedTop = new Set(t.fills.map((f) => f.slot))
+  for (const fill of t.fills) {
+    lines.push(`| \`${fill.layout}.${fill.slot}\` | ${fill.what} | ${fill.kind} |`)
+    if (fill.nested) {
+      const inner = byTitle(fill.nested.layout)
+      const usedInner = new Set(fill.nested.fills.map((f) => f.slot))
+      for (const f of fill.nested.fills) lines.push(`| \`${fill.nested.layout}.${f.slot}\` (in \`${fill.layout}.${fill.slot}\`) | ${f.what} | ${f.kind} |`)
+      for (const name of slotNames(inner)) if (!usedInner.has(name)) lines.push(`| \`${fill.nested.layout}.${name}\` (in \`${fill.layout}.${fill.slot}\`) | not used | – |`)
+    }
+  }
+  for (const name of slotNames(layout)) if (!usedTop.has(name)) lines.push(`| \`${t.layout}.${name}\` | not used | – |`)
+  lines.push("")
   lines.push("## Fixed and variable", "", "**Fixed by the template** (edit the constants at the top of the file):", "")
   for (const item of t.fixed) lines.push(`- ${item}`)
   lines.push("", "**Props** (the variable part):", "")
@@ -76,6 +164,16 @@ const templatePageMdx = (t) => {
   lines.push("## Code", "", "The template is one file, and a page uses it. The page sets only what varies: no heights, no overflow.", "")
   return lines.join("\n")
 }
+
+const byTitle = (title) => {
+  const layout = layouts.find((l) => l.title === title)
+  if (!layout) throw new Error(`unknown layout ${title}`)
+  return layout
+}
+
+checkLayoutData()
+mkdirSync(path.join(root, "..", "..", "lib"), { recursive: true })
+writeFileSync(path.join(root, "..", "..", "lib", "layout-data.json"), JSON.stringify(layoutDataJson(), null, 2) + "\n")
 
 mkdirSync(path.join(root, "layouts"), { recursive: true })
 mkdirSync(path.join(root, "templates"), { recursive: true })

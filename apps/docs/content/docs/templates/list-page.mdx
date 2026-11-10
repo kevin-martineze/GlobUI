@@ -7,9 +7,23 @@ A template renders `PageLayout`, fixes part of it, and exposes props for the res
 
 ## Preview
 
-**Anatomy** colours the fixed parts, the props, and the scroll region. The panel changes the props live; the fixed parts stay.
+**Anatomy** names each slot and what fills it. The panel changes the props live; the fixed parts stay.
 
 <LayoutPreview slug="templates/list-page/default" kind="template" controls={"[{\"name\":\"title\",\"label\":\"Title\",\"type\":\"text\",\"value\":\"Invoices\"},{\"name\":\"loading\",\"label\":\"Loading\",\"type\":\"boolean\",\"value\":false},{\"name\":\"empty\",\"label\":\"No rows\",\"type\":\"boolean\",\"value\":false}]"} codeFiles="../../templates/list-page/list-page-template.tsx,examples/templates/list-page/default.tsx" />
+
+## How it uses the layout
+
+The template fills these slots of `PageLayout`. Each slot is fixed by the template, filled by a prop, or not used.
+
+<SlotMap layout="PageLayout" template="list-page" />
+
+| Layout slot | Filled with | Fixed or prop |
+| --- | --- | --- |
+| `PageLayout.header` | header layout | fixed |
+| `PageLayout.header` | title, description, actions | prop |
+| `PageLayout.content` | DataTable: sorting, search, pagination, empty and loading states | fixed |
+| `PageLayout.content` | columns, data, filters, state | prop |
+| `PageLayout.aside` | not used | – |
 
 ## Fixed and variable
 
