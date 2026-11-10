@@ -45,8 +45,9 @@ function Popover({ open, defaultOpen = false, onOpenChange, placement = "bottom"
     onOpenChange: setOpen,
     placement,
     offset,
-    // Non-modal: move focus in, but do not trap it.
-    onShow: (el) => (el.querySelector<HTMLElement>(FOCUSABLE) ?? el).focus({ preventScroll: true }),
+    // Non-modal: move focus in, but do not trap it. A [data-autofocus] element inside wins over the first focusable one.
+    onShow: (el) =>
+      (el.querySelector<HTMLElement>("[data-autofocus]") ?? el.querySelector<HTMLElement>(FOCUSABLE) ?? el).focus({ preventScroll: true }),
   })
 
   return <PopoverContext.Provider value={{ open: isOpen, contentId, triggerId, panel }}>{children}</PopoverContext.Provider>

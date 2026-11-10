@@ -46,7 +46,9 @@ function rewriteImports(source) {
   return source
     .replace(/from "@glob-ui\/utils"/g, 'from "@/lib/glob-ui/utils"')
     .replace(/from "@glob-ui\/hooks"/g, 'from "@/hooks/glob-ui"')
-    .replace(/from "@glob-ui\/([a-z-]+)"/g, 'from "@/components/glob-ui/$1"')
+    // Point at index explicitly: a directory import can resolve to <name>/<name>.tsx, which does not
+    // re-export helpers that live in other files of the package (for example calendar's date helpers).
+    .replace(/from "@glob-ui\/([a-z-]+)"/g, 'from "@/components/glob-ui/$1/index"')
 }
 
 /** npm dependencies of a package, without the workspace packages. */

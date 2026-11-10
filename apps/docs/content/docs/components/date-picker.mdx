@@ -1,0 +1,53 @@
+---
+title: "Date picker"
+description: "A date field. The trigger shows the value and opens a calendar in a popover, for one day or a range, with optional presets."
+---
+
+<PackageInfo pkg="date-picker" exports="DatePicker" />
+
+<InstallTabs pkg="date-picker" />
+
+## Preview
+
+<ComponentPreview name="date-picker/default" />
+
+## Examples
+
+### Range with presets
+
+`mode="range"` shows two months (stacked on small screens). The picker closes once the range is complete. `presets` add a column of buttons, such as Last 7 days.
+
+<ComponentPreview name="date-picker/range" />
+
+### In a form
+
+`name` writes a hidden input: the ISO date for a single day, or an ISO 8601 interval (`2026-11-03/2026-11-09`) for a range. Empty while incomplete.
+
+<ComponentPreview name="date-picker/form" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### DatePicker (single)
+
+<ApiTable pkg="date-picker" name="DatePickerSingleProps" />
+
+### DatePicker (range)
+
+<ApiTable pkg="date-picker" name="DatePickerRangeProps" />
+
+### DatePickerPreset
+
+<ApiTable pkg="date-picker" name="DatePickerPreset" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Enter, Space, ArrowDown on the trigger | Opens the calendar, with focus on the selected day (or today). |
+| Enter on a day | Selects it and closes the picker; focus returns to the trigger. A range closes after its second day. |
+| Escape | Closes the picker and returns focus to the trigger. |
+| Clear button | Empties the value. It is a separate button beside the trigger. |
+
+**ARIA.** The trigger is a button named by the Field label and its value. The calendar is a dialog named "Choose a date" (or "Choose a date range"). Because the value is shown in the name, a visual value is never hidden from assistive technology.

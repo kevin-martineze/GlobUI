@@ -17,6 +17,8 @@
     "slider",
     "toggle",
     "combobox",
+    "calendar",
+    "date-picker",
     "---Overlays---",
     "dialog",
     "popover",

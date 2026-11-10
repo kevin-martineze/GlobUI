@@ -72,3 +72,20 @@ describe("Popover", () => {
     expect(onOpenChange).toHaveBeenLastCalledWith(false)
   })
 })
+
+describe("Popover autofocus", () => {
+  it("focuses the [data-autofocus] element inside the content, not the first focusable one", async () => {
+    await render(
+      <Popover defaultOpen>
+        <PopoverTrigger asChild>
+          <Button>Open</Button>
+        </PopoverTrigger>
+        <PopoverContent>
+          <button>First</button>
+          <button data-autofocus>Chosen</button>
+        </PopoverContent>
+      </Popover>
+    )
+    await expect.poll(() => document.activeElement?.textContent).toBe("Chosen")
+  })
+})

@@ -1,0 +1,56 @@
+---
+title: "Calendar"
+description: "A month grid for picking one day or a range of days. Values are ISO date strings (\"YYYY-MM-DD\"), so they serialize and compare without time zones."
+---
+
+<PackageInfo pkg="calendar" exports="Calendar, toISODate, parseISODate, addDays, addMonths, isSameDay, compareISODate, todayISODate" />
+
+<InstallTabs pkg="calendar" />
+
+## Preview
+
+<ComponentPreview name="calendar/default" />
+
+## Examples
+
+### Range
+
+`mode="range"` with `{ from, to }`. The first click sets `from`, the second sets `to` (swapped if earlier). Hover previews the range. `min`, `max` and disabled days can sit inside a range.
+
+<ComponentPreview name="calendar/range" />
+
+### Limits and disabled days
+
+`min` and `max` disable the days outside them, and navigation stops at their months. `isDateDisabled` disables more days; they can still receive focus, but cannot be selected.
+
+<ComponentPreview name="calendar/min-max" />
+
+### Locale
+
+`locale` sets the month and weekday names and the first day of the week (from the locale; override it with `weekStartsOn`).
+
+<ComponentPreview name="calendar/locale" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### Calendar (single)
+
+<ApiTable pkg="calendar" name="CalendarSingleProps" />
+
+### Calendar (range)
+
+<ApiTable pkg="calendar" name="CalendarRangeProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Tab | Moves into the grid on one day (the selected day, else today). Tab again leaves it. |
+| Arrow keys | Move one day (Left, Right) or one week (Up, Down). Focus crosses into another month, which becomes the visible one. |
+| Home, End | First and last day of the week. |
+| PageUp, PageDown | One month, on the same day (clamped to the month's length). Shift adds a year. |
+| Enter, Space | Selects the focused day. |
+
+**ARIA.** A `role="grid"` table per month, named by its heading (a polite live region, so a month change is announced). Each day is a gridcell with a button. Selected days have `aria-selected`, today has `aria-current="date"`, and disabled days have `aria-disabled` (focusable, not selectable).
