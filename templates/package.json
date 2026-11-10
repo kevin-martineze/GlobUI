@@ -1,0 +1,21 @@
+{
+  "name": "glob-ui-templates",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Copy-code templates for GlobUI (registry only, not published to npm).",
+  "dependencies": {
+    "@glob-ui/app-shell-layout": "workspace:*",
+    "@glob-ui/data-table": "workspace:*",
+    "@glob-ui/dropdown-menu": "workspace:*",
+    "@glob-ui/button": "workspace:*",
+    "@glob-ui/card": "workspace:*",
+    "@glob-ui/layout": "workspace:*",
+    "@glob-ui/page-layout": "workspace:*",
+    "@tanstack/react-table": "^9.3.1"
+  },
+  "devDependencies": {
+    "@glob-ui/utils": "workspace:*",
+    "react": "^19",
+    "react-dom": "^19"
+  }
+}

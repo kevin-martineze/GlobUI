@@ -58,3 +58,61 @@ body {
   font-family: var(--font-glob-sans), system-ui, sans-serif;
 }
 
+
+/*
+ * Layout preview (app/preview only): the anatomy view and fill. The parent frame sets html[data-anatomy]
+ * and html[data-fill] through postMessage (components/preview-root.tsx), so no page code knows about them.
+ * Labels are block elements in the flow: they are only drawn in anatomy mode.
+ */
+html[data-anatomy="layout"] [data-slot] {
+  outline: 2px dashed var(--glob-primary);
+  outline-offset: -2px;
+}
+html[data-anatomy="layout"] [data-slot][data-scroll="scroll"] {
+  outline-color: var(--glob-success);
+}
+html[data-anatomy="layout"] [data-slot]::before {
+  content: attr(data-slot) " · " attr(data-scroll);
+}
+html[data-anatomy="template"] [data-template-part="fixed"] {
+  outline: 2px solid var(--glob-info);
+  outline-offset: -2px;
+}
+html[data-anatomy="template"] [data-template-part="prop"] {
+  outline: 2px dashed var(--glob-warning);
+  outline-offset: -2px;
+}
+html[data-anatomy="template"] [data-slot][data-scroll="scroll"] {
+  outline: 2px solid var(--glob-success);
+  outline-offset: -2px;
+}
+html[data-anatomy] [data-slot]::before,
+html[data-anatomy] [data-template-part]::before {
+  display: block;
+  width: max-content;
+  padding: 2px 6px;
+  font: 600 11px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: var(--glob-primary);
+  color: var(--glob-primary-foreground);
+}
+html[data-anatomy="template"] [data-template-part="fixed"]::before {
+  content: "fixed by the template";
+  background: var(--glob-info);
+}
+html[data-anatomy="template"] [data-template-part="prop"]::before {
+  content: "prop";
+  background: var(--glob-warning);
+}
+html[data-anatomy="template"] [data-slot][data-scroll="scroll"]::before {
+  content: "scroll region · " attr(data-slot);
+  background: var(--glob-success);
+}
+html[data-anatomy="layout"] [data-slot][data-scroll="scroll"]::before {
+  background: var(--glob-success);
+}
+html[data-fill] [data-scroll="scroll"]::after {
+  content: "";
+  display: block;
+  height: 150vh;
+  background: repeating-linear-gradient(45deg, transparent 0 12px, color-mix(in oklab, var(--glob-text) 8%, transparent) 12px 24px);
+}

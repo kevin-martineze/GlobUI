@@ -4,3 +4,4 @@
 @import "../../packages/styles/glob-ui.css";
 
 @source "../../packages/*/src/**/*.{ts,tsx}";
+@source "../../templates/*/*.tsx";

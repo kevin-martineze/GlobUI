@@ -1,0 +1,9 @@
+{
+  "title": "Layouts",
+  "pages": [
+    "index",
+    "app-shell",
+    "page",
+    "stacked"
+  ]
+}

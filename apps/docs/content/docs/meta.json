@@ -1,4 +1,18 @@
 {
   "title": "Documentation",
-  "pages": ["---Getting started---", "index", "installation", "theming", "server-and-client", "---Components---", "components", "---Utilities---", "utilities"]
+  "pages": [
+    "---Getting started---",
+    "index",
+    "installation",
+    "theming",
+    "server-and-client",
+    "---Components---",
+    "components",
+    "---Layouts---",
+    "layouts",
+    "---Templates---",
+    "templates",
+    "---Utilities---",
+    "utilities"
+  ]
 }

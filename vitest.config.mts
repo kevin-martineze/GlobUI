@@ -36,7 +36,7 @@ export default defineConfig({
         resolve: { alias },
         test: {
           name: "browser",
-          include: ["packages/*/src/**/*.browser.test.tsx"],
+          include: ["packages/*/src/**/*.browser.test.tsx", "templates/*/*.browser.test.tsx"],
           setupFiles: ["tests/browser/setup.ts"],
           browser: {
             enabled: true,

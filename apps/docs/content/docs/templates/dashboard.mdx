@@ -1,0 +1,35 @@
+---
+title: "Dashboard template"
+description: "A dashboard: an app shell with a brand, a navigation and a user menu fixed, and a page header for each page."
+---
+
+A template renders `AppShellLayout`, fixes part of it, and exposes props for the rest. It is copy-code: the file is yours to edit.
+
+## Preview
+
+**Anatomy** colours the fixed parts, the props, and the scroll region. The panel changes the props live; the fixed parts stay.
+
+<LayoutPreview slug="templates/dashboard/default" kind="template" controls={"[{\"name\":\"title\",\"label\":\"Title\",\"type\":\"text\",\"value\":\"Orders\"},{\"name\":\"description\",\"label\":\"Description\",\"type\":\"text\",\"value\":\"Every order this month.\"},{\"name\":\"activeHref\",\"label\":\"Current page\",\"type\":\"select\",\"value\":\"/orders\",\"options\":[\"/\",\"/orders\",\"/customers\",\"/settings\"]}]"} codeFiles="../../templates/dashboard/dashboard-template.tsx,examples/templates/dashboard/default.tsx" />
+
+## Fixed and variable
+
+**Fixed by the template** (edit the constants at the top of the file):
+
+- Brand
+- Navigation with `aria-current`
+- User menu
+- Navigation trigger on small screens
+
+**Props** (the variable part):
+
+- `title`, `description`, `breadcrumbs`, `actions`
+- `activeHref`: the current page
+- `children`: the page content
+
+## Install
+
+<RegistryCommand name="dashboard-template" />
+
+## Code
+
+The template is one file, and a page uses it. The page sets only what varies: no heights, no overflow.

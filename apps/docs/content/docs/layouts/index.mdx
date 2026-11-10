@@ -1,0 +1,76 @@
+---
+title: "Methodology"
+description: "The methodology behind GlobUI layouts and templates: a layout owns the scroll, a template fixes part of it, and a page only fills the slots."
+---
+
+Most scroll bugs come from pages that decide their own heights and overflow. Two `overflow-auto` regions nest, a flex child lacks `min-h-0`, `100vh` is wrong on phones, a sticky header stops sticking, or the sidebar scrolls the whole page. Every page solves this again, slightly differently.
+
+GlobUI moves those decisions into the layout. A page only fills the slots.
+
+## Three layers
+
+| Layer | Owns | Never does |
+| --- | --- | --- |
+| **Layout** | Structure, slots, scroll, responsive behaviour, landmarks | Render content |
+| **Template** | Which slots are fixed, and with what; the props for the rest | Set heights or overflow |
+| **Page** | The variable content | Decide structure or scroll |
+
+<svg viewBox="0 0 640 220" role="img" aria-labelledby="layers-title layers-desc" className="my-6 w-full max-w-2xl">
+  <title id="layers-title">Layout, template and page</title>
+  <desc id="layers-desc">A layout holds slots. A template fills some slots with fixed content. A page fills the rest.</desc>
+  <rect x="20" y="20" width="600" height="180" rx="12" fill="none" stroke="var(--glob-primary)" strokeWidth="2" strokeDasharray="6 4" />
+  <text x="36" y="44" fontSize="13" fontWeight="600" fill="var(--glob-text)">Layout: AppShellLayout (owns the scroll)</text>
+  <rect x="40" y="58" width="560" height="36" rx="8" fill="var(--glob-info-light)" stroke="var(--glob-info)" />
+  <text x="56" y="81" fontSize="12" fill="var(--glob-text)">header · fixed · brand and account (template)</text>
+  <rect x="40" y="104" width="150" height="112" rx="8" fill="var(--glob-info-light)" stroke="var(--glob-info)" />
+  <text x="54" y="128" fontSize="12" fill="var(--glob-text)">sidebar · fixed</text>
+  <text x="54" y="146" fontSize="12" fill="var(--glob-text)">navigation (template)</text>
+  <rect x="206" y="104" width="394" height="112" rx="8" fill="var(--glob-success-light)" stroke="var(--glob-success)" />
+  <text x="220" y="128" fontSize="12" fill="var(--glob-text)">main · scroll</text>
+  <rect x="220" y="140" width="366" height="66" rx="6" fill="var(--glob-warning-light)" stroke="var(--glob-warning)" strokeDasharray="4 3" />
+  <text x="234" y="166" fontSize="12" fill="var(--glob-text)">page: props and content (variable)</text>
+</svg>
+
+## Scroll rules
+
+1. **A layout owns the scroll.** Each slot declares `data-scroll`: `fixed` (never scrolls, stays in place) or `scroll` (the one region that scrolls for that part of the screen).
+2. **Two modes.** In **app** mode the viewport never scrolls (`h-dvh`), and only the scroll slots do. Use it for dashboards, chat and editors. In **document** mode the page scrolls as a document, and the fixed slots stick. Use it for docs, portals and landing pages.
+3. **A page sets no heights, no overflow, no `sticky`, no `100vh`.** It fills the slots. If it needs to scroll, it is inside the scroll slot.
+4. **One scroll region per part of the screen.** Nested scroll regions are the cause of most bugs. A sidebar list may scroll inside its own fixed sidebar. Nothing else nests.
+
+## Accessibility comes with the structure
+
+Every layout renders its landmarks (`header`, `nav`, `main`, `aside`, `footer`), one `main`, and a **Skip to content** link as its first stop. Below `lg` the navigation moves into a Sheet, opened by `LayoutNavTrigger`, with focus managed: focus moves in, Escape returns it to the trigger.
+
+## Two files: a template and a page
+
+A template renders a layout and fixes what does not change between pages. The page sets only what varies.
+
+```tsx
+// templates/dashboard/dashboard-template.tsx (yours to edit)
+export function DashboardTemplate({ title, actions, activeHref, children }: DashboardTemplateProps) {
+  return (
+    <AppShellLayout header={<AppHeader />} sidebar={<AppNav activeHref={activeHref} />}>
+      <PageLayout header={<PageHeader title={title} actions={actions} />}>{children}</PageLayout>
+    </AppShellLayout>
+  )
+}
+```
+
+```tsx
+// app/orders/page.tsx
+export default function OrdersPage() {
+  return (
+    <DashboardTemplate title="Orders" activeHref="/orders" actions={<Button>New order</Button>}>
+      <OrdersTable />
+    </DashboardTemplate>
+  )
+}
+```
+
+## Read more
+
+- Layouts: [AppShellLayout](/docs/layouts/app-shell), [PageLayout](/docs/layouts/page), [StackedLayout](/docs/layouts/stacked).
+- Templates: [Dashboard](/docs/templates/dashboard), [List page](/docs/templates/list-page), [Detail page](/docs/templates/detail-page).
+
+Every layout and template page has a live preview. **Anatomy** shows the slots and their scroll behaviour, **Fill with content** shows which region scrolls, and the device buttons change the width so media queries are real.

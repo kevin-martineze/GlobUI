@@ -1,0 +1,33 @@
+---
+title: "Detail page template"
+description: "A detail page: breadcrumbs, a back link and a title, the content, and a sticky aside card with the facts about the item."
+---
+
+A template renders `PageLayout`, fixes part of it, and exposes props for the rest. It is copy-code: the file is yours to edit.
+
+## Preview
+
+**Anatomy** colours the fixed parts, the props, and the scroll region. The panel changes the props live; the fixed parts stay.
+
+<LayoutPreview slug="templates/detail-page/default" kind="template" controls={"[{\"name\":\"title\",\"label\":\"Title\",\"type\":\"text\",\"value\":\"Order 1042\"},{\"name\":\"aside\",\"label\":\"Show aside\",\"type\":\"boolean\",\"value\":true}]"} codeFiles="../../templates/detail-page/detail-page-template.tsx,examples/templates/detail-page/default.tsx" />
+
+## Fixed and variable
+
+**Fixed by the template** (edit the constants at the top of the file):
+
+- Header layout with breadcrumbs and back link
+- Aside card frame
+
+**Props** (the variable part):
+
+- `title`, `breadcrumbs`, `backHref`, `actions`
+- `children`
+- `aside`: the facts in the card
+
+## Install
+
+<RegistryCommand name="detail-page-template" />
+
+## Code
+
+The template is one file, and a page uses it. The page sets only what varies: no heights, no overflow.

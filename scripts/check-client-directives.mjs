@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url"
 const root = fileURLToPath(new URL("../packages/", import.meta.url))
 
 // Packages that must stay server-safe (no banner).
-const SERVER = ["alert", "all", "badge", "button", "card", "field", "input", "label", "pagination", "progress", "separator", "skeleton", "slot", "spinner", "table", "textarea", "utils"]
+const SERVER = ["alert", "all", "badge", "button", "card", "field", "input", "label", "page-layout", "pagination", "progress", "separator", "skeleton", "slot", "spinner", "table", "textarea", "utils"]
 
 // toast is split: index (toast(), server-safe) vs toaster (client).
 const CHECKS = []

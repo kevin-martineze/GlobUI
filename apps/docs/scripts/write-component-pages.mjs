@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url"
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "content", "docs")
 
-import { components, utilities } from "./docs-data.mjs"
+import { components, utilities, layouts, templates } from "./docs-data.mjs"
 
 const pageMdx = (p) => {
   const lines = []
@@ -40,6 +40,50 @@ const pageMdx = (p) => {
   return lines.join("\n")
 }
 
+// Layout pages: anatomy preview, slot table, props, accessibility. The methodology page (layouts/index.mdx) is written by hand.
+const layoutPageMdx = (l) => {
+  const lines = []
+  lines.push("---", `title: ${JSON.stringify(l.title)}`, `description: ${JSON.stringify(l.description)}`, "---", "")
+  lines.push(`<PackageInfo pkg="${l.pkg}" exports="${l.exports}" />`, "")
+  lines.push(`<InstallTabs pkg="${l.pkg}" />`, "")
+  lines.push("## Anatomy", "", "Each slot declares its scroll behaviour. Switch on **Anatomy** to see them, and **Fill with content** to see which region scrolls.", "")
+  lines.push(`<LayoutPreview slug="${l.demo}" kind="layout" codeFiles="examples/${l.demo}.tsx" />`, "")
+  lines.push("## Slots", "", "| Slot | Element | Scroll | Notes |", "| --- | --- | --- | --- |")
+  for (const [slot, el, scroll, note] of l.slots) lines.push(`| \`${slot}\` | ${el} | ${scroll} | ${note} |`)
+  lines.push("")
+  lines.push(`- **fixed**: the slot never scrolls. It stays in place, or sticks.`, `- **scroll**: the one region that scrolls for this part of the screen.`, "")
+  if (l.extra) lines.push(l.extra)
+  lines.push("## API", "")
+  for (const part of l.api) lines.push(`### ${part.name}`, "", `<ApiTable pkg="${l.pkg}" name="${part.name}" />`, "")
+  lines.push("## Accessibility", "", "| Key or action | Behaviour |", "| --- | --- |")
+  for (const [key, action] of l.a11y) lines.push(`| ${key} | ${action} |`)
+  lines.push("", `**ARIA.** ${l.aria}`, "")
+  return lines.join("\n")
+}
+
+// Template pages: preview with the three-colour anatomy and the props panel, the fixed parts, and the code in two files.
+const templatePageMdx = (t) => {
+  const lines = []
+  lines.push("---", `title: ${JSON.stringify(t.title)}`, `description: ${JSON.stringify(t.description)}`, "---", "")
+  lines.push(`A template renders \`${t.layout}\`, fixes part of it, and exposes props for the rest. It is copy-code: the file is yours to edit.`, "")
+  lines.push("## Preview", "", "**Anatomy** colours the fixed parts, the props, and the scroll region. The panel changes the props live; the fixed parts stay.", "")
+  lines.push(`<LayoutPreview slug="${t.demo}" kind="template" controls={${JSON.stringify(JSON.stringify(t.controls))}} codeFiles="../../templates/${t.file},examples/${t.demo}.tsx" />`, "")
+  lines.push("## Fixed and variable", "", "**Fixed by the template** (edit the constants at the top of the file):", "")
+  for (const item of t.fixed) lines.push(`- ${item}`)
+  lines.push("", "**Props** (the variable part):", "")
+  for (const item of t.props) lines.push(`- ${item}`)
+  lines.push("", "## Install", "", `<RegistryCommand name="${t.name}" />`, "")
+  lines.push("## Code", "", "The template is one file, and a page uses it. The page sets only what varies: no heights, no overflow.", "")
+  return lines.join("\n")
+}
+
+mkdirSync(path.join(root, "layouts"), { recursive: true })
+mkdirSync(path.join(root, "templates"), { recursive: true })
+for (const l of layouts) writeFileSync(path.join(root, "layouts", `${l.slug}.mdx`), layoutPageMdx(l))
+for (const t of templates) writeFileSync(path.join(root, "templates", `${t.slug}.mdx`), templatePageMdx(t))
+writeFileSync(path.join(root, "layouts", "meta.json"), JSON.stringify({ title: "Layouts", pages: ["index", ...layouts.map((l) => l.slug)] }, null, 2) + "\n")
+writeFileSync(path.join(root, "templates", "meta.json"), JSON.stringify({ title: "Templates", pages: templates.map((t) => t.slug) }, null, 2) + "\n")
+
 mkdirSync(path.join(root, "components"), { recursive: true })
 mkdirSync(path.join(root, "utilities"), { recursive: true })
 
@@ -62,4 +106,4 @@ writeFileSync(
   path.join(root, "utilities", "meta.json"),
   JSON.stringify({ title: "Utilities", pages: utilities.map((u) => u.slug) }, null, 2) + "\n"
 )
-console.log(`wrote ${components.length} component pages and ${utilities.length} utility pages`)
+console.log(`wrote ${components.length} component pages, ${utilities.length} utility pages, ${layouts.length} layout and ${templates.length} template pages`)

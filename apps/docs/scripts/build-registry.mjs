@@ -13,7 +13,7 @@
 import { mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
-import { components, utilities } from "./docs-data.mjs"
+import { components, utilities, layouts, layoutCore, templates } from "./docs-data.mjs"
 
 const here = path.dirname(fileURLToPath(import.meta.url))
 const repo = path.resolve(here, "../../..")
@@ -22,8 +22,8 @@ const outDir = path.resolve(here, "../public/r")
 const SITE = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "")
 const SCHEMA = "https://ui.shadcn.com/schema/registry-item.json"
 
-const titles = new Map([...components, ...utilities].map((c) => [c.pkg, c.title]))
-const descriptions = new Map([...components, ...utilities].map((c) => [c.pkg, c.description]))
+const titles = new Map([...components, ...utilities, ...layouts, layoutCore].map((c) => [c.pkg, c.title]))
+const descriptions = new Map([...components, ...utilities, ...layouts, layoutCore].map((c) => [c.pkg, c.description]))
 
 const readJson = (file) => JSON.parse(readFileSync(file, "utf8"))
 
@@ -172,7 +172,7 @@ items.push({
 })
 
 // Components: one item per documented package (slot included).
-const componentPackages = [...components.map((c) => c.pkg), ...utilities.map((u) => u.pkg)].filter((p) => p !== "utils")
+const componentPackages = [...components.map((c) => c.pkg), ...utilities.map((u) => u.pkg), layoutCore.pkg, ...layouts.map((l) => l.pkg)].filter((p) => p !== "utils")
 for (const pkgName of componentPackages) {
   const dir = path.join(packagesDir, pkgName)
   const pkg = readJson(path.join(dir, "package.json"))
@@ -190,6 +190,40 @@ for (const pkgName of componentPackages) {
       target: `@components/glob-ui/${pkgName}/${path.basename(file)}`,
       content: (assertNoJsxAsChild(file, readFileSync(file, "utf8")), rewriteImports(readFileSync(file, "utf8"))),
     })),
+  })
+}
+
+// Templates: copy-code blocks built from GlobUI layouts and components. Their npm dependencies come from
+// templates/package.json; their registry dependencies from the @glob-ui/* imports in each file.
+const templatesDir = path.join(repo, "templates")
+const templateNpm = npmDependencies(readJson(path.join(templatesDir, "package.json")))
+for (const t of templates) {
+  const dir = path.join(templatesDir, path.dirname(t.file))
+  const files = sourceFiles(dir)
+  const sources = files.map((file) => readFileSync(file, "utf8"))
+  const deps = new Set([`${SITE}/r/glob-ui-theme.json`])
+  for (const source of sources) {
+    for (const [, slug] of source.matchAll(/from "@glob-ui\/([a-z-]+)"/g)) {
+      deps.add(slug === "utils" ? `${SITE}/r/glob-ui-utils.json` : `${SITE}/r/${slug}.json`)
+    }
+  }
+  items.push({
+    $schema: SCHEMA,
+    name: t.name,
+    type: "registry:block",
+    title: t.title,
+    description: t.description,
+    ...(templateNpm.length ? { dependencies: templateNpm } : {}),
+    registryDependencies: [...deps],
+    files: files.map((file, i) => {
+      assertNoJsxAsChild(file, sources[i])
+      return {
+        path: path.relative(repo, file),
+        type: "registry:block",
+        target: `@components/templates/${t.slug}/${path.basename(file)}`,
+        content: rewriteImports(sources[i]),
+      }
+    }),
   })
 }
 

@@ -226,6 +226,9 @@ importers:
       '@glob-ui/alert-dialog':
         specifier: workspace:*
         version: link:../../packages/alert-dialog
+      '@glob-ui/app-shell-layout':
+        specifier: workspace:*
+        version: link:../../packages/app-shell-layout
       '@glob-ui/avatar':
         specifier: workspace:*
         version: link:../../packages/avatar
@@ -274,9 +277,15 @@ importers:
       '@glob-ui/label':
         specifier: workspace:*
         version: link:../../packages/label
+      '@glob-ui/layout':
+        specifier: workspace:*
+        version: link:../../packages/layout
       '@glob-ui/multi-select':
         specifier: workspace:*
         version: link:../../packages/multi-select
+      '@glob-ui/page-layout':
+        specifier: workspace:*
+        version: link:../../packages/page-layout
       '@glob-ui/pagination':
         specifier: workspace:*
         version: link:../../packages/pagination
@@ -316,6 +325,9 @@ importers:
       '@glob-ui/spinner':
         specifier: workspace:*
         version: link:../../packages/spinner
+      '@glob-ui/stacked-layout':
+        specifier: workspace:*
+        version: link:../../packages/stacked-layout
       '@glob-ui/styles':
         specifier: workspace:*
         version: link:../../packages/styles
@@ -455,6 +467,9 @@ importers:
       '@glob-ui/alert-dialog':
         specifier: workspace:*
         version: link:../alert-dialog
+      '@glob-ui/app-shell-layout':
+        specifier: workspace:*
+        version: link:../app-shell-layout
       '@glob-ui/avatar':
         specifier: workspace:*
         version: link:../avatar
@@ -503,9 +518,15 @@ importers:
       '@glob-ui/label':
         specifier: workspace:*
         version: link:../label
+      '@glob-ui/layout':
+        specifier: workspace:*
+        version: link:../layout
       '@glob-ui/multi-select':
         specifier: workspace:*
         version: link:../multi-select
+      '@glob-ui/page-layout':
+        specifier: workspace:*
+        version: link:../page-layout
       '@glob-ui/pagination':
         specifier: workspace:*
         version: link:../pagination
@@ -545,6 +566,9 @@ importers:
       '@glob-ui/spinner':
         specifier: workspace:*
         version: link:../spinner
+      '@glob-ui/stacked-layout':
+        specifier: workspace:*
+        version: link:../stacked-layout
       '@glob-ui/switch':
         specifier: workspace:*
         version: link:../switch
@@ -575,6 +599,25 @@ importers:
       react-dom:
         specifier: ^19
         version: 19.2.4(react@19.2.4)
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.32)(supports-color@7.2.0)(typescript@5.9.3)(yaml@2.9.1)
+
+  packages/app-shell-layout:
+    dependencies:
+      '@glob-ui/layout':
+        specifier: workspace:*
+        version: link:../layout
+      '@glob-ui/utils':
+        specifier: workspace:*
+        version: link:../utils
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
+      react:
+        specifier: ^19
+        version: 19.2.4
     devDependencies:
       tsup:
         specifier: ^8.5.1
@@ -899,6 +942,22 @@ importers:
         specifier: ^8.5.1
         version: 8.5.1(jiti@2.7.0)(postcss@8.5.32)(supports-color@7.2.0)(typescript@5.9.3)(yaml@2.9.1)
 
+  packages/layout:
+    dependencies:
+      '@glob-ui/sheet':
+        specifier: workspace:*
+        version: link:../sheet
+      '@glob-ui/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react:
+        specifier: ^19
+        version: 19.2.4
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.32)(supports-color@7.2.0)(typescript@5.9.3)(yaml@2.9.1)
+
   packages/multi-select:
     dependencies:
       '@glob-ui/hooks':
@@ -917,6 +976,25 @@ importers:
         specifier: ^19
         version: 19.2.4(react@19.2.4)
     devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.32)(supports-color@7.2.0)(typescript@5.9.3)(yaml@2.9.1)
+
+  packages/page-layout:
+    dependencies:
+      '@glob-ui/utils':
+        specifier: workspace:*
+        version: link:../utils
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
+      react:
+        specifier: ^19
+        version: 19.2.4
+    devDependencies:
+      react-dom:
+        specifier: ^19
+        version: 19.2.4(react@19.2.4)
       tsup:
         specifier: ^8.5.1
         version: 8.5.1(jiti@2.7.0)(postcss@8.5.32)(supports-color@7.2.0)(typescript@5.9.3)(yaml@2.9.1)
@@ -1156,6 +1234,22 @@ importers:
         specifier: ^8.5.1
         version: 8.5.1(jiti@2.7.0)(postcss@8.5.32)(supports-color@7.2.0)(typescript@5.9.3)(yaml@2.9.1)
 
+  packages/stacked-layout:
+    dependencies:
+      '@glob-ui/layout':
+        specifier: workspace:*
+        version: link:../layout
+      '@glob-ui/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react:
+        specifier: ^19
+        version: 19.2.4
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.32)(supports-color@7.2.0)(typescript@5.9.3)(yaml@2.9.1)
+
   packages/styles: {}
 
   packages/switch:
@@ -1300,6 +1394,43 @@ importers:
       tsup:
         specifier: ^8.5.1
         version: 8.5.1(jiti@2.7.0)(postcss@8.5.32)(supports-color@7.2.0)(typescript@5.9.3)(yaml@2.9.1)
+
+  templates:
+    dependencies:
+      '@glob-ui/app-shell-layout':
+        specifier: workspace:*
+        version: link:../packages/app-shell-layout
+      '@glob-ui/button':
+        specifier: workspace:*
+        version: link:../packages/button
+      '@glob-ui/card':
+        specifier: workspace:*
+        version: link:../packages/card
+      '@glob-ui/data-table':
+        specifier: workspace:*
+        version: link:../packages/data-table
+      '@glob-ui/dropdown-menu':
+        specifier: workspace:*
+        version: link:../packages/dropdown-menu
+      '@glob-ui/layout':
+        specifier: workspace:*
+        version: link:../packages/layout
+      '@glob-ui/page-layout':
+        specifier: workspace:*
+        version: link:../packages/page-layout
+      '@tanstack/react-table':
+        specifier: ^9.3.1
+        version: 9.3.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+    devDependencies:
+      '@glob-ui/utils':
+        specifier: workspace:*
+        version: link:../packages/utils
+      react:
+        specifier: ^19
+        version: 19.2.4
+      react-dom:
+        specifier: ^19
+        version: 19.2.4(react@19.2.4)
 
 packages:
 

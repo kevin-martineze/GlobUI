@@ -1,0 +1,48 @@
+---
+title: "PageLayout"
+description: "A page inside a layout: a sticky header, the content, and an optional aside that sticks from `lg`. It sets no height and no overflow, and it is server-safe."
+---
+
+<PackageInfo pkg="page-layout" exports="PageLayout, PageHeader" />
+
+<InstallTabs pkg="page-layout" />
+
+## Anatomy
+
+Each slot declares its scroll behaviour. Switch on **Anatomy** to see them, and **Fill with content** to see which region scrolls.
+
+<LayoutPreview slug="layouts/page/default" kind="layout" codeFiles="examples/layouts/page/default.tsx" />
+
+## Slots
+
+| Slot | Element | Scroll | Notes |
+| --- | --- | --- | --- |
+| `header` | `<div>` | fixed | Sticks to the top of the nearest scroll region while the content scrolls. |
+| `content` | `<div>` | scroll | Moves with the scroll region that contains the page. |
+| `aside` | `<aside>` | fixed | Sticks from `lg`. Below `lg` it stacks under the content. |
+
+- **fixed**: the slot never scrolls. It stays in place, or sticks.
+- **scroll**: the one region that scrolls for this part of the screen.
+
+## Server-safe
+
+`PageLayout` and `PageHeader` have no client code, so they render in a Server Component. Put them inside a layout, for example the `main` of an `AppShellLayout`.
+
+## API
+
+### PageLayoutProps
+
+<ApiTable pkg="page-layout" name="PageLayoutProps" />
+
+### PageHeaderProps
+
+<ApiTable pkg="page-layout" name="PageHeaderProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| PageHeader | The title is an `h1`. Breadcrumbs sit above it: give them a `nav` with its own label. |
+| aside | A complementary landmark. Give it a label when the page has more than one. |
+
+**ARIA.** `PageHeader` renders the single `h1` of the page. Actions wrap onto a new line at 375 px.
