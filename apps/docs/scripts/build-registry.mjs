@@ -51,6 +51,16 @@ function rewriteImports(source) {
     .replace(/from "@glob-ui\/([a-z-]+)"/g, 'from "@/components/glob-ui/$1/index"')
 }
 
+// The shadcn CLI (Base UI styles, the default since shadcn 4) rewrites `<X asChild>` JSX in copied files into
+// `render={...}`, which GlobUI components do not accept. Registry sources must not use asChild as a JSX attribute
+// (defining the prop is fine; forward it through a spread instead).
+const JSX_AS_CHILD = /<[A-Z][\w.]*(?:\s+[^<>]*?)?\sasChild(?=[\s=/>])/
+function assertNoJsxAsChild(file, source) {
+  if (JSX_AS_CHILD.test(source)) {
+    throw new Error(`${path.relative(repo, file)}: asChild used as a JSX attribute; the shadcn CLI would rewrite it to render. Forward it through a spread.`)
+  }
+}
+
 /** npm dependencies of a package, without the workspace packages. */
 function npmDependencies(pkg) {
   return Object.entries(pkg.dependencies ?? {})
@@ -178,7 +188,7 @@ for (const pkgName of componentPackages) {
       path: path.relative(repo, file),
       type: "registry:ui",
       target: `@components/glob-ui/${pkgName}/${path.basename(file)}`,
-      content: rewriteImports(readFileSync(file, "utf8")),
+      content: (assertNoJsxAsChild(file, readFileSync(file, "utf8")), rewriteImports(readFileSync(file, "utf8"))),
     })),
   })
 }

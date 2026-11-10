@@ -560,6 +560,69 @@ export const components = [
     ],
     aria: "The trigger is a button named by the Field label and its value. The calendar is a dialog named \"Choose a date\" (or \"Choose a date range\"). Because the value is shown in the name, a visual value is never hidden from assistive technology.",
   },
+  {
+    group: "Data", slug: "table", title: "Table", pkg: "table", exports: "Table, TableHeader, TableBody, TableFooter, TableRow, TableHead, TableCell, TableCaption",
+    description: "Styled native table parts: header, body, footer, rows and cells, with density, striped rows, a sticky header and right-aligned numbers.",
+    main: "table/default",
+    examples: [
+      { title: "Density", name: "table/density", text: "`density` is `compact`, `default` or `comfortable`: the cell padding of the whole table." },
+      { title: "Sticky header", name: "table/sticky-header", text: "`stickyHeader` keeps the header in view. The table scrolls inside its wrapper, so give the wrapper a height with `containerClassName`." },
+    ],
+    api: [
+      { name: "TableProps", label: "Table" },
+      { name: "TableHeadProps", label: "TableHead" },
+      { name: "TableCellProps", label: "TableCell" },
+    ],
+    a11y: [
+      ["Scroll region (scrollLabel)", "The wrapper becomes `role=\"region\"`, named by `scrollLabel`, and focusable, so keyboard users can scroll a wide table with the arrow keys. Use it when the table can be wider than the screen."],
+      ["Caption", "`TableCaption` names the table for screen readers and is shown under it."],
+      ["Row selection", "`data-state=\"selected\"` shades the row. Pair it with a checkbox in a cell for a selectable table."],
+    ],
+    aria: "Uses the native table elements, so screen readers announce the row and column headers. `align` only changes the text alignment, not the reading order.",
+    extra: "## The table owns its scroll\n\nA table wider than its container scrolls inside its own wrapper, never the page. This is the rule for every layout: the page does not handle horizontal scroll. Give a long table a `containerClassName` with a height when you also want a sticky header.",
+  },
+  {
+    group: "Data", slug: "pagination", title: "Pagination", pkg: "pagination", exports: "Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext, PaginationEllipsis, getPageRange",
+    description: "Page navigation: previous and next, page links and ellipses. `getPageRange` computes which pages to show.",
+    main: "pagination/default",
+    examples: [
+      { title: "Controlled with buttons", name: "pagination/controlled", text: "Buttons instead of links, with state. `getPageRange` decides which pages and ellipses to show." },
+    ],
+    api: [
+      { name: "PaginationLinkProps", label: "PaginationLink" },
+      { name: "PaginationPreviousProps", label: "PaginationPrevious" },
+      { name: "PageRangeOptions", label: "getPageRange", file: "get-page-range.ts" },
+    ],
+    a11y: [
+      ["Current page", "`aria-current=\"page\"` on the active link."],
+      ["Previous, Next", "Named \"Go to previous page\" and \"Go to next page\". When disabled they have `aria-disabled` and no `href`."],
+      ["Ellipsis", "The dots are decorative; the text \"More pages\" is read instead."],
+    ],
+    aria: "The landmark is a `nav` named \"Pagination\". Links are native anchors; use `asChild` with your router's link so the router renders the anchor.",
+  },
+  {
+    group: "Data", slug: "data-table", title: "Data table", pkg: "data-table", exports: "DataTable, createDataTableColumnHelper, dataTableFeatures",
+    description: "A table with sorting, search, pagination, row selection and column visibility, each opt-in. Built on TanStack Table v9.",
+    main: "data-table/default",
+    examples: [
+      { title: "Row selection and a toolbar", name: "data-table/selection", text: "`rowSelection` adds a checkbox column with select-all (indeterminate when some rows are selected). `toolbar` puts bulk actions next to the search." },
+      { title: "Server data", name: "data-table/server", text: "`manual` with `state`, the change handlers and `rowCount`: the server sorts and pages, and `loading` shows skeleton rows." },
+      { title: "Columns and row actions", name: "data-table/columns", text: "`columnVisibility` adds a Columns menu. A `helper.display` column can hold row actions." },
+    ],
+    api: [
+      { name: "DataTableProps", label: "DataTable" },
+      { name: "DataTableState", label: "DataTableState" },
+    ],
+    a11y: [
+      ["Sort", "The column header is a button. `aria-sort` on the header says ascending, descending or none. Shift adds a second sort."],
+      ["Search", "A search field named \"Search\". After a search the live region says the result count, for example \"12 results\"."],
+      ["Pages", "The live region announces the page, for example \"Page 2 of 5\"."],
+      ["Select", "\"Select all rows\" selects the page and is indeterminate when some rows are selected. Each row has \"Select row\"."],
+      ["Rows", "A row click (`onRowClick`) is for pointers only: give keyboard users a link or button inside a cell."],
+    ],
+    aria: "The table is named by `aria-label` and is a scroll region when it can be wider than its container. `aria-busy` is set while `loading`.",
+    extra: "## Client-side vs server-side\n\nBy default the table sorts, filters and pages the rows it has. That is right for up to a few thousand rows that arrive once.\n\nFor larger data, set `manual`. The server then does the sorting and paging: pass the current `state` and the change handlers (`onSortingChange`, `onPaginationChange`, `onGlobalFilterChange`), and the total as `rowCount`. The table shows `data` exactly as it is given, so the server's order is kept. The \"Server data\" example shows the full loop with a fake 400 ms request.",
+  },
 ]
 
 export const utilities = [

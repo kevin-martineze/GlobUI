@@ -51,7 +51,11 @@ for (const u of utilities) {
 }
 
 // Sidebar: groups in the order the docs use. Separators come from the group names.
-const groups = ["Forms", "Overlays", "Feedback", "Display", "Navigation"]
+const groups = ["Forms", "Data", "Overlays", "Feedback", "Display", "Navigation"]
+// A component in a group missing from this list would be left out of the sidebar and 404 in production.
+for (const c of components) {
+  if (!groups.includes(c.group)) throw new Error(`${c.slug}: group "${c.group}" is not in the sidebar groups (${groups.join(", ")})`)
+}
 const pages = groups.flatMap((g) => [`---${g}---`, ...components.filter((c) => c.group === g).map((c) => c.slug)])
 writeFileSync(path.join(root, "components", "meta.json"), JSON.stringify({ title: "Components", pages }, null, 2) + "\n")
 writeFileSync(
