@@ -660,3 +660,121 @@ Falsy values are ignored. Without the GlobUI scales, \`rounded-glob-md\` and \`r
 `,
   },
 ]
+
+// Layouts: each owns structure and scroll. `slots` is the slot table (slot, element, scroll); `demo` is the preview route
+// example (examples/<demo>.tsx). The methodology page is the core `layout` package (see layoutCore).
+export const layoutCore = {
+  slug: "index", title: "Layouts", pkg: "layout", exports: "LayoutSlot, LayoutNavProvider, LayoutNavTrigger, LayoutMobileNav, SkipLink, useLayoutScroll",
+  description: "The rules behind every GlobUI layout: a layout owns the scroll, a template fixes part of it, and a page only fills the slots.",
+}
+
+export const layouts = [
+  {
+    slug: "app-shell", title: "AppShellLayout", pkg: "app-shell-layout", exports: "AppShellLayout",
+    scrollMode: "app",
+    description: "An app shell for dashboards and admin apps. The viewport never scrolls: the header and sidebar stay in place, and only the main region scrolls.",
+    demo: "layouts/app-shell/default",
+    slots: [
+      ["header", "`<header>`", "fixed", "Brand, the navigation trigger on small screens, account."],
+      ["sidebar", "`<nav>`", "fixed", "Navigation. Hidden below `lg`, where it moves into a Sheet. Its list is the only scroller inside it."],
+      ["main", "`<main>`", "scroll", "The page. The one region that scrolls."],
+    ],
+    api: [{ name: "AppShellLayoutProps" }],
+    a11y: [
+      ["Skip to content", "The first Tab stop. Enter moves focus to `main`."],
+      ["Navigation trigger", "A button named \"Open navigation\" with `aria-expanded`. It opens the navigation in a Sheet below `lg`."],
+      ["Sheet", "Focus moves into the navigation. Escape returns focus to the trigger. A link inside it closes the Sheet."],
+    ],
+    aria: "Landmarks: `banner` for the header, `navigation` named by `sidebarLabel`, and one `main`. Only the main region is a keyboard stop for scrolling.",
+    extra: `## Mobile navigation
+
+Put \`LayoutNavTrigger\` in the \`header\`. It hides itself at \`lg\` and up, where the sidebar is shown inline. Below \`lg\` the \`sidebar\` content opens in a Sheet from the left.
+
+\`\`\`tsx
+<AppShellLayout header={<><LayoutNavTrigger /><Brand /></>} sidebar={<NavLinks />}>
+  <Page />
+</AppShellLayout>
+\`\`\`
+`,
+  },
+  {
+    slug: "page", title: "PageLayout", pkg: "page-layout", exports: "PageLayout, PageHeader",
+    scrollMode: "inside",
+    description: "A page inside a layout: a sticky header, the content, and an optional aside that sticks from `lg`. It sets no height and no overflow, and it is server-safe.",
+    demo: "layouts/page/default",
+    slots: [
+      ["header", "`<div>`", "fixed", "Sticks to the top of the nearest scroll region while the content scrolls."],
+      ["content", "`<div>`", "scroll", "Moves with the scroll region that contains the page."],
+      ["aside", "`<aside>`", "fixed", "Sticks from `lg`. Below `lg` it stacks under the content."],
+    ],
+    api: [{ name: "PageLayoutProps" }, { name: "PageHeaderProps" }],
+    a11y: [
+      ["PageHeader", "The title is an `h1`. Breadcrumbs sit above it: give them a `nav` with its own label."],
+      ["aside", "A complementary landmark. Give it a label when the page has more than one."],
+    ],
+    aria: "`PageHeader` renders the single `h1` of the page. Actions wrap onto a new line at 375 px.",
+    extra: `## Server-safe
+
+\`PageLayout\` and \`PageHeader\` have no client code, so they render in a Server Component. Put them inside a layout, for example the \`main\` of an \`AppShellLayout\`.
+`,
+  },
+  {
+    slug: "stacked", title: "StackedLayout", pkg: "stacked-layout", exports: "StackedLayout",
+    scrollMode: "document",
+    description: "A document layout: the page scrolls as a document, and the header stays visible. Use it for simple apps, portals and docs.",
+    demo: "layouts/stacked/default",
+    slots: [
+      ["header", "`<header>`", "fixed", "Sticks to the top of the document."],
+      ["main", "`<main>`", "scroll", "The page, in document flow. The document is the scroller."],
+      ["footer", "`<footer>`", "fixed", "At the end of the document. It is not a scroller."],
+    ],
+    api: [{ name: "StackedLayoutProps" }],
+    a11y: [
+      ["Skip to content", "The first Tab stop. Enter moves focus to `main`."],
+      ["mobileNav", "Opens from `LayoutNavTrigger` in a Sheet below `lg`, the same as the app shell."],
+    ],
+    aria: "Landmarks: `banner`, one `main`, and `contentinfo` for the footer. `useLayoutScroll()` returns `document.scrollingElement`.",
+  },
+]
+
+// Templates: registry copy-code only (templates/<name>/). `demo` is the preview example, `controls` the props panel on the page.
+export const templates = [
+  {
+    slug: "dashboard", title: "Dashboard template", name: "dashboard-template", exports: "DashboardTemplate", pkg: "dashboard-template",
+    layout: "AppShellLayout", file: "dashboard/dashboard-template.tsx",
+    description: "A dashboard: an app shell with a brand, a navigation and a user menu fixed, and a page header for each page.",
+    demo: "templates/dashboard/default",
+    fixed: ["Brand", "Navigation with `aria-current`", "User menu", "Navigation trigger on small screens"],
+    props: ["`title`, `description`, `breadcrumbs`, `actions`", "`activeHref`: the current page", "`children`: the page content"],
+    controls: [
+      { name: "title", label: "Title", type: "text", value: "Orders" },
+      { name: "description", label: "Description", type: "text", value: "Every order this month." },
+      { name: "activeHref", label: "Current page", type: "select", value: "/orders", options: ["/", "/orders", "/customers", "/settings"] },
+    ],
+  },
+  {
+    slug: "list-page", title: "List page template", name: "list-page-template", exports: "ListPageTemplate", pkg: "list-page-template",
+    layout: "PageLayout", file: "list-page/list-page-template.tsx",
+    description: "A list page: a page header with actions, and a DataTable with sorting, search, pagination, a loading state and an empty state.",
+    demo: "templates/list-page/default",
+    fixed: ["Header layout", "Toolbar position for filters", "Empty state", "Loading state"],
+    props: ["`title`, `description`, `actions`, `filters`", "`columns`, `data`, `loading`, `manual`, `rowCount`", "`state` and the change handlers"],
+    controls: [
+      { name: "title", label: "Title", type: "text", value: "Invoices" },
+      { name: "loading", label: "Loading", type: "boolean", value: false },
+      { name: "empty", label: "No rows", type: "boolean", value: false },
+    ],
+  },
+  {
+    slug: "detail-page", title: "Detail page template", name: "detail-page-template", exports: "DetailPageTemplate", pkg: "detail-page-template",
+    layout: "PageLayout", file: "detail-page/detail-page-template.tsx",
+    description: "A detail page: breadcrumbs, a back link and a title, the content, and a sticky aside card with the facts about the item.",
+    demo: "templates/detail-page/default",
+    fixed: ["Header layout with breadcrumbs and back link", "Aside card frame"],
+    props: ["`title`, `breadcrumbs`, `backHref`, `actions`", "`children`", "`aside`: the facts in the card"],
+    controls: [
+      { name: "title", label: "Title", type: "text", value: "Order 1042" },
+      { name: "aside", label: "Show aside", type: "boolean", value: true },
+    ],
+  },
+]

@@ -45,7 +45,7 @@ try {
   // 3. Add items from the registry, non-interactively. alert-dialog pulls dialog and button as
   // registry dependencies; progress needs the theme's keyframes; combobox and command
   // need both utils files (cn and the text matching).
-  const items = ["button", "dialog", "select", "toast", "alert-dialog", "progress", "combobox", "command", "calendar", "date-picker", "table", "pagination", "data-table"].map((n) => `${site}/r/${n}.json`)
+  const items = ["button", "dialog", "select", "toast", "alert-dialog", "progress", "combobox", "command", "calendar", "date-picker", "table", "pagination", "data-table", "app-shell-layout", "dashboard-template"].map((n) => `${site}/r/${n}.json`)
   sh("npx", ["--yes", "shadcn@4.23.0", "add", ...items, "--yes"], { cwd: app })
   log(`shadcn add ${items.length} items: OK`)
   const globals = readFileSync(path.join(app, "src/app/globals.css"), "utf8")
@@ -146,6 +146,24 @@ export function ClientPanel() {
 }
 `
   )
+  // The dashboard template (copied, with its layouts) on its own route: a full-height app shell and a page header.
+  mkdirSync(path.join(app, "src/app/dashboard"), { recursive: true })
+  writeFileSync(
+    path.join(app, "src/app/dashboard/page.tsx"),
+    `import { DashboardTemplate } from "@/components/templates/dashboard/dashboard-template"
+
+export default function Dashboard() {
+  return (
+    <DashboardTemplate title="Orders" activeHref="/orders">
+      <p>Copied from the registry.</p>
+    </DashboardTemplate>
+  )
+}
+`
+  )
+  const dashboard = readFileSync(path.join(app, "src/components/templates/dashboard/dashboard-template.tsx"), "utf8")
+  if (!dashboard.includes("data-template-part")) throw new Error("dashboard-template was not copied with its template markers")
+  log("dashboard-template copied: OK")
   const build = spawnSync("npx", ["next", "build"], { cwd: app, encoding: "utf8", env: { ...process.env, NEXT_TELEMETRY_DISABLED: "1" } })
   if (build.status !== 0) throw new Error("next build of the shadcn consumer failed:\n" + (build.stdout ?? "") + (build.stderr ?? ""))
   log("next build of the shadcn consumer: OK")

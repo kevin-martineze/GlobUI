@@ -1,0 +1,35 @@
+---
+title: "List page template"
+description: "A list page: a page header with actions, and a DataTable with sorting, search, pagination, a loading state and an empty state."
+---
+
+A template renders `PageLayout`, fixes part of it, and exposes props for the rest. It is copy-code: the file is yours to edit.
+
+## Preview
+
+**Anatomy** colours the fixed parts, the props, and the scroll region. The panel changes the props live; the fixed parts stay.
+
+<LayoutPreview slug="templates/list-page/default" kind="template" controls={"[{\"name\":\"title\",\"label\":\"Title\",\"type\":\"text\",\"value\":\"Invoices\"},{\"name\":\"loading\",\"label\":\"Loading\",\"type\":\"boolean\",\"value\":false},{\"name\":\"empty\",\"label\":\"No rows\",\"type\":\"boolean\",\"value\":false}]"} codeFiles="../../templates/list-page/list-page-template.tsx,examples/templates/list-page/default.tsx" />
+
+## Fixed and variable
+
+**Fixed by the template** (edit the constants at the top of the file):
+
+- Header layout
+- Toolbar position for filters
+- Empty state
+- Loading state
+
+**Props** (the variable part):
+
+- `title`, `description`, `actions`, `filters`
+- `columns`, `data`, `loading`, `manual`, `rowCount`
+- `state` and the change handlers
+
+## Install
+
+<RegistryCommand name="list-page-template" />
+
+## Code
+
+The template is one file, and a page uses it. The page sets only what varies: no heights, no overflow.

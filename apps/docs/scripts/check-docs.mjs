@@ -13,7 +13,15 @@ const problems = []
 
 // 1. Coverage
 const NOT_DOCUMENTED = new Set(["hooks", "utils", "all", "styles"])
-const UTILITY_PAGE = { slot: "utilities/slot.mdx", utils: "utilities/cn.mdx" }
+const UTILITY_PAGE = {
+  slot: "utilities/slot.mdx",
+  utils: "utilities/cn.mdx",
+  // Layout packages are documented on the Layouts pages (the core layout package on the methodology page).
+  layout: "layouts/index.mdx",
+  "app-shell-layout": "layouts/app-shell.mdx",
+  "page-layout": "layouts/page.mdx",
+  "stacked-layout": "layouts/stacked.mdx",
+}
 const packages = readdirSync(packagesDir).filter((dir) => existsSync(path.join(packagesDir, dir, "src/index.ts")))
 for (const pkg of packages) {
   if (NOT_DOCUMENTED.has(pkg)) continue
@@ -49,6 +57,13 @@ if (!existsSync(out)) {
         const html = readFileSync(full, "utf8")
         for (const [, href] of html.matchAll(/href="(\/[^"#?]*)(?:[#?][^"]*)?"/g)) {
           if (href.startsWith("/_next") || href.startsWith("/api/")) continue
+          // Preview routes are rendered on demand (not prerendered), so check that the demo exists in examples/.
+          if (href.startsWith("/preview/")) {
+            links++
+            const demo = href.slice("/preview/".length).replace(/\/$/, "")
+            if (!existsSync(path.join(docs, "examples", `${demo}.tsx`))) problems.push(`${path.relative(docs, full)}: no preview demo for ${href}`)
+            continue
+          }
           // Static files (icons, images) are checked against public/, not against pages.
           if (existsSync(path.join(docs, "public", href))) continue
           links++

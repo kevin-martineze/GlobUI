@@ -1,0 +1,8 @@
+{
+  "title": "Templates",
+  "pages": [
+    "dashboard",
+    "list-page",
+    "detail-page"
+  ]
+}

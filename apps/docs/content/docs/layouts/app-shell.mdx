@@ -1,0 +1,51 @@
+---
+title: "AppShellLayout"
+description: "An app shell for dashboards and admin apps. The viewport never scrolls: the header and sidebar stay in place, and only the main region scrolls."
+---
+
+<PackageInfo pkg="app-shell-layout" exports="AppShellLayout" />
+
+<InstallTabs pkg="app-shell-layout" />
+
+## Anatomy
+
+Each slot declares its scroll behaviour. Switch on **Anatomy** to see them, and **Fill with content** to see which region scrolls.
+
+<LayoutPreview slug="layouts/app-shell/default" kind="layout" codeFiles="examples/layouts/app-shell/default.tsx" />
+
+## Slots
+
+| Slot | Element | Scroll | Notes |
+| --- | --- | --- | --- |
+| `header` | `<header>` | fixed | Brand, the navigation trigger on small screens, account. |
+| `sidebar` | `<nav>` | fixed | Navigation. Hidden below `lg`, where it moves into a Sheet. Its list is the only scroller inside it. |
+| `main` | `<main>` | scroll | The page. The one region that scrolls. |
+
+- **fixed**: the slot never scrolls. It stays in place, or sticks.
+- **scroll**: the one region that scrolls for this part of the screen.
+
+## Mobile navigation
+
+Put `LayoutNavTrigger` in the `header`. It hides itself at `lg` and up, where the sidebar is shown inline. Below `lg` the `sidebar` content opens in a Sheet from the left.
+
+```tsx
+<AppShellLayout header={<><LayoutNavTrigger /><Brand /></>} sidebar={<NavLinks />}>
+  <Page />
+</AppShellLayout>
+```
+
+## API
+
+### AppShellLayoutProps
+
+<ApiTable pkg="app-shell-layout" name="AppShellLayoutProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Skip to content | The first Tab stop. Enter moves focus to `main`. |
+| Navigation trigger | A button named "Open navigation" with `aria-expanded`. It opens the navigation in a Sheet below `lg`. |
+| Sheet | Focus moves into the navigation. Escape returns focus to the trigger. A link inside it closes the Sheet. |
+
+**ARIA.** Landmarks: `banner` for the header, `navigation` named by `sidebarLabel`, and one `main`. Only the main region is a keyboard stop for scrolling.

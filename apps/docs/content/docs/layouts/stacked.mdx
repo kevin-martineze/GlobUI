@@ -1,0 +1,40 @@
+---
+title: "StackedLayout"
+description: "A document layout: the page scrolls as a document, and the header stays visible. Use it for simple apps, portals and docs."
+---
+
+<PackageInfo pkg="stacked-layout" exports="StackedLayout" />
+
+<InstallTabs pkg="stacked-layout" />
+
+## Anatomy
+
+Each slot declares its scroll behaviour. Switch on **Anatomy** to see them, and **Fill with content** to see which region scrolls.
+
+<LayoutPreview slug="layouts/stacked/default" kind="layout" codeFiles="examples/layouts/stacked/default.tsx" />
+
+## Slots
+
+| Slot | Element | Scroll | Notes |
+| --- | --- | --- | --- |
+| `header` | `<header>` | fixed | Sticks to the top of the document. |
+| `main` | `<main>` | scroll | The page, in document flow. The document is the scroller. |
+| `footer` | `<footer>` | fixed | At the end of the document. It is not a scroller. |
+
+- **fixed**: the slot never scrolls. It stays in place, or sticks.
+- **scroll**: the one region that scrolls for this part of the screen.
+
+## API
+
+### StackedLayoutProps
+
+<ApiTable pkg="stacked-layout" name="StackedLayoutProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Skip to content | The first Tab stop. Enter moves focus to `main`. |
+| mobileNav | Opens from `LayoutNavTrigger` in a Sheet below `lg`, the same as the app shell. |
+
+**ARIA.** Landmarks: `banner`, one `main`, and `contentinfo` for the footer. `useLayoutScroll()` returns `document.scrollingElement`.
