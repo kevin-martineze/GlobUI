@@ -123,3 +123,17 @@
     --glob-overlay: rgba(0, 0, 0, 0.7);
   }
 }
+
+/* Indeterminate progress: a bar that slides across its track. Used by @glob-ui/progress. */
+@theme {
+  --animate-glob-indeterminate: glob-indeterminate 1.5s ease-in-out infinite;
+
+  @keyframes glob-indeterminate {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(400%);
+    }
+  }
+}

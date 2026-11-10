@@ -1,2 +1,2 @@
-export { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "./dialog"
-export type { DialogProps, DialogTriggerProps, DialogContentProps, DialogHeaderProps, DialogTitleProps, DialogDescriptionProps, DialogFooterProps, DialogCloseProps } from "./dialog"
+export { Dialog, DialogTrigger, DialogContent, DialogContentBase, DialogCloseIcon, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose, dialogVariants } from "./dialog"
+export type { DialogProps, DialogTriggerProps, DialogContentProps, DialogContentBaseProps, DialogCloseIconProps, DialogHeaderProps, DialogTitleProps, DialogDescriptionProps, DialogFooterProps, DialogCloseProps } from "./dialog"
