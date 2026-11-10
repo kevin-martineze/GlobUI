@@ -1,8 +1,29 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="apps/docs/public/brand/logo-dark.svg">
+    <img alt="GlobUI" src="apps/docs/public/brand/logo-light.svg" height="56">
+  </picture>
+</p>
+
 # GlobUI
 
 A React component library. Next.js 16 (docs site), React 19, TypeScript, Tailwind CSS 4, pnpm workspaces.
 
-The packages are not published to npm yet. Releasing and publishing: [RELEASING.md](RELEASING.md). Deploying the docs site: [DEPLOY.md](DEPLOY.md).
+[![npm version](https://img.shields.io/npm/v/@glob-ui/all)](https://www.npmjs.com/package/@glob-ui/all)
+[![license](https://img.shields.io/npm/l/@glob-ui/all)](./LICENSE)
+
+Status: **published on npm (0.1.0)**. All 30 `@glob-ui/*` packages share one version.
+
+## Install
+
+```bash
+pnpm add @glob-ui/button        # one component
+pnpm add @glob-ui/all           # every component
+```
+
+npm, yarn and bun work too (`npm install`, `yarn add`, `bun add`). Then set up Tailwind: see the [installation guide](apps/docs/content/docs/installation.mdx).
+
+Releasing and publishing: [RELEASING.md](RELEASING.md). Deploying the docs site: [DEPLOY.md](DEPLOY.md).
 
 ## Install and develop
 

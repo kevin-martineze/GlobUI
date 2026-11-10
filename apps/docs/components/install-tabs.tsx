@@ -19,10 +19,22 @@ export function RegistryCommand({ name }: { name: string }) {
 /** npm and copy-code installation for one component page. */
 export function InstallTabs({ pkg }: { pkg: string }) {
   return (
-    <Tabs items={["npm", "Copy code"]} defaultValue="npm" className="my-4">
-      <Tab value="npm">
-        <DynamicCodeBlock lang="bash" code={`pnpm add @glob-ui/${pkg}`} />
-        <p className="mt-2 text-sm text-fd-muted-foreground">Not on npm yet: see the installation guide. Once published, this is the command.</p>
+    <Tabs items={["Packages", "Copy code"]} defaultValue="Packages" className="my-4">
+      <Tab value="Packages">
+        <Tabs items={["pnpm", "npm", "yarn", "bun"]} defaultValue="pnpm" groupId="package-manager" persist>
+          <Tab value="pnpm">
+            <DynamicCodeBlock lang="bash" code={`pnpm add @glob-ui/${pkg}`} />
+          </Tab>
+          <Tab value="npm">
+            <DynamicCodeBlock lang="bash" code={`npm install @glob-ui/${pkg}`} />
+          </Tab>
+          <Tab value="yarn">
+            <DynamicCodeBlock lang="bash" code={`yarn add @glob-ui/${pkg}`} />
+          </Tab>
+          <Tab value="bun">
+            <DynamicCodeBlock lang="bash" code={`bun add @glob-ui/${pkg}`} />
+          </Tab>
+        </Tabs>
       </Tab>
       <Tab value="Copy code">
         <RegistryCommand name={registryName(pkg)} />

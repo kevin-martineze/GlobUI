@@ -2,7 +2,9 @@
 
 Every `@glob-ui/*` package is published at **one shared version** (the `fixed` group in `.changeset/config.json`). Changesets bumps them together, and CI publishes them with npm **trusted publishing** (OIDC): there is no `NPM_TOKEN` secret, and each release carries provenance.
 
-Nothing is published yet. The `@glob-ui` npm organisation does not exist. The release workflow does nothing until you turn it on (step 5 below).
+Status: all 30 packages are published at `0.1.0`. The first publish was done by hand (step 2); the CI release workflow is on once `NPM_PUBLISH_ENABLED` is set (step 5 below).
+
+TODO after the docs site is deployed: update the homepage and docs links in the package READMEs and `package.json`, then run `pnpm sync:packages`.
 
 ## One-time setup (you do these steps)
 
