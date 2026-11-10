@@ -45,7 +45,7 @@ try {
   // 3. Add items from the registry, non-interactively. alert-dialog pulls dialog and button as
   // registry dependencies; progress needs the theme's keyframes; combobox and command
   // need both utils files (cn and the text matching).
-  const items = ["button", "dialog", "select", "toast", "alert-dialog", "progress", "combobox", "command"].map((n) => `${site}/r/${n}.json`)
+  const items = ["button", "dialog", "select", "toast", "alert-dialog", "progress", "combobox", "command", "calendar", "date-picker"].map((n) => `${site}/r/${n}.json`)
   sh("npx", ["--yes", "shadcn@4.23.0", "add", ...items, "--yes"], { cwd: app })
   log(`shadcn add ${items.length} items: OK`)
   const globals = readFileSync(path.join(app, "src/app/globals.css"), "utf8")
@@ -60,6 +60,7 @@ import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription } 
 import { Select } from "@/components/glob-ui/select"
 import { Toaster } from "@/components/glob-ui/toast"
 import { Combobox } from "@/components/glob-ui/combobox"
+import { DatePicker } from "@/components/glob-ui/date-picker"
 import { Command, CommandInput, CommandList, CommandItem, CommandEmpty } from "@/components/glob-ui/command"
 import { Progress } from "@/components/glob-ui/progress"
 import {
@@ -88,6 +89,7 @@ export default function Home() {
       </Dialog>
       <Select aria-label="Plain select" options={[{ value: "a", label: "Alpha" }]} defaultValue="a" />
       <Combobox aria-label="Framework" options={[{ value: "next", label: "Next.js" }]} />
+      <DatePicker aria-label="Due date" defaultValue="2026-11-09" name="due" />
       <Command>
         <CommandInput placeholder="Search" />
         <CommandList>

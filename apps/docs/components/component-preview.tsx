@@ -18,7 +18,7 @@ export function ComponentPreview({ name }: { name: string }) {
   return (
     <Tabs items={["Preview", "Code"]} defaultValue="preview" className="my-4">
       <Tab value="Preview">
-        <div className="flex min-h-40 flex-wrap items-center justify-center gap-4 overflow-x-auto rounded-xl border border-fd-border bg-fd-background p-6">
+        <div className="not-prose flex min-h-40 flex-wrap items-center justify-center gap-4 overflow-x-auto rounded-xl border border-fd-border bg-fd-background p-6">
           <Example />
         </div>
       </Tab>

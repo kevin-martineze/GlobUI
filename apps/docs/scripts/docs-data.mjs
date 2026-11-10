@@ -517,6 +517,49 @@ export const components = [
     ],
     aria: "The search field is `role=\"combobox\"` with `aria-activedescendant`; the list is `role=\"listbox\"`, items are `role=\"option\"`, groups are `role=\"group\"` named by their heading. `CommandDialog` is a modal named by a visually hidden title (its `label`). Put `CommandEmpty` outside `CommandList`.",
   },
+  {
+    group: "Forms", slug: "calendar", title: "Calendar", pkg: "calendar", exports: "Calendar, toISODate, parseISODate, addDays, addMonths, isSameDay, compareISODate, todayISODate",
+    description: "A month grid for picking one day or a range of days. Values are ISO date strings (\"YYYY-MM-DD\"), so they serialize and compare without time zones.",
+    main: "calendar/default",
+    examples: [
+      { title: "Range", name: "calendar/range", text: "`mode=\"range\"` with `{ from, to }`. The first click sets `from`, the second sets `to` (swapped if earlier). Hover previews the range. `min`, `max` and disabled days can sit inside a range." },
+      { title: "Limits and disabled days", name: "calendar/min-max", text: "`min` and `max` disable the days outside them, and navigation stops at their months. `isDateDisabled` disables more days; they can still receive focus, but cannot be selected." },
+      { title: "Locale", name: "calendar/locale", text: "`locale` sets the month and weekday names and the first day of the week (from the locale; override it with `weekStartsOn`)." },
+    ],
+    api: [
+      { name: "CalendarSingleProps", label: "Calendar (single)" },
+      { name: "CalendarRangeProps", label: "Calendar (range)" },
+    ],
+    a11y: [
+      ["Tab", "Moves into the grid on one day (the selected day, else today). Tab again leaves it."],
+      ["Arrow keys", "Move one day (Left, Right) or one week (Up, Down). Focus crosses into another month, which becomes the visible one."],
+      ["Home, End", "First and last day of the week."],
+      ["PageUp, PageDown", "One month, on the same day (clamped to the month's length). Shift adds a year."],
+      ["Enter, Space", "Selects the focused day."],
+    ],
+    aria: "A `role=\"grid\"` table per month, named by its heading (a polite live region, so a month change is announced). Each day is a gridcell with a button. Selected days have `aria-selected`, today has `aria-current=\"date\"`, and disabled days have `aria-disabled` (focusable, not selectable).",
+  },
+  {
+    group: "Forms", slug: "date-picker", title: "Date picker", pkg: "date-picker", exports: "DatePicker",
+    description: "A date field. The trigger shows the value and opens a calendar in a popover, for one day or a range, with optional presets.",
+    main: "date-picker/default",
+    examples: [
+      { title: "Range with presets", name: "date-picker/range", text: "`mode=\"range\"` shows two months (stacked on small screens). The picker closes once the range is complete. `presets` add a column of buttons, such as Last 7 days." },
+      { title: "In a form", name: "date-picker/form", text: "`name` writes a hidden input: the ISO date for a single day, or an ISO 8601 interval (`2026-11-03/2026-11-09`) for a range. Empty while incomplete." },
+    ],
+    api: [
+      { name: "DatePickerSingleProps", label: "DatePicker (single)" },
+      { name: "DatePickerRangeProps", label: "DatePicker (range)" },
+      { name: "DatePickerPreset", label: "DatePickerPreset" },
+    ],
+    a11y: [
+      ["Enter, Space, ArrowDown on the trigger", "Opens the calendar, with focus on the selected day (or today)."],
+      ["Enter on a day", "Selects it and closes the picker; focus returns to the trigger. A range closes after its second day."],
+      ["Escape", "Closes the picker and returns focus to the trigger."],
+      ["Clear button", "Empties the value. It is a separate button beside the trigger."],
+    ],
+    aria: "The trigger is a button named by the Field label and its value. The calendar is a dialog named \"Choose a date\" (or \"Choose a date range\"). Because the value is shown in the name, a visual value is never hidden from assistive technology.",
+  },
 ]
 
 export const utilities = [
