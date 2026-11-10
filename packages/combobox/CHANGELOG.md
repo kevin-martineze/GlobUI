@@ -1,0 +1,20 @@
+# @glob-ui/combobox
+
+## 0.2.0
+
+### Minor Changes
+
+- d706a00: Add Combobox and Command (command palette)
+- b5a84ba: Add Calendar and DatePicker (single and range)
+- 88a9743: Add Table, Pagination and DataTable
+
+### Patch Changes
+
+- Updated dependencies [f55ac33]
+- Updated dependencies [d706a00]
+- Updated dependencies [b5a84ba]
+- Updated dependencies [88a9743]
+  - @glob-ui/hooks@0.2.0
+  - @glob-ui/input@0.2.0
+  - @glob-ui/spinner@0.2.0
+  - @glob-ui/utils@0.2.0
