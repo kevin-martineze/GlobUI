@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { registry } from "@/examples/registry"
 import { GITHUB_URL } from "@/lib/layout.shared"
+import { GlobUILogo } from "@/components/logo-mark"
 
 // Every demo is an example file from examples/, so the landing page never shows code that is not tested.
 const demos = [
@@ -37,7 +38,9 @@ export default function Home() {
   return (
     <main className="flex flex-col">
       <section className="mx-auto flex w-full max-w-5xl flex-col items-center gap-6 px-4 pt-20 pb-12 text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-fd-foreground sm:text-5xl">GlobUI</h1>
+        <h1>
+          <GlobUILogo title="GlobUI" className="h-16 w-auto text-fd-foreground sm:h-20" />
+        </h1>
         <p className="max-w-2xl text-lg text-fd-muted-foreground">
           An accessible React component library. Each component is its own package, styled with design tokens, and works
           in dark mode.

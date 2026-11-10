@@ -35,3 +35,7 @@ cd apps/docs && NEXT_PUBLIC_SITE_URL=https://glob-ui.example.com pnpm build && n
 ```
 
 The steps are the same as `vercel.json`; the only difference is the environment variable.
+
+## TODO
+
+- After deploy: update homepage + docs links, then `pnpm sync:packages`. The package READMEs and `package.json` still point to GitHub until then.

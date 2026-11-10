@@ -3,20 +3,53 @@ title: Installation
 description: Install GlobUI packages and set up Tailwind so the components are styled.
 ---
 
-<Callout type="warn" title="Not on npm yet">
-  Packages are not published to npm yet. The commands below are what they will be once they are. To use them now, depend on the workspace packages of this repository.
+<Callout title="Versions">
+  All `@glob-ui/*` packages share one version (currently 0.1.0). Install the same version of every package you use, or install `@glob-ui/all`, which brings in every component at the matching version.
 </Callout>
 
-<Tabs items={["npm", "Copy code"]}>
-  <Tab value="npm">
+<Tabs items={["Packages", "Copy code"]}>
+  <Tab value="Packages">
 
-Install one package per component, or everything at once:
+Install one package per component, or everything at once. Pick your package manager:
+
+<Tabs items={["pnpm", "npm", "yarn", "bun"]} defaultValue="pnpm" groupId="package-manager" persist>
+  <Tab value="pnpm">
 
 ```bash
 pnpm add @glob-ui/button
 # or every component
 pnpm add @glob-ui/all
 ```
+
+  </Tab>
+  <Tab value="npm">
+
+```bash
+npm install @glob-ui/button
+# or every component
+npm install @glob-ui/all
+```
+
+  </Tab>
+  <Tab value="yarn">
+
+```bash
+yarn add @glob-ui/button
+# or every component
+yarn add @glob-ui/all
+```
+
+  </Tab>
+  <Tab value="bun">
+
+```bash
+bun add @glob-ui/button
+# or every component
+bun add @glob-ui/all
+```
+
+  </Tab>
+</Tabs>
 
 Then set up Tailwind v4 once, in the global stylesheet. The first line brings in the design tokens. The `@source` line makes Tailwind generate the classes the packages use. Tailwind skips `node_modules` by default, so this line is required.
 
