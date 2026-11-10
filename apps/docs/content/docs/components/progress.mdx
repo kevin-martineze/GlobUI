@@ -1,0 +1,44 @@
+---
+title: "Progress"
+description: "A progress bar, determinate with a value or indeterminate while the length is unknown."
+---
+
+<PackageInfo pkg="progress" exports="Progress, progressVariants" />
+
+<InstallTabs pkg="progress" />
+
+## Preview
+
+<ComponentPreview name="progress/default" />
+
+## Examples
+
+### Tones
+
+`tone` is `primary` (default), `success`, `warning` or `danger`. `size` is `sm`, `md` (default) or `lg`.
+
+<ComponentPreview name="progress/tones" />
+
+### Indeterminate
+
+Pass `value={null}` (or leave it out) when the length is unknown. The bar slides; with reduced motion it pulses.
+
+<ComponentPreview name="progress/indeterminate" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### ProgressProps
+
+<ApiTable pkg="progress" name="ProgressProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Screen readers | `role="progressbar"` with `aria-valuemin`, `aria-valuemax`, `aria-valuenow` and `aria-valuetext`. |
+| Indeterminate | No `aria-valuenow`: the state is announced without a number. |
+| Values | Clamped to 0 through `max`. |
+
+**ARIA.** A progress bar needs a name: pass `aria-label`, or `aria-labelledby` pointing at a visible label. `getValueLabel` changes the text read instead of the number, for example "2 of 5 files".

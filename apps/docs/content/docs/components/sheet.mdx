@@ -1,0 +1,57 @@
+---
+title: "Sheet"
+description: "A panel that slides in from an edge. It is a Dialog: same focus handling, Escape, backdrop and scroll lock."
+---
+
+<PackageInfo pkg="sheet" exports="Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetFooter, SheetClose" />
+
+<InstallTabs pkg="sheet" />
+
+## Preview
+
+<ComponentPreview name="sheet/default" />
+
+## Examples
+
+### Sides
+
+`side` is `right` (default), `left`, `top` or `bottom`. Top and bottom are full width.
+
+<ComponentPreview name="sheet/sides" />
+
+### Sizes
+
+`size` is `sm`, `md` (default) or `lg` for `left` and `right`. It does not apply to `top` and `bottom`.
+
+<ComponentPreview name="sheet/sizes" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### Sheet
+
+<ApiTable pkg="sheet" name="SheetProps" />
+
+### SheetTrigger
+
+<ApiTable pkg="sheet" name="SheetTriggerProps" />
+
+### SheetContent
+
+<ApiTable pkg="sheet" name="SheetContentProps" />
+
+### SheetClose
+
+<ApiTable pkg="sheet" name="SheetCloseProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Enter, Space on the trigger | Opens the sheet. Focus moves inside. |
+| Tab, Shift+Tab | Cycle inside the sheet. The page behind is inert. |
+| Escape | Closes the sheet and returns focus to the trigger. |
+| Backdrop click | Closes the sheet. |
+
+**ARIA.** The sheet is a modal dialog named by `SheetTitle` and described by `SheetDescription`. Always include a title. Build your own modal on the same behaviour with `DialogContentBase` from `@glob-ui/dialog`.

@@ -1,5 +1,5 @@
 // End-to-end test of the copy-code registry: serves the docs (dev server) with the registry generated
-// for this local address, installs four items into a fresh Next 16 app with the shadcn CLI in
+// for this local address, installs six items into a fresh Next 16 app with the shadcn CLI in
 // non-interactive mode, then runs `next build` on that app.
 // Usage: node scripts/shadcn-e2e.mjs   (SMOKE_DIR overrides the work folder, PORT the docs port)
 import { spawn, spawnSync } from "node:child_process"
@@ -42,10 +42,14 @@ try {
   sh("npx", ["--yes", "shadcn@4.23.0", "init", "--defaults", "--yes"], { cwd: app })
   log("shadcn init: OK")
 
-  // 3. Add four items from the registry, non-interactively.
-  const items = ["button", "dialog", "select", "toast"].map((n) => `${site}/r/${n}.json`)
+  // 3. Add items from the registry, non-interactively. alert-dialog pulls dialog and button as
+  // registry dependencies; progress needs the theme's keyframes.
+  const items = ["button", "dialog", "select", "toast", "alert-dialog", "progress"].map((n) => `${site}/r/${n}.json`)
   sh("npx", ["--yes", "shadcn@4.23.0", "add", ...items, "--yes"], { cwd: app })
-  log("shadcn add button dialog select toast: OK")
+  log("shadcn add button dialog select toast alert-dialog progress: OK")
+  const globals = readFileSync(path.join(app, "src/app/globals.css"), "utf8")
+  if (!/@keyframes glob-indeterminate/.test(globals)) throw new Error("globals.css is missing @keyframes glob-indeterminate from the theme item")
+  log("theme keyframes in globals.css: OK")
 
   // 4. A page that uses them (server Button, client Dialog, Select and Toast), then next build.
   writeFileSync(
@@ -54,6 +58,16 @@ try {
 import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription } from "@/components/glob-ui/dialog"
 import { Select } from "@/components/glob-ui/select"
 import { Toaster } from "@/components/glob-ui/toast"
+import { Progress } from "@/components/glob-ui/progress"
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/glob-ui/alert-dialog"
 import { ClientPanel } from "./client-panel"
 
 export default function Home() {
@@ -70,6 +84,20 @@ export default function Home() {
         </DialogContent>
       </Dialog>
       <Select aria-label="Plain select" options={[{ value: "a", label: "Alpha" }]} defaultValue="a" />
+      <Progress aria-label="Server progress" value={40} />
+      <Progress aria-label="Loading" />
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <Button variant="outline">Delete</Button>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogTitle>Delete the item?</AlertDialogTitle>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction variant="danger">Delete</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
       <ClientPanel />
       <Toaster />
     </main>
