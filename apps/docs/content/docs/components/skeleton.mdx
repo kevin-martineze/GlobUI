@@ -1,0 +1,28 @@
+---
+title: "Skeleton"
+description: "A placeholder shape shown while content loads."
+---
+
+<PackageInfo pkg="skeleton" exports="Skeleton" />
+
+<InstallTabs pkg="skeleton" />
+
+## Preview
+
+<ComponentPreview name="skeleton/default" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### SkeletonProps
+
+<ApiTable pkg="skeleton" name="SkeletonProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Screen readers | `aria-hidden`. The skeleton is not announced. |
+
+**ARIA.** A skeleton is invisible to screen readers, so announce the loading state separately, for example with a `Spinner` that has an `aria-label`, or a visually hidden "Loading" text.

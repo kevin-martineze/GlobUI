@@ -1,7 +1,6 @@
 {
   "name": "@glob-ui/toast",
   "version": "0.1.0",
-  "private": true,
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch --no-clean"
@@ -11,13 +10,21 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
-    }
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./package.json": "./package.json"
   },
   "files": [
-    "dist/"
+    "dist/",
+    "LICENSE",
+    "README.md"
   ],
   "peerDependencies": {
     "react": "^19",
@@ -29,5 +36,34 @@
   },
   "devDependencies": {
     "tsup": "^8.5.1"
+  },
+  "description": "Short, timed messages. Call `toast()` from anywhere, and mount `<Toaster />` once.",
+  "keywords": [
+    "react",
+    "glob-ui",
+    "components",
+    "accessible",
+    "tailwind",
+    "toast"
+  ],
+  "license": "MIT",
+  "author": "Kevin Martínez E",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevin-martineze/GlobUI.git",
+    "directory": "packages/toast"
+  },
+  "homepage": "https://github.com/kevin-martineze/GlobUI#readme",
+  "bugs": {
+    "url": "https://github.com/kevin-martineze/GlobUI/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "sideEffects": false,
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18.18"
   }
 }

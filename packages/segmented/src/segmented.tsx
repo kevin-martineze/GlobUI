@@ -10,7 +10,7 @@ export interface SegmentedOption {
 }
 
 export interface SegmentedProps
-  extends Pick<React.HTMLAttributes<HTMLDivElement>, "id" | "aria-invalid" | "aria-describedby" | "aria-labelledby"> {
+  extends Pick<React.HTMLAttributes<HTMLDivElement>, "id" | "aria-invalid" | "aria-describedby" | "aria-labelledby" | "aria-label"> {
   options: SegmentedOption[]
   /** Controlled value. */
   value?: string
@@ -44,6 +44,7 @@ export function Segmented({
   "aria-invalid": ariaInvalid,
   "aria-describedby": ariaDescribedBy,
   "aria-labelledby": ariaLabelledBy,
+  "aria-label": ariaLabel,
 }: SegmentedProps) {
   const [current, setCurrent] = useControllableState<string>(value, defaultValue, onChange)
 
@@ -64,6 +65,7 @@ export function Segmented({
     <div
       id={id}
       role="radiogroup"
+      aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
       aria-invalid={ariaInvalid}

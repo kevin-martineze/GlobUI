@@ -1,0 +1,56 @@
+---
+title: Theming
+description: The design tokens, light and dark mode, and how to override them.
+---
+
+Every colour, radius and shadow in GlobUI is a CSS custom property with the `--glob-` prefix. The components use only the `glob-*` utilities (`bg-glob-surface`, `text-glob-text-secondary`), so changing a token changes every component.
+
+## Tokens
+
+Light values are the default. Dark values apply when `data-theme="dark"` is set on `<html>`, or when the user prefers a dark colour scheme and has not chosen a theme. The values below are read from `packages/styles/glob-ui.css` at build time.
+
+<TokenTable />
+
+## Which token for which text
+
+Use `--glob-text` for body text and `--glob-text-secondary` for helper text, placeholders, and icons that carry meaning (a chevron that shows an open list, for example). Both pass WCAG AA on every surface GlobUI uses, in light and dark.
+
+`--glob-muted` is for decorative use only (dividers, purely visual icons) and is not used for text. Its light value fails 4.5:1 on white, so it must not carry information.
+
+## Light and dark
+
+Set `data-theme="light"` or `data-theme="dark"` on `<html>` to force a theme. Leave it unset to follow the system.
+
+This site uses [next-themes](https://github.com/pacocoursey/next-themes) through Fumadocs' `RootProvider`, with `attribute: ["class", "data-theme"]`. One toggle then sets both the `dark` class that Fumadocs reads and the `data-theme` attribute that GlobUI reads. A blocking script in `<head>` sets the attribute before the first paint, so there is no flash.
+
+```tsx title="app/layout.tsx"
+import { RootProvider } from "fumadocs-ui/provider/next"
+
+<RootProvider theme={{ attribute: ["class", "data-theme"], defaultTheme: "system", enableSystem: true }}>
+  {children}
+</RootProvider>
+```
+
+Your app does not need Fumadocs. Without it, write the attribute yourself, for example with a small script that reads `localStorage` before paint.
+
+## Overriding tokens
+
+Redefine a token on `:root` after importing the styles. The later rule wins.
+
+```css title="app/globals.css"
+@import "@glob-ui/styles";
+
+:root {
+  --glob-primary: #0f766e;
+  --glob-primary-foreground: #ffffff;
+}
+
+:root[data-theme="dark"] {
+  --glob-primary: #5eead4;
+  --glob-primary-foreground: #042f2e;
+}
+```
+
+## Primary and its foreground
+
+`--glob-primary` is the brand colour (buttons, selected states). `--glob-primary-foreground` is the text colour on top of it. The default primary is a light orange, so its foreground is dark (`#171717`). White text on that orange fails contrast. If you change the primary, check that the foreground keeps at least 4.5:1 contrast with it.

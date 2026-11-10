@@ -1,0 +1,37 @@
+---
+title: "Switch"
+description: "An on/off control with `role=\"switch\"`, controlled or uncontrolled, with an optional form value."
+---
+
+<PackageInfo pkg="switch" exports="Switch, switchVariants" />
+
+<InstallTabs pkg="switch" />
+
+## Preview
+
+<ComponentPreview name="switch/default" />
+
+## Examples
+
+### In a form
+
+With `name`, a hidden input submits `value` while the switch is on.
+
+<ComponentPreview name="switch/form" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### SwitchProps
+
+<ApiTable pkg="switch" name="SwitchProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Space, Enter | Toggles the switch. |
+| Tab | Focuses it. |
+
+**ARIA.** `role="switch"` with `aria-checked`. Give it a name with `aria-label` or a visible label, for example a Field.

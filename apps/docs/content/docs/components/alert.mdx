@@ -1,0 +1,38 @@
+---
+title: "Alert"
+description: "A callout for information, success, warning or an error, with an icon."
+---
+
+<PackageInfo pkg="alert" exports="Alert, AlertTitle, AlertDescription, AlertIcon, alertVariants" />
+
+<InstallTabs pkg="alert" />
+
+## Preview
+
+<ComponentPreview name="alert/default" />
+
+## Examples
+
+### Variants
+
+`info`, `success`, `warning` and `danger`. Warning and danger are announced at once.
+
+<ComponentPreview name="alert/variants" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### AlertProps
+
+<ApiTable pkg="alert" name="AlertProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| default, info, success | `role="status"`: announced politely, after the current speech. |
+| warning, danger | `role="alert"`: announced at once. |
+| Icon | Decorative. It is hidden from assistive technology, so the title carries the meaning. |
+
+**ARIA.** Do not rely on colour alone: the icon and the title say what happened.

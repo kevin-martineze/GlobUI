@@ -1,9 +1,40 @@
 {
   "name": "@glob-ui/styles",
   "version": "0.1.0",
-  "private": true,
   "exports": {
-    ".": "./glob-ui.css"
+    ".": "./glob-ui.css",
+    "./package.json": "./package.json"
   },
-  "files": ["glob-ui.css"]
+  "files": [
+    "glob-ui.css",
+    "LICENSE",
+    "README.md"
+  ],
+  "description": "GlobUI design tokens (CSS custom properties) and the Tailwind theme mapping.",
+  "keywords": [
+    "react",
+    "glob-ui",
+    "tokens",
+    "tailwind",
+    "theme",
+    "styles"
+  ],
+  "license": "MIT",
+  "author": "Kevin Martínez E",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevin-martineze/GlobUI.git",
+    "directory": "packages/styles"
+  },
+  "homepage": "https://github.com/kevin-martineze/GlobUI#readme",
+  "bugs": {
+    "url": "https://github.com/kevin-martineze/GlobUI/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "sideEffects": [
+    "*.css"
+  ]
 }

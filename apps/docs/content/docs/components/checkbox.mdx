@@ -1,0 +1,43 @@
+---
+title: "Checkbox"
+description: "A native checkbox with a label, sizes, and an indeterminate state for groups."
+---
+
+<PackageInfo pkg="checkbox" exports="Checkbox, checkboxVariants" />
+
+<InstallTabs pkg="checkbox" />
+
+## Preview
+
+<ComponentPreview name="checkbox/default" />
+
+## Examples
+
+### Indeterminate
+
+`indeterminate` shows a dash. It is a DOM property, not a checked state, and the browser clears it on click.
+
+<ComponentPreview name="checkbox/indeterminate" />
+
+### Disabled
+
+Disabled checkboxes keep their checked state and are skipped by Tab.
+
+<ComponentPreview name="checkbox/disabled" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### CheckboxProps
+
+<ApiTable pkg="checkbox" name="CheckboxProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Space | Toggles the checkbox (native). |
+| Tab | Focuses it. Disabled checkboxes are skipped. |
+
+**ARIA.** The label is the accessible name. With a Field, the Field label and the checkbox label are both read, for example "Terms I accept the terms".

@@ -55,6 +55,12 @@ export function CountrySelect({ value, onChange, size = "md", disabled }: Countr
     onShow: () => searchRef.current?.focus({ preventScroll: true }),
   })
 
+  /** Closes the list and clears the search, so the next open starts from the full list. */
+  function closeList() {
+    setOpen(false)
+    setSearch("")
+  }
+
   function openList() {
     if (disabled) return
     listbox.setActiveKey(value)
@@ -63,7 +69,7 @@ export function CountrySelect({ value, onChange, size = "md", disabled }: Countr
 
   function commit(iso: string) {
     onChange(iso)
-    setOpen(false)
+    closeList()
   }
 
   function onTriggerKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
@@ -81,10 +87,10 @@ export function CountrySelect({ value, onChange, size = "md", disabled }: Countr
       if (listbox.activeItem) commit(listbox.activeItem.iso)
     } else if (e.key === "Escape") {
       e.preventDefault()
-      setOpen(false)
+      closeList()
     } else if (e.key === "Tab") {
       if (listbox.activeItem) onChange(listbox.activeItem.iso)
-      setOpen(false)
+      closeList()
     }
   }
 
@@ -116,7 +122,7 @@ export function CountrySelect({ value, onChange, size = "md", disabled }: Countr
         <span className="text-base leading-none" aria-hidden="true">{selected.flag}</span>
         <span className="text-glob-text-secondary">{selected.code}</span>
         <svg
-          className={cn("h-3 w-3 text-glob-muted transition-transform", open && "rotate-180")}
+          className={cn("h-3 w-3 text-glob-text-secondary transition-transform", open && "rotate-180")}
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -149,7 +155,7 @@ export function CountrySelect({ value, onChange, size = "md", disabled }: Countr
             aria-autocomplete="list"
             aria-activedescendant={listbox.activeDescendant}
             autoComplete="off"
-            className="w-full rounded-glob-sm border border-glob-border bg-glob-surface-secondary px-2 py-1.5 text-sm text-glob-text placeholder:text-glob-muted outline-none focus:ring-1 focus:ring-glob-ring"
+            className="w-full rounded-glob-sm border border-glob-border bg-glob-surface-secondary px-2 py-1.5 text-sm text-glob-text placeholder:text-glob-text-secondary outline-none focus:ring-1 focus:ring-glob-ring"
           />
         </div>
         <div id={listId} role="listbox" aria-label="Countries" className="relative max-h-60 overflow-y-auto p-1">
@@ -168,18 +174,19 @@ export function CountrySelect({ value, onChange, size = "md", disabled }: Countr
                 className={cn(
                   "flex w-full cursor-pointer items-center gap-3 rounded-glob-sm px-2 py-2 text-left text-sm select-none",
                   isActive && "bg-glob-surface-hover",
-                  isSelected && "text-glob-primary"
+                  // The selected row is marked by font weight; orange text on white fails contrast.
+                  isSelected && "font-medium"
                 )}
               >
                 <span className="text-base leading-none" aria-hidden="true">{country.flag}</span>
                 <span className="flex-1">{country.name}</span>
-                <span className="text-glob-text-secondary">{country.code}</span>
+                <span className="text-glob-text">{country.code}</span>
               </div>
             )
           })}
         </div>
         {filtered.length === 0 && (
-          <div role="status" className="px-3 py-4 text-center text-sm text-glob-muted">
+          <div role="status" className="px-3 py-4 text-center text-sm text-glob-text-secondary">
             No countries found
           </div>
         )}

@@ -1,0 +1,44 @@
+---
+title: "Toast"
+description: "Short, timed messages. Call `toast()` from anywhere, and mount `<Toaster />` once."
+---
+
+<PackageInfo pkg="toast" exports="toast, Toaster" />
+
+<InstallTabs pkg="toast" />
+
+## Preview
+
+<ComponentPreview name="toast/default" />
+
+## Examples
+
+### Action
+
+`action` adds a button. A sticky toast (`duration: Infinity`) stays until it is closed.
+
+<ComponentPreview name="toast/action" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### toast(options)
+
+<ApiTable pkg="toast" file="store.ts" name="ToastOptions" />
+
+### Toaster
+
+<ApiTable pkg="toast" file="toaster.tsx" name="ToasterProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Default, success, info | Announced politely through a live region (`role="status"`). |
+| Warning, error | Announced at once through `role="alert"`. |
+| Hover or focus inside the list | Pauses the timer. It resumes when the pointer and focus leave. |
+| Close button | Named "Close notification". Dismisses the toast. |
+| Action button | Runs the action, then dismisses the toast unless `preventDefault()` is called. |
+
+**ARIA.** The two live regions are always in the page, so screen readers pick up toasts reliably. A toast over an open dialog is still clickable: the Toaster moves into the dialog while one is open.

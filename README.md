@@ -1,27 +1,37 @@
 # GlobUI
 
-A React component library. Next.js 16 (showcase), React 19, TypeScript, Tailwind CSS 4, pnpm workspaces.
+A React component library. Next.js 16 (docs site), React 19, TypeScript, Tailwind CSS 4, pnpm workspaces.
 
-The packages are not published yet (`"private": true`). Consume them from this workspace for now.
+The packages are not published to npm yet. Releasing and publishing: [RELEASING.md](RELEASING.md). Deploying the docs site: [DEPLOY.md](DEPLOY.md).
 
 ## Install and develop
 
 ```bash
 pnpm install
-pnpm dev          # builds every package once, then watches packages and runs the showcase
+pnpm dev          # builds every package once, then watches the packages and runs the docs site
 ```
 
-Open http://localhost:3000 for the component showcase.
+Open http://localhost:3000 for the docs site: the component pages are the reference, with live examples.
 
 | Script | What it does |
 | --- | --- |
 | `pnpm dev` | Builds packages, then runs `dev:watch` |
-| `pnpm dev:watch` | Runs `tsup --watch --no-clean` in every package plus `next dev` in the showcase |
+| `pnpm dev:watch` | Runs `tsup --watch --no-clean` in every package plus `next dev` in apps/docs |
 | `pnpm build:packages` | Builds every `@glob-ui/*` package into its `dist/` |
-| `pnpm build` | Builds packages, then the showcase |
+| `pnpm build` | Builds packages, runs the directive check, then builds the docs site and checks it |
+| `pnpm build:docs` | Builds the docs site (MDX, examples, copy-code registry) and runs `check:docs` |
+| `pnpm check:docs` | Every public package has a page; no broken internal link in the built site |
+| `pnpm check:packages` | publint and attw on every package tarball, plus release metadata |
+| `pnpm sync:packages` | Writes each package's LICENSE copy, README and release metadata |
+| `pnpm changeset` | Adds a changeset (a note for the next release) |
 | `pnpm lint` | ESLint over the whole repo (must print nothing) |
+| `pnpm test` | Runs the unit and browser test projects once |
+| `pnpm test:unit` | Node tests only (pure logic and SSR smoke) |
+| `pnpm test:browser` | Browser tests only (Chromium, headless) |
+| `pnpm test:watch` | Vitest in watch mode |
+| `pnpm check:directives` | Asserts `"use client"` is present in client builds and absent from server builds (runs in `pnpm build`) |
 
-Packages are consumed through `dist/`. The showcase reads `dist/`, so keep `dev:watch` running while you edit a package, or rebuild it.
+Packages are consumed through `dist/`. The docs site reads `dist/`, so keep `dev:watch` running while you edit a package, or rebuild it.
 
 ### Adding a package
 
@@ -29,7 +39,7 @@ Packages are consumed through `dist/`. The showcase reads `dist/`, so keep `dev:
 2. Name it `@glob-ui/<name>` and add `"private": true`.
 3. Declare every workspace dependency as `"workspace:*"`. Put React in `peerDependencies`.
 4. List every dependency in the tsup `external` array.
-5. Register it in three places: `packages/all` (dependency, `external`, re-export in `src/index.ts`), `apps/showcase/package.json`, and a section in `apps/showcase/src/app/page.tsx`.
+5. Register it in `packages/all` (dependency, `external`, re-export in `src/index.ts`), add it to `apps/docs/package.json`, and add its page: an entry in `apps/docs/scripts/docs-data.mjs`, then `node apps/docs/scripts/write-component-pages.mjs` and `pnpm sync:packages`. Examples go in `apps/docs/examples/<component>/`.
 6. Run `pnpm install`, then `pnpm build` and `pnpm lint`.
 
 ## Architecture
@@ -43,6 +53,34 @@ Packages are consumed through `dist/`. The showcase reads `dist/`, so keep `dev:
   - `@glob-ui/styles`: the design tokens and the Tailwind theme mapping.
 - **Client and server.** Components that hold state or handlers start with `"use client"`. esbuild drops module-level directives when it bundles, so each client package's `tsup.config.ts` sets `banner: { js: '"use client"' }`. Without it, Next treats the component as server code and breaks. Server-only packages have no banner.
 - **Toast is split.** `toast()` works from server code (it is a no-op there). `Toaster` is a separate client module, built as `dist/toaster.*`.
+
+
+## Tests
+
+Tests use Vitest 5 with two projects, configured in `vitest.config.mts`:
+
+- **unit** (Node): pure logic (`cn`, `mergeProps`, `composeRefs`, the toast store) and SSR smoke tests (`renderToString` must not throw for server-safe components).
+- **browser** (Vitest browser mode, Chromium via `@vitest/browser-playwright`): every interactive component, with real keyboard and focus through `userEvent`, and axe-core checks through `tests/browser/a11y.ts`. Components need a real browser: jsdom has no `<dialog>` modal, popover API or layout.
+
+Tests import package sources (`@glob-ui/<pkg>` resolves to `packages/<pkg>/src/index.ts`), so `pnpm test` does not need a build. Test files sit next to the code:
+
+| File | Project |
+| --- | --- |
+| `src/<name>.test.ts` | unit |
+| `src/<name>.ssr.test.tsx` | unit (SSR) |
+| `src/<name>.browser.test.tsx` | browser |
+
+Install the Chromium binary once per machine (CI does this too):
+
+```bash
+pnpm exec playwright install chromium
+# Linux only, if the browser fails to start for missing system libraries:
+pnpm exec playwright install-deps chromium
+```
+
+Write tests against roles and accessible names (`getByRole`), not CSS classes, and avoid snapshots and sleeps. For delays use fake timers and drive React with `flush()` (see `packages/tooltip/src/tooltip.browser.test.tsx`).
+
+CI (`.github/workflows/ci.yml`) runs install (frozen lockfile), lint, build (with the directive check), and test on every push and pull request.
 
 ## Tokens
 
@@ -65,7 +103,7 @@ Dark values are set in two places in `packages/styles/glob-ui.css`:
 - `:root[data-theme="dark"]`, for an explicit choice.
 - `@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { ... } }`, when the user has no explicit choice.
 
-Set `data-theme="light"` or `data-theme="dark"` on `<html>` to force a theme. The showcase does this from a stored choice, with an inline script in `<head>` so there is no flash. Colour values use plain `var()` values instead of `light-dark()` because Safari 17.5 lacks it.
+Set `data-theme="light"` or `data-theme="dark"` on `<html>` to force a theme. The docs site does this from a stored choice, with an inline script in `<head>` so there is no flash. Colour values use plain `var()` values instead of `light-dark()` because Safari 17.5 lacks it.
 
 ### Tailwind setup for consumers
 
@@ -142,6 +180,6 @@ toast.dismiss()
 - **Client boundary.** Add `"use client"` to a component only when it uses state, effects or handlers. Keep the banner in `tsup.config.ts` for every client package.
 - **Verification before you send a change.**
   1. `pnpm build` and `pnpm lint` both pass with no output from lint.
-  2. In the showcase, check the component with the keyboard alone: Tab in, arrows, Enter/Space, Escape, Tab out.
+  2. In the docs site, check the component with the keyboard alone: Tab in, arrows, Enter/Space, Escape, Tab out.
   3. Check it in both themes.
   4. For form controls, submit a native form and confirm `FormData` contains the named values.

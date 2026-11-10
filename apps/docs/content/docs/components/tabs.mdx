@@ -1,0 +1,51 @@
+---
+title: "Tabs"
+description: "Switch between panels. Underline and pill variants, horizontal or vertical."
+---
+
+<PackageInfo pkg="tabs" exports="Tabs, TabsList, TabsTrigger, TabsContent" />
+
+<InstallTabs pkg="tabs" />
+
+## Preview
+
+<ComponentPreview name="tabs/default" />
+
+## Examples
+
+### Pill, vertical
+
+`variant="pill"` and `orientation="vertical"`. Arrow keys follow the orientation.
+
+<ComponentPreview name="tabs/pill-vertical" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### Tabs
+
+<ApiTable pkg="tabs" name="TabsProps" />
+
+### TabsList
+
+<ApiTable pkg="tabs" name="TabsListProps" />
+
+### TabsTrigger
+
+<ApiTable pkg="tabs" name="TabsTriggerProps" />
+
+### TabsContent
+
+<ApiTable pkg="tabs" name="TabsContentProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Tab | Enters the tab list on the selected tab. Only one tab is in the tab order. |
+| Arrow keys (Left and Right, or Up and Down when vertical) | Move to the next or previous tab, and select it. The list loops. |
+| Home, End | Move to the first or last enabled tab. |
+| Disabled tab | Skipped. |
+
+**ARIA.** The list is `role="tablist"` with `aria-orientation`. Each trigger is `role="tab"` with `aria-selected` and `aria-controls`. The panel is `role="tabpanel"`. If `value` matches no tab, the first enabled tab takes the tab stop.

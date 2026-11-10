@@ -9,7 +9,7 @@ const eslintConfig = defineConfig([
     settings: {
       // Monorepo: tell @next/eslint-plugin-next where the Next app lives.
       next: {
-        rootDir: "apps/showcase/",
+        rootDir: "apps/docs/",
       },
       // The root has no react package, so "detect" cannot resolve it.
       react: {
@@ -25,6 +25,8 @@ const eslintConfig = defineConfig([
     "**/dist/**",
     "**/node_modules/**",
     "**/next-env.d.ts",
+    // Fumadocs writes these files from source.config.ts; they are not hand-written.
+    "**/.source/**",
   ]),
 ]);
 

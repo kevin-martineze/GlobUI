@@ -1,0 +1,43 @@
+---
+title: "Input"
+description: "A single-line text field with sizes, invalid styling and focus rings."
+---
+
+<PackageInfo pkg="input" exports="Input, inputVariants" />
+
+<InstallTabs pkg="input" />
+
+## Preview
+
+<ComponentPreview name="input/default" />
+
+## Examples
+
+### With a Field
+
+`Field` wires the label, description and error to the input.
+
+<ComponentPreview name="input/with-field" />
+
+### Sizes and disabled
+
+`size` is `sm`, `md` or `lg`. Disabled inputs are skipped by Tab.
+
+<ComponentPreview name="input/states" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### InputProps
+
+<ApiTable pkg="input" name="InputProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Tab | Focuses the input. Disabled inputs are skipped. |
+| Typing | Native text editing. The browser handles the caret, selection and autofill. |
+
+**ARIA.** The input is a native `<input>`, so it needs a name. Use `Field`, or pass `aria-label`. When `aria-invalid` is set, the error styling and the screen reader state both follow.

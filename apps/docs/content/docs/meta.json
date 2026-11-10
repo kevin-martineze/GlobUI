@@ -1,0 +1,4 @@
+{
+  "title": "Documentation",
+  "pages": ["---Getting started---", "index", "installation", "theming", "server-and-client", "---Components---", "components", "---Utilities---", "utilities"]
+}

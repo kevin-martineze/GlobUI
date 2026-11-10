@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@glob-ui/utils"
 
 const avatarVariants = cva(
-  "relative inline-flex shrink-0 select-none items-center justify-center overflow-hidden bg-glob-surface-hover font-medium text-glob-text-secondary",
+  "relative inline-flex shrink-0 select-none items-center justify-center overflow-hidden bg-glob-surface-hover font-medium text-glob-text",
   {
     variants: {
       size: {

@@ -67,7 +67,7 @@ const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
             disabled={disabled}
             placeholder={placeholder ?? "555 000 0000"}
             className={cn(
-              "h-full flex-1 bg-transparent text-glob-text outline-none placeholder:text-glob-muted",
+              "h-full flex-1 bg-transparent text-glob-text outline-none placeholder:text-glob-text-secondary",
               inputSizeStyles[size ?? "md"]
             )}
             {...props}

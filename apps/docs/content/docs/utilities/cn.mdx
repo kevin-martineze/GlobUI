@@ -1,0 +1,22 @@
+---
+title: "cn()"
+description: "Joins class names and merges Tailwind classes, so the last conflicting class wins. It knows the GlobUI radius and shadow scales."
+---
+
+<PackageInfo pkg="utils" exports="cn" />
+
+<InstallTabs pkg="utils" />
+
+## Preview
+
+<ComponentPreview name="cn/default" />
+
+## Usage
+
+```ts
+import { cn } from "@glob-ui/utils"
+
+cn("rounded-glob-md p-2", isActive && "bg-glob-surface-hover", className)
+```
+
+Falsy values are ignored. Without the GlobUI scales, `rounded-glob-md` and `rounded-full` would both survive; with them, the later one wins.

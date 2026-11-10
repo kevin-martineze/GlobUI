@@ -1,0 +1,6 @@
+/* Test-only stylesheet: the same Tailwind + tokens the docs site uses, so classes such as
+   hidden, inert, opacity and transitions behave as in production. */
+@import "tailwindcss";
+@import "../../packages/styles/glob-ui.css";
+
+@source "../../packages/*/src/**/*.{ts,tsx}";

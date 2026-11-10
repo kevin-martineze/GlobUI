@@ -1,0 +1,42 @@
+---
+title: "Avatar"
+description: "A user picture with initials as the fallback, and a stacked group with an overflow count."
+---
+
+<PackageInfo pkg="avatar" exports="Avatar, AvatarGroup, avatarVariants" />
+
+<InstallTabs pkg="avatar" />
+
+## Preview
+
+<ComponentPreview name="avatar/default" />
+
+## Examples
+
+### Group
+
+`AvatarGroup` stacks avatars and shows the rest as a count, set by `max`.
+
+<ComponentPreview name="avatar/group" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### AvatarProps
+
+<ApiTable pkg="avatar" name="AvatarProps" />
+
+### AvatarGroupProps
+
+<ApiTable pkg="avatar" name="AvatarGroupProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Loaded image | A real image with `alt` text. |
+| Loading or failed image | Shows the fallback (initials from `alt`). The wrapper is `role="img"` named by `alt`. |
+| Group | `role="group"`. The overflow count is `role="img"` named "N more". |
+
+**ARIA.** Pass `alt` with the person's name, so the fallback is still named. The fallback initials are hidden from assistive technology.

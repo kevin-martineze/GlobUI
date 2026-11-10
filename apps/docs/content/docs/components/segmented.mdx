@@ -1,0 +1,41 @@
+---
+title: "Segmented control"
+description: "A row of mutually exclusive options that looks like a control group, for example Day, Week, Month."
+---
+
+<PackageInfo pkg="segmented" exports="Segmented" />
+
+<InstallTabs pkg="segmented" />
+
+## Preview
+
+<ComponentPreview name="segmented/default" />
+
+## Examples
+
+### Sizes
+
+`size` is `sm`, `md` or `lg`.
+
+<ComponentPreview name="segmented/sizes" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### SegmentedProps
+
+<ApiTable pkg="segmented" name="SegmentedProps" />
+
+### Option
+
+<ApiTable pkg="segmented" name="SegmentedOption" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Tab | Enters the group on the checked option. Only one option is in the tab order. |
+| Arrow keys | Move to the next or previous option, select it, and wrap. Disabled options are skipped. |
+
+**ARIA.** The group is `role="radiogroup"` and each option is `role="radio"` with `aria-checked`. Name it with `aria-label`.

@@ -1,0 +1,37 @@
+---
+title: "Phone input"
+description: "A telephone field with a country picker. The picker searches by country name, dial code and ISO code."
+---
+
+<PackageInfo pkg="phone-input" exports="PhoneInput, phoneInputVariants" />
+
+<InstallTabs pkg="phone-input" />
+
+## Preview
+
+<ComponentPreview name="phone-input/default" />
+
+## Examples
+
+### With a Field
+
+`Field` labels the telephone input and shows its error.
+
+<ComponentPreview name="phone-input/with-field" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### PhoneInputProps
+
+<ApiTable pkg="phone-input" name="PhoneInputProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Country picker | A combobox named "Country code". Works like Select: Enter or ArrowDown opens it, typing searches by name, dial code or ISO code, Enter selects, Escape closes. |
+| Telephone input | A native `type="tel"` input. Name it with `Field` or `aria-label`. |
+
+**ARIA.** The country picker is a combobox with a listbox, as in Select. The telephone input is a native input, so the Field label, description and error apply to it.

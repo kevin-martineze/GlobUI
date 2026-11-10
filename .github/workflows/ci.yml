@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+# A newer push to the same branch or PR cancels the run still in progress.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      # The pnpm version comes from the "packageManager" field in package.json.
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Cache the Playwright browser binaries, keyed by the lockfile (which pins the Playwright version).
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+
+      # Browser system dependencies are needed on every run, even when the binaries are cached.
+      - name: Install Playwright system dependencies
+        run: pnpm exec playwright install-deps chromium
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+
+      - name: Lint
+        run: pnpm lint
+
+      # Builds every package, then asserts client/server "use client" banners, then builds the docs site.
+      - name: Build
+        run: pnpm build
+
+      - name: Check docs (every package has a page, no broken links)
+        run: pnpm check:docs
+
+      - name: Check packages (publint, attw, metadata)
+        run: pnpm check:packages
+
+      # Installs the packed tarballs into fresh Next and Vite apps (outside the repo) and builds them.
+      - name: Consumer smoke test (Next and Vite, tarballs)
+        run: node scripts/consumer-smoke.mjs
+
+      # Serves the docs registry and installs items with the shadcn CLI into a fresh Next app.
+      - name: shadcn registry end-to-end
+        run: node scripts/shadcn-e2e.mjs
+
+      - name: Test
+        run: pnpm test

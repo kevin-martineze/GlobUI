@@ -1,0 +1,57 @@
+---
+title: "Button"
+description: "A button that can render as a link, and shows a loading state without changing its width."
+---
+
+<PackageInfo pkg="button" exports="Button, buttonVariants" />
+
+<InstallTabs pkg="button" />
+
+## Preview
+
+<ComponentPreview name="button/default" />
+
+## Examples
+
+### Variants
+
+`primary`, `secondary`, `outline` and `ghost`.
+
+<ComponentPreview name="button/variants" />
+
+### Sizes
+
+`sm`, `md` (default) and `lg`.
+
+<ComponentPreview name="button/sizes" />
+
+### States
+
+`disabled` is not focusable. `loading` keeps the label width, sets `aria-busy` and disables the button.
+
+<ComponentPreview name="button/states" />
+
+### As a link
+
+`asChild` renders the single child (here an `<a>`) with the button styles and props.
+
+<ComponentPreview name="button/as-child" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### ButtonProps
+
+<ApiTable pkg="button" name="ButtonProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Enter, Space | Activates the button (native button behaviour). |
+| Tab | Moves focus to the button. Disabled buttons are skipped. |
+| loading | Sets `aria-busy="true"` and disables the button, so it cannot be activated twice. |
+| asChild | Sets `aria-disabled` instead of `disabled`, because a link has no disabled state. |
+
+**ARIA.** A text button needs a visible label, or an `aria-label` when it has only an icon. The spinner shown while `loading` does not change the accessible name.

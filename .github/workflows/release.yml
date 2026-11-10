@@ -1,0 +1,61 @@
+name: Release
+
+# Opens or updates the "Version Packages" PR while changesets exist on main. When that PR is merged,
+# the same workflow publishes the new versions to npm.
+#
+# Publishing uses npm trusted publishing (OIDC): no NPM_TOKEN secret. Provenance is attached
+# automatically through publishConfig.provenance.
+#
+# The job runs only when the repository variable NPM_PUBLISH_ENABLED is "true". Until the @glob-ui
+# npm organisation exists and the first version is published by hand (see RELEASING.md), leave it unset.
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
+
+jobs:
+  release:
+    if: vars.NPM_PUBLISH_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.14
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+
+      # Trusted publishing needs npm CLI 11.5.1 or newer. Node 22.14 bundles an older npm.
+      - name: Upgrade npm for trusted publishing
+        run: npm install -g npm@^11.5.1 && npm --version
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify before releasing
+        run: pnpm lint && pnpm build && pnpm check:packages && pnpm test
+
+      - name: Version or publish
+        uses: changesets/action@v1
+        with:
+          version: pnpm changeset version
+          publish: pnpm release
+          commit: "chore: version packages"
+          title: "chore: version packages"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

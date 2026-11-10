@@ -13,6 +13,7 @@ type Panel = ReturnType<typeof useFloatingPanel>
 interface PopoverContextValue {
   open: boolean
   contentId: string
+  triggerId: string
   panel: Panel
 }
 
@@ -38,6 +39,7 @@ export interface PopoverProps {
 function Popover({ open, defaultOpen = false, onOpenChange, placement = "bottom", offset = 8, children }: PopoverProps) {
   const [isOpen, setOpen] = useControllableState(open, defaultOpen, onOpenChange)
   const contentId = useId()
+  const triggerId = useId()
   const panel = useFloatingPanel({
     open: isOpen,
     onOpenChange: setOpen,
@@ -47,7 +49,7 @@ function Popover({ open, defaultOpen = false, onOpenChange, placement = "bottom"
     onShow: (el) => (el.querySelector<HTMLElement>(FOCUSABLE) ?? el).focus({ preventScroll: true }),
   })
 
-  return <PopoverContext.Provider value={{ open: isOpen, contentId, panel }}>{children}</PopoverContext.Provider>
+  return <PopoverContext.Provider value={{ open: isOpen, contentId, triggerId, panel }}>{children}</PopoverContext.Provider>
 }
 Popover.displayName = "Popover"
 
@@ -57,7 +59,7 @@ export interface PopoverTriggerProps extends React.ButtonHTMLAttributes<HTMLButt
 
 const PopoverTrigger = forwardRef<HTMLButtonElement, PopoverTriggerProps>(
   ({ asChild = false, onClick, onPointerDown, ...props }, ref) => {
-    const { open, contentId, panel } = usePopoverContext("PopoverTrigger")
+    const { open, contentId, triggerId, panel } = usePopoverContext("PopoverTrigger")
     const { setTrigger, triggerHandlers } = panel
     const mergedRef = useMemo(() => composeRefs<HTMLButtonElement>(ref, setTrigger), [ref, setTrigger])
     const Comp = asChild ? Slot : "button"
@@ -65,6 +67,7 @@ const PopoverTrigger = forwardRef<HTMLButtonElement, PopoverTriggerProps>(
     return (
       <Comp
         ref={mergedRef}
+        id={triggerId}
         type={asChild ? undefined : "button"}
         aria-haspopup="dialog"
         aria-expanded={open}
@@ -88,7 +91,7 @@ export type PopoverContentProps = React.HTMLAttributes<HTMLDivElement>
 
 const PopoverContent = forwardRef<HTMLDivElement, PopoverContentProps>(
   ({ className, style, children, ...props }, ref) => {
-    const { contentId, panel } = usePopoverContext("PopoverContent")
+    const { contentId, triggerId, panel } = usePopoverContext("PopoverContent")
     const { setPanel, floatingStyles } = panel
     const mergedRef = useMemo(() => composeRefs<HTMLDivElement>(ref, setPanel), [ref, setPanel])
 
@@ -98,6 +101,8 @@ const PopoverContent = forwardRef<HTMLDivElement, PopoverContentProps>(
         id={contentId}
         popover="auto"
         role="dialog"
+        // Named by its trigger unless the caller passes aria-label or aria-labelledby.
+        aria-labelledby={triggerId}
         tabIndex={-1}
         style={{ ...floatingStyles, ...style }}
         className={cn(

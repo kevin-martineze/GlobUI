@@ -1,0 +1,39 @@
+---
+title: "Popover"
+description: "Floating content next to a trigger, for example a small form. Non-modal: focus moves in, but nothing is trapped."
+---
+
+<PackageInfo pkg="popover" exports="Popover, PopoverTrigger, PopoverContent" />
+
+<InstallTabs pkg="popover" />
+
+## Preview
+
+<ComponentPreview name="popover/default" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### Popover
+
+<ApiTable pkg="popover" name="PopoverProps" />
+
+### PopoverTrigger
+
+<ApiTable pkg="popover" name="PopoverTriggerProps" />
+
+### PopoverContent
+
+<ApiTable pkg="popover" file="popover.tsx" name="PopoverContentProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Enter, Space on the trigger | Opens the popover and moves focus to its first focusable element. |
+| Click the trigger again | Closes it. It does not reopen. |
+| Escape | Closes it and returns focus to the trigger. |
+| Click outside | Closes it (light dismiss). |
+
+**ARIA.** The trigger has `aria-haspopup="dialog"` and `aria-expanded`. The content is `role="dialog"`, named by its trigger unless you pass `aria-label` or `aria-labelledby`.

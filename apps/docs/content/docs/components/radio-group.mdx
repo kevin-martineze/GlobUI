@@ -1,0 +1,42 @@
+---
+title: "Radio group"
+description: "A group of native radios: one tab stop, arrows move and select."
+---
+
+<PackageInfo pkg="radio-group" exports="RadioGroup, RadioGroupItem, radioVariants" />
+
+<InstallTabs pkg="radio-group" />
+
+## Preview
+
+<ComponentPreview name="radio-group/default" />
+
+## Examples
+
+### Horizontal
+
+`orientation` sets the arrow keys to use: Left and Right, or Up and Down.
+
+<ComponentPreview name="radio-group/horizontal" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### RadioGroupProps
+
+<ApiTable pkg="radio-group" name="RadioGroupProps" />
+
+### RadioGroupItemProps
+
+<ApiTable pkg="radio-group" name="RadioGroupItemProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Tab | Enters the group on the checked radio. Only one radio is in the tab order. |
+| Arrow keys | Move to the next or previous radio, select it, and wrap around. Disabled radios are skipped. |
+| Space | Selects the focused radio. |
+
+**ARIA.** The group has `role="radiogroup"` and needs a name: a `Field` label, or `aria-label`.
