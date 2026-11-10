@@ -25,7 +25,7 @@ export interface AppShellLayoutProps extends React.HTMLAttributes<HTMLDivElement
   header?: React.ReactNode
   /** The fixed sidebar navigation. Below `lg` it moves into a Sheet, opened by `LayoutNavTrigger`. */
   sidebar?: React.ReactNode
-  /** The main region. It is the one region that scrolls. */
+  /** The main region. It is the one region that scrolls. It has no padding: put a `PageLayout` in it. */
   children?: React.ReactNode
   /** The accessible name of the navigation landmark. */
   sidebarLabel?: string
@@ -89,7 +89,7 @@ export const AppShellLayout = forwardRef<HTMLDivElement, AppShellLayoutProps>(
               scroll="scroll"
               as="main"
               id={mainId}
-              className={cn("min-w-0 flex-1 p-4 focus:outline-none md:p-6", sidebarSide === "right" && "order-first")}
+              className={cn("min-w-0 flex-1 focus:outline-none", sidebarSide === "right" && "order-first")}
             >
               {children}
             </LayoutSlot>

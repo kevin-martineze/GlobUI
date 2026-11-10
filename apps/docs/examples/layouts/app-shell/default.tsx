@@ -1,5 +1,6 @@
 import { AppShellLayout } from "@glob-ui/app-shell-layout"
 import { LayoutNavTrigger } from "@glob-ui/layout"
+import { PageLayout, PageHeader } from "@glob-ui/page-layout"
 
 const ROWS = Array.from({ length: 24 }, (_, i) => `Order ${1000 + i}`)
 
@@ -26,14 +27,15 @@ export default function AppShellDefault() {
         </>
       }
     >
-      <h2 className="mb-4 text-xl font-semibold">Orders</h2>
-      <ul className="flex flex-col gap-2">
-        {ROWS.map((row) => (
-          <li key={row} className="rounded-lg border p-3">
-            {row}
-          </li>
-        ))}
-      </ul>
+      <PageLayout header={<PageHeader title="Orders" />}>
+        <ul className="flex flex-col gap-2">
+          {ROWS.map((row) => (
+            <li key={row} className="rounded-lg border p-3">
+              {row}
+            </li>
+          ))}
+        </ul>
+      </PageLayout>
     </AppShellLayout>
   )
 }

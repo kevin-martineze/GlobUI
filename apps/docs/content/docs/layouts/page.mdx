@@ -1,6 +1,6 @@
 ---
 title: "PageLayout"
-description: "A page inside a layout: a sticky header, the content, and an optional aside that sticks from `lg`. It sets no height and no overflow, and it is server-safe."
+description: "A page inside a layout: a sticky header, the content, and an optional aside that sticks from `lg`. It owns the page padding, sets no height and no overflow, and it is server-safe."
 ---
 
 <PackageInfo pkg="page-layout" exports="PageLayout, PageHeader" />
@@ -27,6 +27,10 @@ Each slot declares its scroll behaviour. Switch on **Anatomy** to see them, and 
 ## Server-safe
 
 `PageLayout` and `PageHeader` have no client code, so they render in a Server Component. Put them inside a layout, for example the `main` of an `AppShellLayout`.
+
+## The page padding belongs here
+
+The shells (`AppShellLayout`, `StackedLayout`) give their `main` region no padding: they own structure and scroll only. `PageLayout` owns the page padding, so a page never wraps its content in a `div` with spacing, a height or overflow.
 
 ## API
 

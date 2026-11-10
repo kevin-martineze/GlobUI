@@ -19,7 +19,7 @@ Each slot declares its scroll behaviour. Switch on **Anatomy** to see them, and 
 | --- | --- | --- | --- |
 | `header` | `<header>` | fixed | Brand, the navigation trigger on small screens, account. |
 | `sidebar` | `<nav>` | fixed | Navigation. Hidden below `lg`, where it moves into a Sheet. Its list is the only scroller inside it. |
-| `main` | `<main>` | scroll | The page. The one region that scrolls. |
+| `main` | `<main>` | scroll | The page. The one region that scrolls. It has no padding: put a `PageLayout` in it. |
 
 - **fixed**: the slot never scrolls. It stays in place, or sticks.
 - **scroll**: the one region that scrolls for this part of the screen.

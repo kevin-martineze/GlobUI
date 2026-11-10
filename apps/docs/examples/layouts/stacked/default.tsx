@@ -1,5 +1,6 @@
 import { StackedLayout } from "@glob-ui/stacked-layout"
 import { LayoutNavTrigger } from "@glob-ui/layout"
+import { PageLayout } from "@glob-ui/page-layout"
 
 const SECTIONS = Array.from({ length: 12 }, (_, i) => `Section ${i + 1}`)
 
@@ -25,12 +26,14 @@ export default function StackedDefault() {
       navLabel="Site"
       footer={<p className="text-sm text-fd-muted-foreground">Footer</p>}
     >
-      {SECTIONS.map((section) => (
-        <section key={section} className="mb-8">
-          <h2 className="mb-2 text-lg font-semibold">{section}</h2>
-          <p>Text of the section. The header stays in view while the document scrolls.</p>
-        </section>
-      ))}
+      <PageLayout>
+        {SECTIONS.map((section) => (
+          <section key={section} className="flex flex-col gap-2">
+            <h2 className="text-lg font-semibold">{section}</h2>
+            <p>Text of the section. The header stays in view while the document scrolls.</p>
+          </section>
+        ))}
+      </PageLayout>
     </StackedLayout>
   )
 }

@@ -677,7 +677,7 @@ export const layouts = [
     slots: [
       ["header", "`<header>`", "fixed", "Brand, the navigation trigger on small screens, account."],
       ["sidebar", "`<nav>`", "fixed", "Navigation. Hidden below `lg`, where it moves into a Sheet. Its list is the only scroller inside it."],
-      ["main", "`<main>`", "scroll", "The page. The one region that scrolls."],
+      ["main", "`<main>`", "scroll", "The page. The one region that scrolls. It has no padding: put a `PageLayout` in it."],
     ],
     api: [{ name: "AppShellLayoutProps" }],
     a11y: [
@@ -700,7 +700,7 @@ Put \`LayoutNavTrigger\` in the \`header\`. It hides itself at \`lg\` and up, wh
   {
     slug: "page", title: "PageLayout", pkg: "page-layout", exports: "PageLayout, PageHeader",
     scrollMode: "inside",
-    description: "A page inside a layout: a sticky header, the content, and an optional aside that sticks from `lg`. It sets no height and no overflow, and it is server-safe.",
+    description: "A page inside a layout: a sticky header, the content, and an optional aside that sticks from `lg`. It owns the page padding, sets no height and no overflow, and it is server-safe.",
     demo: "layouts/page/default",
     slots: [
       ["header", "`<div>`", "fixed", "Sticks to the top of the nearest scroll region while the content scrolls."],
@@ -716,6 +716,10 @@ Put \`LayoutNavTrigger\` in the \`header\`. It hides itself at \`lg\` and up, wh
     extra: `## Server-safe
 
 \`PageLayout\` and \`PageHeader\` have no client code, so they render in a Server Component. Put them inside a layout, for example the \`main\` of an \`AppShellLayout\`.
+
+## The page padding belongs here
+
+The shells (\`AppShellLayout\`, \`StackedLayout\`) give their \`main\` region no padding: they own structure and scroll only. \`PageLayout\` owns the page padding, so a page never wraps its content in a \`div\` with spacing, a height or overflow.
 `,
   },
   {
@@ -725,7 +729,7 @@ Put \`LayoutNavTrigger\` in the \`header\`. It hides itself at \`lg\` and up, wh
     demo: "layouts/stacked/default",
     slots: [
       ["header", "`<header>`", "fixed", "Sticks to the top of the document."],
-      ["main", "`<main>`", "scroll", "The page, in document flow. The document is the scroller."],
+      ["main", "`<main>`", "scroll", "The page, in document flow. The document is the scroller. It has no padding: put a `PageLayout` in it."],
       ["footer", "`<footer>`", "fixed", "At the end of the document. It is not a scroller."],
     ],
     api: [{ name: "StackedLayoutProps" }],

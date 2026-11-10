@@ -35,7 +35,7 @@ GlobUI moves those decisions into the layout. A page only fills the slots.
 
 1. **A layout owns the scroll.** Each slot declares `data-scroll`: `fixed` (never scrolls, stays in place) or `scroll` (the one region that scrolls for that part of the screen).
 2. **Two modes.** In **app** mode the viewport never scrolls (`h-dvh`), and only the scroll slots do. Use it for dashboards, chat and editors. In **document** mode the page scrolls as a document, and the fixed slots stick. Use it for docs, portals and landing pages.
-3. **A page sets no heights, no overflow, no `sticky`, no `100vh`.** It fills the slots. If it needs to scroll, it is inside the scroll slot.
+3. **A page sets no heights, no overflow, no `sticky`, no `100vh`, and no wrapper with page padding.** It fills the slots. If it needs to scroll, it is inside the scroll slot. The shells own structure and scroll; `PageLayout` owns the page padding.
 4. **One scroll region per part of the screen.** Nested scroll regions are the cause of most bugs. A sidebar list may scroll inside its own fixed sidebar. Nothing else nests.
 
 ## Accessibility comes with the structure
