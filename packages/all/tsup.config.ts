@@ -46,6 +46,8 @@ export default defineConfig({
     "@glob-ui/toggle",
     "@glob-ui/combobox",
     "@glob-ui/command",
+    "@glob-ui/calendar",
+    "@glob-ui/date-picker",
     "@glob-ui/popover",
     "@glob-ui/tooltip",
     "@glob-ui/tabs",

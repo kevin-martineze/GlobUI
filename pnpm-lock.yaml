@@ -235,6 +235,9 @@ importers:
       '@glob-ui/button':
         specifier: workspace:*
         version: link:../../packages/button
+      '@glob-ui/calendar':
+        specifier: workspace:*
+        version: link:../../packages/calendar
       '@glob-ui/card':
         specifier: workspace:*
         version: link:../../packages/card
@@ -247,6 +250,9 @@ importers:
       '@glob-ui/command':
         specifier: workspace:*
         version: link:../../packages/command
+      '@glob-ui/date-picker':
+        specifier: workspace:*
+        version: link:../../packages/date-picker
       '@glob-ui/dialog':
         specifier: workspace:*
         version: link:../../packages/dialog
@@ -449,6 +455,9 @@ importers:
       '@glob-ui/button':
         specifier: workspace:*
         version: link:../button
+      '@glob-ui/calendar':
+        specifier: workspace:*
+        version: link:../calendar
       '@glob-ui/card':
         specifier: workspace:*
         version: link:../card
@@ -461,6 +470,9 @@ importers:
       '@glob-ui/command':
         specifier: workspace:*
         version: link:../command
+      '@glob-ui/date-picker':
+        specifier: workspace:*
+        version: link:../date-picker
       '@glob-ui/dialog':
         specifier: workspace:*
         version: link:../dialog
@@ -604,6 +616,25 @@ importers:
         specifier: ^8.5.1
         version: 8.5.1(jiti@2.7.0)(postcss@8.5.32)(supports-color@7.2.0)(typescript@5.9.3)(yaml@2.9.1)
 
+  packages/calendar:
+    dependencies:
+      '@glob-ui/hooks':
+        specifier: workspace:*
+        version: link:../hooks
+      '@glob-ui/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react:
+        specifier: ^19
+        version: 19.2.4
+    devDependencies:
+      react-dom:
+        specifier: ^19
+        version: 19.2.4(react@19.2.4)
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.32)(supports-color@7.2.0)(typescript@5.9.3)(yaml@2.9.1)
+
   packages/card:
     dependencies:
       '@glob-ui/utils':
@@ -663,6 +694,31 @@ importers:
       '@glob-ui/hooks':
         specifier: workspace:*
         version: link:../hooks
+      '@glob-ui/utils':
+        specifier: workspace:*
+        version: link:../utils
+      react:
+        specifier: ^19
+        version: 19.2.4
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.32)(supports-color@7.2.0)(typescript@5.9.3)(yaml@2.9.1)
+
+  packages/date-picker:
+    dependencies:
+      '@glob-ui/calendar':
+        specifier: workspace:*
+        version: link:../calendar
+      '@glob-ui/hooks':
+        specifier: workspace:*
+        version: link:../hooks
+      '@glob-ui/popover':
+        specifier: workspace:*
+        version: link:../popover
+      '@glob-ui/slot':
+        specifier: workspace:*
+        version: link:../slot
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
