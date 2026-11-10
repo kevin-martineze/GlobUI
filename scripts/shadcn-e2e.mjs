@@ -45,7 +45,7 @@ try {
   // 3. Add items from the registry, non-interactively. alert-dialog pulls dialog and button as
   // registry dependencies; progress needs the theme's keyframes; combobox and command
   // need both utils files (cn and the text matching).
-  const items = ["button", "dialog", "select", "toast", "alert-dialog", "progress", "combobox", "command", "calendar", "date-picker"].map((n) => `${site}/r/${n}.json`)
+  const items = ["button", "dialog", "select", "toast", "alert-dialog", "progress", "combobox", "command", "calendar", "date-picker", "table", "pagination", "data-table"].map((n) => `${site}/r/${n}.json`)
   sh("npx", ["--yes", "shadcn@4.23.0", "add", ...items, "--yes"], { cwd: app })
   log(`shadcn add ${items.length} items: OK`)
   const globals = readFileSync(path.join(app, "src/app/globals.css"), "utf8")
@@ -125,12 +125,22 @@ export default function Home() {
 import { Button } from "@/components/glob-ui/button"
 import { Select } from "@/components/glob-ui/select"
 import { toast } from "@/components/glob-ui/toast"
+import { DataTable, createDataTableColumnHelper, type DataTableColumn } from "@/components/glob-ui/data-table"
+
+type Row = { id: string; name: string; amount: number }
+const helper = createDataTableColumnHelper<Row>()
+const columns: DataTableColumn<Row>[] = [
+  helper.accessor("name", { header: "Name" }),
+  helper.accessor("amount", { header: "Amount" }),
+]
+const rows: Row[] = Array.from({ length: 6 }, (_, i) => ({ id: "r" + i, name: "Item " + i, amount: i * 10 }))
 
 export function ClientPanel() {
   return (
     <div className="flex flex-col gap-3">
       <Select aria-label="Client select" options={[{ value: "mx", label: "Mexico" }]} defaultValue="mx" />
       <Button onClick={() => toast.success("Saved from a consumer app")}>Toast</Button>
+      <DataTable aria-label="Demo table" columns={columns} data={rows} sorting globalFilter pagination pageSize={3} />
     </div>
   )
 }

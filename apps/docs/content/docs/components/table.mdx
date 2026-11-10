@@ -1,0 +1,55 @@
+---
+title: "Table"
+description: "Styled native table parts: header, body, footer, rows and cells, with density, striped rows, a sticky header and right-aligned numbers."
+---
+
+<PackageInfo pkg="table" exports="Table, TableHeader, TableBody, TableFooter, TableRow, TableHead, TableCell, TableCaption" />
+
+<InstallTabs pkg="table" />
+
+## Preview
+
+<ComponentPreview name="table/default" />
+
+## Examples
+
+### Density
+
+`density` is `compact`, `default` or `comfortable`: the cell padding of the whole table.
+
+<ComponentPreview name="table/density" />
+
+### Sticky header
+
+`stickyHeader` keeps the header in view. The table scrolls inside its wrapper, so give the wrapper a height with `containerClassName`.
+
+<ComponentPreview name="table/sticky-header" />
+
+## The table owns its scroll
+
+A table wider than its container scrolls inside its own wrapper, never the page. This is the rule for every layout: the page does not handle horizontal scroll. Give a long table a `containerClassName` with a height when you also want a sticky header.
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### Table
+
+<ApiTable pkg="table" name="TableProps" />
+
+### TableHead
+
+<ApiTable pkg="table" name="TableHeadProps" />
+
+### TableCell
+
+<ApiTable pkg="table" name="TableCellProps" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Scroll region (scrollLabel) | The wrapper becomes `role="region"`, named by `scrollLabel`, and focusable, so keyboard users can scroll a wide table with the arrow keys. Use it when the table can be wider than the screen. |
+| Caption | `TableCaption` names the table for screen readers and is shown under it. |
+| Row selection | `data-state="selected"` shades the row. Pair it with a checkbox in a cell for a selectable table. |
+
+**ARIA.** Uses the native table elements, so screen readers announce the row and column headers. `align` only changes the text alignment, not the reading order.

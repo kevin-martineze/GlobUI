@@ -1,0 +1,46 @@
+---
+title: "Pagination"
+description: "Page navigation: previous and next, page links and ellipses. `getPageRange` computes which pages to show."
+---
+
+<PackageInfo pkg="pagination" exports="Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext, PaginationEllipsis, getPageRange" />
+
+<InstallTabs pkg="pagination" />
+
+## Preview
+
+<ComponentPreview name="pagination/default" />
+
+## Examples
+
+### Controlled with buttons
+
+Buttons instead of links, with state. `getPageRange` decides which pages and ellipses to show.
+
+<ComponentPreview name="pagination/controlled" />
+
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### PaginationLink
+
+<ApiTable pkg="pagination" name="PaginationLinkProps" />
+
+### PaginationPrevious
+
+<ApiTable pkg="pagination" name="PaginationPreviousProps" />
+
+### getPageRange
+
+<ApiTable pkg="pagination" file="get-page-range.ts" name="PageRangeOptions" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Current page | `aria-current="page"` on the active link. |
+| Previous, Next | Named "Go to previous page" and "Go to next page". When disabled they have `aria-disabled` and no `href`. |
+| Ellipsis | The dots are decorative; the text "More pages" is read instead. |
+
+**ARIA.** The landmark is a `nav` named "Pagination". Links are native anchors; use `asChild` with your router's link so the router renders the anchor.

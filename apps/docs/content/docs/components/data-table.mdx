@@ -1,0 +1,61 @@
+---
+title: "Data table"
+description: "A table with sorting, search, pagination, row selection and column visibility, each opt-in. Built on TanStack Table v9."
+---
+
+<PackageInfo pkg="data-table" exports="DataTable, createDataTableColumnHelper, dataTableFeatures" />
+
+<InstallTabs pkg="data-table" />
+
+## Preview
+
+<ComponentPreview name="data-table/default" />
+
+## Examples
+
+### Row selection and a toolbar
+
+`rowSelection` adds a checkbox column with select-all (indeterminate when some rows are selected). `toolbar` puts bulk actions next to the search.
+
+<ComponentPreview name="data-table/selection" />
+
+### Server data
+
+`manual` with `state`, the change handlers and `rowCount`: the server sorts and pages, and `loading` shows skeleton rows.
+
+<ComponentPreview name="data-table/server" />
+
+### Columns and row actions
+
+`columnVisibility` adds a Columns menu. A `helper.display` column can hold row actions.
+
+<ComponentPreview name="data-table/columns" />
+
+## Client-side vs server-side
+
+By default the table sorts, filters and pages the rows it has. That is right for up to a few thousand rows that arrive once.
+
+For larger data, set `manual`. The server then does the sorting and paging: pass the current `state` and the change handlers (`onSortingChange`, `onPaginationChange`, `onGlobalFilterChange`), and the total as `rowCount`. The table shows `data` exactly as it is given, so the server's order is kept. The "Server data" example shows the full loop with a fake 400 ms request.
+## API
+
+Props are generated from the TypeScript types in the package source.
+
+### DataTable
+
+<ApiTable pkg="data-table" name="DataTableProps" />
+
+### DataTableState
+
+<ApiTable pkg="data-table" name="DataTableState" />
+
+## Accessibility
+
+| Key or action | Behaviour |
+| --- | --- |
+| Sort | The column header is a button. `aria-sort` on the header says ascending, descending or none. Shift adds a second sort. |
+| Search | A search field named "Search". After a search the live region says the result count, for example "12 results". |
+| Pages | The live region announces the page, for example "Page 2 of 5". |
+| Select | "Select all rows" selects the page and is indeterminate when some rows are selected. Each row has "Select row". |
+| Rows | A row click (`onRowClick`) is for pointers only: give keyboard users a link or button inside a cell. |
+
+**ARIA.** The table is named by `aria-label` and is a scroll region when it can be wider than its container. `aria-busy` is set while `loading`.
