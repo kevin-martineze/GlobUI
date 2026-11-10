@@ -1,11 +1,13 @@
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared"
+import { GlobUILogo } from "@/components/logo-mark"
 
 export const GITHUB_URL = "https://github.com/kevin-martineze/GlobUI"
 
 export function baseOptions(): BaseLayoutProps {
   return {
     nav: {
-      title: "GlobUI",
+      // The title is wrapped in the nav link to "/"; the logo's title is its accessible name.
+      title: <GlobUILogo title="GlobUI home" className="h-6 w-auto" />,
     },
     links: [
       { text: "Docs", url: "/docs" },

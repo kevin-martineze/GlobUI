@@ -49,6 +49,8 @@ if (!existsSync(out)) {
         const html = readFileSync(full, "utf8")
         for (const [, href] of html.matchAll(/href="(\/[^"#?]*)(?:[#?][^"]*)?"/g)) {
           if (href.startsWith("/_next") || href.startsWith("/api/")) continue
+          // Static files (icons, images) are checked against public/, not against pages.
+          if (existsSync(path.join(docs, "public", href))) continue
           links++
           const normalised = href.replace(/\/$/, "") || "/"
           if (!pages.has(normalised) && !pages.has(normalised.replace(/^\//, "/"))) {

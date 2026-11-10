@@ -17,6 +17,22 @@ export const metadata: Metadata = {
     template: "%s – GlobUI",
   },
   description: "An accessible React component library. One package per component, design tokens, dark mode.",
+  icons: {
+    icon: [
+      { url: "/brand/favicon.svg", type: "image/svg+xml" },
+      { url: "/brand/favicon.ico", sizes: "any" },
+    ],
+    apple: { url: "/brand/apple-touch-icon.png", sizes: "180x180" },
+  },
+  openGraph: {
+    title: "GlobUI",
+    description: "An accessible React component library. One package per component, design tokens, dark mode.",
+    images: [{ url: "/brand/og.png", width: 1200, height: 630, alt: "GlobUI: an accessible React component library" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/brand/og.png"],
+  },
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {
