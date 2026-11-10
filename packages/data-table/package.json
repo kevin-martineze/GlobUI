@@ -1,0 +1,76 @@
+{
+  "name": "@glob-ui/data-table",
+  "version": "0.1.0",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch --no-clean"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/",
+    "LICENSE",
+    "README.md"
+  ],
+  "peerDependencies": {
+    "react": "^19"
+  },
+  "dependencies": {
+    "@glob-ui/button": "workspace:*",
+    "@glob-ui/checkbox": "workspace:*",
+    "@glob-ui/dropdown-menu": "workspace:*",
+    "@glob-ui/hooks": "workspace:*",
+    "@glob-ui/input": "workspace:*",
+    "@glob-ui/select": "workspace:*",
+    "@glob-ui/skeleton": "workspace:*",
+    "@glob-ui/table": "workspace:*",
+    "@glob-ui/utils": "workspace:*",
+    "@tanstack/react-table": "^9.3.1"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.1"
+  },
+  "description": "A table with sorting, search, pagination, row selection and column visibility, each opt-in. Built on TanStack Table v9.",
+  "keywords": [
+    "react",
+    "glob-ui",
+    "components",
+    "accessible",
+    "tailwind",
+    "data-table"
+  ],
+  "license": "MIT",
+  "author": "Kevin Martínez E",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevin-martineze/GlobUI.git",
+    "directory": "packages/data-table"
+  },
+  "homepage": "https://github.com/kevin-martineze/GlobUI#readme",
+  "bugs": {
+    "url": "https://github.com/kevin-martineze/GlobUI/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "sideEffects": false,
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18.18"
+  }
+}
