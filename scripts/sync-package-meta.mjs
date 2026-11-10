@@ -7,7 +7,7 @@
 import { readFileSync, readdirSync, writeFileSync, copyFileSync, existsSync } from "node:fs"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
-import { components, utilities } from "../apps/docs/scripts/docs-data.mjs"
+import { components, utilities, layouts, layoutCore } from "../apps/docs/scripts/docs-data.mjs"
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
 const REPO = "https://github.com/kevin-martineze/GlobUI"
@@ -17,6 +17,8 @@ const DOCS = `${REPO}/tree/main/apps/docs/content/docs`
 const docEntry = new Map()
 for (const c of components) docEntry.set(c.pkg, { title: c.title, description: c.description, page: `components/${c.slug}.mdx` })
 for (const u of utilities) docEntry.set(u.pkg, { title: u.title, description: u.description, page: `utilities/${u.slug}.mdx` })
+for (const l of layouts) docEntry.set(l.pkg, { title: l.title, description: l.description, page: `layouts/${l.slug}.mdx` })
+docEntry.set(layoutCore.pkg, { title: layoutCore.title, description: layoutCore.description, page: `layouts/${layoutCore.slug}.mdx` })
 
 const extra = {
   all: { description: "Every GlobUI component in one package.", keywords: ["bundle"] },
