@@ -5,11 +5,12 @@ Wordmark: "glob" (weight 700, text colour) + a dot + "ui" (weight 500), the dot 
 colour. The dot is the size of a full stop, on the baseline, with the same gap on each side. Letters are
 outlined to paths, so the output has no font dependency.
 
-The primary is teal (the Globin teal). On white it is too light for text, so the light wordmark uses the
+The primary is teal. On white it is too light for text, so the light wordmark uses the
 darker text teal (--glob-primary-text); on dark it uses the fill teal (--glob-primary).
 
 Outputs (apps/docs/public/brand/ and apps/docs/components/):
   logo-light.svg, logo-dark.svg          wordmark for light and dark backgrounds
+  readme-banner.svg                      the dark wordmark on a dark plate, for the README (reads on any theme)
   favicon.svg, favicon.ico               "g" and dot on a dark rounded square
   apple-touch-icon.png (180), icon-512.png
   og.png (1200x630)                      wordmark and tagline on #0A0A0A
@@ -264,6 +265,17 @@ def logo_svg(colors, name):
     return ops, vb
 
 
+def readme_banner_svg(ops):
+    """The dark wordmark on a dark rounded plate. GitHub picks a <picture> source from the OS colour scheme,
+    not from the GitHub theme, so a single image on its own background is the one that always reads."""
+    x0, y0, x1, y1 = bounds_of(ops)
+    pad_x, pad_y = 420, 300
+    vb = (x0 - pad_x, -y1 - pad_y, (x1 - x0) + 2 * pad_x, (y1 - y0) + 2 * pad_y)
+    svg = svg_document(ops, 1, 0, 0, vb, label=LOGO_LABEL, bg=OG_BG, radius=160, title=LOGO_LABEL)
+    with open(os.path.join(PUBLIC, "readme-banner.svg"), "w") as f:
+        f.write(svg)
+
+
 def logo_mark_tsx(ops, vb):
     """A React component with the same paths, coloured with the --glob-* tokens."""
     colors = {"var(--glob-text)": [], "var(--glob-primary-text)": []}
@@ -310,6 +322,7 @@ def main():
     os.makedirs(PUBLIC, exist_ok=True)
     light_ops, _ = logo_svg(LIGHT, "logo-light.svg")
     dark_ops, _ = logo_svg(DARK, "logo-dark.svg")
+    readme_banner_svg(dark_ops)
     with open(os.path.join(COMPONENTS, "logo-mark.tsx"), "w") as f:
         f.write(logo_mark_tsx(light_ops, logo_vb(light_ops)))
 
