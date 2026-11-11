@@ -146,7 +146,7 @@ const AccordionTrigger = forwardRef<HTMLButtonElement, AccordionTriggerProps>(
           data-accordion-trigger=""
           data-state={item.open ? "open" : "closed"}
           className={cn(
-            "group flex flex-1 items-center justify-between gap-4 py-4 text-left text-sm font-medium text-glob-text transition-colors hover:text-glob-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50",
+            "group flex flex-1 items-center justify-between gap-4 py-4 text-left text-sm font-medium text-glob-text transition-colors hover:text-glob-primary-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50",
             className
           )}
           onClick={(e) => {

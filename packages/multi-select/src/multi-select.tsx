@@ -187,7 +187,7 @@ export function MultiSelect({
           <span
             key={item.value}
             className={cn(
-              "inline-flex items-center gap-1 rounded-glob-sm bg-glob-primary-light px-2 text-glob-primary",
+              "inline-flex items-center gap-1 rounded-glob-sm bg-glob-primary-light px-2 text-glob-primary-text",
               chipSizeStyles[size]
             )}
           >
@@ -197,7 +197,7 @@ export function MultiSelect({
               aria-label={`Remove ${item.label}`}
               disabled={disabled}
               onClick={() => removeChip(item.value)}
-              className="inline-flex rounded-glob-sm hover:text-glob-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed"
+              className="inline-flex rounded-glob-sm hover:text-glob-primary-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed"
             >
               <svg className="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                 <path d="M18 6L6 18M6 6l12 12" />
@@ -304,7 +304,7 @@ export function MultiSelect({
                   "flex w-full items-center gap-2 rounded-glob-sm px-2 py-2 text-left text-sm select-none",
                   isDisabled ? "cursor-not-allowed opacity-50" : "cursor-pointer",
                   isActive && !isDisabled && "bg-glob-surface-hover",
-                  // The check mark shows the selection; orange text on white fails contrast.
+                  // The check mark shows the selection; the fill colour as text fails contrast on white.
                 )}
               >
                 <span

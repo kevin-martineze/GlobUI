@@ -174,7 +174,7 @@ export function CountrySelect({ value, onChange, size = "md", disabled }: Countr
                 className={cn(
                   "flex w-full cursor-pointer items-center gap-3 rounded-glob-sm px-2 py-2 text-left text-sm select-none",
                   isActive && "bg-glob-surface-hover",
-                  // The selected row is marked by font weight; orange text on white fails contrast.
+                  // The selected row is marked by font weight; the fill colour as text fails contrast on white.
                   isSelected && "font-medium"
                 )}
               >

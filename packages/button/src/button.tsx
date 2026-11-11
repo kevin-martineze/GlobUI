@@ -14,7 +14,7 @@ const buttonVariants = cva(
         danger: "bg-glob-danger text-glob-surface hover:opacity-90",
         ghost: "text-glob-text hover:bg-glob-surface-hover",
         outline: "border border-glob-border text-glob-text hover:bg-glob-surface-hover",
-        link: "text-glob-primary underline-offset-4 hover:underline",
+        link: "text-glob-primary-text underline-offset-4 hover:underline",
       },
       size: {
         sm: "h-8 px-3 text-xs",
