@@ -272,7 +272,7 @@ export function Select({
                   "flex w-full items-center gap-2 rounded-glob-sm px-2 py-2 text-left text-sm select-none",
                   option.disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer",
                   isActive && !option.disabled && "bg-glob-surface-hover",
-                  // The filled indicator shows the selection; orange text on white fails contrast.
+                  // The filled indicator shows the selection; the fill colour as text fails contrast on white.
                   isSelected && "font-medium"
                 )}
               >

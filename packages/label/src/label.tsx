@@ -30,7 +30,7 @@ const Label = forwardRef<HTMLLabelElement, LabelProps>(
       <label ref={ref} className={cn(labelVariants({ size, className }))} {...props}>
         {children}
         {required && (
-          <span aria-hidden="true" className="text-glob-primary">
+          <span aria-hidden="true" className="text-glob-primary-text">
             *
           </span>
         )}

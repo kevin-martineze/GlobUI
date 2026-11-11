@@ -54,6 +54,33 @@
   --color-fd-success: var(--glob-success);
 }
 
+/*
+ * Fumadocs uses its primary colour both as a fill (the active marker behind a label, a primary button) and as text or a
+ * line (active tabs and table-of-contents items, type tables, search matches, the tab underline). The brand fill is light,
+ * so as text or as a line on white it fails contrast. Text and lines use the readable teal (--glob-primary-text); fills keep
+ * --glob-primary, with --glob-primary-foreground on top.
+ * Each rule repeats the selector Tailwind generates for that class, condition included, so a variant like
+ * data-[active=true]: only applies while the condition holds. The html prefix beats Fumadocs' own rules, which are not in a
+ * layer. If Fumadocs adds a new text-fd-primary variant, add it here.
+ */
+html .text-fd-primary,
+html :is(.\*\:first\:text-fd-primary > *):first-child,
+html .has-data-\[active\=true\]\:text-fd-primary:has([data-active="true"]),
+html .data-\[active\=true\]\:text-fd-primary[data-active="true"],
+html .data-\[state\=active\]\:text-fd-primary[data-state="active"] {
+  color: var(--glob-primary-text);
+}
+html .text-fd-primary\/50 {
+  color: color-mix(in oklab, var(--glob-primary-text) 50%, transparent);
+}
+html .border-fd-primary,
+html .data-\[state\=active\]\:border-fd-primary[data-state="active"] {
+  border-color: var(--glob-primary-text);
+}
+:root ::highlight(fd-search) {
+  color: var(--glob-primary-text);
+}
+
 body {
   font-family: var(--font-glob-sans), system-ui, sans-serif;
 }

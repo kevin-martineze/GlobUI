@@ -53,4 +53,8 @@ Redefine a token on `:root` after importing the styles. The later rule wins.
 
 ## Primary and its foreground
 
-`--glob-primary` is the brand colour (buttons, selected states). `--glob-primary-foreground` is the text colour on top of it. The default primary is a light orange, so its foreground is dark (`#171717`). White text on that orange fails contrast. If you change the primary, check that the foreground keeps at least 4.5:1 contrast with it.
+`--glob-primary` is the brand colour: the fill of buttons, selected states and the active marker. The default is a teal (`#33CFA8`). Dark text sits on it (`--glob-primary-foreground`, `#171717`), at about 9:1, so the foreground is dark in both themes.
+
+The teal is light, so it fails as text or as a focus line on white (about 2:1). Use `--glob-primary-text` for anything the primary colour does as text, links, or a line: it is a darker teal in light mode (`#0F7F68`, at least 4.5:1 on white and on the pale tint) and the same teal as the fill in dark mode. `--glob-ring` is the focus ring: at least 3:1 on the surface.
+
+`--glob-primary-hover` and `--glob-primary-light` (the tint behind selected chips) are set beside the primary. If you change the primary, check that the foreground keeps at least 4.5:1 on the fill and on its hover, and that the text token keeps 4.5:1 on the tint.
