@@ -1,5 +1,12 @@
 # @glob-ui/styles
 
+## 0.3.0
+
+### Minor Changes
+
+- 6ad662b: The primary colour is now teal (`#33CFA8`), replacing orange. Text and lines in the primary colour use the new `--glob-primary-text` token, which is darker in light mode so it passes 4.5:1 on white.
+- 355a3d2: Add layouts (AppShell, Page, Stacked) and the first templates
+
 ## 0.2.0
 
 ### Minor Changes
