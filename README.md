@@ -1,18 +1,18 @@
+<!-- One image on its own dark plate: GitHub picks a <picture> source by the OS colour scheme, not the GitHub theme. -->
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="apps/docs/public/brand/logo-dark.svg">
-    <img alt="GlobUI" src="apps/docs/public/brand/logo-light.svg" height="56">
-  </picture>
+  <img alt="glob.ui" src="apps/docs/public/brand/readme-banner.svg" height="96">
 </p>
 
 # GlobUI
 
-A React component library. Next.js 16 (docs site), React 19, TypeScript, Tailwind CSS 4, pnpm workspaces.
+Accessible React components, plus layouts that own the scroll and templates that fix what repeats. Your page only fills the slots.
+
+Docs: [globui.dev](https://globui.dev). Built with React 19, TypeScript and Tailwind CSS 4; the docs site is Next.js 16.
 
 [![npm version](https://img.shields.io/npm/v/@glob-ui/all)](https://www.npmjs.com/package/@glob-ui/all)
 [![license](https://img.shields.io/npm/l/@glob-ui/all)](./LICENSE)
 
-Status: **published on npm (0.1.0)**. All 30 `@glob-ui/*` packages share one version.
+Published on npm. Every `@glob-ui/*` package shares one version (the badge above shows the current one). Components can also be copied into your project with the shadcn CLI: see [globui.dev](https://globui.dev).
 
 ## Install
 
