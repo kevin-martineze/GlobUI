@@ -430,7 +430,8 @@ function CommandDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={setOpen}>
-      <DialogContentBase className="m-auto flex max-h-[min(70dvh,32rem)] w-[calc(100%-2rem)] max-w-lg flex-col overflow-hidden rounded-glob-lg border border-glob-border bg-glob-surface p-0 text-glob-text shadow-glob-md backdrop:bg-glob-overlay">
+      {/* open:flex, not flex: a closed dialog must keep the browser default (display: none), or it renders as a stray line. */}
+      <DialogContentBase className="m-auto open:flex max-h-[min(70dvh,32rem)] w-[calc(100%-2rem)] max-w-lg flex-col overflow-hidden rounded-glob-lg border border-glob-border bg-glob-surface p-0 text-glob-text shadow-glob-md backdrop:bg-glob-overlay">
         <DialogTitle className="sr-only">{label}</DialogTitle>
         {/* Mounted only while open, so every opening starts with an empty search. */}
         {isOpen && (
