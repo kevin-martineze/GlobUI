@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react"
 
 export type PreviewControl =
   | { name: string; label: string; type: "text"; value: string }
@@ -27,13 +27,40 @@ const LEGEND_TEMPLATE = [
   { label: "scroll region", color: "var(--glob-success)" },
 ]
 
+const PHONE_QUERY = "(max-width: 639px)"
+function subscribePhone(onChange: () => void) {
+  const query = window.matchMedia(PHONE_QUERY)
+  query.addEventListener("change", onChange)
+  return () => query.removeEventListener("change", onChange)
+}
+
 /**
  * The parent side of a layout preview. Device, anatomy, fill and props are sent to the iframe with postMessage;
  * the iframe is never reloaded by a toggle. Full screen opens the same route in a new tab.
  */
-export function LayoutPreviewFrame({ slug, kind, controls }: { slug: string; kind: "layout" | "template"; controls: PreviewControl[] }) {
+export function LayoutPreviewFrame({
+  slug,
+  kind,
+  controls,
+  minimal = false,
+  height = 640,
+  autoDevice = false,
+}: {
+  slug: string
+  kind: "layout" | "template"
+  controls: PreviewControl[]
+  /** The home page variant: a shorter toolbar ("Show anatomy", no fill). */
+  minimal?: boolean
+  /** The iframe height in px (before scaling). */
+  height?: number
+  /** Start at the mobile size on phones, so a phone does not open a tiny scaled desktop. Set after mount, so server and client render the same. */
+  autoDevice?: boolean
+}) {
   const frameRef = useRef<HTMLIFrameElement>(null)
-  const [device, setDevice] = useState<Device>("desktop")
+  // The size the reader picked. Until they pick one, a phone gets the mobile size (when autoDevice is set).
+  const [chosen, setDevice] = useState<Device | null>(null)
+  const phone = useSyncExternalStore(subscribePhone, () => window.matchMedia(PHONE_QUERY).matches, () => false)
+  const device: Device = chosen ?? (autoDevice && phone ? "mobile" : "desktop")
   const [anatomy, setAnatomy] = useState(false)
   const [fill, setFill] = useState(false)
   const [values, setValues] = useState<Record<string, unknown>>(() =>
@@ -76,7 +103,6 @@ export function LayoutPreviewFrame({ slug, kind, controls }: { slug: string; kin
 
   const legend = kind === "template" ? LEGEND_TEMPLATE : LEGEND_LAYOUT
   const width = DEVICES[device].width
-  const height = 640
 
   // The width available for the frame. The iframe keeps its device width (so its media queries are real)
   // and is scaled down when the page is narrower.
@@ -114,16 +140,18 @@ export function LayoutPreviewFrame({ slug, kind, controls }: { slug: string; kin
           onClick={() => setAnatomy((v) => !v)}
           className="rounded-lg border border-fd-border px-2.5 py-1 text-sm aria-pressed:bg-fd-accent"
         >
-          Anatomy
+          {minimal ? "Show anatomy" : "Anatomy"}
         </button>
-        <button
-          type="button"
-          aria-pressed={fill}
-          onClick={() => setFill((v) => !v)}
-          className="rounded-lg border border-fd-border px-2.5 py-1 text-sm aria-pressed:bg-fd-accent"
-        >
-          Fill with content
-        </button>
+        {minimal ? null : (
+          <button
+            type="button"
+            aria-pressed={fill}
+            onClick={() => setFill((v) => !v)}
+            className="rounded-lg border border-fd-border px-2.5 py-1 text-sm aria-pressed:bg-fd-accent"
+          >
+            Fill with content
+          </button>
+        )}
         <a
           href={`/preview/${slug}`}
           target="_blank"
@@ -145,7 +173,8 @@ export function LayoutPreviewFrame({ slug, kind, controls }: { slug: string; kin
         </ul>
       ) : null}
 
-      <div ref={stageRef} className="max-w-full rounded-xl border border-fd-border bg-fd-background p-3">
+      {/* overflow-hidden: before the first measure the frame is at full device width; it must not widen the page. */}
+      <div ref={stageRef} className="max-w-full overflow-hidden rounded-xl border border-fd-border bg-fd-background p-3">
         <div className="mx-auto box-content overflow-hidden rounded-lg border border-fd-border" style={{ width: width * scale, height: height * scale }}>
           <iframe
             ref={frameRef}
