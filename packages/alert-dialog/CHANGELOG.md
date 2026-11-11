@@ -1,5 +1,19 @@
 # @glob-ui/alert-dialog
 
+## 0.3.0
+
+### Minor Changes
+
+- 355a3d2: Add layouts (AppShell, Page, Stacked) and the first templates
+
+### Patch Changes
+
+- Updated dependencies [6ad662b]
+- Updated dependencies [355a3d2]
+  - @glob-ui/button@0.3.0
+  - @glob-ui/dialog@0.3.0
+  - @glob-ui/utils@0.3.0
+
 ## 0.2.0
 
 ### Minor Changes

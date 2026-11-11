@@ -1,5 +1,11 @@
 # @glob-ui/utils
 
+## 0.3.0
+
+### Minor Changes
+
+- 355a3d2: Add layouts (AppShell, Page, Stacked) and the first templates
+
 ## 0.2.0
 
 ### Minor Changes
