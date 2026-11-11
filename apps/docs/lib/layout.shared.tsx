@@ -7,7 +7,7 @@ export function baseOptions(): BaseLayoutProps {
   return {
     nav: {
       // The title is wrapped in the nav link to "/"; the logo's title is its accessible name.
-      title: <GlobUILogo title="GlobUI home" className="h-6 w-auto" />,
+      title: <GlobUILogo title="glob.ui home" className="h-6 w-auto" />,
     },
     links: [
       { text: "Docs", url: "/docs" },
