@@ -39,9 +39,12 @@ for (const dir of readdirSync(packagesDir)) {
     const publint = spawnSync("pnpm", ["exec", "publint", pkgDir, "--strict"], { cwd: root, encoding: "utf8" })
     if (publint.status !== 0) problems.push(`${label}: publint\n${publint.stdout}${publint.stderr}`)
 
-    const attw = spawnSync("pnpm", ["exec", "attw", "--pack", pkgDir], { cwd: root, encoding: "utf8" })
-    const out = (attw.stdout ?? "") + (attw.stderr ?? "")
-    if (attw.status !== 0 || !out.includes("No problems found")) problems.push(`${label}: attw\n${out}`)
+    // attw cannot evaluate the ".svelte" entry points, so the Svelte package is skipped for it (publint still runs).
+    if (dir !== "svelte") {
+      const attw = spawnSync("pnpm", ["exec", "attw", "--pack", pkgDir], { cwd: root, encoding: "utf8" })
+      const out = (attw.stdout ?? "") + (attw.stderr ?? "")
+      if (attw.status !== 0 || !out.includes("No problems found")) problems.push(`${label}: attw\n${out}`)
+    }
   }
 }
 

@@ -27,6 +27,9 @@ const extra = {
   utils: { description: "Internal class-name helper used by GlobUI components.", internal: true },
   // Framework-free packages: no React in their keywords. Core is behaviour over the DOM; recipes are class strings.
   core: { description: "Internal framework-free behaviour (focus, keyboard, positioning, scroll) used by GlobUI components.", keywords: ["behaviour", "focus", "keyboard"], internal: true, frameworkFree: true },
+  // Framework packages: ESM, one subpath per component family (their exports are written by hand, see below).
+  svelte: { description: "Svelte 5 components for GlobUI: dialog, sheet and layouts, with the same API and behaviour as the React packages.", keywords: ["svelte", "components", "accessible", "tailwind"], framework: "Svelte", esm: true },
+  vue: { description: "Vue 3 components for GlobUI: dialog, sheet and layouts, with the same API and behaviour as the React packages.", keywords: ["vue", "components", "accessible", "tailwind"], framework: "Vue", esm: true },
   recipes: { description: "Internal class-variance-authority recipes and shared class strings used by GlobUI components.", keywords: ["recipes", "tailwind"], internal: true, frameworkFree: true },
 }
 
@@ -42,7 +45,7 @@ for (const dir of readdirSync(packagesDir)) {
   const isStyles = name === "styles"
   const isInternal = Boolean(info.internal)
   const frameworkFree = Boolean(info.frameworkFree)
-  const keywords = frameworkFree
+  const keywords = frameworkFree || info.esm
     ? ["glob-ui", ...(info.keywords ?? []), name]
     : ["react", "glob-ui", ...(isStyles ? ["tokens", "tailwind"] : ["components", "accessible", "tailwind"]), ...(info.keywords ?? []), name]
 
@@ -59,7 +62,10 @@ for (const dir of readdirSync(packagesDir)) {
   pkg.files = isStyles ? ["glob-ui.css", "LICENSE", "README.md"] : ["dist/", "LICENSE", "README.md"]
   // Conditional exports with one types file per module format (.d.mts for import, .d.ts for require),
   // so ESM consumers get ESM types. Without this, attw reports FalseCJS.
-  if (isStyles) {
+  if (info.esm) {
+    // Hand-written subpath exports (one per component family). Only the module type is set here.
+    pkg.type = "module"
+  } else if (isStyles) {
     pkg.exports = { ".": "./glob-ui.css", "./package.json": "./package.json" }
   } else {
     pkg.exports = {
@@ -90,6 +96,41 @@ for (const dir of readdirSync(packagesDir)) {
     lines.push("## Install", "", install, "", "In your global stylesheet (see the [installation guide](" + `${DOCS}/installation.mdx` + ")):", "", "```css", '@import "tailwindcss";', '@import "@glob-ui/styles";', "```", "")
   } else if (name === "all") {
     lines.push("## Install", "", install, "", "Every component is also available as its own package, for example `@glob-ui/button`.", "")
+  }
+  if (info.framework) {
+    const families = ["dialog", "sheet", "layout", "app-shell-layout", "page-layout", "stacked-layout"]
+    lines.push(
+      "## Install",
+      "",
+      install,
+      "",
+      `Peer dependency: \`${info.framework === "Svelte" ? "svelte" : "vue"}\` (${info.framework === "Svelte" ? "^5" : "^3.5"}).`,
+      "",
+      "## Subpaths",
+      "",
+      `Each component family is its own subpath: ${families.map((f) => "\`@glob-ui/" + pkg.name.split("/")[1] + "/" + f + "\`").join(", ")}.`,
+      "",
+      "## Tailwind",
+      "",
+      "The components ship Tailwind class names. Tailwind does not scan \`node_modules\` by default, so add these \`@source\` lines to your stylesheet, next to the GlobUI theme:",
+      "",
+      "```css",
+      '@import "tailwindcss";',
+      '@import "@glob-ui/styles";',
+      '@source "../node_modules/@glob-ui/' + pkg.name.split("/")[1] + '";',
+      '@source "../node_modules/@glob-ui/recipes";',
+      "```",
+      "",
+      "## Usage",
+      "",
+      "```" + (info.framework === "Svelte" ? "svelte" : "vue"),
+      ...(info.framework === "Svelte"
+        ? ['<script lang="ts">', '  import { Dialog, DialogTrigger, DialogContent, DialogTitle } from "@glob-ui/svelte/dialog"', "</script>", "", "<Dialog>", "  <DialogTrigger>Open</DialogTrigger>", "  <DialogContent>", "    <DialogTitle>Confirm</DialogTitle>", "  </DialogContent>", "</Dialog>"]
+        : ['<script setup lang="ts">', '  import { Dialog, DialogTrigger, DialogContent, DialogTitle } from "@glob-ui/vue/dialog"', "</script>", "", "<template>", "  <Dialog>", "    <DialogTrigger>Open</DialogTrigger>", "    <DialogContent>", "      <DialogTitle>Confirm</DialogTitle>", "    </DialogContent>", "  </Dialog>", "</template>"]),
+      "",
+      "```",
+      ""
+    )
   }
   lines.push("## License", "", "MIT. See [LICENSE](./LICENSE).", "")
   writeFileSync(path.join(packagesDir, dir, "README.md"), lines.join("\n"))
