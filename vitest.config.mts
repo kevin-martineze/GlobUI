@@ -4,6 +4,8 @@ import { fileURLToPath } from "node:url"
 import { defineConfig } from "vitest/config"
 import { playwright } from "@vitest/browser-playwright"
 import tailwindcss from "@tailwindcss/vite"
+import { svelte } from "@sveltejs/vite-plugin-svelte"
+import vue from "@vitejs/plugin-vue"
 
 // Tests import package sources, not dist, so no build is needed first.
 // `@glob-ui/<pkg>` -> `packages/<pkg>/src/index.ts` for every package with an index.
@@ -56,6 +58,43 @@ export default defineConfig({
           name: "browser",
           include: ["packages/*/src/**/*.browser.test.{ts,tsx}", "templates/*/*.browser.test.tsx", "tests/contracts/**/*.browser.test.tsx"],
           setupFiles: ["tests/browser/setup.ts"],
+          browser: {
+            enabled: true,
+            provider: playwright(),
+            headless: true,
+            instances: [{ browser: "chromium" }],
+          },
+        },
+      },
+      {
+        plugins: [tailwindcss(), svelte()],
+        resolve: { alias },
+        // Same pre-bundling rule as the React project: no optimizer reloads in the middle of a run.
+        optimizeDeps: {
+          include: ["svelte", "svelte/internal/client", "vitest-browser-svelte", "axe-core", "class-variance-authority", "clsx", "tailwind-merge"],
+        },
+        test: {
+          name: "browser-svelte",
+          include: ["tests/contracts/svelte/*.browser.test.ts"],
+          setupFiles: ["tests/browser/setup-base.ts"],
+          browser: {
+            enabled: true,
+            provider: playwright(),
+            headless: true,
+            instances: [{ browser: "chromium" }],
+          },
+        },
+      },
+      {
+        plugins: [tailwindcss(), vue()],
+        resolve: { alias },
+        optimizeDeps: {
+          include: ["vue", "vitest-browser-vue", "axe-core", "class-variance-authority", "clsx", "tailwind-merge"],
+        },
+        test: {
+          name: "browser-vue",
+          include: ["tests/contracts/vue/*.browser.test.ts"],
+          setupFiles: ["tests/browser/setup-base.ts"],
           browser: {
             enabled: true,
             provider: playwright(),
