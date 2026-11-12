@@ -1,0 +1,88 @@
+{
+  "name": "@glob-ui/svelte",
+  "version": "0.3.0",
+  "description": "Svelte 5 components for GlobUI: dialog, sheet and layouts, with the same API and behaviour as the React packages.",
+  "type": "module",
+  "exports": {
+    "./dialog": {
+      "types": "./dist/dialog/index.d.ts",
+      "svelte": "./dist/dialog/index.js",
+      "default": "./dist/dialog/index.js"
+    },
+    "./sheet": {
+      "types": "./dist/sheet/index.d.ts",
+      "svelte": "./dist/sheet/index.js",
+      "default": "./dist/sheet/index.js"
+    },
+    "./layout": {
+      "types": "./dist/layout/index.d.ts",
+      "svelte": "./dist/layout/index.js",
+      "default": "./dist/layout/index.js"
+    },
+    "./app-shell-layout": {
+      "types": "./dist/app-shell-layout/index.d.ts",
+      "svelte": "./dist/app-shell-layout/index.js",
+      "default": "./dist/app-shell-layout/index.js"
+    },
+    "./page-layout": {
+      "types": "./dist/page-layout/index.d.ts",
+      "svelte": "./dist/page-layout/index.js",
+      "default": "./dist/page-layout/index.js"
+    },
+    "./stacked-layout": {
+      "types": "./dist/stacked-layout/index.d.ts",
+      "svelte": "./dist/stacked-layout/index.js",
+      "default": "./dist/stacked-layout/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/",
+    "LICENSE",
+    "README.md"
+  ],
+  "keywords": [
+    "glob-ui",
+    "svelte",
+    "components",
+    "accessible",
+    "tailwind"
+  ],
+  "license": "MIT",
+  "author": "Kevin Martínez E",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevin-martineze/GlobUI.git",
+    "directory": "packages/svelte"
+  },
+  "homepage": "https://github.com/kevin-martineze/GlobUI#readme",
+  "bugs": {
+    "url": "https://github.com/kevin-martineze/GlobUI/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "svelte-package -i src -o dist && svelte-check --tsconfig ./tsconfig.json",
+    "dev": "svelte-package -i src -o dist --watch"
+  },
+  "peerDependencies": {
+    "svelte": "^5"
+  },
+  "dependencies": {
+    "@glob-ui/core": "workspace:*",
+    "@glob-ui/recipes": "workspace:*",
+    "@glob-ui/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "@sveltejs/package": "^3.0.2",
+    "svelte": "^5.57.3",
+    "svelte-check": "^4.7.8",
+    "typescript": "^5.9.3"
+  }
+}

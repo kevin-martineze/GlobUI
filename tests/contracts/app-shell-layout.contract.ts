@@ -1,13 +1,13 @@
 import { describe, expect, it, beforeEach } from "vitest"
 import { page } from "vitest/browser"
 import { expectNoA11yViolations } from "../browser/a11y"
-import type { RenderAdapter } from "./types"
+import type { AppShellAdapter } from "./types"
 
 const main = () => document.querySelector("main") as HTMLElement
 const docScroll = () => document.scrollingElement as HTMLElement
 
 /** AppShellLayout: the viewport never scrolls, only the main region does, and the page is accessible. */
-export function appShellLayoutContract(render: RenderAdapter) {
+export function appShellLayoutContract(render: AppShellAdapter) {
   describe(`AppShellLayout (${render.name})`, () => {
     beforeEach(async () => {
       await page.viewport(1280, 800)

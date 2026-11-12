@@ -1,10 +1,10 @@
 import { describe, expect, it, beforeEach } from "vitest"
 import { page, userEvent } from "vitest/browser"
 import { expectNoA11yViolations } from "../browser/a11y"
-import type { RenderAdapter } from "./types"
+import type { DialogAdapter } from "./types"
 
 /** Dialog: a modal on the native dialog element. It names itself, locks the page scroll, closes on Escape and returns focus. */
-export function dialogContract(render: RenderAdapter) {
+export function dialogContract(render: DialogAdapter) {
   describe(`Dialog (${render.name})`, () => {
     beforeEach(async () => {
       await page.viewport(1280, 800)

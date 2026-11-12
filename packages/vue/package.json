@@ -1,0 +1,129 @@
+{
+  "name": "@glob-ui/vue",
+  "version": "0.3.0",
+  "description": "Vue 3 components for GlobUI: dialog, sheet and layouts, with the same API and behaviour as the React packages.",
+  "type": "module",
+  "exports": {
+    "./dialog": {
+      "types": {
+        "import": "./dist/dialog/index.d.ts",
+        "require": "./dist/dialog/index.d.cts"
+      },
+      "import": "./dist/dialog/index.js",
+      "require": "./dist/dialog/index.cjs"
+    },
+    "./sheet": {
+      "types": {
+        "import": "./dist/sheet/index.d.ts",
+        "require": "./dist/sheet/index.d.cts"
+      },
+      "import": "./dist/sheet/index.js",
+      "require": "./dist/sheet/index.cjs"
+    },
+    "./layout": {
+      "types": {
+        "import": "./dist/layout/index.d.ts",
+        "require": "./dist/layout/index.d.cts"
+      },
+      "import": "./dist/layout/index.js",
+      "require": "./dist/layout/index.cjs"
+    },
+    "./app-shell-layout": {
+      "types": {
+        "import": "./dist/app-shell-layout/index.d.ts",
+        "require": "./dist/app-shell-layout/index.d.cts"
+      },
+      "import": "./dist/app-shell-layout/index.js",
+      "require": "./dist/app-shell-layout/index.cjs"
+    },
+    "./page-layout": {
+      "types": {
+        "import": "./dist/page-layout/index.d.ts",
+        "require": "./dist/page-layout/index.d.cts"
+      },
+      "import": "./dist/page-layout/index.js",
+      "require": "./dist/page-layout/index.cjs"
+    },
+    "./stacked-layout": {
+      "types": {
+        "import": "./dist/stacked-layout/index.d.ts",
+        "require": "./dist/stacked-layout/index.d.cts"
+      },
+      "import": "./dist/stacked-layout/index.js",
+      "require": "./dist/stacked-layout/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/",
+    "LICENSE",
+    "README.md"
+  ],
+  "keywords": [
+    "glob-ui",
+    "vue",
+    "components",
+    "accessible",
+    "tailwind"
+  ],
+  "license": "MIT",
+  "author": "Kevin Martínez E",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevin-martineze/GlobUI.git",
+    "directory": "packages/vue"
+  },
+  "homepage": "https://github.com/kevin-martineze/GlobUI#readme",
+  "bugs": {
+    "url": "https://github.com/kevin-martineze/GlobUI/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "GLOB_FORMAT=es vite build && GLOB_FORMAT=cjs vite build && vue-tsc -p tsconfig.build.json && node scripts/finish-types.mjs",
+    "dev": "vite build --watch"
+  },
+  "peerDependencies": {
+    "vue": "^3.5"
+  },
+  "dependencies": {
+    "@glob-ui/core": "workspace:*",
+    "@glob-ui/recipes": "workspace:*",
+    "@glob-ui/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.10",
+    "typescript": "^5.9.3",
+    "vite": "^8.3.8",
+    "vue": "^3.5.45",
+    "vue-tsc": "^3.3.14"
+  },
+  "typesVersions": {
+    "*": {
+      "dialog": [
+        "./dist/dialog/index.d.ts"
+      ],
+      "sheet": [
+        "./dist/sheet/index.d.ts"
+      ],
+      "layout": [
+        "./dist/layout/index.d.ts"
+      ],
+      "app-shell-layout": [
+        "./dist/app-shell-layout/index.d.ts"
+      ],
+      "page-layout": [
+        "./dist/page-layout/index.d.ts"
+      ],
+      "stacked-layout": [
+        "./dist/stacked-layout/index.d.ts"
+      ]
+    }
+  }
+}
