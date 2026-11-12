@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "@glob-ui/dialog": "workspace:*",
+    "@glob-ui/recipes": "workspace:*",
     "@glob-ui/utils": "workspace:*",
     "class-variance-authority": "^0.7.1"
   },

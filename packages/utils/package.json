@@ -27,6 +27,7 @@
     "README.md"
   ],
   "dependencies": {
+    "@glob-ui/core": "workspace:*",
     "clsx": "^2.1.1",
     "tailwind-merge": "^3.6.0"
   },

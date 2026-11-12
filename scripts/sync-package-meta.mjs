@@ -25,6 +25,9 @@ const extra = {
   styles: { description: "GlobUI design tokens (CSS custom properties) and the Tailwind theme mapping.", keywords: ["tokens", "tailwind", "theme"] },
   hooks: { description: "Internal hooks used by GlobUI components.", internal: true },
   utils: { description: "Internal class-name helper used by GlobUI components.", internal: true },
+  // Framework-free packages: no React in their keywords. Core is behaviour over the DOM; recipes are class strings.
+  core: { description: "Internal framework-free behaviour (focus, keyboard, positioning, scroll) used by GlobUI components.", keywords: ["behaviour", "focus", "keyboard"], internal: true, frameworkFree: true },
+  recipes: { description: "Internal class-variance-authority recipes and shared class strings used by GlobUI components.", keywords: ["recipes", "tailwind"], internal: true, frameworkFree: true },
 }
 
 const packagesDir = path.join(root, "packages")
@@ -38,7 +41,10 @@ for (const dir of readdirSync(packagesDir)) {
   const description = doc?.description ?? info.description
   const isStyles = name === "styles"
   const isInternal = Boolean(info.internal)
-  const keywords = ["react", "glob-ui", ...(isStyles ? ["tokens", "tailwind"] : ["components", "accessible", "tailwind"]), ...(info.keywords ?? []), name]
+  const frameworkFree = Boolean(info.frameworkFree)
+  const keywords = frameworkFree
+    ? ["glob-ui", ...(info.keywords ?? []), name]
+    : ["react", "glob-ui", ...(isStyles ? ["tokens", "tailwind"] : ["components", "accessible", "tailwind"]), ...(info.keywords ?? []), name]
 
   delete pkg.private
   pkg.description = description

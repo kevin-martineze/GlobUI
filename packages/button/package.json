@@ -30,6 +30,7 @@
     "react": "^19"
   },
   "dependencies": {
+    "@glob-ui/recipes": "workspace:*",
     "@glob-ui/slot": "workspace:*",
     "@glob-ui/spinner": "workspace:*",
     "@glob-ui/utils": "workspace:*",

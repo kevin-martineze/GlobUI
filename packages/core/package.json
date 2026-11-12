@@ -1,0 +1,63 @@
+{
+  "name": "@glob-ui/core",
+  "version": "0.3.0",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch --no-clean"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/",
+    "LICENSE",
+    "README.md"
+  ],
+  "dependencies": {
+    "@floating-ui/dom": "^1.8.0"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.1"
+  },
+  "description": "Internal framework-free behaviour (focus, keyboard, positioning, scroll) used by GlobUI components.",
+  "keywords": [
+    "glob-ui",
+    "behaviour",
+    "focus",
+    "keyboard",
+    "core"
+  ],
+  "license": "MIT",
+  "author": "Kevin Martínez E",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevin-martineze/GlobUI.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/kevin-martineze/GlobUI#readme",
+  "bugs": {
+    "url": "https://github.com/kevin-martineze/GlobUI/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "sideEffects": false,
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18.18"
+  }
+}

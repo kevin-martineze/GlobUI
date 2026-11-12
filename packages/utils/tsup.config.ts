@@ -15,6 +15,6 @@ export default defineConfig({
   },
   sourcemap: true,
   clean: true,
-  external: ["clsx", "tailwind-merge"],
+  external: ["@glob-ui/core", "clsx", "tailwind-merge"],
   splitting: false,
 })

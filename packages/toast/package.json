@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "@glob-ui/alert": "workspace:*",
+    "@glob-ui/core": "workspace:*",
     "@glob-ui/utils": "workspace:*"
   },
   "devDependencies": {

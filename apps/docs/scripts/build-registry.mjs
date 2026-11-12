@@ -46,6 +46,9 @@ function rewriteImports(source) {
   return source
     .replace(/from "@glob-ui\/utils"/g, 'from "@/lib/glob-ui/utils"')
     .replace(/from "@glob-ui\/hooks"/g, 'from "@/hooks/glob-ui"')
+    // Framework-free packages live in lib/ next to cn(): core behaviour and recipes (cva + class strings).
+    .replace(/from "@glob-ui\/core"/g, 'from "@/lib/glob-ui/core/index"')
+    .replace(/from "@glob-ui\/recipes"/g, 'from "@/lib/glob-ui/recipes/index"')
     // Point at index explicitly: a directory import can resolve to <name>/<name>.tsx, which does not
     // re-export helpers that live in other files of the package (for example calendar's date helpers).
     .replace(/from "@glob-ui\/([a-z-]+)"/g, 'from "@/components/glob-ui/$1/index"')
@@ -77,6 +80,8 @@ function workspaceRegistryDependencies(pkg, theme = true) {
     const slug = name.slice("@glob-ui/".length)
     if (slug === "utils") deps.push(`${SITE}/r/glob-ui-utils.json`)
     else if (slug === "hooks") deps.push(`${SITE}/r/glob-ui-hooks.json`)
+    else if (slug === "core") deps.push(`${SITE}/r/glob-ui-core.json`)
+    else if (slug === "recipes") deps.push(`${SITE}/r/glob-ui-recipes.json`)
     else deps.push(`${SITE}/r/${slug}.json`)
   }
   return deps
@@ -144,7 +149,8 @@ items.push({
   title: "GlobUI utils",
   description: "cn(): class names merged with the GlobUI radius and shadow scales.",
   dependencies: npmDependencies(readJson(path.join(utilsDir, "package.json"))),
-  registryDependencies: [`${SITE}/r/glob-ui-theme.json`],
+  // utils re-exports the text helpers that moved to core, so it pulls the core item too.
+  registryDependencies: [`${SITE}/r/glob-ui-theme.json`, `${SITE}/r/glob-ui-core.json`],
   // index.ts is the entry (cn and the re-exports); every other file keeps its name next to it.
   files: sourceFiles(path.join(utilsDir, "src")).map((file) => ({
     path: path.relative(repo, file),
@@ -154,6 +160,33 @@ items.push({
   })),
 })
 
+// core and recipes: framework-free packages copied to lib/glob-ui/<name>/. Their files keep relative imports.
+for (const [slug, title, description] of [
+  ["core", "GlobUI core", "Framework-free behaviour used by the GlobUI components: focus, keyboard, positioning and scroll lock."],
+  ["recipes", "GlobUI recipes", "Class-variance-authority variants and shared class strings used by the GlobUI components."],
+]) {
+  const dir = path.join(packagesDir, slug)
+  const pkg = readJson(path.join(dir, "package.json"))
+  items.push({
+    $schema: SCHEMA,
+    name: `glob-ui-${slug}`,
+    type: "registry:lib",
+    title,
+    description,
+    dependencies: npmDependencies(pkg),
+    registryDependencies: workspaceRegistryDependencies(pkg, false),
+    files: sourceFiles(path.join(dir, "src")).map((file) => {
+      const rel = path.relative(path.join(dir, "src"), file)
+      return {
+        path: path.relative(repo, file),
+        type: "registry:lib",
+        target: `@lib/glob-ui/${slug}/${rel}`,
+        content: rewriteImports(readFileSync(file, "utf8")),
+      }
+    }),
+  })
+}
+
 const hooksDir = path.join(packagesDir, "hooks")
 items.push({
   $schema: SCHEMA,
@@ -162,7 +195,7 @@ items.push({
   title: "GlobUI hooks",
   description: "Focus and positioning hooks used by the GlobUI overlay and menu components.",
   dependencies: npmDependencies(readJson(path.join(hooksDir, "package.json"))),
-  registryDependencies: [`${SITE}/r/glob-ui-theme.json`],
+  registryDependencies: [...new Set([`${SITE}/r/glob-ui-theme.json`, ...workspaceRegistryDependencies(readJson(path.join(hooksDir, "package.json")), false)])],
   files: sourceFiles(path.join(hooksDir, "src")).map((file) => ({
     path: path.relative(repo, file),
     type: "registry:hook",
@@ -204,7 +237,7 @@ for (const t of templates) {
   const deps = new Set([`${SITE}/r/glob-ui-theme.json`])
   for (const source of sources) {
     for (const [, slug] of source.matchAll(/from "@glob-ui\/([a-z-]+)"/g)) {
-      deps.add(slug === "utils" ? `${SITE}/r/glob-ui-utils.json` : `${SITE}/r/${slug}.json`)
+      deps.add(slug === "utils" ? `${SITE}/r/glob-ui-utils.json` : slug === "core" ? `${SITE}/r/glob-ui-core.json` : slug === "recipes" ? `${SITE}/r/glob-ui-recipes.json` : `${SITE}/r/${slug}.json`)
     }
   }
   items.push({

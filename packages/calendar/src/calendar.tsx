@@ -3,7 +3,7 @@
 import { forwardRef, useEffect, useId, useRef, useState } from "react"
 import { cn } from "@glob-ui/utils"
 import { useControllableState } from "@glob-ui/hooks"
-import { addDays, addMonths, compareISODate, daysInMonth, parseISODate, todayISODate } from "./date"
+import { addDays, addMonths, compareISODate, daysInMonth, parseISODate, todayISODate } from "@glob-ui/core"
 import { defaultWeekStart, useHydrated, useResolvedLocale, weekdayNames } from "./locale"
 
 export interface DateRange {

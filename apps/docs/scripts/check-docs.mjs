@@ -13,7 +13,8 @@ const packagesDir = path.resolve(docs, "../../packages")
 const problems = []
 
 // 1. Coverage
-const NOT_DOCUMENTED = new Set(["hooks", "utils", "all", "styles"])
+// core and recipes are internal and framework-free: no site pages until the other frameworks ship (phase 10).
+const NOT_DOCUMENTED = new Set(["hooks", "utils", "all", "styles", "core", "recipes"])
 const UTILITY_PAGE = {
   slot: "utilities/slot.mdx",
   utils: "utilities/cn.mdx",

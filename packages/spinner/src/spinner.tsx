@@ -1,19 +1,7 @@
 import { forwardRef } from "react"
-import { cva, type VariantProps } from "class-variance-authority"
+import type { VariantProps } from "class-variance-authority"
 import { cn } from "@glob-ui/utils"
-
-const spinnerVariants = cva("shrink-0 animate-spin", {
-  variants: {
-    size: {
-      sm: "h-4 w-4",
-      md: "h-5 w-5",
-      lg: "h-6 w-6",
-    },
-  },
-  defaultVariants: {
-    size: "md",
-  },
-})
+import { spinnerVariants } from "@glob-ui/recipes"
 
 export interface SpinnerProps
   extends Omit<React.SVGProps<SVGSVGElement>, "ref">,

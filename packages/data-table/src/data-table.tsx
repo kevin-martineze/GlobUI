@@ -22,7 +22,8 @@ import {
   type SortingState,
   type Updater,
 } from "@tanstack/react-table"
-import { cn, matchesSearch } from "@glob-ui/utils"
+import { cn } from "@glob-ui/utils"
+import { matchesSearch } from "@glob-ui/core"
 import { useControllableState } from "@glob-ui/hooks"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@glob-ui/table"
 import { Button, buttonVariants } from "@glob-ui/button"
