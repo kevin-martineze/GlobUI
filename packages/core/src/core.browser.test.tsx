@@ -1,6 +1,6 @@
 // Core controllers against the DOM, with no framework. Each one is driven by plain DOM calls.
 import { afterEach, describe, expect, it, vi } from "vitest"
-import { attachRovingFocus, createFloatingPanel, getLayoutScroll, lockScroll, scrollLockCount } from "./index"
+import { attachRovingFocus, createFloatingPanel, createModal, getLayoutScroll, lockScroll, scrollLockCount } from "./index"
 
 const nodes: HTMLElement[] = []
 function add<T extends HTMLElement>(el: T): T {
@@ -100,5 +100,35 @@ describe("createFloatingPanel", () => {
     expect(panel.matches(":popover-open")).toBe(false)
     expect(onOpenChange).not.toHaveBeenCalled()
     controller.destroy()
+  })
+})
+
+describe("createModal", () => {
+  it("opens a modal, locks scroll, and reports Escape without closing by itself", () => {
+    const dialog = add(document.createElement("dialog"))
+    const onOpenChange = vi.fn()
+    const controller = createModal(dialog, { open: false, onOpenChange })
+    controller.update({ open: true, onOpenChange })
+    expect(dialog.open).toBe(true)
+    expect(document.documentElement.style.overflow).toBe("hidden")
+    dialog.dispatchEvent(new Event("cancel", { cancelable: true }))
+    expect(onOpenChange).toHaveBeenCalledWith(false)
+    expect(dialog.open).toBe(true)
+    controller.update({ open: false, onOpenChange })
+    expect(dialog.open).toBe(false)
+    expect(document.documentElement.style.overflow).not.toBe("hidden")
+    controller.destroy()
+  })
+
+  it("names the dialog by its title only while the title exists", () => {
+    const title = add(document.createElement("h2"))
+    title.id = "modal-title-test"
+    const dialog = add(document.createElement("dialog"))
+    const onOpenChange = vi.fn()
+    const controller = createModal(dialog, { open: true, onOpenChange, labelledBy: "modal-title-test", describedBy: "missing-id" })
+    expect(dialog.getAttribute("aria-labelledby")).toBe("modal-title-test")
+    expect(dialog.hasAttribute("aria-describedby")).toBe(false)
+    controller.destroy()
+    dialog.close()
   })
 })
