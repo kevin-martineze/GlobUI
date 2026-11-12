@@ -34,9 +34,27 @@ export default defineConfig({
         oxc,
         plugins: [tailwindcss()],
         resolve: { alias },
+        // Pre-bundle up front: otherwise a cold cache (CI, or after an install) re-optimizes mid-run,
+        // Vite reloads the test iframes and whole suites fail to start.
+        optimizeDeps: {
+          include: [
+            "react",
+            "react-dom",
+            "react-dom/client",
+            "react/jsx-runtime",
+            "react/jsx-dev-runtime",
+            "vitest-browser-react",
+            "axe-core",
+            "@floating-ui/dom",
+            "@tanstack/react-table",
+            "class-variance-authority",
+            "clsx",
+            "tailwind-merge",
+          ],
+        },
         test: {
           name: "browser",
-          include: ["packages/*/src/**/*.browser.test.tsx", "templates/*/*.browser.test.tsx"],
+          include: ["packages/*/src/**/*.browser.test.{ts,tsx}", "templates/*/*.browser.test.tsx", "tests/contracts/**/*.browser.test.tsx"],
           setupFiles: ["tests/browser/setup.ts"],
           browser: {
             enabled: true,

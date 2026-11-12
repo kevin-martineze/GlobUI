@@ -202,6 +202,12 @@ importers:
       publint:
         specifier: ^0.3.25
         version: 0.3.25
+      react:
+        specifier: 19.2.4
+        version: 19.2.4
+      react-dom:
+        specifier: 19.2.4
+        version: 19.2.4(react@19.2.4)
       tailwindcss:
         specifier: ^4
         version: 4.3.0
@@ -420,6 +426,9 @@ importers:
 
   packages/alert:
     dependencies:
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -609,6 +618,9 @@ importers:
       '@glob-ui/layout':
         specifier: workspace:*
         version: link:../layout
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -625,6 +637,9 @@ importers:
 
   packages/avatar:
     dependencies:
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -641,6 +656,9 @@ importers:
 
   packages/badge:
     dependencies:
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -657,6 +675,9 @@ importers:
 
   packages/button:
     dependencies:
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/slot':
         specifier: workspace:*
         version: link:../slot
@@ -679,6 +700,9 @@ importers:
 
   packages/calendar:
     dependencies:
+      '@glob-ui/core':
+        specifier: workspace:*
+        version: link:../core
       '@glob-ui/hooks':
         specifier: workspace:*
         version: link:../hooks
@@ -711,6 +735,9 @@ importers:
 
   packages/checkbox:
     dependencies:
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -727,6 +754,9 @@ importers:
 
   packages/combobox:
     dependencies:
+      '@glob-ui/core':
+        specifier: workspace:*
+        version: link:../core
       '@glob-ui/hooks':
         specifier: workspace:*
         version: link:../hooks
@@ -749,6 +779,9 @@ importers:
 
   packages/command:
     dependencies:
+      '@glob-ui/core':
+        specifier: workspace:*
+        version: link:../core
       '@glob-ui/dialog':
         specifier: workspace:*
         version: link:../dialog
@@ -766,6 +799,16 @@ importers:
         specifier: ^8.5.1
         version: 8.5.1(jiti@2.7.0)(postcss@8.5.32)(supports-color@7.2.0)(typescript@5.9.3)(yaml@2.9.1)
 
+  packages/core:
+    dependencies:
+      '@floating-ui/dom':
+        specifier: ^1.8.0
+        version: 1.8.0
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.32)(supports-color@7.2.0)(typescript@5.9.3)(yaml@2.9.1)
+
   packages/data-table:
     dependencies:
       '@glob-ui/button':
@@ -774,6 +817,9 @@ importers:
       '@glob-ui/checkbox':
         specifier: workspace:*
         version: link:../checkbox
+      '@glob-ui/core':
+        specifier: workspace:*
+        version: link:../core
       '@glob-ui/dropdown-menu':
         specifier: workspace:*
         version: link:../dropdown-menu
@@ -833,9 +879,15 @@ importers:
 
   packages/dialog:
     dependencies:
+      '@glob-ui/core':
+        specifier: workspace:*
+        version: link:../core
       '@glob-ui/hooks':
         specifier: workspace:*
         version: link:../hooks
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/slot':
         specifier: workspace:*
         version: link:../slot
@@ -858,6 +910,9 @@ importers:
       '@glob-ui/hooks':
         specifier: workspace:*
         version: link:../hooks
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/slot':
         specifier: workspace:*
         version: link:../slot
@@ -896,9 +951,9 @@ importers:
 
   packages/hooks:
     dependencies:
-      '@floating-ui/react-dom':
-        specifier: ^2.1.9
-        version: 2.1.9(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@glob-ui/core':
+        specifier: workspace:*
+        version: link:../core
       react:
         specifier: ^19
         version: 19.2.4
@@ -912,6 +967,9 @@ importers:
 
   packages/input:
     dependencies:
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -928,6 +986,9 @@ importers:
 
   packages/label:
     dependencies:
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -944,6 +1005,12 @@ importers:
 
   packages/layout:
     dependencies:
+      '@glob-ui/core':
+        specifier: workspace:*
+        version: link:../core
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/sheet':
         specifier: workspace:*
         version: link:../sheet
@@ -982,6 +1049,9 @@ importers:
 
   packages/page-layout:
     dependencies:
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -1020,9 +1090,15 @@ importers:
 
   packages/phone-input:
     dependencies:
+      '@glob-ui/core':
+        specifier: workspace:*
+        version: link:../core
       '@glob-ui/hooks':
         specifier: workspace:*
         version: link:../hooks
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -1064,6 +1140,9 @@ importers:
 
   packages/progress:
     dependencies:
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -1083,6 +1162,9 @@ importers:
 
   packages/radio-group:
     dependencies:
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -1092,6 +1174,16 @@ importers:
       react:
         specifier: ^19
         version: 19.2.4
+    devDependencies:
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.32)(supports-color@7.2.0)(typescript@5.9.3)(yaml@2.9.1)
+
+  packages/recipes:
+    dependencies:
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
     devDependencies:
       tsup:
         specifier: ^8.5.1
@@ -1118,6 +1210,9 @@ importers:
       '@glob-ui/hooks':
         specifier: workspace:*
         version: link:../hooks
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/slot':
         specifier: workspace:*
         version: link:../slot
@@ -1159,6 +1254,9 @@ importers:
       '@glob-ui/dialog':
         specifier: workspace:*
         version: link:../dialog
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -1191,6 +1289,9 @@ importers:
       '@glob-ui/hooks':
         specifier: workspace:*
         version: link:../hooks
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -1220,6 +1321,9 @@ importers:
 
   packages/spinner:
     dependencies:
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -1254,6 +1358,9 @@ importers:
 
   packages/switch:
     dependencies:
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -1289,6 +1396,9 @@ importers:
       '@glob-ui/hooks':
         specifier: workspace:*
         version: link:../hooks
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/slot':
         specifier: workspace:*
         version: link:../slot
@@ -1308,6 +1418,9 @@ importers:
 
   packages/textarea:
     dependencies:
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -1327,6 +1440,9 @@ importers:
       '@glob-ui/alert':
         specifier: workspace:*
         version: link:../alert
+      '@glob-ui/core':
+        specifier: workspace:*
+        version: link:../core
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -1346,6 +1462,9 @@ importers:
       '@glob-ui/hooks':
         specifier: workspace:*
         version: link:../hooks
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -1384,6 +1503,9 @@ importers:
 
   packages/utils:
     dependencies:
+      '@glob-ui/core':
+        specifier: workspace:*
+        version: link:../core
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
