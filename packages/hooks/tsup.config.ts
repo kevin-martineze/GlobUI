@@ -15,7 +15,7 @@ export default defineConfig({
   },
   sourcemap: true,
   clean: true,
-  external: ["react", "react-dom", "@floating-ui/react-dom"],
+  external: ["react", "react-dom", "@glob-ui/core"],
   splitting: false,
   // esbuild drops module-level directives when bundling; re-add it so RSC treats this as a client module.
   banner: { js: '"use client"' },

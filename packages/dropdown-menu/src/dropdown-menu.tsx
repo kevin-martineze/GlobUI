@@ -1,10 +1,11 @@
 "use client"
 
 import { createContext, forwardRef, useCallback, useContext, useId, useMemo, useRef } from "react"
-import { cva, type VariantProps } from "class-variance-authority"
+import type { VariantProps } from "class-variance-authority"
 import { cn } from "@glob-ui/utils"
 import { Slot, composeRefs } from "@glob-ui/slot"
 import { useControllableState, useFloatingPanel, useRovingFocus, type Placement } from "@glob-ui/hooks"
+import { itemVariants } from "@glob-ui/recipes"
 
 const ITEM_SELECTOR = '[data-roving-item]:not([aria-disabled="true"])'
 
@@ -182,26 +183,6 @@ const DropdownMenuContent = forwardRef<HTMLDivElement, DropdownMenuContentProps>
   }
 )
 DropdownMenuContent.displayName = "DropdownMenuContent"
-
-const itemVariants = cva(
-  "relative flex cursor-default select-none items-center gap-2 rounded-glob-sm px-2 py-1.5 text-sm outline-none aria-disabled:cursor-not-allowed aria-disabled:opacity-50",
-  {
-    variants: {
-      variant: {
-        default: "text-glob-text focus:bg-glob-surface-hover",
-        danger: "text-glob-danger focus:bg-glob-danger-light",
-      },
-      inset: {
-        true: "pl-8",
-        false: "",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-      inset: false,
-    },
-  }
-)
 
 interface BaseItemProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "onSelect"> {
   disabled?: boolean

@@ -1,7 +1,8 @@
 "use client"
 
 import { createContext, forwardRef, useCallback, useContext, useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react"
-import { cn, matchesSearch } from "@glob-ui/utils"
+import { cn } from "@glob-ui/utils"
+import { matchesSearch } from "@glob-ui/core"
 import { useControllableState, useListbox } from "@glob-ui/hooks"
 import { Dialog, DialogContentBase, DialogTitle } from "@glob-ui/dialog"
 

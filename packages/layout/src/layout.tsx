@@ -3,6 +3,8 @@
 import { createContext, forwardRef, useCallback, useContext, useId, useState, useSyncExternalStore } from "react"
 import { cn } from "@glob-ui/utils"
 import { Sheet, SheetContent } from "@glob-ui/sheet"
+import { getLayoutScroll } from "@glob-ui/core"
+import { SCROLL_CLASSES } from "@glob-ui/recipes"
 
 // Hydration-safe: false on the server and during hydration, true afterwards.
 const noopSubscribe = () => () => {}
@@ -31,11 +33,8 @@ export function useLayoutScroll(): HTMLElement | null {
   const hydrated = useHydrated()
   if (!hydrated) return null
   if (scroll) return scroll.element
-  return (document.scrollingElement as HTMLElement | null) ?? null
+  return getLayoutScroll(null)
 }
-
-const SCROLL_CLASSES =
-  "min-h-0 overflow-y-auto overscroll-contain [scrollbar-gutter:stable] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-glob-ring"
 
 export type LayoutScrollMode = "fixed" | "scroll"
 

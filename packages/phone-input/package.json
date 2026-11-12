@@ -31,7 +31,9 @@
     "react-dom": "^19"
   },
   "dependencies": {
+    "@glob-ui/core": "workspace:*",
     "@glob-ui/hooks": "workspace:*",
+    "@glob-ui/recipes": "workspace:*",
     "@glob-ui/utils": "workspace:*",
     "class-variance-authority": "^0.7.1"
   },

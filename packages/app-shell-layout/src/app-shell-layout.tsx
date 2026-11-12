@@ -1,24 +1,9 @@
 "use client"
 
 import { forwardRef, useId } from "react"
-import { cva } from "class-variance-authority"
 import { cn } from "@glob-ui/utils"
 import { LayoutSlot, LayoutNavProvider, LayoutMobileNav, SkipLink } from "@glob-ui/layout"
-
-const sidebarVariants = cva("hidden min-h-0 shrink-0 flex-col border-glob-border bg-glob-surface lg:flex", {
-  variants: {
-    side: {
-      left: "border-r",
-      right: "border-l",
-    },
-    width: {
-      sm: "w-48",
-      md: "w-56",
-      lg: "w-64",
-    },
-  },
-  defaultVariants: { side: "left", width: "md" },
-})
+import { sidebarVariants } from "@glob-ui/recipes"
 
 export interface AppShellLayoutProps extends React.HTMLAttributes<HTMLDivElement> {
   /** The fixed header across the top. Put `LayoutNavTrigger` here for small screens. */

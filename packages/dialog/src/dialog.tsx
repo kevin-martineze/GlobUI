@@ -9,36 +9,13 @@ import {
   useMemo,
   useRef,
 } from "react"
-import { cva, type VariantProps } from "class-variance-authority"
+import type { VariantProps } from "class-variance-authority"
 import { cn } from "@glob-ui/utils"
 import { useControllableState } from "@glob-ui/hooks"
 import { Slot, composeRefs } from "@glob-ui/slot"
-
-// Scroll lock shared by every open dialog. Compensates the scrollbar width so the page does not shift.
-let lockCount = 0
-let savedStyles: { overflow: string; paddingRight: string } | null = null
-
-function lockScroll() {
-  const html = document.documentElement
-  if (lockCount === 0) {
-    const scrollbarWidth = window.innerWidth - html.clientWidth
-    savedStyles = { overflow: html.style.overflow, paddingRight: html.style.paddingRight }
-    if (scrollbarWidth > 0) {
-      const current = parseFloat(getComputedStyle(html).paddingRight) || 0
-      html.style.paddingRight = `${current + scrollbarWidth}px`
-    }
-    html.style.overflow = "hidden"
-  }
-  lockCount++
-  return () => {
-    lockCount--
-    if (lockCount === 0 && savedStyles) {
-      html.style.overflow = savedStyles.overflow
-      html.style.paddingRight = savedStyles.paddingRight
-      savedStyles = null
-    }
-  }
-}
+import { dialogVariants } from "@glob-ui/recipes"
+import { lockScroll, shouldRestoreFocus } from "@glob-ui/core"
+export { dialogVariants }
 
 interface DialogContextValue {
   open: boolean
@@ -113,31 +90,6 @@ const DialogTrigger = forwardRef<HTMLButtonElement, DialogTriggerProps>(
 )
 DialogTrigger.displayName = "DialogTrigger"
 
-export const dialogVariants = cva(
-  [
-    "m-auto max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] overflow-visible rounded-glob-lg border border-glob-border bg-glob-surface p-0 text-glob-text shadow-glob-md",
-    // Enter/exit. @starting-style animates the entry; allow-discrete keeps display/overlay alive
-    // during the exit. Browsers without them open and close without animation.
-    "scale-95 opacity-0 transition-[opacity,scale,overlay,display] transition-discrete duration-200 ease-out",
-    "open:scale-100 open:opacity-100 starting:open:scale-95 starting:open:opacity-0",
-    "backdrop:bg-glob-overlay backdrop:opacity-0 backdrop:transition-[opacity,overlay,display] backdrop:transition-discrete backdrop:duration-200",
-    "open:backdrop:opacity-100 starting:open:backdrop:opacity-0",
-    "motion-reduce:transition-none motion-reduce:backdrop:transition-none",
-  ],
-  {
-    variants: {
-      size: {
-        sm: "max-w-sm",
-        md: "max-w-lg",
-        lg: "max-w-2xl",
-      },
-    },
-    defaultVariants: {
-      size: "md",
-    },
-  }
-)
-
 export type DialogContentBaseProps = React.DialogHTMLAttributes<HTMLDialogElement>
 
 /**
@@ -194,10 +146,7 @@ const DialogContentBase = forwardRef<HTMLDialogElement, DialogContentBaseProps>(
         onClose={(e) => {
           onClose?.(e)
           if (open) setOpen(false)
-          const active = document.activeElement
-          if (!active || active === document.body || innerRef.current?.contains(active)) {
-            previouslyFocused.current?.focus()
-          }
+          if (shouldRestoreFocus(innerRef.current)) previouslyFocused.current?.focus()
         }}
         // A click lands on the <dialog> element itself only over the backdrop: content fills it.
         onPointerDown={(e) => {

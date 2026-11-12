@@ -15,4 +15,5 @@ const twMerge = extendTailwindMerge({
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
-export { normalizeText, matchesSearch } from "./text"
+// Moved to @glob-ui/core in 0.4.0; re-exported so existing imports keep working.
+export { normalizeText, matchesSearch } from "@glob-ui/core"

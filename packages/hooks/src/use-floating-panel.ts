@@ -1,22 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import {
-  arrow as arrowMiddleware,
-  autoUpdate,
-  flip,
-  offset as offsetMiddleware,
-  shift,
-  size,
-  useFloating,
-  type Placement,
-} from "@floating-ui/react-dom"
-
-function isPopoverOpen(el: HTMLElement) {
-  try {
-    return el.matches(":popover-open")
-  } catch {
-    return false
-  }
-}
+import { createFloatingPanel, type FloatingPanelController, type FloatingPosition, type Placement } from "@glob-ui/core"
 
 export interface UseFloatingPanelOptions {
   open: boolean
@@ -41,8 +24,11 @@ export interface UseFloatingPanelOptions {
   matchTriggerWidth?: boolean
 }
 
+const INITIAL: FloatingPosition = { x: 0, y: 0, placement: "bottom", isPositioned: false, middlewareData: {} }
+
 /**
- * Positions a `popover` element next to a trigger and keeps it in sync with `open`.
+ * Positions a `popover` element next to a trigger and keeps it in sync with `open`. The positioning and
+ * the popover handling live in `@glob-ui/core`; this hook keeps the position in React state.
  * The panel element must have a `popover` attribute ("auto" or "manual").
  */
 export function useFloatingPanel({
@@ -59,72 +45,54 @@ export function useFloatingPanel({
 }: UseFloatingPanelOptions) {
   const [trigger, setTrigger] = useState<HTMLElement | null>(null)
   const [panel, setPanel] = useState<HTMLElement | null>(null)
+  const [position, setPosition] = useState<FloatingPosition>(INITIAL)
+  const controllerRef = useRef<FloatingPanelController | null>(null)
 
-  // Latest callbacks without re-running the effects.
-  const onShowRef = useRef(onShow)
-  const onOpenChangeRef = useRef(onOpenChange)
-  const restoreFocusToRef = useRef(restoreFocusTo)
+  // Latest callbacks without re-creating the controller.
+  const callbacks = useRef({ onShow, onOpenChange, restoreFocusTo })
   useEffect(() => {
-    onShowRef.current = onShow
-    onOpenChangeRef.current = onOpenChange
-    restoreFocusToRef.current = restoreFocusTo
+    callbacks.current = { onShow, onOpenChange, restoreFocusTo }
   })
 
-  const { floatingStyles, update, isPositioned, placement: finalPlacement, middlewareData } = useFloating({
+  const options = {
     open,
     placement,
-    // Panels live in the top layer, outside any overflow:hidden ancestor.
-    strategy: "fixed",
-    elements: { reference: trigger, floating: panel },
-    middleware: [
-      offsetMiddleware(offset),
-      flip({ padding: 8 }),
-      shift({ padding: 8 }),
-      ...(fitViewport
-        ? [
-            size({
-              padding: 8,
-              apply({ availableHeight, availableWidth, elements, rects }) {
-                Object.assign(elements.floating.style, {
-                  maxHeight: `${Math.max(0, availableHeight)}px`,
-                  maxWidth: `${Math.max(0, availableWidth)}px`,
-                  ...(matchTriggerWidth ? { minWidth: `${rects.reference.width}px` } : {}),
-                })
-              },
-            }),
-          ]
-        : []),
-      ...(arrow ? [arrowMiddleware({ element: arrow, padding: 6 })] : []),
-    ],
+    offset,
+    arrow,
+    fitViewport,
+    matchTriggerWidth,
+    restoreFocus,
+    onOpenChange: (next: boolean) => callbacks.current.onOpenChange(next),
+    onShow: (el: HTMLElement) => callbacks.current.onShow?.(el),
+    restoreFocusTo: () => callbacks.current.restoreFocusTo?.() ?? null,
+    onPosition: setPosition,
+  }
+
+  // Created once the trigger and panel are mounted; destroyed with them.
+  useEffect(() => {
+    if (!trigger || !panel) return
+    const controller = createFloatingPanel(trigger, panel, options)
+    controllerRef.current = controller
+    return () => {
+      controller.destroy()
+      controllerRef.current = null
+    }
+    // `options` is passed to `update` on every render below; only the elements create the controller.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [trigger, panel])
+
+  useEffect(() => {
+    controllerRef.current?.update(options)
   })
 
-  // Show/hide the native popover; track the trigger position only while open.
-  useEffect(() => {
-    if (!panel || typeof panel.showPopover !== "function") return
-    if (!open) {
-      if (isPopoverOpen(panel)) panel.hidePopover()
-      return
-    }
-    if (!isPopoverOpen(panel)) panel.showPopover()
-    onShowRef.current?.(panel)
-    return trigger ? autoUpdate(trigger, panel, update) : undefined
-  }, [open, panel, trigger, update])
-
-  // Mirror browser-initiated closes (light dismiss, Esc) into state.
-  useEffect(() => {
-    if (!panel) return
-    const onToggle = (e: Event) => {
-      if ((e as ToggleEvent).newState !== "closed") return
-      onOpenChangeRef.current(false)
-      if (!restoreFocus) return
-      const active = document.activeElement
-      if (!active || active === document.body || panel.contains(active)) {
-        ;(restoreFocusToRef.current?.() ?? trigger)?.focus()
-      }
-    }
-    panel.addEventListener("toggle", onToggle)
-    return () => panel.removeEventListener("toggle", onToggle)
-  }, [panel, trigger, restoreFocus])
+  // The position is only meaningful while the trigger and panel exist.
+  // opacity (not visibility) until positioned: the panel must be focusable right after showPopover().
+  const floatingStyles: React.CSSProperties = {
+    position: "fixed",
+    left: 0,
+    top: 0,
+    ...(position.isPositioned ? { transform: `translate(${position.x}px, ${position.y}px)` } : {}),
+  }
 
   // Light dismiss closes the panel on pointerup, before the trigger's click runs. Remember the
   // state at pointerdown so clicking the trigger closes the panel instead of reopening it.
@@ -145,11 +113,10 @@ export function useFloatingPanel({
     setTrigger,
     panel,
     setPanel,
-    // opacity (not visibility) until positioned: the panel must be focusable right after showPopover().
-    floatingStyles: (isPositioned ? floatingStyles : { ...floatingStyles, opacity: 0 }) as React.CSSProperties,
-    isPositioned,
-    placement: finalPlacement,
-    middlewareData,
+    floatingStyles: (position.isPositioned ? floatingStyles : { ...floatingStyles, opacity: 0 }) as React.CSSProperties,
+    isPositioned: position.isPositioned,
+    placement: position.isPositioned ? position.placement : placement,
+    middlewareData: position.middlewareData,
     triggerHandlers,
   }
 }

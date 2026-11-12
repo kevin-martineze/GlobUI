@@ -32,6 +32,7 @@
   "dependencies": {
     "@glob-ui/button": "workspace:*",
     "@glob-ui/checkbox": "workspace:*",
+    "@glob-ui/core": "workspace:*",
     "@glob-ui/dropdown-menu": "workspace:*",
     "@glob-ui/hooks": "workspace:*",
     "@glob-ui/input": "workspace:*",

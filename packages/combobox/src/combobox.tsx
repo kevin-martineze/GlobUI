@@ -1,7 +1,8 @@
 "use client"
 
 import { useId, useMemo, useRef, useState } from "react"
-import { cn, matchesSearch, normalizeText } from "@glob-ui/utils"
+import { cn } from "@glob-ui/utils"
+import { matchesSearch, normalizeText } from "@glob-ui/core"
 import { useControllableState, useFloatingPanel, useListbox, isPrintable } from "@glob-ui/hooks"
 import { inputVariants } from "@glob-ui/input"
 import { Spinner } from "@glob-ui/spinner"

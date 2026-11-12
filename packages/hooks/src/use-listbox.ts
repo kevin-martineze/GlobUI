@@ -1,4 +1,12 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
+import {
+  createTypeahead,
+  isPrintableKey,
+  listboxKeyMove,
+  listboxOptionId,
+  moveListboxIndex,
+  scrollOptionIntoView,
+} from "@glob-ui/core"
 
 export interface UseListboxOptions<T> {
   /** Base id; option ids are derived from it. */
@@ -12,58 +20,33 @@ export interface UseListboxOptions<T> {
   open: boolean
 }
 
-const TYPEAHEAD_RESET_MS = 500
-const PAGE_SIZE = 10
-
 /**
  * Active-option state for a listbox driven by `aria-activedescendant` (focus stays on the
  * combobox or search input). Handles arrows, Home/End, PageUp/PageDown and typeahead, skips
- * disabled options, and keeps the active option scrolled into view.
+ * disabled options, and keeps the active option scrolled into view. The rules live in `@glob-ui/core`.
  */
 export function useListbox<T>({ id, items, getKey, getText, isDisabled, open }: UseListboxOptions<T>) {
   const [activeKeyState, setActiveKey] = useState<string | null>(null)
-  const buffer = useRef("")
-  const resetTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
+  const [typeahead] = useState(() => createTypeahead())
+  useEffect(() => () => typeahead.reset(), [typeahead])
 
   const enabled = items.filter((item) => !isDisabled?.(item))
   // If the stored key is filtered out (or unset), the first enabled option is active.
   const activeItem = open ? (enabled.find((item) => getKey(item) === activeKeyState) ?? enabled[0]) : undefined
   const activeKey = activeItem === undefined ? null : getKey(activeItem)
-  const optionId = (key: string) => `${id}-option-${encodeURIComponent(key)}`
+  const optionId = (key: string) => listboxOptionId(id, key)
 
-  function move(to: "next" | "prev" | "first" | "last" | "pageDown" | "pageUp") {
+  function move(to: Parameters<typeof moveListboxIndex>[2]) {
     if (enabled.length === 0) return
     const index = activeItem === undefined ? -1 : enabled.indexOf(activeItem)
-    const last = enabled.length - 1
-    const next = {
-      next: index < 0 ? 0 : Math.min(index + 1, last),
-      prev: index < 0 ? last : Math.max(index - 1, 0),
-      first: 0,
-      last,
-      pageDown: Math.min(Math.max(index, 0) + PAGE_SIZE, last),
-      pageUp: Math.max(index - PAGE_SIZE, 0),
-    }[to]
-    setActiveKey(getKey(enabled[next]))
+    setActiveKey(getKey(enabled[moveListboxIndex(index, enabled.length, to)]))
   }
 
   /** Jumps to the next option starting with the typed text. Repeating one letter cycles. */
-  function typeahead(char: string) {
-    clearTimeout(resetTimer.current)
-    resetTimer.current = setTimeout(() => (buffer.current = ""), TYPEAHEAD_RESET_MS)
-    buffer.current += char.toLowerCase()
-
-    const search = buffer.current
-    const isRepeat = search.length > 1 && search.split("").every((c) => c === search[0])
-    const query = isRepeat ? search[0] : search
+  function typeaheadTo(char: string) {
     const index = activeItem === undefined ? -1 : enabled.indexOf(activeItem)
-    const start = isRepeat || search.length === 1 ? index + 1 : Math.max(index, 0)
-    for (let i = 0; i < enabled.length; i++) {
-      const item = enabled[(start + i) % enabled.length]
-      if (getText(item).toLowerCase().startsWith(query)) {
-        setActiveKey(getKey(item))
-        return
-      }
-    }
+    const found = typeahead.type(char, enabled.map(getText), index)
+    if (found !== -1) setActiveKey(getKey(enabled[found]))
   }
 
   /**
@@ -71,22 +54,15 @@ export function useListbox<T>({ id, items, getKey, getText, isDisabled, open }: 
    * Pass `homeEnd: false` in text inputs, where Home/End move the caret.
    */
   function navigate(e: React.KeyboardEvent, { homeEnd = true, typeahead: allowTypeahead = false } = {}) {
-    const keys: Record<string, Parameters<typeof move>[0]> = {
-      ArrowDown: "next",
-      ArrowUp: "prev",
-      PageDown: "pageDown",
-      PageUp: "pageUp",
-      ...(homeEnd ? { Home: "first", End: "last" } : {}),
-    }
-    const target = keys[e.key]
-    if (target && !e.altKey) {
+    const to = listboxKeyMove(e.key, { homeEnd })
+    if (to && !e.altKey) {
       e.preventDefault()
-      move(target)
+      move(to)
       return true
     }
-    if (allowTypeahead && isPrintable(e)) {
+    if (allowTypeahead && isPrintableKey(e)) {
       e.preventDefault()
-      typeahead(e.key)
+      typeaheadTo(e.key)
       return true
     }
     return false
@@ -98,10 +74,7 @@ export function useListbox<T>({ id, items, getKey, getText, isDisabled, open }: 
     const option = document.getElementById(optionId(activeKey))
     const list = option?.closest<HTMLElement>('[role="listbox"]')
     if (!option || !list) return
-    const top = option.offsetTop
-    const bottom = top + option.offsetHeight
-    if (top < list.scrollTop) list.scrollTop = top
-    else if (bottom > list.scrollTop + list.clientHeight) list.scrollTop = bottom - list.clientHeight
+    scrollOptionIntoView(option, list)
     // optionId only depends on id.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, activeKey, id])
@@ -111,7 +84,7 @@ export function useListbox<T>({ id, items, getKey, getText, isDisabled, open }: 
     activeItem,
     setActiveKey,
     move,
-    typeahead,
+    typeahead: typeaheadTo,
     navigate,
     optionId,
     /** Value for `aria-activedescendant` on the element that has focus. */
@@ -121,5 +94,5 @@ export function useListbox<T>({ id, items, getKey, getText, isDisabled, open }: 
 
 /** A single printable character without Ctrl/Meta/Alt (Space excluded). */
 export function isPrintable(e: React.KeyboardEvent) {
-  return e.key.length === 1 && e.key !== " " && !e.ctrlKey && !e.metaKey && !e.altKey
+  return isPrintableKey(e)
 }

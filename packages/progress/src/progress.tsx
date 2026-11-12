@@ -1,19 +1,7 @@
 import { forwardRef } from "react"
-import { cva, type VariantProps } from "class-variance-authority"
+import type { VariantProps } from "class-variance-authority"
 import { cn } from "@glob-ui/utils"
-
-const progressVariants = cva("relative w-full overflow-hidden rounded-glob-sm bg-glob-surface-hover", {
-  variants: {
-    size: {
-      sm: "h-1",
-      md: "h-2",
-      lg: "h-3",
-    },
-  },
-  defaultVariants: {
-    size: "md",
-  },
-})
+import { progressVariants } from "@glob-ui/recipes"
 
 const fillTone = {
   primary: "bg-glob-primary",

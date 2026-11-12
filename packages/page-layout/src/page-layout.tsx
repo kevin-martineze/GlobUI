@@ -1,30 +1,9 @@
 import { forwardRef } from "react"
-import { cva } from "class-variance-authority"
 import { cn } from "@glob-ui/utils"
+import { contentVariants, asideVariants } from "@glob-ui/recipes"
 
 // Server-safe: no hooks and no client code. It lives inside a scroll region (an app shell's main, or a stacked layout).
 // It owns the page padding: the shells' main regions have none, so a page never adds a wrapper with spacing.
-
-const contentVariants = cva("flex min-w-0 flex-1 flex-col gap-6", {
-  variants: {
-    width: {
-      default: "max-w-5xl",
-      wide: "max-w-7xl",
-      full: "max-w-none",
-    },
-  },
-  defaultVariants: { width: "default" },
-})
-
-const asideVariants = cva("flex min-w-0 shrink-0 flex-col gap-4 lg:sticky lg:top-6 lg:self-start", {
-  variants: {
-    asideWidth: {
-      sm: "lg:w-64",
-      md: "lg:w-80",
-    },
-  },
-  defaultVariants: { asideWidth: "sm" },
-})
 
 export interface PageLayoutProps extends React.HTMLAttributes<HTMLDivElement> {
   /** The page header. It sticks to the top of the nearest scroll region while the content scrolls. */

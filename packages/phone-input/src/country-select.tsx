@@ -3,7 +3,7 @@
 import { useId, useMemo, useRef, useState } from "react"
 import { cn } from "@glob-ui/utils"
 import { useFloatingPanel, useListbox } from "@glob-ui/hooks"
-import { countries } from "./country-data"
+import { countries } from "@glob-ui/core"
 
 interface CountrySelectProps {
   value: string

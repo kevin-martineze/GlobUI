@@ -1,6 +1,6 @@
 # @glob-ui/page-layout
 
-A page inside a layout: a sticky header, the content, and an optional aside that sticks from `lg`. It sets no height and no overflow, and it is server-safe.
+A page inside a layout: a sticky header, the content, and an optional aside that sticks from `lg`. It owns the page padding, sets no height and no overflow, and it is server-safe.
 
 ## Install
 
