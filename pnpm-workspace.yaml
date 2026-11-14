@@ -2,7 +2,11 @@ packages:
   - "packages/*"
   - "apps/*"
   - "templates"
+  - "tests/contracts/angular"
 allowBuilds:
   esbuild: false
   sharp: false
   unrs-resolver: false
+  "@parcel/watcher": false
+  lmdb: false
+  msgpackr-extract: false
