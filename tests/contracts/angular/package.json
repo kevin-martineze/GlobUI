@@ -1,0 +1,25 @@
+{
+  "name": "@glob-ui/contracts-angular",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Runs the shared contract tests against the Angular components with Angular's unit-test builder.",
+  "devDependencies": {
+    "@angular/build": "22.2.5",
+    "@angular/cli": "22.2.5",
+    "@angular/common": "22.2.5",
+    "@angular/compiler": "22.2.5",
+    "@angular/compiler-cli": "22.2.5",
+    "@angular/core": "22.2.5",
+    "@angular/platform-browser": "22.2.5",
+    "@tailwindcss/postcss": "4.3.5",
+    "@vitest/browser-playwright": "^5.1.0",
+    "axe-core": "^4.14.0",
+    "class-variance-authority": "0.7.1",
+    "clsx": "2.1.1",
+    "playwright": "^1.65.0",
+    "rxjs": "^7.8.2",
+    "tailwind-merge": "3.6.0",
+    "typescript": "6.0.3",
+    "vitest": "^5.1.0"
+  }
+}

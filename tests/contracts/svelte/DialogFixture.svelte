@@ -1,13 +1,13 @@
 <script lang="ts">
   import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription, DialogClose } from "../../../packages/svelte/src/dialog"
 
-  let { title, triggerLabel }: { title: string; triggerLabel: string } = $props()
+  let { title, triggerLabel, titleClass, contentClass }: { title: string; triggerLabel: string; titleClass?: string; contentClass?: string } = $props()
 </script>
 
 <Dialog>
   <DialogTrigger>{triggerLabel}</DialogTrigger>
-  <DialogContent>
-    <DialogTitle>{title}</DialogTitle>
+  <DialogContent class={contentClass}>
+    <DialogTitle class={titleClass}>{title}</DialogTitle>
     <DialogDescription>Are you sure?</DialogDescription>
     <DialogClose>Cancel</DialogClose>
   </DialogContent>

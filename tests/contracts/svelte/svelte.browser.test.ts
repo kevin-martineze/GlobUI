@@ -48,6 +48,7 @@ const svelte = {
   },
 } satisfies AppShellAdapter & LayoutScrollAdapter & DialogAdapter & SheetAdapter & PageLayoutAdapter & StackedLayoutAdapter
 
+import { classParityContract } from "../class-parity.contract"
 appShellLayoutContract(svelte)
 layoutScrollContract(svelte)
 mobileNavContract(svelte)
@@ -55,3 +56,4 @@ dialogContract(svelte)
 sheetContract(svelte)
 pageLayoutContract(svelte)
 stackedLayoutContract(svelte)
+classParityContract(svelte)

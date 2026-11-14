@@ -1,0 +1,26 @@
+{
+  "extends": "../../../packages/angular/tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "types": [],
+    "paths": {
+      "@glob-ui/angular/*": [
+        "../../../packages/angular/*/index.ts"
+      ],
+      "@glob-ui/core": [
+        "../../../packages/core/src/index.ts"
+      ],
+      "@glob-ui/recipes": [
+        "../../../packages/recipes/src/index.ts"
+      ],
+      "@glob-ui/utils": [
+        "../../../packages/utils/src/index.ts"
+      ]
+    }
+  },
+  "include": [
+    "./**/*.ts",
+    "../**/*.ts",
+    "../../../packages/angular/**/*.ts"
+  ]
+}
