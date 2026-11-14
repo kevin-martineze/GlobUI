@@ -4,6 +4,7 @@
   import { SheetContent } from "../sheet"
   import { Dialog } from "../dialog"
   import { LAYOUT_NAV_KEY, type LayoutNavContext } from "../shared/context"
+  import { LAYOUT_MOBILE_NAV_LIST_CLASSES } from "@glob-ui/recipes"
 
   let { label, children }: { label: string; children?: Snippet } = $props()
   const nav = getContext<LayoutNavContext | undefined>(LAYOUT_NAV_KEY)
@@ -21,7 +22,7 @@
       if ((event.target as HTMLElement).closest("a[href]")) nav.setOpen(false)
     }}
   >
-    <nav aria-label={label} class="flex flex-col gap-1">
+    <nav aria-label={label} class={LAYOUT_MOBILE_NAV_LIST_CLASSES}>
       {@render children?.()}
     </nav>
   </SheetContent>

@@ -2,6 +2,7 @@
   import type { Snippet } from "svelte"
   import type { HTMLAttributes } from "svelte/elements"
   import { cn } from "@glob-ui/utils"
+  import { PAGE_HEADER_ACTIONS_CLASSES, PAGE_HEADER_CLASSES, PAGE_HEADER_ROW_CLASSES, PAGE_HEADER_SECONDARY_TEXT_CLASSES, PAGE_HEADER_TITLE_BLOCK_CLASSES, PAGE_HEADER_TITLE_CLASSES } from "@glob-ui/recipes"
 
   let {
     title,
@@ -20,23 +21,23 @@
   } = $props()
 </script>
 
-<div data-slot="page-header" class={cn("flex min-w-0 flex-col gap-2", className)} {...rest}>
+<div data-slot="page-header" class={cn(PAGE_HEADER_CLASSES, className)} {...rest}>
   {#if breadcrumbs}
-    <div class="text-sm text-glob-text-secondary">{@render breadcrumbs()}</div>
+    <div class={PAGE_HEADER_SECONDARY_TEXT_CLASSES}>{@render breadcrumbs()}</div>
   {/if}
-  <div class="flex flex-wrap items-start justify-between gap-4">
-    <div class="flex min-w-0 flex-col gap-1">
-      <h1 class="break-words text-2xl font-semibold tracking-tight text-glob-text">
+  <div class={PAGE_HEADER_ROW_CLASSES}>
+    <div class={PAGE_HEADER_TITLE_BLOCK_CLASSES}>
+      <h1 class={PAGE_HEADER_TITLE_CLASSES}>
         {#if typeof title === "string"}{title}{:else}{@render (title as Snippet)()}{/if}
       </h1>
       {#if description}
-        <p class="text-sm text-glob-text-secondary">
+        <p class={PAGE_HEADER_SECONDARY_TEXT_CLASSES}>
           {#if typeof description === "string"}{description}{:else}{@render (description as Snippet)()}{/if}
         </p>
       {/if}
     </div>
     {#if actions}
-      <div class="flex flex-wrap items-center gap-2">{@render actions()}</div>
+      <div class={PAGE_HEADER_ACTIONS_CLASSES}>{@render actions()}</div>
     {/if}
   </div>
 </div>

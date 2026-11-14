@@ -5,6 +5,7 @@
   import { sheetVariants } from "@glob-ui/recipes"
   import DialogContentBase from "../dialog/DialogContentBase.svelte"
   import DialogCloseIcon from "../dialog/DialogCloseIcon.svelte"
+  import { SHEET_BODY_CLASSES } from "@glob-ui/recipes"
 
   type Side = "left" | "right" | "top" | "bottom"
   type Size = "sm" | "md" | "lg"
@@ -19,7 +20,7 @@
 </script>
 
 <DialogContentBase class={cn(sheetVariants({ side, size, className }))} {...rest}>
-  <div class="relative flex h-full flex-col gap-4 overflow-y-auto p-6">
+  <div class={SHEET_BODY_CLASSES}>
     {@render children?.()}
     {#if showCloseButton}<DialogCloseIcon />{/if}
   </div>

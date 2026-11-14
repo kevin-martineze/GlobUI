@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useLayoutNav } from "../shared/context"
+import { LAYOUT_NAV_TRIGGER_CLASSES } from "@glob-ui/recipes"
 
 const nav = useLayoutNav("LayoutNavTrigger")
 
@@ -14,7 +15,7 @@ function onClick(event: MouseEvent) {
     aria-label="Open navigation"
     :aria-expanded="nav.open"
     :aria-controls="nav.panelId"
-    class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-glob-md text-glob-text transition-colors hover:bg-glob-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring lg:hidden"
+    :class="LAYOUT_NAV_TRIGGER_CLASSES"
     v-bind="$attrs"
     @click="onClick"
   >

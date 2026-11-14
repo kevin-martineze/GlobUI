@@ -4,6 +4,7 @@ import { cn } from "@glob-ui/utils"
 import { sheetVariants } from "@glob-ui/recipes"
 import DialogContentBase from "../dialog/DialogContentBase.vue"
 import DialogCloseIcon from "../dialog/DialogCloseIcon.vue"
+import { SHEET_BODY_CLASSES } from "@glob-ui/recipes"
 
 const props = withDefaults(
   defineProps<{
@@ -24,7 +25,7 @@ const classes = computed(() => cn(sheetVariants({ side: props.side, size: props.
 
 <template>
   <DialogContentBase :class="classes" v-bind="rest">
-    <div class="relative flex h-full flex-col gap-4 overflow-y-auto p-6">
+    <div :class="SHEET_BODY_CLASSES">
       <slot />
       <DialogCloseIcon v-if="showCloseButton" />
     </div>
