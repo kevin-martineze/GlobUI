@@ -12,7 +12,7 @@ const SERVER = ["alert", "all", "badge", "button", "card", "core", "field", "inp
 // toast is split: index (toast(), server-safe) vs toaster (client).
 const CHECKS = []
 // Svelte and Vue packages are not React client modules: no banner, and their output is not index.mjs.
-const FRAMEWORK = ["svelte", "vue"]
+const FRAMEWORK = ["svelte", "vue", "angular"]
 
 for (const dir of readdirSync(root)) {
   const dist = join(root, dir, "dist")
