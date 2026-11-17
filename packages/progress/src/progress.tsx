@@ -2,13 +2,9 @@ import { forwardRef } from "react"
 import type { VariantProps } from "class-variance-authority"
 import { cn } from "@glob-ui/utils"
 import { progressVariants } from "@glob-ui/recipes"
+import { PROGRESS_FILL_TONE, PROGRESS_INDETERMINATE_CLASSES, PROGRESS_FILL_CLASSES } from "@glob-ui/recipes"
 
-const fillTone = {
-  primary: "bg-glob-primary",
-  success: "bg-glob-success",
-  warning: "bg-glob-warning",
-  danger: "bg-glob-danger",
-} as const
+const fillTone = PROGRESS_FILL_TONE
 
 export interface ProgressProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "role">,
@@ -47,13 +43,13 @@ const Progress = forwardRef<HTMLDivElement, ProgressProps>(
           // Slides across the track; with reduced motion it becomes a static full bar that pulses.
           <div
             className={cn(
-              "h-full w-2/5 animate-glob-indeterminate rounded-glob-sm motion-reduce:w-full motion-reduce:animate-pulse",
+              PROGRESS_INDETERMINATE_CLASSES,
               fillTone[tone]
             )}
           />
         ) : (
           <div
-            className={cn("h-full w-full rounded-glob-sm transition-transform duration-300 ease-out motion-reduce:transition-none", fillTone[tone])}
+            className={cn(PROGRESS_FILL_CLASSES, fillTone[tone])}
             style={{ transform: `translateX(-${100 - percent}%)` }}
           />
         )}

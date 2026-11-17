@@ -1,6 +1,6 @@
 # @glob-ui/svelte
 
-Svelte 5 components for GlobUI: dialog, sheet and layouts, with the same API and behaviour as the React packages.
+Svelte 5 components for GlobUI: forms and primitives, dialog, sheet and layouts, with the same API and behaviour as the React packages.
 
 ## Install
 
@@ -12,7 +12,14 @@ Peer dependency: `svelte` (^5).
 
 ## Subpaths
 
-Each component family is its own subpath: `@glob-ui/svelte/dialog`, `@glob-ui/svelte/sheet`, `@glob-ui/svelte/layout`, `@glob-ui/svelte/app-shell-layout`, `@glob-ui/svelte/page-layout`, `@glob-ui/svelte/stacked-layout`.
+Each component family is its own subpath, for example `@glob-ui/svelte/button`.
+
+- Forms: `button`, `input`, `textarea`, `label`, `field`, `checkbox`, `switch`, `radio-group`, `slider`, `toggle` (Toggle and ToggleGroup), `segmented`.
+- Display: `badge`, `card`, `alert`, `avatar` (Avatar and AvatarGroup), `progress`, `separator`, `skeleton`, `spinner`.
+- Overlays: `dialog`, `sheet`.
+- Layouts: `layout`, `app-shell-layout`, `page-layout`, `stacked-layout`.
+
+Two-way state uses `bind:`, for example `<Checkbox bind:checked />`, `<Slider bind:value />` or `<RadioGroup bind:value>`. Without a binding, Switch, RadioGroup, Slider, Toggle, ToggleGroup and Segmented keep their own state, starting from `defaultChecked`, `defaultValue` or `defaultPressed`. A control inside a `Field` takes its id, label, description and error from the field.
 
 ## Tailwind
 
@@ -38,7 +45,21 @@ The components ship Tailwind class names. Tailwind does not scan `node_modules` 
     <DialogTitle>Confirm</DialogTitle>
   </DialogContent>
 </Dialog>
+```
 
+```svelte
+<script lang="ts">
+  import { Field } from "@glob-ui/svelte/field"
+  import { Input } from "@glob-ui/svelte/input"
+  import { Button } from "@glob-ui/svelte/button"
+
+  let email = $state("")
+</script>
+
+<Field label="Email" description="Work address" error={email.includes("@") ? undefined : "Enter a valid email"}>
+  <Input bind:value={email} />
+</Field>
+<Button>Save</Button>
 ```
 
 ## License

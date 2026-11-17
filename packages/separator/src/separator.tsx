@@ -1,5 +1,6 @@
 import { forwardRef } from "react"
 import { cn } from "@glob-ui/utils"
+import { SEPARATOR_CLASSES, SEPARATOR_ORIENTATION_CLASSES } from "@glob-ui/recipes"
 
 export interface SeparatorProps extends React.HTMLAttributes<HTMLDivElement> {
   orientation?: "horizontal" | "vertical"
@@ -14,8 +15,8 @@ const Separator = forwardRef<HTMLDivElement, SeparatorProps>(
       role={decorative ? "none" : "separator"}
       aria-orientation={decorative ? undefined : orientation}
       className={cn(
-        "shrink-0 bg-glob-border",
-        orientation === "vertical" ? "w-px self-stretch" : "h-px w-full",
+        SEPARATOR_CLASSES,
+        SEPARATOR_ORIENTATION_CLASSES[orientation],
         className
       )}
       {...props}

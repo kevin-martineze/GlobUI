@@ -68,6 +68,10 @@ const svelteApp = makeApp("svelte-consumer", {
   import { AppShellLayout } from "@glob-ui/svelte/app-shell-layout"
   import { LayoutNavTrigger } from "@glob-ui/svelte/layout"
   import { Sheet, SheetTrigger, SheetContent, SheetTitle, SheetClose } from "@glob-ui/svelte/sheet"
+  import { Button } from "@glob-ui/svelte/button"
+  import { Field } from "@glob-ui/svelte/field"
+  import { Input } from "@glob-ui/svelte/input"
+  import { Checkbox } from "@glob-ui/svelte/checkbox"
 </script>
 
 <AppShellLayout>
@@ -86,6 +90,11 @@ const svelteApp = makeApp("svelte-consumer", {
     <a href="#orders">Orders</a>
   {/snippet}
   <h1>Orders</h1>
+  <Field label="Search" description="Order number or customer">
+    <Input />
+  </Field>
+  <Checkbox label="Only open orders" />
+  <Button>Apply</Button>
 </AppShellLayout>
 `,
   },
@@ -216,4 +225,4 @@ for (const [dir, tool] of apps) {
   if (!out) throw new Error(`${dir}: no dist after build`)
 }
 
-log(`OK: AppShellLayout with a Sheet built for Svelte, Vue, and Angular 22.2.5 and 21.2.26 (${work})`)
+log(`OK: AppShellLayout with a Sheet built for Svelte (plus Field, Input, Checkbox, Button), Vue, and Angular 22.2.5 and 21.2.26 (${work})`)

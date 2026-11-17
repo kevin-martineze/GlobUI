@@ -1,14 +1,11 @@
 import { Children, cloneElement, forwardRef, isValidElement, useId } from "react"
 import { cn } from "@glob-ui/utils"
 import { Label } from "@glob-ui/label"
+import { CONTROL_TEXT_SIZE, FIELD_CLASSES, FIELD_DESCRIPTION_CLASSES, FIELD_ERROR_CLASSES } from "@glob-ui/recipes"
 
 type Size = "sm" | "md" | "lg"
 
-const textSize: Record<Size, string> = {
-  sm: "text-xs",
-  md: "text-sm",
-  lg: "text-base",
-}
+const textSize: Record<Size, string> = CONTROL_TEXT_SIZE
 
 interface ControlProps {
   id?: string
@@ -59,7 +56,7 @@ const Field = forwardRef<HTMLDivElement, FieldProps>(
       : child
 
     return (
-      <div ref={ref} className={cn("flex flex-col gap-1.5", className)} {...props}>
+      <div ref={ref} className={cn(FIELD_CLASSES, className)} {...props}>
         {label && (
           <Label id={labelId} htmlFor={controlId} size={size} required={required}>
             {label}
@@ -67,12 +64,12 @@ const Field = forwardRef<HTMLDivElement, FieldProps>(
         )}
         {control}
         {description && (
-          <p id={descriptionId} className={cn("text-glob-text-secondary", textSize[size])}>
+          <p id={descriptionId} className={cn(FIELD_DESCRIPTION_CLASSES, textSize[size])}>
             {description}
           </p>
         )}
         {hasError && (
-          <p id={errorId} className={cn("text-glob-danger", textSize[size])}>
+          <p id={errorId} className={cn(FIELD_ERROR_CLASSES, textSize[size])}>
             {error}
           </p>
         )}

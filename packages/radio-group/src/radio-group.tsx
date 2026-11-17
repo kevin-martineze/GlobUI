@@ -4,20 +4,13 @@ import { createContext, forwardRef, useContext, useId, useState } from "react"
 import type { VariantProps } from "class-variance-authority"
 import { cn } from "@glob-ui/utils"
 import { radioVariants } from "@glob-ui/recipes"
+import { CONTROL_TEXT_SIZE, CHOICE_CONTROL_CLASSES, CHOICE_ROW_CLASSES, CHOICE_LABEL_CLASSES, CHOICE_LABEL_DISABLED_CLASSES, RADIO_GROUP_CLASSES, RADIO_GROUP_ORIENTATION_CLASSES, RADIO_INVALID_CLASSES, RADIO_DOT_CLASSES, RADIO_DOT_SIZE } from "@glob-ui/recipes"
 
 type Size = "sm" | "md" | "lg"
 
-const dotSize: Record<Size, string> = {
-  sm: "h-1.5 w-1.5",
-  md: "h-2 w-2",
-  lg: "h-2.5 w-2.5",
-}
+const dotSize: Record<Size, string> = RADIO_DOT_SIZE
 
-const labelSize: Record<Size, string> = {
-  sm: "text-xs",
-  md: "text-sm",
-  lg: "text-base",
-}
+const labelSize: Record<Size, string> = CONTROL_TEXT_SIZE
 
 interface RadioGroupContextValue {
   name: string
@@ -92,8 +85,8 @@ const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
           aria-required={required || undefined}
           aria-disabled={disabled || undefined}
           className={cn(
-            "flex",
-            orientation === "horizontal" ? "flex-row flex-wrap gap-4" : "flex-col gap-2",
+            RADIO_GROUP_CLASSES,
+            RADIO_GROUP_ORIENTATION_CLASSES[orientation],
             className
           )}
           {...props}
@@ -125,8 +118,8 @@ const RadioGroupItem = forwardRef<HTMLInputElement, RadioGroupItemProps>(
     const isDisabled = ctx.disabled || disabled
 
     return (
-      <span className="inline-flex items-center gap-2">
-        <span className="relative inline-flex shrink-0">
+      <span className={CHOICE_ROW_CLASSES}>
+        <span className={CHOICE_CONTROL_CLASSES}>
           <input
             ref={ref}
             type="radio"
@@ -140,7 +133,7 @@ const RadioGroupItem = forwardRef<HTMLInputElement, RadioGroupItemProps>(
             className={cn(
               radioVariants({ size: ctx.size }),
               // aria-invalid is not valid on role radio; the group carries it, items only show it.
-              ctx.invalid && "border-glob-danger",
+              ctx.invalid && RADIO_INVALID_CLASSES,
               className
             )}
             {...props}
@@ -148,7 +141,7 @@ const RadioGroupItem = forwardRef<HTMLInputElement, RadioGroupItemProps>(
           <span
             aria-hidden="true"
             className={cn(
-              "pointer-events-none absolute inset-0 m-auto hidden rounded-full bg-glob-primary-foreground peer-checked:block",
+              RADIO_DOT_CLASSES,
               dotSize[ctx.size]
             )}
           />
@@ -157,9 +150,9 @@ const RadioGroupItem = forwardRef<HTMLInputElement, RadioGroupItemProps>(
           <label
             htmlFor={inputId}
             className={cn(
-              "cursor-pointer text-glob-text",
+              CHOICE_LABEL_CLASSES,
               labelSize[ctx.size],
-              isDisabled && "cursor-not-allowed opacity-50"
+              isDisabled && CHOICE_LABEL_DISABLED_CLASSES
             )}
           >
             {label}

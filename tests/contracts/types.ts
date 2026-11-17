@@ -66,3 +66,66 @@ export interface StackedLayoutAdapter {
   /** StackedLayout with a header, a page of content, a footer and a mobile navigation. */
   stackedLayout(): Promise<void>
 }
+
+// Phase 10d-1: forms and primitives. One adapter for the whole batch; each method mounts one fixture.
+
+export interface SegmentedFixtureOption {
+  value: string
+  label: string
+  disabled?: boolean
+}
+
+export interface FormsAdapter {
+  readonly name: string
+  /** The class-parity gallery (see forms-parity.contract.ts). */
+  formsGallery(): Promise<void>
+  /** A Button with this text. */
+  button(fixture: { label: string; loading?: boolean; disabled?: boolean; onClick?: () => void }): Promise<void>
+  /** A Button rendered as a link: asChild in React, the `child` snippet in Svelte. */
+  buttonLink(fixture: { label: string; href: string }): Promise<void>
+  /** Field around an Input. */
+  fieldWithInput(fixture: { label: string; description?: string; error?: string }): Promise<void>
+  /** Field around a RadioGroup with Free (checked) and Pro. */
+  fieldWithRadioGroup(fixture: { label: string }): Promise<void>
+  /** Field around a Checkbox that has its own label. */
+  fieldWithCheckbox(fixture: { label: string; checkboxLabel: string }): Promise<void>
+  /** Field around a Slider. */
+  fieldWithSlider(fixture: { label: string; description?: string }): Promise<void>
+  checkbox(fixture: { label: string; indeterminate?: boolean }): Promise<void>
+  /** A Switch named by aria-label. */
+  switch(fixture: {
+    label: string
+    name?: string
+    value?: string
+    defaultChecked?: boolean
+    onCheckedChange?: (checked: boolean) => void
+  }): Promise<void>
+  /** A RadioGroup named "Plan" with Free, Pro and Team. */
+  radioGroup(fixture: { defaultValue?: string; name?: string; inForm?: boolean; onValueChange?: (value: string) => void }): Promise<void>
+  /** A non-decorative Separator between two paragraphs. */
+  separator(): Promise<void>
+  /** An Avatar. `setSrc` re-renders it with a new src (same alt). */
+  avatar(fixture: { src?: string; alt: string }): Promise<{ setSrc(src?: string): Promise<void> }>
+  /** A Progress named by a visible label through aria-labelledby. */
+  progress(fixture: { label: string; value: number | null }): Promise<void>
+  slider(fixture: { label: string; defaultValue?: number; min?: number; max?: number; onValueChange?: (value: number) => void }): Promise<void>
+  /** A Toggle named by aria-label, showing the label's first letter. */
+  toggle(fixture: { label: string; onPressedChange?: (pressed: boolean) => void }): Promise<void>
+  /** A ToggleGroup named by `label`. Items show their label and are named by it. */
+  toggleGroup(fixture: {
+    type: "single" | "multiple"
+    label: string
+    items: { value: string; label: string; disabled?: boolean }[]
+    /** Wraps the group between a "Before" and an "After" button. */
+    withOutsideButtons?: boolean
+    onValueChange?: (value: string | string[]) => void
+  }): Promise<void>
+  /** A Segmented named "Range". */
+  segmented(fixture: {
+    options: SegmentedFixtureOption[]
+    defaultValue?: string
+    name?: string
+    inForm?: boolean
+    onChange?: (value: string) => void
+  }): Promise<void>
+}

@@ -5,6 +5,7 @@ import type { VariantProps } from "class-variance-authority"
 import { cn } from "@glob-ui/utils"
 import { useControllableState, useRovingFocus } from "@glob-ui/hooks"
 import { toggleVariants } from "@glob-ui/recipes"
+import { TOGGLE_GROUP_CLASSES } from "@glob-ui/recipes"
 
 export interface ToggleProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "value">,
@@ -144,7 +145,7 @@ const ToggleGroup = forwardRef<HTMLDivElement, ToggleGroupProps>((props, ref) =>
           stopRef.current = e.target as HTMLElement
           syncTabStop()
         }}
-        className={cn("inline-flex items-center gap-1", orientation === "vertical" && "flex-col", className)}
+        className={cn(TOGGLE_GROUP_CLASSES, orientation === "vertical" && "flex-col", className)}
       >
         {children}
       </div>

@@ -802,6 +802,9 @@ importers:
 
   packages/card:
     dependencies:
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -1018,6 +1021,9 @@ importers:
       '@glob-ui/label':
         specifier: workspace:*
         version: link:../label
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -1274,6 +1280,9 @@ importers:
       '@glob-ui/hooks':
         specifier: workspace:*
         version: link:../hooks
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -1315,6 +1324,9 @@ importers:
 
   packages/separator:
     dependencies:
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -1353,6 +1365,9 @@ importers:
 
   packages/skeleton:
     dependencies:
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils

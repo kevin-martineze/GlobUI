@@ -1,38 +1,133 @@
 {
   "name": "@glob-ui/svelte",
   "version": "0.3.0",
-  "description": "Svelte 5 components for GlobUI: dialog, sheet and layouts, with the same API and behaviour as the React packages.",
+  "description": "Svelte 5 components for GlobUI: forms, primitives, dialog, sheet and layouts, with the same API and behaviour as the React packages.",
   "type": "module",
   "exports": {
-    "./dialog": {
-      "types": "./dist/dialog/index.d.ts",
-      "svelte": "./dist/dialog/index.js",
-      "default": "./dist/dialog/index.js"
-    },
-    "./sheet": {
-      "types": "./dist/sheet/index.d.ts",
-      "svelte": "./dist/sheet/index.js",
-      "default": "./dist/sheet/index.js"
-    },
-    "./layout": {
-      "types": "./dist/layout/index.d.ts",
-      "svelte": "./dist/layout/index.js",
-      "default": "./dist/layout/index.js"
+    "./alert": {
+      "types": "./dist/alert/index.d.ts",
+      "svelte": "./dist/alert/index.js",
+      "default": "./dist/alert/index.js"
     },
     "./app-shell-layout": {
       "types": "./dist/app-shell-layout/index.d.ts",
       "svelte": "./dist/app-shell-layout/index.js",
       "default": "./dist/app-shell-layout/index.js"
     },
+    "./avatar": {
+      "types": "./dist/avatar/index.d.ts",
+      "svelte": "./dist/avatar/index.js",
+      "default": "./dist/avatar/index.js"
+    },
+    "./badge": {
+      "types": "./dist/badge/index.d.ts",
+      "svelte": "./dist/badge/index.js",
+      "default": "./dist/badge/index.js"
+    },
+    "./button": {
+      "types": "./dist/button/index.d.ts",
+      "svelte": "./dist/button/index.js",
+      "default": "./dist/button/index.js"
+    },
+    "./card": {
+      "types": "./dist/card/index.d.ts",
+      "svelte": "./dist/card/index.js",
+      "default": "./dist/card/index.js"
+    },
+    "./checkbox": {
+      "types": "./dist/checkbox/index.d.ts",
+      "svelte": "./dist/checkbox/index.js",
+      "default": "./dist/checkbox/index.js"
+    },
+    "./dialog": {
+      "types": "./dist/dialog/index.d.ts",
+      "svelte": "./dist/dialog/index.js",
+      "default": "./dist/dialog/index.js"
+    },
+    "./field": {
+      "types": "./dist/field/index.d.ts",
+      "svelte": "./dist/field/index.js",
+      "default": "./dist/field/index.js"
+    },
+    "./input": {
+      "types": "./dist/input/index.d.ts",
+      "svelte": "./dist/input/index.js",
+      "default": "./dist/input/index.js"
+    },
+    "./label": {
+      "types": "./dist/label/index.d.ts",
+      "svelte": "./dist/label/index.js",
+      "default": "./dist/label/index.js"
+    },
+    "./layout": {
+      "types": "./dist/layout/index.d.ts",
+      "svelte": "./dist/layout/index.js",
+      "default": "./dist/layout/index.js"
+    },
     "./page-layout": {
       "types": "./dist/page-layout/index.d.ts",
       "svelte": "./dist/page-layout/index.js",
       "default": "./dist/page-layout/index.js"
     },
+    "./progress": {
+      "types": "./dist/progress/index.d.ts",
+      "svelte": "./dist/progress/index.js",
+      "default": "./dist/progress/index.js"
+    },
+    "./radio-group": {
+      "types": "./dist/radio-group/index.d.ts",
+      "svelte": "./dist/radio-group/index.js",
+      "default": "./dist/radio-group/index.js"
+    },
+    "./segmented": {
+      "types": "./dist/segmented/index.d.ts",
+      "svelte": "./dist/segmented/index.js",
+      "default": "./dist/segmented/index.js"
+    },
+    "./separator": {
+      "types": "./dist/separator/index.d.ts",
+      "svelte": "./dist/separator/index.js",
+      "default": "./dist/separator/index.js"
+    },
+    "./sheet": {
+      "types": "./dist/sheet/index.d.ts",
+      "svelte": "./dist/sheet/index.js",
+      "default": "./dist/sheet/index.js"
+    },
+    "./skeleton": {
+      "types": "./dist/skeleton/index.d.ts",
+      "svelte": "./dist/skeleton/index.js",
+      "default": "./dist/skeleton/index.js"
+    },
+    "./slider": {
+      "types": "./dist/slider/index.d.ts",
+      "svelte": "./dist/slider/index.js",
+      "default": "./dist/slider/index.js"
+    },
+    "./spinner": {
+      "types": "./dist/spinner/index.d.ts",
+      "svelte": "./dist/spinner/index.js",
+      "default": "./dist/spinner/index.js"
+    },
     "./stacked-layout": {
       "types": "./dist/stacked-layout/index.d.ts",
       "svelte": "./dist/stacked-layout/index.js",
       "default": "./dist/stacked-layout/index.js"
+    },
+    "./switch": {
+      "types": "./dist/switch/index.d.ts",
+      "svelte": "./dist/switch/index.js",
+      "default": "./dist/switch/index.js"
+    },
+    "./textarea": {
+      "types": "./dist/textarea/index.d.ts",
+      "svelte": "./dist/textarea/index.js",
+      "default": "./dist/textarea/index.js"
+    },
+    "./toggle": {
+      "types": "./dist/toggle/index.d.ts",
+      "svelte": "./dist/toggle/index.js",
+      "default": "./dist/toggle/index.js"
     },
     "./package.json": "./package.json"
   },
