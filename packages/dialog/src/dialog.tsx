@@ -11,6 +11,7 @@ import {
 } from "react"
 import type { VariantProps } from "class-variance-authority"
 import { cn } from "@glob-ui/utils"
+import { DIALOG_BODY_CLASSES, DIALOG_CLOSE_ICON_CLASSES, DIALOG_DESCRIPTION_CLASSES, DIALOG_FOOTER_CLASSES, DIALOG_HEADER_CLASSES, DIALOG_TITLE_CLASSES } from "@glob-ui/recipes"
 import { useControllableState } from "@glob-ui/hooks"
 import { Slot, composeRefs } from "@glob-ui/slot"
 import { dialogVariants } from "@glob-ui/recipes"
@@ -184,7 +185,7 @@ const DialogCloseIcon = forwardRef<HTMLButtonElement, DialogCloseIconProps>(({ c
         if (!e.defaultPrevented) ctx.setOpen(false)
       }}
       className={cn(
-        "absolute right-4 top-4 inline-flex h-8 w-8 items-center justify-center rounded-glob-sm text-glob-text-secondary transition-colors hover:bg-glob-surface-hover hover:text-glob-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring",
+        DIALOG_CLOSE_ICON_CLASSES,
         className
       )}
       {...props}
@@ -207,7 +208,7 @@ export interface DialogContentProps
 const DialogContent = forwardRef<HTMLDialogElement, DialogContentProps>(
   ({ className, size, showCloseButton = true, children, ...props }, ref) => (
     <DialogContentBase ref={ref} className={cn(dialogVariants({ size, className }))} {...props}>
-      <div className="relative flex max-h-[calc(100dvh-2rem)] flex-col gap-4 overflow-y-auto p-6">
+      <div className={DIALOG_BODY_CLASSES}>
         {children}
         {showCloseButton && <DialogCloseIcon />}
       </div>
@@ -219,7 +220,7 @@ DialogContent.displayName = "DialogContent"
 export type DialogHeaderProps = React.HTMLAttributes<HTMLDivElement>
 
 const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("flex flex-col gap-1.5 pr-8", className)} {...props} />
+  <div ref={ref} className={cn(DIALOG_HEADER_CLASSES, className)} {...props} />
 ))
 DialogHeader.displayName = "DialogHeader"
 
@@ -231,7 +232,7 @@ const DialogTitle = forwardRef<HTMLHeadingElement, DialogTitleProps>(({ classNam
     <h2
       ref={ref}
       id={ctx.titleId}
-      className={cn("text-lg font-semibold leading-none tracking-tight", className)}
+      className={cn(DIALOG_TITLE_CLASSES, className)}
       {...props}
     />
   )
@@ -244,7 +245,7 @@ const DialogDescription = forwardRef<HTMLParagraphElement, DialogDescriptionProp
   ({ className, ...props }, ref) => {
     const ctx = useDialogContext("DialogDescription")
     return (
-      <p ref={ref} id={ctx.descriptionId} className={cn("text-sm text-glob-text-secondary", className)} {...props} />
+      <p ref={ref} id={ctx.descriptionId} className={cn(DIALOG_DESCRIPTION_CLASSES, className)} {...props} />
     )
   }
 )
@@ -253,7 +254,7 @@ DialogDescription.displayName = "DialogDescription"
 export type DialogFooterProps = React.HTMLAttributes<HTMLDivElement>
 
 const DialogFooter = forwardRef<HTMLDivElement, DialogFooterProps>(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("flex flex-col-reverse gap-2 sm:flex-row sm:justify-end", className)} {...props} />
+  <div ref={ref} className={cn(DIALOG_FOOTER_CLASSES, className)} {...props} />
 ))
 DialogFooter.displayName = "DialogFooter"
 

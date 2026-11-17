@@ -4,6 +4,7 @@ import nextTs from "eslint-config-next/typescript";
 import svelte from "eslint-plugin-svelte";
 import vue from "eslint-plugin-vue";
 import tseslint from "typescript-eslint";
+import angular from "angular-eslint";
 
 const eslintConfig = defineConfig([
   ...nextVitals,
@@ -14,6 +15,16 @@ const eslintConfig = defineConfig([
   {
     files: ["**/*.svelte", "**/*.vue"],
     languageOptions: { parserOptions: { parser: tseslint.parser } },
+  },
+  // The Angular package: the Angular rules for components, directives and their templates.
+  ...angular.configs.tsRecommended.map((config) => ({ ...config, files: ["packages/angular/**/*.ts", "tests/contracts/angular/**/*.ts"] })),
+  {
+    files: ["packages/angular/**/*.ts"],
+    rules: {
+      // `class` is the one allowed alias: consumers write `class="..."` as on any element, and the part merges it after
+      // its base classes with cn(), like `className` in React. The signal itself is named `userClass`.
+      "@angular-eslint/no-input-rename": ["error", { allowedNames: ["class"] }],
+    },
   },
   {
     files: ["**/*.vue"],

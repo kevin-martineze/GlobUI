@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { HTMLAnchorAttributes } from "svelte/elements"
   import { cn } from "@glob-ui/utils"
+  import { SKIP_LINK_CLASSES } from "@glob-ui/recipes"
 
   let {
     targetId,
@@ -14,7 +15,7 @@
 <a
   href={`#${targetId}`}
   class={cn(
-    "sr-only z-50 rounded-glob-md bg-glob-surface px-3 py-2 text-sm font-medium text-glob-text shadow-glob-md focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring",
+    SKIP_LINK_CLASSES,
     className
   )}
   {...rest}

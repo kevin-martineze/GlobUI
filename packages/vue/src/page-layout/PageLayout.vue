@@ -2,6 +2,7 @@
 import { computed, useSlots } from "vue"
 import { cn } from "@glob-ui/utils"
 import { contentVariants, asideVariants } from "@glob-ui/recipes"
+import { PAGE_ASIDE_HEADER_OFFSET_CLASSES, PAGE_HEADER_CONTENT_CLASSES, PAGE_LAYOUT_CLASSES, PAGE_LAYOUT_PADDED_CLASSES } from "@glob-ui/recipes"
 
 const props = withDefaults(
   defineProps<{
@@ -19,16 +20,16 @@ const hasHeader = computed(() => Boolean(slots.header))
 <template>
   <div
     data-layout="page"
-    :class="cn('mx-auto flex w-full min-w-0 flex-col gap-6 px-4 pb-6 md:px-6 md:pb-8 lg:flex-row lg:items-start lg:gap-8', !hasHeader && 'pt-4 md:pt-6', props.class)"
+    :class="cn(PAGE_LAYOUT_CLASSES, !hasHeader && PAGE_LAYOUT_PADDED_CLASSES, props.class)"
     v-bind="$attrs"
   >
     <div data-slot="content" data-scroll="scroll" :class="contentVariants({ width })">
-      <div v-if="hasHeader" data-slot="header" data-scroll="fixed" class="sticky top-0 z-10 bg-glob-surface pb-3 pt-4 md:pt-6">
+      <div v-if="hasHeader" data-slot="header" data-scroll="fixed" :class="PAGE_HEADER_CONTENT_CLASSES">
         <slot name="header" />
       </div>
       <slot />
     </div>
-    <aside v-if="slots.aside" data-slot="aside" data-scroll="fixed" :class="cn(asideVariants({ asideWidth }), hasHeader && 'lg:mt-6')">
+    <aside v-if="slots.aside" data-slot="aside" data-scroll="fixed" :class="cn(asideVariants({ asideWidth }), hasHeader && PAGE_ASIDE_HEADER_OFFSET_CLASSES)">
       <slot name="aside" />
     </aside>
   </div>

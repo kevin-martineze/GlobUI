@@ -3,6 +3,7 @@
 import { forwardRef } from "react"
 import type { VariantProps } from "class-variance-authority"
 import { cn } from "@glob-ui/utils"
+import { SHEET_BODY_CLASSES, SHEET_FOOTER_CLASSES } from "@glob-ui/recipes"
 import {
   Dialog,
   DialogTrigger,
@@ -42,7 +43,7 @@ export interface SheetContentProps extends DialogContentBaseProps, VariantProps<
 const SheetContent = forwardRef<HTMLDialogElement, SheetContentProps>(
   ({ className, side, size, showCloseButton = true, children, ...props }, ref) => (
     <DialogContentBase ref={ref} className={cn(sheetVariants({ side, size, className }))} {...props}>
-      <div className="relative flex h-full flex-col gap-4 overflow-y-auto p-6">
+      <div className={SHEET_BODY_CLASSES}>
         {children}
         {showCloseButton && <DialogCloseIcon />}
       </div>
@@ -52,7 +53,7 @@ const SheetContent = forwardRef<HTMLDialogElement, SheetContentProps>(
 SheetContent.displayName = "SheetContent"
 
 const SheetFooter = forwardRef<HTMLDivElement, SheetFooterProps>(({ className, ...props }, ref) => (
-  <DialogFooter ref={ref} className={cn("mt-auto", className)} {...props} />
+  <DialogFooter ref={ref} className={cn(SHEET_FOOTER_CLASSES, className)} {...props} />
 ))
 SheetFooter.displayName = "SheetFooter"
 

@@ -2,6 +2,7 @@
 
 import { forwardRef, useId } from "react"
 import { cn } from "@glob-ui/utils"
+import { APP_SHELL_CLASSES, APP_SHELL_HEADER_CLASSES, APP_SHELL_MAIN_CLASSES, APP_SHELL_SIDEBAR_LIST_CLASSES } from "@glob-ui/recipes"
 import { LayoutSlot, LayoutNavProvider, LayoutMobileNav, SkipLink } from "@glob-ui/layout"
 import { sidebarVariants } from "@glob-ui/recipes"
 
@@ -37,7 +38,7 @@ export const AppShellLayout = forwardRef<HTMLDivElement, AppShellLayoutProps>(
         className={cn(sidebarVariants({ side: sidebarSide, width: sidebarWidth }), sidebarSide === "right" && "order-last")}
       >
         {/* The list region is the only scroller inside the sidebar, so a long menu never scrolls the page. */}
-        <LayoutSlot name="sidebar-list" scroll="scroll" className="flex min-h-0 flex-1 flex-col gap-1 p-3">
+        <LayoutSlot name="sidebar-list" scroll="scroll" className={APP_SHELL_SIDEBAR_LIST_CLASSES}>
           {sidebar}
         </LayoutSlot>
       </LayoutSlot>
@@ -51,7 +52,7 @@ export const AppShellLayout = forwardRef<HTMLDivElement, AppShellLayoutProps>(
           data-scroll-mode="app"
           className={cn(
             // h-screen is the fallback; dvh follows the mobile browser toolbar where supported.
-            "flex h-screen supports-[height:100dvh]:h-dvh min-h-0 flex-col overflow-hidden pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)] text-glob-text",
+            APP_SHELL_CLASSES,
             className
           )}
           {...props}
@@ -62,7 +63,7 @@ export const AppShellLayout = forwardRef<HTMLDivElement, AppShellLayoutProps>(
               name="header"
               scroll="fixed"
               as="header"
-              className="flex shrink-0 items-center gap-2 border-b border-glob-border bg-glob-surface px-4 pt-[env(safe-area-inset-top)] md:px-6"
+              className={APP_SHELL_HEADER_CLASSES}
             >
               {header}
             </LayoutSlot>
@@ -74,7 +75,7 @@ export const AppShellLayout = forwardRef<HTMLDivElement, AppShellLayoutProps>(
               scroll="scroll"
               as="main"
               id={mainId}
-              className={cn("min-w-0 flex-1 focus:outline-none", sidebarSide === "right" && "order-first")}
+              className={cn(APP_SHELL_MAIN_CLASSES, sidebarSide === "right" && "order-first")}
             >
               {children}
             </LayoutSlot>

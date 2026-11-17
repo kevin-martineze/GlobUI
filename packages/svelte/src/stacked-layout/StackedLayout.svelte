@@ -6,6 +6,7 @@
   import LayoutNavProvider from "../layout/LayoutNavProvider.svelte"
   import LayoutMobileNav from "../layout/LayoutMobileNav.svelte"
   import SkipLink from "../layout/SkipLink.svelte"
+  import { STACKED_CLASSES, STACKED_FOOTER_CLASSES, STACKED_HEADER_CLASSES, STACKED_MAIN_CLASSES } from "@glob-ui/recipes"
 
   let {
     header,
@@ -34,7 +35,7 @@
   <div
     data-layout="stacked"
     data-scroll-mode="document"
-    class={cn("flex min-h-screen flex-col pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)] text-glob-text", className)}
+    class={cn(STACKED_CLASSES, className)}
     {...rest}
   >
     <SkipLink targetId={mainId} />
@@ -43,16 +44,16 @@
         name="header"
         scroll="fixed"
         as="header"
-        class="sticky top-0 z-40 flex items-center gap-2 border-b border-glob-border bg-glob-surface px-4 pt-[env(safe-area-inset-top)] md:px-6"
+        class={STACKED_HEADER_CLASSES}
       >
         {@render header()}
       </LayoutSlot>
     {/if}
-    <main id={mainId} tabindex="-1" data-slot="main" data-scroll="scroll" class="flex-1 focus:outline-none">
+    <main id={mainId} tabindex="-1" data-slot="main" data-scroll="scroll" class={STACKED_MAIN_CLASSES}>
       {@render children?.()}
     </main>
     {#if footer}
-      <LayoutSlot name="footer" scroll="fixed" as="footer" class="border-t border-glob-border p-4 md:px-6">
+      <LayoutSlot name="footer" scroll="fixed" as="footer" class={STACKED_FOOTER_CLASSES}>
         {@render footer()}
       </LayoutSlot>
     {/if}

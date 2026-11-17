@@ -54,14 +54,14 @@ function Probe() {
   return <span data-testid="probe">{el ? el.tagName : "none"}</span>
 }
 
-function DialogView({ title, triggerLabel }: DialogFixture) {
+function DialogView({ title, triggerLabel, titleClass, contentClass }: DialogFixture) {
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button>{triggerLabel}</Button>
       </DialogTrigger>
-      <DialogContent>
-        <DialogTitle>{title}</DialogTitle>
+      <DialogContent className={contentClass}>
+        <DialogTitle className={titleClass}>{title}</DialogTitle>
         <DialogDescription>Are you sure?</DialogDescription>
         <DialogClose asChild>
           <Button variant="outline">Cancel</Button>
@@ -147,6 +147,7 @@ const react: AppShellAdapter & LayoutScrollAdapter & DialogAdapter & SheetAdapte
   },
 }
 
+import { classParityContract } from "./class-parity.contract"
 appShellLayoutContract(react)
 layoutScrollContract(react)
 mobileNavContract(react)
@@ -154,3 +155,4 @@ dialogContract(react)
 sheetContract(react)
 pageLayoutContract(react)
 stackedLayoutContract(react)
+classParityContract(react)

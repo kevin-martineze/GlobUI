@@ -2,6 +2,7 @@
   import type { HTMLButtonAttributes } from "svelte/elements"
   import { cn } from "@glob-ui/utils"
   import { getDialogContext } from "../shared/context"
+  import { DIALOG_CLOSE_ICON_CLASSES } from "@glob-ui/recipes"
 
   let { class: className, onclick, ...rest }: HTMLButtonAttributes = $props()
   const ctx = getDialogContext("DialogCloseIcon")
@@ -11,7 +12,7 @@
   type="button"
   aria-label="Close"
   class={cn(
-    "absolute right-4 top-4 inline-flex h-8 w-8 items-center justify-center rounded-glob-sm text-glob-text-secondary transition-colors hover:bg-glob-surface-hover hover:text-glob-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring",
+    DIALOG_CLOSE_ICON_CLASSES,
     className
   )}
   {...rest}

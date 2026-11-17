@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { cn } from "@glob-ui/utils"
+import { DIALOG_HEADER_CLASSES } from "@glob-ui/recipes"
 
 defineProps<{ class?: string }>()
 </script>
 
 <template>
-  <div :class="cn('flex flex-col gap-1.5 pr-8', $props.class)"><slot /></div>
+  <div :class="cn(DIALOG_HEADER_CLASSES, $props.class)"><slot /></div>
 </template>

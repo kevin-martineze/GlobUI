@@ -48,6 +48,7 @@ const vue = {
   },
 } satisfies AppShellAdapter & LayoutScrollAdapter & DialogAdapter & SheetAdapter & PageLayoutAdapter & StackedLayoutAdapter
 
+import { classParityContract } from "../class-parity.contract"
 appShellLayoutContract(vue)
 layoutScrollContract(vue)
 mobileNavContract(vue)
@@ -55,3 +56,4 @@ dialogContract(vue)
 sheetContract(vue)
 pageLayoutContract(vue)
 stackedLayoutContract(vue)
+classParityContract(vue)

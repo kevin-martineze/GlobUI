@@ -1,5 +1,6 @@
 import { forwardRef } from "react"
 import { cn } from "@glob-ui/utils"
+import { PAGE_ASIDE_HEADER_OFFSET_CLASSES, PAGE_HEADER_ACTIONS_CLASSES, PAGE_HEADER_CLASSES, PAGE_HEADER_CONTENT_CLASSES, PAGE_HEADER_ROW_CLASSES, PAGE_HEADER_SECONDARY_TEXT_CLASSES, PAGE_HEADER_TITLE_BLOCK_CLASSES, PAGE_HEADER_TITLE_CLASSES, PAGE_LAYOUT_CLASSES, PAGE_LAYOUT_PADDED_CLASSES } from "@glob-ui/recipes"
 import { contentVariants, asideVariants } from "@glob-ui/recipes"
 
 // Server-safe: no hooks and no client code. It lives inside a scroll region (an app shell's main, or a stacked layout).
@@ -26,12 +27,12 @@ export const PageLayout = forwardRef<HTMLDivElement, PageLayoutProps>(
     <div
       ref={ref}
       data-layout="page"
-      className={cn("mx-auto flex w-full min-w-0 flex-col gap-6 px-4 pb-6 md:px-6 md:pb-8 lg:flex-row lg:items-start lg:gap-8", !header && "pt-4 md:pt-6", className)}
+      className={cn(PAGE_LAYOUT_CLASSES, !header && PAGE_LAYOUT_PADDED_CLASSES, className)}
       {...props}
     >
       <div data-slot="content" data-scroll="scroll" className={contentVariants({ width })}>
         {header ? (
-          <div data-slot="header" data-scroll="fixed" className="sticky top-0 z-10 bg-glob-surface pb-3 pt-4 md:pt-6">
+          <div data-slot="header" data-scroll="fixed" className={PAGE_HEADER_CONTENT_CLASSES}>
             {header}
           </div>
         ) : null}
@@ -39,7 +40,7 @@ export const PageLayout = forwardRef<HTMLDivElement, PageLayoutProps>(
       </div>
       {aside ? (
         // With a header, the aside starts level with the header text (the header has top padding).
-        <aside data-slot="aside" data-scroll="fixed" className={cn(asideVariants({ asideWidth }), header && "lg:mt-6")}>
+        <aside data-slot="aside" data-scroll="fixed" className={cn(asideVariants({ asideWidth }), header && PAGE_ASIDE_HEADER_OFFSET_CLASSES)}>
           {aside}
         </aside>
       ) : null}
@@ -60,14 +61,14 @@ export interface PageHeaderProps extends Omit<React.HTMLAttributes<HTMLDivElemen
 /** The title block of a page: breadcrumbs, the `h1`, a description, and actions. */
 export const PageHeader = forwardRef<HTMLDivElement, PageHeaderProps>(
   ({ title, description, breadcrumbs, actions, className, ...props }, ref) => (
-    <div ref={ref} data-slot="page-header" className={cn("flex min-w-0 flex-col gap-2", className)} {...props}>
-      {breadcrumbs ? <div className="text-sm text-glob-text-secondary">{breadcrumbs}</div> : null}
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <div className="flex min-w-0 flex-col gap-1">
-          <h1 className="break-words text-2xl font-semibold tracking-tight text-glob-text">{title}</h1>
-          {description ? <p className="text-sm text-glob-text-secondary">{description}</p> : null}
+    <div ref={ref} data-slot="page-header" className={cn(PAGE_HEADER_CLASSES, className)} {...props}>
+      {breadcrumbs ? <div className={PAGE_HEADER_SECONDARY_TEXT_CLASSES}>{breadcrumbs}</div> : null}
+      <div className={PAGE_HEADER_ROW_CLASSES}>
+        <div className={PAGE_HEADER_TITLE_BLOCK_CLASSES}>
+          <h1 className={PAGE_HEADER_TITLE_CLASSES}>{title}</h1>
+          {description ? <p className={PAGE_HEADER_SECONDARY_TEXT_CLASSES}>{description}</p> : null}
         </div>
-        {actions ? <div className="flex flex-wrap items-center gap-2">{actions}</div> : null}
+        {actions ? <div className={PAGE_HEADER_ACTIONS_CLASSES}>{actions}</div> : null}
       </div>
     </div>
   )

@@ -6,6 +6,7 @@ import LayoutSlot from "../layout/LayoutSlot.vue"
 import LayoutNavProvider from "../layout/LayoutNavProvider.vue"
 import LayoutMobileNav from "../layout/LayoutMobileNav.vue"
 import SkipLink from "../layout/SkipLink.vue"
+import { APP_SHELL_CLASSES, APP_SHELL_HEADER_CLASSES, APP_SHELL_MAIN_CLASSES, APP_SHELL_SIDEBAR_LIST_CLASSES } from "@glob-ui/recipes"
 
 const props = withDefaults(
   defineProps<{
@@ -33,7 +34,7 @@ const mainId = useId()
     <div
       data-layout="app-shell"
       data-scroll-mode="app"
-      :class="cn('flex h-screen supports-[height:100dvh]:h-dvh min-h-0 flex-col overflow-hidden pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)] text-glob-text', props.class)"
+      :class="cn(APP_SHELL_CLASSES, props.class)"
       v-bind="$attrs"
     >
       <SkipLink :target-id="mainId" />
@@ -42,7 +43,7 @@ const mainId = useId()
         name="header"
         scroll="fixed"
         as="header"
-        class="flex shrink-0 items-center gap-2 border-b border-glob-border bg-glob-surface px-4 pt-[env(safe-area-inset-top)] md:px-6"
+        :class="APP_SHELL_HEADER_CLASSES"
       >
         <slot name="header" />
       </LayoutSlot>
@@ -55,7 +56,7 @@ const mainId = useId()
           :aria-label="sidebarLabel"
           :class="cn(sidebarVariants({ side: sidebarSide, width: sidebarWidth }), sidebarSide === 'right' && 'order-last')"
         >
-          <LayoutSlot name="sidebar-list" scroll="scroll" class="flex min-h-0 flex-1 flex-col gap-1 p-3">
+          <LayoutSlot name="sidebar-list" scroll="scroll" :class="APP_SHELL_SIDEBAR_LIST_CLASSES">
             <slot name="sidebar" />
           </LayoutSlot>
         </LayoutSlot>
@@ -64,7 +65,7 @@ const mainId = useId()
           name="main"
           scroll="scroll"
           as="main"
-          :class="cn('min-w-0 flex-1 focus:outline-none', sidebarSide === 'right' && 'order-first')"
+          :class="cn(APP_SHELL_MAIN_CLASSES, sidebarSide === 'right' && 'order-first')"
         >
           <slot />
         </LayoutSlot>

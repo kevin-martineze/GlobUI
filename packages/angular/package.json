@@ -1,0 +1,57 @@
+{
+  "name": "@glob-ui/angular",
+  "version": "0.3.0",
+  "description": "Angular components for GlobUI: dialog, sheet and layouts, with the same API and behaviour as the React packages.",
+  "type": "module",
+  "license": "MIT",
+  "devDependencies": {
+    "@angular/build": "22.2.5",
+    "@angular/common": "22.2.5",
+    "@angular/compiler": "22.2.5",
+    "@angular/compiler-cli": "22.2.5",
+    "@angular/core": "22.2.5",
+    "@angular/platform-browser": "22.2.5",
+    "ng-packagr": "22.2.6",
+    "rxjs": "^7.8.2",
+    "tslib": "^2.9.1",
+    "typescript": "6.0.3"
+  },
+  "keywords": [
+    "glob-ui",
+    "angular",
+    "components",
+    "accessible",
+    "tailwind"
+  ],
+  "sideEffects": false,
+  "author": "Kevin Martínez E",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevin-martineze/GlobUI.git",
+    "directory": "packages/angular"
+  },
+  "homepage": "https://github.com/kevin-martineze/GlobUI#readme",
+  "bugs": {
+    "url": "https://github.com/kevin-martineze/GlobUI/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "directory": "dist"
+  },
+  "peerDependencies": {
+    "@angular/common": ">=21.0.0 <23.0.0",
+    "@angular/core": ">=21.0.0 <23.0.0"
+  },
+  "dependencies": {
+    "@glob-ui/core": "workspace:*",
+    "@glob-ui/recipes": "workspace:*",
+    "@glob-ui/utils": "workspace:*"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "ng-packagr -p ng-package.json"
+  }
+}

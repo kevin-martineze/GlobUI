@@ -2,6 +2,7 @@
 
 import { forwardRef, useId } from "react"
 import { cn } from "@glob-ui/utils"
+import { STACKED_CLASSES, STACKED_FOOTER_CLASSES, STACKED_HEADER_CLASSES, STACKED_MAIN_CLASSES } from "@glob-ui/recipes"
 import { LayoutSlot, LayoutNavProvider, LayoutMobileNav, SkipLink } from "@glob-ui/layout"
 
 export interface StackedLayoutProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -29,7 +30,7 @@ export const StackedLayout = forwardRef<HTMLDivElement, StackedLayoutProps>(
           ref={ref}
           data-layout="stacked"
           data-scroll-mode="document"
-          className={cn("flex min-h-screen flex-col pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)] text-glob-text", className)}
+          className={cn(STACKED_CLASSES, className)}
           {...props}
         >
           <SkipLink targetId={mainId} />
@@ -38,17 +39,17 @@ export const StackedLayout = forwardRef<HTMLDivElement, StackedLayoutProps>(
               name="header"
               scroll="fixed"
               as="header"
-              className="sticky top-0 z-40 flex items-center gap-2 border-b border-glob-border bg-glob-surface px-4 pt-[env(safe-area-inset-top)] md:px-6"
+              className={STACKED_HEADER_CLASSES}
             >
               {header}
             </LayoutSlot>
           ) : null}
           {/* The document is the scroller here, so main sets no overflow: it is a plain flow element. */}
-          <main id={mainId} tabIndex={-1} data-slot="main" data-scroll="scroll" className="flex-1 focus:outline-none">
+          <main id={mainId} tabIndex={-1} data-slot="main" data-scroll="scroll" className={STACKED_MAIN_CLASSES}>
             {children}
           </main>
           {footer ? (
-            <LayoutSlot name="footer" scroll="fixed" as="footer" className="border-t border-glob-border p-4 md:px-6">
+            <LayoutSlot name="footer" scroll="fixed" as="footer" className={STACKED_FOOTER_CLASSES}>
               {footer}
             </LayoutSlot>
           ) : null}

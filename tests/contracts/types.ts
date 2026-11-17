@@ -17,6 +17,10 @@ export interface DialogFixture {
   title: string
   /** Text of the button that opens the dialog. */
   triggerLabel: string
+  /** Extra classes for DialogTitle (class / className). Unset in every other test. */
+  titleClass?: string
+  /** Extra classes for DialogContent, which go on the dialog element. */
+  contentClass?: string
 }
 
 export interface SheetFixture {

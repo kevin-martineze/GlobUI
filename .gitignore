@@ -53,3 +53,9 @@ apps/docs/public/r/
 
 # brand generator virtualenv
 scripts/brand/.venv/
+
+# svelte-package build output
+.svelte-kit/
+
+# Angular CLI cache
+.angular/

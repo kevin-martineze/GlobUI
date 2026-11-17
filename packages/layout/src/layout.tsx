@@ -2,6 +2,7 @@
 
 import { createContext, forwardRef, useCallback, useContext, useId, useState, useSyncExternalStore } from "react"
 import { cn } from "@glob-ui/utils"
+import { LAYOUT_MOBILE_NAV_LIST_CLASSES, LAYOUT_NAV_TRIGGER_CLASSES, SKIP_LINK_CLASSES } from "@glob-ui/recipes"
 import { Sheet, SheetContent } from "@glob-ui/sheet"
 import { getLayoutScroll } from "@glob-ui/core"
 import { SCROLL_CLASSES } from "@glob-ui/recipes"
@@ -105,7 +106,7 @@ export const SkipLink = forwardRef<HTMLAnchorElement, SkipLinkProps>(
         document.getElementById(targetId)?.focus()
       }}
       className={cn(
-        "sr-only z-50 rounded-glob-md bg-glob-surface px-3 py-2 text-sm font-medium text-glob-text shadow-glob-md focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring",
+        SKIP_LINK_CLASSES,
         className
       )}
       {...props}
@@ -161,7 +162,7 @@ export const LayoutNavTrigger = forwardRef<HTMLButtonElement, LayoutNavTriggerPr
           if (!event.defaultPrevented) nav.setOpen(true)
         }}
         className={cn(
-          "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-glob-md text-glob-text transition-colors hover:bg-glob-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring lg:hidden",
+          LAYOUT_NAV_TRIGGER_CLASSES,
           className
         )}
         {...props}
@@ -201,7 +202,7 @@ export function LayoutMobileNav({ label, children }: LayoutMobileNavProps) {
           if (target.closest("a[href]")) nav.setOpen(false)
         }}
       >
-        <nav aria-label={label} className="flex flex-col gap-1">
+        <nav aria-label={label} className={LAYOUT_MOBILE_NAV_LIST_CLASSES}>
           {children}
         </nav>
       </SheetContent>

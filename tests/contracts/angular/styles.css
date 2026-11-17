@@ -1,0 +1,4 @@
+/* The shared test stylesheet, plus the Angular sources (their class strings must reach the CSS). */
+@import "../../browser/test.css";
+
+@source "../../../packages/angular/**/*.ts";

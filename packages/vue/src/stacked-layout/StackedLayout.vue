@@ -5,6 +5,7 @@ import LayoutSlot from "../layout/LayoutSlot.vue"
 import LayoutNavProvider from "../layout/LayoutNavProvider.vue"
 import LayoutMobileNav from "../layout/LayoutMobileNav.vue"
 import SkipLink from "../layout/SkipLink.vue"
+import { STACKED_CLASSES, STACKED_FOOTER_CLASSES, STACKED_HEADER_CLASSES, STACKED_MAIN_CLASSES } from "@glob-ui/recipes"
 
 const props = withDefaults(
   defineProps<{
@@ -31,7 +32,7 @@ const mainId = useId()
     <div
       data-layout="stacked"
       data-scroll-mode="document"
-      :class="cn('flex min-h-screen flex-col pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)] text-glob-text', props.class)"
+      :class="cn(STACKED_CLASSES, props.class)"
       v-bind="$attrs"
     >
       <SkipLink :target-id="mainId" />
@@ -40,14 +41,14 @@ const mainId = useId()
         name="header"
         scroll="fixed"
         as="header"
-        class="sticky top-0 z-40 flex items-center gap-2 border-b border-glob-border bg-glob-surface px-4 pt-[env(safe-area-inset-top)] md:px-6"
+        :class="STACKED_HEADER_CLASSES"
       >
         <slot name="header" />
       </LayoutSlot>
-      <main :id="mainId" tabindex="-1" data-slot="main" data-scroll="scroll" class="flex-1 focus:outline-none">
+      <main :id="mainId" tabindex="-1" data-slot="main" data-scroll="scroll" :class="STACKED_MAIN_CLASSES">
         <slot />
       </main>
-      <LayoutSlot v-if="slots.footer" name="footer" scroll="fixed" as="footer" class="border-t border-glob-border p-4 md:px-6">
+      <LayoutSlot v-if="slots.footer" name="footer" scroll="fixed" as="footer" :class="STACKED_FOOTER_CLASSES">
         <slot name="footer" />
       </LayoutSlot>
       <LayoutMobileNav v-if="slots.mobileNav" :label="navLabel">

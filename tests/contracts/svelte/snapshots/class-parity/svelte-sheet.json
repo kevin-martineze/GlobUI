@@ -1,0 +1,11 @@
+{
+  "dialog > div": [
+    "relative flex h-full flex-col gap-4 overflow-y-auto p-6"
+  ],
+  "dialog h2": [
+    "text-lg font-semibold leading-none tracking-tight"
+  ],
+  "dialog button[aria-label=\"Close\"]": [
+    "absolute right-4 top-4 inline-flex h-8 w-8 items-center justify-center rounded-glob-sm text-glob-text-secondary transition-colors hover:bg-glob-surface-hover hover:text-glob-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring"
+  ]
+}

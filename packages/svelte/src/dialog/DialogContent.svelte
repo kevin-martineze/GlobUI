@@ -5,6 +5,7 @@
   import { dialogVariants } from "@glob-ui/recipes"
   import DialogContentBase from "./DialogContentBase.svelte"
   import DialogCloseIcon from "./DialogCloseIcon.svelte"
+  import { DIALOG_BODY_CLASSES } from "@glob-ui/recipes"
 
   type Size = "sm" | "md" | "lg"
   let {
@@ -17,7 +18,7 @@
 </script>
 
 <DialogContentBase class={cn(dialogVariants({ size, className }))} {...rest}>
-  <div class="relative flex max-h-[calc(100dvh-2rem)] flex-col gap-4 overflow-y-auto p-6">
+  <div class={DIALOG_BODY_CLASSES}>
     {@render children?.()}
     {#if showCloseButton}<DialogCloseIcon />{/if}
   </div>

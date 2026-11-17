@@ -1,7 +1,8 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements"
   import { cn } from "@glob-ui/utils"
+  import { DIALOG_FOOTER_CLASSES } from "@glob-ui/recipes"
   let { class: className, children, ...rest }: HTMLAttributes<HTMLDivElement> = $props()
 </script>
 
-<div class={cn("flex flex-col-reverse gap-2 sm:flex-row sm:justify-end", className)} {...rest}>{@render children?.()}</div>
+<div class={cn(DIALOG_FOOTER_CLASSES, className)} {...rest}>{@render children?.()}</div>
