@@ -1,15 +1,13 @@
 import { forwardRef } from "react"
 import { cn } from "@glob-ui/utils"
+import { CARD_CLASSES, CARD_HEADER_CLASSES, CARD_TITLE_CLASSES, CARD_DESCRIPTION_CLASSES, CARD_CONTENT_CLASSES, CARD_FOOTER_CLASSES } from "@glob-ui/recipes"
 
 export type CardProps = React.HTMLAttributes<HTMLDivElement>
 
 const Card = forwardRef<HTMLDivElement, CardProps>(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn(
-      "rounded-glob-lg border border-glob-border bg-glob-surface text-glob-text shadow-glob-sm",
-      className
-    )}
+    className={cn(CARD_CLASSES, className)}
     {...props}
   />
 ))
@@ -18,7 +16,7 @@ Card.displayName = "Card"
 export type CardHeaderProps = React.HTMLAttributes<HTMLDivElement>
 
 const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("flex flex-col gap-1.5 p-6", className)} {...props} />
+  <div ref={ref} className={cn(CARD_HEADER_CLASSES, className)} {...props} />
 ))
 CardHeader.displayName = "CardHeader"
 
@@ -33,7 +31,7 @@ const CardTitle = forwardRef<HTMLHeadingElement, CardTitleProps>(
   ({ as: Comp = "h3", className, ...props }, ref) => (
     <Comp
       ref={ref}
-      className={cn("text-lg font-semibold leading-none tracking-tight", className)}
+      className={cn(CARD_TITLE_CLASSES, className)}
       {...props}
     />
   )
@@ -44,7 +42,7 @@ export type CardDescriptionProps = React.HTMLAttributes<HTMLParagraphElement>
 
 const CardDescription = forwardRef<HTMLParagraphElement, CardDescriptionProps>(
   ({ className, ...props }, ref) => (
-    <p ref={ref} className={cn("text-sm text-glob-text-secondary", className)} {...props} />
+    <p ref={ref} className={cn(CARD_DESCRIPTION_CLASSES, className)} {...props} />
   )
 )
 CardDescription.displayName = "CardDescription"
@@ -52,14 +50,14 @@ CardDescription.displayName = "CardDescription"
 export type CardContentProps = React.HTMLAttributes<HTMLDivElement>
 
 const CardContent = forwardRef<HTMLDivElement, CardContentProps>(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
+  <div ref={ref} className={cn(CARD_CONTENT_CLASSES, className)} {...props} />
 ))
 CardContent.displayName = "CardContent"
 
 export type CardFooterProps = React.HTMLAttributes<HTMLDivElement>
 
 const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("flex items-center gap-2 p-6 pt-0", className)} {...props} />
+  <div ref={ref} className={cn(CARD_FOOTER_CLASSES, className)} {...props} />
 ))
 CardFooter.displayName = "CardFooter"
 

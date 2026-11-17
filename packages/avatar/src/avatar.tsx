@@ -4,6 +4,7 @@ import { Children, cloneElement, forwardRef, isValidElement, useState } from "re
 import type { VariantProps } from "class-variance-authority"
 import { cn } from "@glob-ui/utils"
 import { avatarVariants } from "@glob-ui/recipes"
+import { AVATAR_IMAGE_CLASSES, AVATAR_FALLBACK_CLASSES, AVATAR_GROUP_CLASSES, AVATAR_GROUP_OVERLAP, AVATAR_GROUP_RING_CLASSES } from "@glob-ui/recipes"
 
 type Status = "loading" | "loaded" | "error"
 
@@ -64,11 +65,11 @@ const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
             }}
             onLoad={() => setStatus("loaded")}
             onError={() => setStatus("error")}
-            className={cn("absolute inset-0 h-full w-full object-cover", !loaded && "opacity-0")}
+            className={cn(AVATAR_IMAGE_CLASSES, !loaded && "opacity-0")}
           />
         )}
         {!loaded && (
-          <span aria-hidden="true" className="flex h-full w-full items-center justify-center">
+          <span aria-hidden="true" className={AVATAR_FALLBACK_CLASSES}>
             {fallbackContent}
           </span>
         )}
@@ -78,12 +79,7 @@ const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
 )
 Avatar.displayName = "Avatar"
 
-const overlap = {
-  sm: "-space-x-2",
-  md: "-space-x-2",
-  lg: "-space-x-3",
-  xl: "-space-x-4",
-}
+const overlap = AVATAR_GROUP_OVERLAP
 
 export interface AvatarGroupProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -100,19 +96,19 @@ const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>(
     const s = size ?? "md"
 
     return (
-      <div ref={ref} role="group" className={cn("flex items-center", overlap[s], className)} {...props}>
+      <div ref={ref} role="group" className={cn(AVATAR_GROUP_CLASSES, overlap[s], className)} {...props}>
         {visible.map((child) =>
           cloneElement(child, {
             size: child.props.size ?? size,
             shape: child.props.shape ?? shape,
-            className: cn("ring-2 ring-glob-surface", child.props.className),
+            className: cn(AVATAR_GROUP_RING_CLASSES, child.props.className),
           })
         )}
         {extra > 0 && (
           <span
             role="img"
             aria-label={`${extra} more`}
-            className={cn(avatarVariants({ size, shape }), "ring-2 ring-glob-surface")}
+            className={cn(avatarVariants({ size, shape }), AVATAR_GROUP_RING_CLASSES)}
           >
             <span aria-hidden="true">+{extra}</span>
           </span>

@@ -1,5 +1,6 @@
 import { forwardRef } from "react"
 import { cn } from "@glob-ui/utils"
+import { SKELETON_CLASSES } from "@glob-ui/recipes"
 
 export type SkeletonProps = React.HTMLAttributes<HTMLDivElement>
 
@@ -8,10 +9,7 @@ const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(({ className, ...prop
   <div
     ref={ref}
     aria-hidden="true"
-    className={cn(
-      "animate-pulse rounded-glob-md bg-glob-surface-hover motion-reduce:animate-none",
-      className
-    )}
+    className={cn(SKELETON_CLASSES, className)}
     {...props}
   />
 ))

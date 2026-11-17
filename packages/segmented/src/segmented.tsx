@@ -2,6 +2,7 @@
 
 import { cn } from "@glob-ui/utils"
 import { useControllableState, useRovingFocus } from "@glob-ui/hooks"
+import { SEGMENTED_CLASSES, SEGMENTED_DISABLED_CLASSES, SEGMENTED_ITEM_CLASSES, SEGMENTED_ITEM_SIZE, SEGMENTED_ITEM_CHECKED_CLASSES, SEGMENTED_ITEM_UNCHECKED_CLASSES } from "@glob-ui/recipes"
 
 export interface SegmentedOption {
   value: string
@@ -24,11 +25,7 @@ export interface SegmentedProps
   className?: string
 }
 
-const sizeStyles = {
-  sm: "h-8 text-xs px-3",
-  md: "h-10 text-sm px-4",
-  lg: "h-12 text-base px-5",
-}
+const sizeStyles = SEGMENTED_ITEM_SIZE
 
 /** Radio group (APG). Arrows move and select; Tab enters the group on the selected option. */
 export function Segmented({
@@ -72,8 +69,8 @@ export function Segmented({
       aria-disabled={disabled || undefined}
       {...roving.rootProps}
       className={cn(
-        "inline-flex rounded-glob-md border border-glob-border bg-glob-surface-secondary p-0.5",
-        disabled && "opacity-50 cursor-not-allowed",
+        SEGMENTED_CLASSES,
+        disabled && SEGMENTED_DISABLED_CLASSES,
         className
       )}
     >
@@ -94,11 +91,11 @@ export function Segmented({
               if (!checked) setCurrent(option.value)
             }}
             className={cn(
-              "rounded-glob-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50",
+              SEGMENTED_ITEM_CLASSES,
               sizeStyles[size],
               checked
-                ? "bg-glob-primary text-glob-primary-foreground shadow-sm"
-                : "text-glob-text-secondary hover:text-glob-text"
+                ? SEGMENTED_ITEM_CHECKED_CLASSES
+                : SEGMENTED_ITEM_UNCHECKED_CLASSES
             )}
           >
             {option.label}

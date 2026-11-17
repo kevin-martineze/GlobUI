@@ -2,6 +2,7 @@ import { forwardRef } from "react"
 import type { VariantProps } from "class-variance-authority"
 import { cn } from "@glob-ui/utils"
 import { labelVariants } from "@glob-ui/recipes"
+import { LABEL_REQUIRED_CLASSES } from "@glob-ui/recipes"
 
 export interface LabelProps
   extends React.LabelHTMLAttributes<HTMLLabelElement>,
@@ -15,7 +16,7 @@ const Label = forwardRef<HTMLLabelElement, LabelProps>(
       <label ref={ref} className={cn(labelVariants({ size, className }))} {...props}>
         {children}
         {required && (
-          <span aria-hidden="true" className="text-glob-primary-text">
+          <span aria-hidden="true" className={LABEL_REQUIRED_CLASSES}>
             *
           </span>
         )}

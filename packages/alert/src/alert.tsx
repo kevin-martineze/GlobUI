@@ -2,16 +2,11 @@ import { forwardRef } from "react"
 import type { VariantProps } from "class-variance-authority"
 import { cn } from "@glob-ui/utils"
 import { alertVariants } from "@glob-ui/recipes"
+import { ALERT_ICON_CLASSES, ALERT_ICON_TONE, ALERT_BODY_CLASSES, ALERT_TITLE_CLASSES, ALERT_DESCRIPTION_CLASSES } from "@glob-ui/recipes"
 
 export type AlertVariant = "default" | "info" | "success" | "warning" | "danger"
 
-const iconColor: Record<AlertVariant, string> = {
-  default: "text-glob-text-secondary",
-  info: "text-glob-info",
-  success: "text-glob-success",
-  warning: "text-glob-warning",
-  danger: "text-glob-danger",
-}
+const iconColor: Record<AlertVariant, string> = ALERT_ICON_TONE
 
 const iconPaths: Record<AlertVariant, React.ReactNode> = {
   default: (
@@ -54,7 +49,7 @@ export interface AlertIconProps {
 /** The variant's icon, coloured. Decorative: hidden from assistive tech. */
 function AlertIcon({ variant = "default", className }: AlertIconProps) {
   return (
-    <span aria-hidden="true" className={cn("mt-0.5 flex shrink-0", iconColor[variant], className)}>
+    <span aria-hidden="true" className={cn(ALERT_ICON_CLASSES, iconColor[variant], className)}>
       <svg
         viewBox="0 0 24 24"
         fill="none"
@@ -90,12 +85,12 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>(
           <AlertIcon variant={v} />
         ) : (
           icon !== null && (
-            <span aria-hidden="true" className={cn("mt-0.5 flex shrink-0", iconColor[v])}>
+            <span aria-hidden="true" className={cn(ALERT_ICON_CLASSES, iconColor[v])}>
               {icon}
             </span>
           )
         )}
-        <div className="flex min-w-0 flex-1 flex-col gap-1">{children}</div>
+        <div className={ALERT_BODY_CLASSES}>{children}</div>
       </div>
     )
   }
@@ -105,14 +100,14 @@ Alert.displayName = "Alert"
 export type AlertTitleProps = React.HTMLAttributes<HTMLDivElement>
 
 const AlertTitle = forwardRef<HTMLDivElement, AlertTitleProps>(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("font-medium leading-5", className)} {...props} />
+  <div ref={ref} className={cn(ALERT_TITLE_CLASSES, className)} {...props} />
 ))
 AlertTitle.displayName = "AlertTitle"
 
 export type AlertDescriptionProps = React.HTMLAttributes<HTMLDivElement>
 
 const AlertDescription = forwardRef<HTMLDivElement, AlertDescriptionProps>(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("leading-5 text-glob-text-secondary", className)} {...props} />
+  <div ref={ref} className={cn(ALERT_DESCRIPTION_CLASSES, className)} {...props} />
 ))
 AlertDescription.displayName = "AlertDescription"
 
