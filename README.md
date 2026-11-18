@@ -5,14 +5,14 @@
 
 # GlobUI
 
-Accessible React components, plus layouts that own the scroll and templates that fix what repeats. Your page only fills the slots.
+Accessible React and Svelte components, plus layouts that own the scroll and templates that fix what repeats. Your page only fills the slots.
 
 Docs: [globui.dev](https://globui.dev). Built with React 19, TypeScript and Tailwind CSS 4; the docs site is Next.js 16.
 
 [![npm version](https://img.shields.io/npm/v/@glob-ui/all)](https://www.npmjs.com/package/@glob-ui/all)
 [![license](https://img.shields.io/npm/l/@glob-ui/all)](./LICENSE)
 
-Published on npm. Every `@glob-ui/*` package shares one version (the badge above shows the current one). Components can also be copied into your project with the shadcn CLI: see [globui.dev](https://globui.dev).
+Published on npm. Every `@glob-ui/*` package shares one version (the badge above shows the current one). Svelte 5 has one package, `@glob-ui/svelte`, with a subpath per component. Components can also be copied into your project, with the shadcn CLI for React or the shadcn-svelte CLI for Svelte: see [globui.dev](https://globui.dev).
 
 ## Install
 

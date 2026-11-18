@@ -9,7 +9,7 @@ The docs site is `apps/docs`. It reads the compiled packages (`packages/*/dist`)
 3. **Include source files outside of the Root Directory**: keep it enabled (the default for new projects). The build reads `packages/`, which is outside `apps/docs`.
 4. **Framework Preset**: Next.js (from `vercel.json`).
 5. **Environment variables** (Production, and Preview if you want previews to show their own address):
-   - `NEXT_PUBLIC_SITE_URL` = the public address, for example `https://glob-ui.example.com` (no trailing slash). It is used for the sitemap, robots, metadata, the copy-code commands (`npx shadcn@latest add <site>/r/button.json`), and the registry's dependency URLs. Without it, the build uses `http://localhost:3000`, which is wrong for a deployment.
+   - `NEXT_PUBLIC_SITE_URL` = the public address, for example `https://glob-ui.example.com` (no trailing slash). It is used for the sitemap, robots, metadata, the copy-code commands (`npx shadcn@latest add <site>/r/button.json`, `npx shadcn-svelte@latest add <site>/r/svelte/button.json`), and the registry's dependency URLs. Without it, the build uses `http://localhost:3000`, which is wrong for a deployment.
 6. Deploy.
 
 Do not set the install or build commands in the dashboard: they come from `vercel.json` (the dashboard values override the file).
@@ -17,7 +17,7 @@ Do not set the install or build commands in the dashboard: they come from `verce
 ## What the build does
 
 - Install (from the repo root, with the lockfile): `pnpm install --frozen-lockfile`.
-- Build: compile every package (`pnpm build:packages`), then in `apps/docs` run `fumadocs-mdx`, write the examples registry, write the copy-code registry (`public/r/*.json`), `next build`, and `check-docs` (every package has a page, no broken internal link).
+- Build: compile every package (`pnpm build:packages`), then in `apps/docs` run `fumadocs-mdx`, write the examples registry, write the copy-code registries (`public/r/*.json` for React, `public/r/svelte/*.json` for Svelte), `next build`, and `check-docs` (every package has a page, no broken internal link).
 
 ## Previews
 

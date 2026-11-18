@@ -8,7 +8,7 @@ import { SlotMap } from "@/components/slot-map"
 import { PackageInfo } from "@/components/package-info"
 import { ApiTable } from "@/components/api-table"
 import { TokenTable } from "@/components/token-table"
-import { InstallTabs, RegistryCommand } from "@/components/install-tabs"
+import { InstallTabs, RegistryCommand, TemplateRegistryCommand } from "@/components/install-tabs"
 
 export function getMDXComponents(components?: MDXComponents): MDXComponents {
   return {
@@ -24,6 +24,7 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     TokenTable,
     InstallTabs,
     RegistryCommand,
+    TemplateRegistryCommand,
     ...components,
   }
 }
