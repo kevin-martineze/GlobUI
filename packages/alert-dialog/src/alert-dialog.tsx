@@ -18,6 +18,7 @@ import {
   type DialogCloseProps,
   type DialogFooterProps,
 } from "@glob-ui/dialog"
+import { ALERT_DIALOG_BODY_CLASSES } from "@glob-ui/recipes"
 
 export type AlertDialogProps = Omit<DialogProps, "closeOnOutsideClick">
 
@@ -51,7 +52,7 @@ const AlertDialogContent = forwardRef<HTMLDialogElement, AlertDialogContentProps
       className={cn(dialogVariants({ size: "sm", className }))}
       {...props}
     >
-      <div className="relative flex max-h-[calc(100dvh-2rem)] flex-col gap-4 overflow-y-auto p-6">{children}</div>
+      <div className={ALERT_DIALOG_BODY_CLASSES}>{children}</div>
     </DialogContentBase>
   )
 )

@@ -5,6 +5,7 @@ import { createPortal } from "react-dom"
 import { cn } from "@glob-ui/utils"
 import { AlertIcon, alertVariants } from "@glob-ui/alert"
 import { toast, toastStore, type ToastData } from "./store"
+import { TOASTER_CLASSES, TOASTER_TRANSITION_CLASSES, TOAST_ACTION_CLASSES, TOAST_BODY_CLASSES, TOAST_CLASSES, TOAST_CLOSE_CLASSES, TOAST_CLOSE_ICON_CLASSES, TOAST_DESCRIPTION_CLASSES, TOAST_FADE_CLASSES, TOAST_LIST_CLASSES, TOAST_TITLE_CLASSES, TOAST_TRANSITION_CLASSES, TOASTER_POSITION_CLASSES, TOAST_ENTER_FROM } from "@glob-ui/recipes"
 
 export type ToasterPosition = "top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right"
 
@@ -17,15 +18,6 @@ export interface ToasterProps {
   /** Accessible name of the notification list. */
   label?: string
   className?: string
-}
-
-const positionClasses: Record<ToasterPosition, string> = {
-  "top-left": "top-0 left-0",
-  "top-center": "top-0 left-1/2 -translate-x-1/2",
-  "top-right": "top-0 right-0",
-  "bottom-left": "bottom-0 left-0",
-  "bottom-center": "bottom-0 left-1/2 -translate-x-1/2",
-  "bottom-right": "bottom-0 right-0",
 }
 
 const isUrgent = (t: ToastData) => t.variant === "warning" || t.variant === "danger"
@@ -133,14 +125,14 @@ function Toaster({
         aria-label={label}
         className={cn(
           // Reset the UA popover box. The container itself ignores the pointer; toasts do not.
-          "pointer-events-none fixed inset-auto m-0 w-full max-w-sm overflow-visible border-0 bg-transparent p-4",
-          "transition-[display,overlay] transition-discrete duration-200",
-          positionClasses[position],
+          TOASTER_CLASSES,
+          TOASTER_TRANSITION_CLASSES,
+          TOASTER_POSITION_CLASSES[position],
           className
         )}
       >
         <ol
-          className="pointer-events-auto flex flex-col gap-2"
+          className={TOAST_LIST_CLASSES}
           onPointerEnter={() => setHovered(true)}
           onPointerLeave={() => setHovered(false)}
           onFocus={() => setFocusWithin(true)}
@@ -266,16 +258,16 @@ function ToastItem({ toast: t, paused, closeLabel, fromTop, onFocusLost }: Toast
       className={cn(
         // Same colours as Alert; no role here, the live regions above announce it.
         alertVariants({ variant: t.variant }),
-        "items-start pr-10 shadow-glob-md",
-        "transition-[opacity,translate] transition-discrete duration-200 ease-out",
-        fromTop ? "starting:-translate-y-2" : "starting:translate-y-2",
-        "starting:opacity-0 data-leaving:opacity-0 motion-reduce:transition-none"
+        TOAST_CLASSES,
+        TOAST_TRANSITION_CLASSES,
+        TOAST_ENTER_FROM[fromTop ? "top" : "bottom"],
+        TOAST_FADE_CLASSES
       )}
     >
       <AlertIcon variant={t.variant} />
-      <div className="flex min-w-0 flex-1 flex-col gap-1">
-        {t.title != null && <div className="font-medium leading-5">{t.title}</div>}
-        {t.description != null && <div className="leading-5 text-glob-text-secondary">{t.description}</div>}
+      <div className={TOAST_BODY_CLASSES}>
+        {t.title != null && <div className={TOAST_TITLE_CLASSES}>{t.title}</div>}
+        {t.description != null && <div className={TOAST_DESCRIPTION_CLASSES}>{t.description}</div>}
         {t.action && (
           <button
             type="button"
@@ -283,7 +275,7 @@ function ToastItem({ toast: t, paused, closeLabel, fromTop, onFocusLost }: Toast
               t.action?.onClick(e)
               if (!e.defaultPrevented) toast.dismiss(t.id)
             }}
-            className="mt-1 self-start rounded-glob-sm border border-glob-border bg-glob-surface px-2 py-1 text-xs font-medium text-glob-text hover:bg-glob-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring"
+            className={TOAST_ACTION_CLASSES}
           >
             {t.action.label}
           </button>
@@ -293,9 +285,9 @@ function ToastItem({ toast: t, paused, closeLabel, fromTop, onFocusLost }: Toast
         type="button"
         aria-label={closeLabel}
         onClick={() => toast.dismiss(t.id)}
-        className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-glob-sm text-glob-text-secondary hover:bg-glob-surface-hover hover:text-glob-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring"
+        className={TOAST_CLOSE_CLASSES}
       >
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="h-3.5 w-3.5" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className={TOAST_CLOSE_ICON_CLASSES} aria-hidden="true">
           <path d="M18 6L6 18M6 6l12 12" />
         </svg>
       </button>

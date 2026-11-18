@@ -5,7 +5,7 @@ import type { VariantProps } from "class-variance-authority"
 import { cn } from "@glob-ui/utils"
 import { Slot, composeRefs } from "@glob-ui/slot"
 import { useControllableState, useFloatingPanel, useRovingFocus, type Placement } from "@glob-ui/hooks"
-import { itemVariants } from "@glob-ui/recipes"
+import { FLOATING_TRANSITION_CLASSES, MENU_CHECK_ICON_CLASSES, MENU_CONTENT_CLASSES, MENU_ITEM_INDICATOR_CLASSES, MENU_LABEL_CLASSES, MENU_LABEL_INSET_CLASSES, MENU_RADIO_DOT_CLASSES, MENU_SEPARATOR_CLASSES, MENU_SHORTCUT_CLASSES, itemVariants } from "@glob-ui/recipes"
 
 const ITEM_SELECTOR = '[data-roving-item]:not([aria-disabled="true"])'
 
@@ -171,8 +171,8 @@ const DropdownMenuContent = forwardRef<HTMLDivElement, DropdownMenuContentProps>
         }}
         className={cn(
           // Reset the UA popover box (inset:0 + margin:auto would center it).
-          "m-0 min-w-[8rem] overflow-auto rounded-glob-md border border-glob-border bg-glob-surface p-1 text-sm text-glob-text shadow-glob-md outline-none",
-          "opacity-0 transition-[opacity,overlay,display] transition-discrete duration-150 open:opacity-100 starting:open:opacity-0 motion-reduce:transition-none",
+          MENU_CONTENT_CLASSES,
+          FLOATING_TRANSITION_CLASSES,
           className
         )}
         {...props}
@@ -270,7 +270,7 @@ DropdownMenuItem.displayName = "DropdownMenuItem"
 
 function ItemIndicator({ children }: { children: React.ReactNode }) {
   return (
-    <span aria-hidden="true" className="absolute left-2 flex h-4 w-4 items-center justify-center">
+    <span aria-hidden="true" className={MENU_ITEM_INDICATOR_CLASSES}>
       {children}
     </span>
   )
@@ -300,7 +300,7 @@ const DropdownMenuCheckboxItem = forwardRef<HTMLDivElement, DropdownMenuCheckbox
       >
         {isChecked && (
           <ItemIndicator>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="h-3.5 w-3.5">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={MENU_CHECK_ICON_CLASSES}>
               <path d="M5 12l5 5L20 7" />
             </svg>
           </ItemIndicator>
@@ -361,7 +361,7 @@ const DropdownMenuRadioItem = forwardRef<HTMLDivElement, DropdownMenuRadioItemPr
       >
         {checked && (
           <ItemIndicator>
-            <span className="h-2 w-2 rounded-full bg-current" />
+            <span className={MENU_RADIO_DOT_CLASSES} />
           </ItemIndicator>
         )}
         {children}
@@ -378,7 +378,7 @@ export interface DropdownMenuLabelProps extends React.HTMLAttributes<HTMLDivElem
 const DropdownMenuLabel = forwardRef<HTMLDivElement, DropdownMenuLabelProps>(({ className, inset, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("px-2 py-1.5 text-xs font-medium text-glob-text-secondary", inset && "pl-8", className)}
+    className={cn(MENU_LABEL_CLASSES, inset && MENU_LABEL_INSET_CLASSES, className)}
     {...props}
   />
 ))
@@ -387,14 +387,14 @@ DropdownMenuLabel.displayName = "DropdownMenuLabel"
 export type DropdownMenuSeparatorProps = React.HTMLAttributes<HTMLDivElement>
 
 const DropdownMenuSeparator = forwardRef<HTMLDivElement, DropdownMenuSeparatorProps>(({ className, ...props }, ref) => (
-  <div ref={ref} role="separator" className={cn("-mx-1 my-1 h-px bg-glob-border", className)} {...props} />
+  <div ref={ref} role="separator" className={cn(MENU_SEPARATOR_CLASSES, className)} {...props} />
 ))
 DropdownMenuSeparator.displayName = "DropdownMenuSeparator"
 
 export type DropdownMenuShortcutProps = React.HTMLAttributes<HTMLSpanElement>
 
 const DropdownMenuShortcut = forwardRef<HTMLSpanElement, DropdownMenuShortcutProps>(({ className, ...props }, ref) => (
-  <span ref={ref} className={cn("ml-auto pl-4 text-xs tracking-widest text-glob-text-secondary", className)} {...props} />
+  <span ref={ref} className={cn(MENU_SHORTCUT_CLASSES, className)} {...props} />
 ))
 DropdownMenuShortcut.displayName = "DropdownMenuShortcut"
 

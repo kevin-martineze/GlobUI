@@ -4,6 +4,7 @@ import { createContext, forwardRef, useContext, useId, useMemo } from "react"
 import { cn } from "@glob-ui/utils"
 import { Slot, composeRefs } from "@glob-ui/slot"
 import { useControllableState, useFloatingPanel, type Placement } from "@glob-ui/hooks"
+import { FLOATING_TRANSITION_CLASSES, POPOVER_CONTENT_CLASSES } from "@glob-ui/recipes"
 
 const FOCUSABLE =
   'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
@@ -108,8 +109,8 @@ const PopoverContent = forwardRef<HTMLDivElement, PopoverContentProps>(
         style={{ ...floatingStyles, ...style }}
         className={cn(
           // Reset the UA popover box (inset:0 + margin:auto would center it).
-          "m-0 overflow-auto rounded-glob-md border border-glob-border bg-glob-surface p-4 text-sm text-glob-text shadow-glob-md outline-none",
-          "opacity-0 transition-[opacity,overlay,display] transition-discrete duration-150 open:opacity-100 starting:open:opacity-0 motion-reduce:transition-none",
+          POPOVER_CONTENT_CLASSES,
+          FLOATING_TRANSITION_CLASSES,
           className
         )}
         {...props}
