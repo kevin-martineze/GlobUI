@@ -1,0 +1,91 @@
+<script lang="ts">
+  import type { Snippet } from "svelte"
+  import { AppShellLayout } from "@glob-ui/svelte/app-shell-layout"
+  import { LayoutNavTrigger } from "@glob-ui/svelte/layout"
+  import { PageLayout, PageHeader } from "@glob-ui/svelte/page-layout"
+  import { buttonVariants } from "@glob-ui/svelte/button"
+  import {
+    DropdownMenu,
+    DropdownMenuTrigger,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+  } from "@glob-ui/svelte/dropdown-menu"
+
+  // Edit: this is yours. The brand, the navigation and the user menu are fixed for every page of the dashboard.
+  const BRAND = { name: "Acme", href: "/" }
+  const NAV_ITEMS = [
+    { label: "Overview", href: "/" },
+    { label: "Orders", href: "/orders" },
+    { label: "Customers", href: "/customers" },
+    { label: "Settings", href: "/settings" },
+  ]
+  const USER = { name: "Ada Lovelace", email: "ada@acme.test", initials: "AL" }
+
+  /** A dashboard: the app shell with a fixed brand, navigation and user menu, and a page header for each page. */
+  let {
+    title,
+    description,
+    breadcrumbs,
+    actions,
+    activeHref,
+    children,
+  }: {
+    /** The page title (an h1). */
+    title: string | Snippet
+    description?: string | Snippet
+    breadcrumbs?: Snippet
+    /** Buttons for the page, next to the title. */
+    actions?: Snippet
+    /** The href of the current page. Its link gets `aria-current="page"`. */
+    activeHref?: string
+    children?: Snippet
+  } = $props()
+</script>
+
+<AppShellLayout sidebarLabel="Main navigation">
+  {#snippet header()}
+    <LayoutNavTrigger />
+    <div data-template-part="fixed" data-template-name="BRAND, user menu" class="flex min-w-0 flex-1 items-center justify-between gap-4">
+      <a href={BRAND.href} class="truncate font-semibold text-glob-text no-underline">
+        {BRAND.name}
+      </a>
+      <DropdownMenu>
+        <DropdownMenuTrigger class={buttonVariants({ variant: "ghost", size: "sm" })}>
+          {USER.initials}
+          <span class="sr-only">Account of {USER.name}</span>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuLabel>{USER.email}</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onSelect={() => undefined}>Profile</DropdownMenuItem>
+          <DropdownMenuItem onSelect={() => undefined}>Sign out</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
+  {/snippet}
+  {#snippet sidebar()}
+    <div data-template-part="fixed" data-template-name="navigation" class="flex flex-col gap-1">
+      {#each NAV_ITEMS as item (item.href)}
+        <a
+          href={item.href}
+          aria-current={item.href === activeHref ? "page" : undefined}
+          class="rounded-glob-md px-3 py-2 text-sm text-glob-text no-underline hover:bg-glob-surface-hover aria-[current=page]:bg-glob-surface-hover aria-[current=page]:font-medium"
+        >
+          {item.label}
+        </a>
+      {/each}
+    </div>
+  {/snippet}
+  <PageLayout>
+    {#snippet header()}
+      <div data-template-part="prop" data-template-name="title, description, breadcrumbs, actions">
+        <PageHeader {title} {description} {breadcrumbs} {actions} />
+      </div>
+    {/snippet}
+    <div data-template-part="prop" data-template-name="children" class="flex min-w-0 flex-col gap-6">
+      {@render children?.()}
+    </div>
+  </PageLayout>
+</AppShellLayout>

@@ -11,7 +11,8 @@
     actions,
     class: className,
     ...rest
-  }: HTMLAttributes<HTMLDivElement> & {
+  }: Omit<HTMLAttributes<HTMLDivElement>, "title"> & {
+    /** The page title (an h1). It replaces the `title` attribute of the element. */
     title: Snippet | string
     description?: Snippet | string
     /** A breadcrumb trail, or any navigation above the title. */

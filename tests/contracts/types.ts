@@ -334,3 +334,23 @@ export interface DataAdapter {
   /** A PhoneInput labelled "Phone" (aria-label on the number input), country "US" unless given. */
   phoneInput(fixture: { country?: string; onCountryChange?: (iso: string) => void }): Promise<void>
 }
+
+// Phase 10g-1: the templates (Dashboard, List page, Detail page).
+
+export type ContractInvoice = { id: string; client: string; amount: number }
+
+export interface TemplatesAdapter {
+  readonly name: string
+  /**
+   * DashboardTemplate with these props. `rows` adds that many paragraphs "Row 0", "Row 1", ... as children, after an
+   * optional paragraph with `content`. `actions` adds a button "New".
+   */
+  dashboard(fixture: { title: string; description?: string; activeHref?: string; content?: string; rows?: number; actions?: boolean }): Promise<void>
+  /**
+   * ListPageTemplate labelled "Invoices table" over `data`, with the accessor columns id ("Invoice") and client
+   * ("Client"). `actions` adds a button "New".
+   */
+  listPage(fixture: { title: string; description?: string; data: ContractInvoice[]; loading?: boolean; actions?: boolean }): Promise<void>
+  /** DetailPageTemplate with these props. `aside` and `content` are paragraphs with that text. `actions` adds a button "Edit". */
+  detailPage(fixture: { title: string; backHref?: string; aside?: string; content?: string; actions?: boolean }): Promise<void>
+}

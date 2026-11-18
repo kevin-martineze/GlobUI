@@ -61,9 +61,11 @@ describe("CountrySelect", () => {
     await render(<CountrySelect value="US" onChange={onChange} />)
     await trigger().element().focus()
     await userEvent.keyboard("{Enter}")
+    // Type only once the search field has focus: under load it can lag behind the open, and the keys go elsewhere.
+    await expect.element(page.getByRole("textbox", { name: "Search countries" })).toHaveFocus()
     await userEvent.keyboard("gb")
     await userEvent.keyboard("{Escape}")
-    expect(isOpen()).toBe(false)
+    await expect.poll(isOpen).toBe(false)
     expect(onChange).not.toHaveBeenCalled()
   })
 

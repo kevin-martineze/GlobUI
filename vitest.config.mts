@@ -68,7 +68,8 @@ export default defineConfig({
       },
       {
         plugins: [tailwindcss(), svelte()],
-        resolve: { alias },
+        // The Svelte templates import subpaths, as an app would: `@glob-ui/svelte/<part>` -> its source index.
+        resolve: { alias: [{ find: /^@glob-ui\/svelte\/(.+)$/, replacement: join(packagesDir, "svelte/src/$1/index.ts") }, ...alias] },
         // Same pre-bundling rule as the React project: no optimizer reloads in the middle of a run.
         optimizeDeps: {
           include: ["svelte", "svelte/internal/client", "vitest-browser-svelte", "axe-core", "class-variance-authority", "clsx", "tailwind-merge"],

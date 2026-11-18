@@ -1739,6 +1739,9 @@ importers:
       '@glob-ui/page-layout':
         specifier: workspace:*
         version: link:../packages/page-layout
+      '@glob-ui/svelte':
+        specifier: workspace:*
+        version: link:../packages/svelte
       '@tanstack/react-table':
         specifier: ^9.3.1
         version: 9.3.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -1752,6 +1755,9 @@ importers:
       react-dom:
         specifier: ^19
         version: 19.2.4(react@19.2.4)
+      svelte:
+        specifier: ^5.57.3
+        version: 5.57.3(@typescript-eslint/types@8.60.0)
 
   tests/contracts/angular:
     devDependencies:
