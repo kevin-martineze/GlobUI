@@ -93,11 +93,20 @@ const methodologyFiles = [
 for (const file of methodologyFiles) {
   const source = readFileSync(file, "utf8")
   const rel = path.relative(path.resolve(docs, "../.."), file)
-  for (const m of source.matchAll(/className=(?:"([^"]*)"|\{`([^`]*)`\})/g)) {
+  for (const m of source.matchAll(/(?:className|class)=(?:"([^"]*)"|\{`([^`]*)`\})/g)) {
     const classes = m[1] ?? m[2]
     if (FORBIDDEN_CLASS.test(classes)) problems.push(`${rel}: "${classes}" decides height, overflow or sticky; that belongs to a layout`)
   }
   // The outer element of each exported page or template (inner helpers, like an empty state, may have spacing).
+  // In a Svelte component that is the first element of the markup, outside the script and the snippets.
+  if (file.endsWith(".svelte")) {
+    const markup = source.replace(/<script[^]*?<\/script>/g, "").replace(/\{#snippet[^]*?\{\/snippet\}/g, "")
+    const outer = markup.match(/<([a-zA-Z]\w*)([^>]*)>/)
+    const outerClass = outer?.[2].match(/\sclass="([^"]*)"/)?.[1]
+    if (outer?.[1] === "div" && outerClass && WRAPPER_SPACING.test(outerClass)) {
+      problems.push(`${rel}: the page wraps its content in <div class="${outerClass}">; put the content in a layout slot (PageLayout owns the padding)`)
+    }
+  }
   for (const m of source.matchAll(/export (?:default )?function \w+[^]*?return \(\s*<(\w+)(?:\s+className="([^"]*)")?/g)) {
     if (m[1] === "div" && m[2] && WRAPPER_SPACING.test(m[2])) {
       problems.push(`${rel}: the page wraps its content in <div className="${m[2]}">; put the content in a layout slot (PageLayout owns the padding)`)
@@ -106,12 +115,13 @@ for (const file of methodologyFiles) {
 }
 console.log(`methodology: ${methodologyFiles.length} demo and template files checked`)
 
+// Pages and templates: React (.tsx) and Svelte (.svelte) files.
 function tsxFiles(dir) {
   if (!existsSync(dir)) return []
   return readdirSync(dir).flatMap((entry) => {
     const full = path.join(dir, entry)
     if (statSync(full).isDirectory()) return entry === "node_modules" ? [] : tsxFiles(full)
-    return entry.endsWith(".tsx") ? [full] : []
+    return entry.endsWith(".tsx") || entry.endsWith(".svelte") ? [full] : []
   })
 }
 
