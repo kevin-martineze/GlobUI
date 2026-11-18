@@ -4,4 +4,4 @@ export type { DataTableColumn, DataTableFeatures, DataTableState } from "./featu
 // Cells and headers render strings, or a component or snippet through these helpers.
 export { renderComponent, renderSnippet } from "@tanstack/svelte-table"
 // The state shapes, re-exported so consumers do not import TanStack directly.
-export type { ColumnDef, SortingState, PaginationState, RowSelectionState, ColumnVisibilityState } from "@tanstack/svelte-table"
+export type { ColumnDef, RowData, SortingState, PaginationState, RowSelectionState, ColumnVisibilityState } from "@tanstack/svelte-table"
