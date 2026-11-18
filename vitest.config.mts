@@ -10,6 +10,7 @@ import vue from "@vitejs/plugin-vue"
 // Tests import package sources, not dist, so no build is needed first.
 // `@glob-ui/<pkg>` -> `packages/<pkg>/src/index.ts` for every package with an index.
 const packagesDir = fileURLToPath(new URL("./packages", import.meta.url))
+const docsDir = fileURLToPath(new URL("./apps/docs", import.meta.url))
 const alias = readdirSync(packagesDir)
   .filter((dir) => existsSync(join(packagesDir, dir, "src/index.ts")))
   .map((dir) => ({
@@ -35,7 +36,15 @@ export default defineConfig({
       {
         oxc,
         plugins: [tailwindcss()],
-        resolve: { alias },
+        // The docs examples import docs components as `@/...` (the docs app's own path alias).
+        // next/link needs Next's runtime; the tests use an anchor in its place.
+        resolve: {
+          alias: [
+            ...alias,
+            { find: /^@\/(.*)$/, replacement: join(docsDir, "$1") },
+            { find: /^next\/link$/, replacement: fileURLToPath(new URL("./tests/docs-examples/next-link.tsx", import.meta.url)) },
+          ],
+        },
         // Pre-bundle up front: otherwise a cold cache (CI, or after an install) re-optimizes mid-run,
         // Vite reloads the test iframes and whole suites fail to start.
         optimizeDeps: {
@@ -56,7 +65,12 @@ export default defineConfig({
         },
         test: {
           name: "browser",
-          include: ["packages/*/src/**/*.browser.test.{ts,tsx}", "templates/*/*.browser.test.tsx", "tests/contracts/**/*.browser.test.tsx"],
+          include: [
+            "packages/*/src/**/*.browser.test.{ts,tsx}",
+            "templates/*/*.browser.test.tsx",
+            "tests/contracts/**/*.browser.test.tsx",
+            "tests/docs-examples/*.browser.test.tsx",
+          ],
           setupFiles: ["tests/browser/setup.ts"],
           browser: {
             enabled: true,
@@ -76,7 +90,7 @@ export default defineConfig({
         },
         test: {
           name: "browser-svelte",
-          include: ["tests/contracts/svelte/*.browser.test.ts"],
+          include: ["tests/contracts/svelte/*.browser.test.ts", "tests/docs-examples/*.browser.test.ts"],
           setupFiles: ["tests/browser/setup-base.ts"],
           browser: {
             enabled: true,

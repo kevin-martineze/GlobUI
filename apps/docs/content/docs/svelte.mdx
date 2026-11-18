@@ -1,0 +1,93 @@
+---
+title: Svelte
+description: GlobUI for Svelte 5. The same components, classes and behaviour as React, written the Svelte way.
+---
+
+`@glob-ui/svelte` has the components, layouts and templates of the React packages, built with Svelte 5 runes. They render the same elements and classes, and pass the same behaviour and accessibility tests: one contract suite runs against both frameworks. Every page of these docs has a **React | Svelte** switch on its code, install command and import line. The choice is kept for the next visit.
+
+## Install
+
+```bash
+pnpm add @glob-ui/svelte
+```
+
+Peer dependency: `svelte` 5. One package holds every component. Each component is its own subpath, so you load only what you import:
+
+```svelte
+<script lang="ts">
+  import { Button } from "@glob-ui/svelte/button"
+  import { Dialog, DialogTrigger, DialogContent, DialogTitle } from "@glob-ui/svelte/dialog"
+</script>
+```
+
+Then set up Tailwind v4 once, in the global stylesheet (for example `src/app.css` in SvelteKit). The components ship Tailwind class names, and Tailwind skips `node_modules` unless you list it:
+
+```css title="src/app.css"
+@import "tailwindcss";
+@import "@glob-ui/styles";
+
+@source "../node_modules/@glob-ui/svelte";
+@source "../node_modules/@glob-ui/recipes";
+```
+
+`@glob-ui/styles` and `@glob-ui/recipes` come with `@glob-ui/svelte`. Adjust the paths to where `node_modules` is, relative to the CSS file.
+
+## From React to Svelte
+
+The props have the same names and values. Where React and Svelte differ, the Svelte version uses the Svelte way:
+
+| React | Svelte | Example |
+| --- | --- | --- |
+| `value` + `onChange` (controlled) | `bind:value`, or `value` + `onChange` | `<Select bind:value={country} {options} />` |
+| `defaultValue`, `defaultChecked`, `defaultOpen` | the same props, uncontrolled | `<Switch defaultChecked />` |
+| `checked` + `onCheckedChange` | `bind:checked` | `<Checkbox bind:checked={agree} label="I agree" />` |
+| `open` + `onOpenChange` | `bind:open` | `<Dialog bind:open>` |
+| `className` | `class` | `<Card class="max-w-sm">` |
+| `containerClassName` (Table, DataTable) | `containerClass` | `<Table containerClass="max-h-64">` |
+| `asChild` with one child element | a `child` snippet that spreads the props | see below |
+| A `ReactNode` prop (`header`, `actions`, `toolbar`) | a snippet with the same name | `{#snippet actions()}...{/snippet}` |
+| `onClick`, `onSubmit` | `onclick`, `onsubmit` | `<Button onclick={save}>` |
+| `htmlFor` | `for` | `<Label for="email">` |
+
+### `asChild` is a `child` snippet
+
+A trigger that renders your own element takes a `child` snippet. It receives the attributes to put on the element, a ref included. Spread all of them:
+
+```svelte
+<DialogTrigger>
+  {#snippet child(props)}<Button variant="outline" {...props}>Edit profile</Button>{/snippet}
+</DialogTrigger>
+```
+
+Button takes one to render a link, Pagination links take one for router links or buttons, and the Tooltip always takes one: its trigger is your element.
+
+### Snippets for regions
+
+Layouts and page parts take snippets where React takes elements. A snippet declared inside the component's tag is passed as the prop of the same name:
+
+```svelte
+<AppShellLayout>
+  {#snippet header()}<LayoutNavTrigger /><strong>Acme</strong>{/snippet}
+  {#snippet sidebar()}<a href="/">Overview</a>{/snippet}
+  <PageLayout>
+    {#snippet header()}<PageHeader title="Orders" />{/snippet}
+    <OrderList />
+  </PageLayout>
+</AppShellLayout>
+```
+
+### DataTable
+
+`DataTable` runs on `@tanstack/svelte-table`. Build the columns with `createDataTableColumnHelper`. A cell renders text, or a snippet or component through `renderSnippet` and `renderComponent`, both exported from `@glob-ui/svelte/data-table`. See the [DataTable](/docs/components/data-table) examples.
+
+### Toasts
+
+Mount `<Toaster />` once, in the root layout (`src/routes/+layout.svelte`). Then call `toast()` from any component or module.
+
+## Server rendering
+
+The components render on the server in SvelteKit and hydrate in the browser. Like the React versions, the ones that depend on the browser (a locale, a measured position) render a stable first pass and update after mount, so the server HTML and the first client render match.
+
+## Templates
+
+The Dashboard, List page and Detail page [templates](/docs/templates/dashboard) have Svelte versions too. Each template page shows both. A Svelte template is one `.svelte` file: copy it into your project (for example `src/lib/components/templates/`) and edit the constants at the top.

@@ -115,6 +115,20 @@ for (const file of methodologyFiles) {
 }
 console.log(`methodology: ${methodologyFiles.length} demo and template files checked`)
 
+// 4. Every docs example has a Svelte version next to it (examples/<group>/<name>.svelte), shown in the Code tab and
+// compared with the React one by tests/docs-examples. The React-only utilities (cn, Slot) have none.
+const REACT_ONLY_EXAMPLES = new Set(["cn", "slot"])
+const examplesDir = path.join(docs, "examples")
+const reactExamples = tsxFiles(examplesDir).filter((f) => f.endsWith(".tsx"))
+for (const file of reactExamples) {
+  const group = path.relative(examplesDir, file).split(path.sep)[0]
+  if (REACT_ONLY_EXAMPLES.has(group)) continue
+  if (!existsSync(file.replace(/\.tsx$/, ".svelte"))) {
+    problems.push(`${path.relative(docs, file)} has no Svelte version (${path.relative(docs, file).replace(/\.tsx$/, ".svelte")})`)
+  }
+}
+console.log(`svelte examples: ${reactExamples.length} examples checked`)
+
 // Pages and templates: React (.tsx) and Svelte (.svelte) files.
 function tsxFiles(dir) {
   if (!existsSync(dir)) return []

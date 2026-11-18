@@ -1,0 +1,8 @@
+[
+  "div flex flex-col items-center gap-3",
+  "div inline-flex rounded-glob-md border border-glob-border bg-glob-surface-secondary p-0.5",
+  "button rounded-glob-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50 h-10 text-sm px-4 text-glob-text-secondary hover:text-glob-text",
+  "button rounded-glob-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50 h-10 text-sm px-4 bg-glob-primary text-glob-primary-foreground shadow-sm",
+  "button rounded-glob-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50 h-10 text-sm px-4 text-glob-text-secondary hover:text-glob-text",
+  "p text-sm text-fd-muted-foreground"
+]

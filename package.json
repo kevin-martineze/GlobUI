@@ -11,6 +11,7 @@
     "check:docs": "node apps/docs/scripts/check-docs.mjs",
     "check:directives": "node scripts/check-client-directives.mjs",
     "check:packages": "node scripts/check-packages.mjs",
+    "check:svelte": "cd packages/svelte && svelte-check --tsconfig ./tsconfig.json --fail-on-warnings && cd ../../templates/svelte && svelte-check --tsconfig ./tsconfig.json --fail-on-warnings && cd ../../apps/docs/examples && svelte-check --tsconfig ./tsconfig.svelte.json --fail-on-warnings",
     "sync:packages": "node scripts/sync-package-meta.mjs",
     "start": "pnpm --filter docs start",
     "lint": "eslint .",

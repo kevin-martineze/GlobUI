@@ -1,0 +1,21 @@
+[
+  "form flex w-full max-w-sm flex-col gap-4",
+  "div flex flex-col gap-1.5",
+  "label inline-flex items-center gap-1 font-medium text-glob-text peer-disabled:cursor-not-allowed peer-disabled:opacity-50 text-sm",
+  "input w-full rounded-glob-md border border-glob-border bg-glob-surface px-3 py-2 text-glob-text placeholder:text-glob-text-secondary transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50 aria-[invalid=true]:border-glob-danger aria-[invalid=true]:focus-visible:ring-glob-danger h-10 text-sm",
+  "div flex flex-col gap-1.5",
+  "label inline-flex items-center gap-1 font-medium text-glob-text peer-disabled:cursor-not-allowed peer-disabled:opacity-50 text-sm",
+  "div relative w-full",
+  "button flex w-full cursor-pointer items-center justify-between gap-2 rounded-glob-md border px-3 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50 data-[invalid=true]:border-glob-danger h-10 text-sm border-glob-border bg-glob-surface pr-16",
+  "span truncate",
+  "svg h-4 w-4 shrink-0 text-glob-text-secondary",
+  "rect",
+  "path",
+  "button absolute right-9 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-glob-sm text-glob-text-secondary hover:bg-glob-surface-hover hover:text-glob-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring",
+  "svg h-3.5 w-3.5",
+  "path",
+  "div m-0 overflow-auto rounded-glob-md border border-glob-border bg-glob-surface text-sm text-glob-text shadow-glob-md outline-none opacity-0 transition-[opacity,overlay,display] transition-discrete duration-150 open:opacity-100 starting:open:opacity-0 motion-reduce:transition-none w-fit p-3",
+  "input",
+  "div",
+  "button inline-flex items-center justify-center gap-2 rounded-glob-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 bg-glob-primary text-glob-primary-foreground hover:bg-glob-primary-hover h-10 px-4 text-sm"
+]

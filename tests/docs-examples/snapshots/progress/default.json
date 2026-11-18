@@ -1,0 +1,6 @@
+[
+  "div flex w-full max-w-sm flex-col gap-2",
+  "label inline-flex items-center gap-1 font-medium text-glob-text peer-disabled:cursor-not-allowed peer-disabled:opacity-50 text-sm",
+  "div relative w-full overflow-hidden rounded-glob-sm bg-glob-surface-hover h-2",
+  "div h-full w-full rounded-glob-sm transition-transform duration-300 ease-out motion-reduce:transition-none bg-glob-primary"
+]

@@ -60,6 +60,11 @@ jobs:
       - name: Check packages (publint, attw, metadata)
         run: pnpm check:packages
 
+      # Type-checks the Svelte package, the Svelte templates and the Svelte docs examples (after the build, which
+      # writes the core and recipes types they import).
+      - name: Check Svelte (svelte-check)
+        run: pnpm check:svelte
+
       # Installs the packed tarballs into fresh Next and Vite apps (outside the repo) and builds them.
       - name: Consumer smoke test (Next and Vite, tarballs)
         run: node scripts/consumer-smoke.mjs

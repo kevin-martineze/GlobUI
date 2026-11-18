@@ -1,0 +1,12 @@
+[
+  "div flex w-full max-w-md flex-col gap-4 text-sm",
+  "p text-glob-text",
+  "div shrink-0 bg-glob-border h-px w-full",
+  "p text-glob-text-secondary",
+  "div flex h-5 items-center gap-3",
+  "a text-glob-primary-text hover:underline",
+  "div shrink-0 bg-glob-border w-px self-stretch",
+  "a text-glob-primary-text hover:underline",
+  "div shrink-0 bg-glob-border w-px self-stretch",
+  "a text-glob-primary-text hover:underline"
+]

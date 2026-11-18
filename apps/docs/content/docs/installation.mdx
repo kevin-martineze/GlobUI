@@ -80,6 +80,9 @@ Replace `button` with any component name. The command for each component is on i
 
 ## Use a component
 
+<Tabs items={["React", "Svelte"]} groupId="framework" persist>
+  <Tab value="React">
+
 ```tsx
 import { Button } from "@glob-ui/button"
 
@@ -87,6 +90,22 @@ export default function Page() {
   return <Button variant="primary">Save</Button>
 }
 ```
+
+  </Tab>
+  <Tab value="Svelte">
+
+```svelte
+<script lang="ts">
+  import { Button } from "@glob-ui/svelte/button"
+</script>
+
+<Button variant="primary">Save</Button>
+```
+
+Svelte uses one package, `@glob-ui/svelte`, with a subpath per component. Its Tailwind setup and the differences from the React API are on the [Svelte](/docs/svelte) page.
+
+  </Tab>
+</Tabs>
 
 ## Why the `@source` line works
 

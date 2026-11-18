@@ -1,0 +1,10 @@
+[
+  "form flex flex-col items-start gap-3",
+  "div flex items-center gap-3",
+  "button group inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent bg-glob-border-strong transition-colors data-[state=checked]:bg-glob-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50 aria-[invalid=true]:border-glob-danger h-6 w-11",
+  "span pointer-events-none block translate-x-0 rounded-full bg-white shadow-glob-sm transition-transform h-5 w-5 group-data-[state=checked]:translate-x-5",
+  "input",
+  "span text-sm",
+  "button rounded-md border border-fd-border px-3 py-1.5 text-sm hover:bg-fd-muted",
+  "p text-sm text-fd-muted-foreground"
+]

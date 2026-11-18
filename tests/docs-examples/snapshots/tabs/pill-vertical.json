@@ -1,0 +1,8 @@
+[
+  "div flex-row flex w-full max-w-md gap-4",
+  "div flex rounded-glob-md border border-glob-border bg-glob-surface-secondary p-0.5 flex-col",
+  "button inline-flex h-9 items-center whitespace-nowrap px-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50 rounded-glob-sm text-glob-text-secondary hover:text-glob-text data-[state=active]:bg-glob-primary data-[state=active]:text-glob-primary-foreground data-[state=active]:shadow-glob-sm justify-start",
+  "button inline-flex h-9 items-center whitespace-nowrap px-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50 rounded-glob-sm text-glob-text-secondary hover:text-glob-text data-[state=active]:bg-glob-primary data-[state=active]:text-glob-primary-foreground data-[state=active]:shadow-glob-sm justify-start",
+  "div text-glob-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring rounded-glob-sm text-sm",
+  "div text-glob-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring rounded-glob-sm text-sm"
+]

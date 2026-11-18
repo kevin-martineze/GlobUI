@@ -1,0 +1,7 @@
+[
+  "div flex w-full max-w-sm items-center gap-4",
+  "div animate-pulse bg-glob-surface-hover motion-reduce:animate-none h-12 w-12 rounded-full",
+  "div flex flex-1 flex-col gap-2",
+  "div animate-pulse rounded-glob-md bg-glob-surface-hover motion-reduce:animate-none h-4 w-3/4",
+  "div animate-pulse rounded-glob-md bg-glob-surface-hover motion-reduce:animate-none h-4 w-1/2"
+]
