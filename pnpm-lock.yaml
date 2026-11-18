@@ -487,6 +487,9 @@ importers:
       '@glob-ui/dialog':
         specifier: workspace:*
         version: link:../dialog
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -846,6 +849,9 @@ importers:
       '@glob-ui/input':
         specifier: workspace:*
         version: link:../input
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/spinner':
         specifier: workspace:*
         version: link:../spinner
@@ -871,6 +877,9 @@ importers:
       '@glob-ui/hooks':
         specifier: workspace:*
         version: link:../hooks
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -1116,6 +1125,9 @@ importers:
       '@glob-ui/hooks':
         specifier: workspace:*
         version: link:../hooks
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/slot':
         specifier: workspace:*
         version: link:../slot
@@ -1207,6 +1219,9 @@ importers:
       '@glob-ui/hooks':
         specifier: workspace:*
         version: link:../hooks
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/slot':
         specifier: workspace:*
         version: link:../slot
@@ -1566,6 +1581,9 @@ importers:
       '@glob-ui/core':
         specifier: workspace:*
         version: link:../core
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -1607,6 +1625,9 @@ importers:
       '@glob-ui/hooks':
         specifier: workspace:*
         version: link:../hooks
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/slot':
         specifier: workspace:*
         version: link:../slot

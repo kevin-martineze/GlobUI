@@ -72,6 +72,9 @@ const svelteApp = makeApp("svelte-consumer", {
   import { Field } from "@glob-ui/svelte/field"
   import { Input } from "@glob-ui/svelte/input"
   import { Checkbox } from "@glob-ui/svelte/checkbox"
+  import { Select } from "@glob-ui/svelte/select"
+  import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@glob-ui/svelte/dropdown-menu"
+  import { Toaster, toast } from "@glob-ui/svelte/toast"
 </script>
 
 <AppShellLayout>
@@ -94,7 +97,15 @@ const svelteApp = makeApp("svelte-consumer", {
     <Input />
   </Field>
   <Checkbox label="Only open orders" />
+  <Select aria-label="Status" options={[{ value: "open", label: "Open" }, { value: "closed", label: "Closed" }]} />
+  <DropdownMenu>
+    <DropdownMenuTrigger>More</DropdownMenuTrigger>
+    <DropdownMenuContent>
+      <DropdownMenuItem onSelect={() => toast.success("Exported")}>Export</DropdownMenuItem>
+    </DropdownMenuContent>
+  </DropdownMenu>
   <Button>Apply</Button>
+  <Toaster />
 </AppShellLayout>
 `,
   },
@@ -225,4 +236,4 @@ for (const [dir, tool] of apps) {
   if (!out) throw new Error(`${dir}: no dist after build`)
 }
 
-log(`OK: AppShellLayout with a Sheet built for Svelte (plus Field, Input, Checkbox, Button), Vue, and Angular 22.2.5 and 21.2.26 (${work})`)
+log(`OK: AppShellLayout with a Sheet built for Svelte (plus Field, Input, Checkbox, Button, Select, DropdownMenu, Toaster), Vue, and Angular 22.2.5 and 21.2.26 (${work})`)

@@ -4,7 +4,7 @@ import { useId, useMemo, useRef, useState } from "react"
 import type { VariantProps } from "class-variance-authority"
 import { cn } from "@glob-ui/utils"
 import { useControllableState, useFloatingPanel, useListbox, isPrintable } from "@glob-ui/hooks"
-import { selectVariants } from "@glob-ui/recipes"
+import { FLOATING_TRANSITION_CLASSES, LISTBOX_CHEVRON_CLASSES, LISTBOX_CHEVRON_OPEN_CLASSES, LISTBOX_CLASSES, LISTBOX_EMPTY_CLASSES, LISTBOX_OPTION_ACTIVE_CLASSES, LISTBOX_OPTION_CLASSES, LISTBOX_OPTION_DISABLED_CLASSES, LISTBOX_OPTION_ENABLED_CLASSES, LISTBOX_OPTION_SELECTED_CLASSES, LISTBOX_PANEL_CLASSES, LISTBOX_SEARCH_INPUT_CLASSES, LISTBOX_SEARCH_WRAPPER_CLASSES, SELECT_PLACEHOLDER_CLASSES, SELECT_RADIO_CHECKED_CLASSES, SELECT_RADIO_CLASSES, SELECT_RADIO_DOT_CLASSES, SELECT_RADIO_UNCHECKED_CLASSES, SELECT_VALUE_CLASSES, selectVariants } from "@glob-ui/recipes"
 
 export interface SelectOption {
   value: string
@@ -178,11 +178,11 @@ export function Select({
           triggerHandlers.onClick()
         }}
         onKeyDown={onTriggerKeyDown}
-        className={cn(selectVariants({ variant, size }), !selected && "text-glob-text-secondary")}
+        className={cn(selectVariants({ variant, size }), !selected && SELECT_PLACEHOLDER_CLASSES)}
       >
-        <span className="truncate">{selected ? selected.label : placeholder}</span>
+        <span className={SELECT_VALUE_CLASSES}>{selected ? selected.label : placeholder}</span>
         <svg
-          className={cn("h-4 w-4 shrink-0 text-glob-text-secondary transition-transform", open && "rotate-180")}
+          className={cn(LISTBOX_CHEVRON_CLASSES, open && LISTBOX_CHEVRON_OPEN_CLASSES)}
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -201,12 +201,12 @@ export function Select({
         style={floatingStyles}
         className={cn(
           // Reset the UA popover box (inset:0 + margin:auto would center it).
-          "m-0 overflow-visible rounded-glob-md border border-glob-border bg-glob-surface text-sm text-glob-text shadow-glob-md outline-none",
-          "opacity-0 transition-[opacity,overlay,display] transition-discrete duration-150 open:opacity-100 starting:open:opacity-0 motion-reduce:transition-none"
+          LISTBOX_PANEL_CLASSES,
+          FLOATING_TRANSITION_CLASSES
         )}
       >
         {searchable && (
-          <div className="border-b border-glob-border p-2">
+          <div className={LISTBOX_SEARCH_WRAPPER_CLASSES}>
             <input
               ref={searchRef}
               type="text"
@@ -219,7 +219,7 @@ export function Select({
               aria-autocomplete="list"
               aria-activedescendant={listbox.activeDescendant}
               autoComplete="off"
-              className="w-full rounded-glob-sm border border-glob-border bg-glob-surface-secondary px-2 py-1.5 text-sm text-glob-text placeholder:text-glob-text-secondary outline-none focus:ring-1 focus:ring-glob-ring"
+              className={LISTBOX_SEARCH_INPUT_CLASSES}
             />
           </div>
         )}
@@ -227,7 +227,7 @@ export function Select({
           id={listId}
           role="listbox"
           aria-labelledby={ariaLabelledBy ?? triggerId}
-          className="relative max-h-60 overflow-y-auto p-1"
+          className={LISTBOX_CLASSES}
         >
           {filtered.map((option) => {
             const isSelected = option.value === current
@@ -248,21 +248,21 @@ export function Select({
                   if (!option.disabled) commit(option.value)
                 }}
                 className={cn(
-                  "flex w-full items-center gap-2 rounded-glob-sm px-2 py-2 text-left text-sm select-none",
-                  option.disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer",
-                  isActive && !option.disabled && "bg-glob-surface-hover",
+                  LISTBOX_OPTION_CLASSES,
+                  option.disabled ? LISTBOX_OPTION_DISABLED_CLASSES : LISTBOX_OPTION_ENABLED_CLASSES,
+                  isActive && !option.disabled && LISTBOX_OPTION_ACTIVE_CLASSES,
                   // The filled indicator shows the selection; the fill colour as text fails contrast on white.
-                  isSelected && "font-medium"
+                  isSelected && LISTBOX_OPTION_SELECTED_CLASSES
                 )}
               >
                 <span
                   aria-hidden="true"
                   className={cn(
-                    "flex h-4 w-4 shrink-0 items-center justify-center rounded-full border transition-colors",
-                    isSelected ? "border-glob-primary bg-glob-primary" : "border-glob-border"
+                    SELECT_RADIO_CLASSES,
+                    isSelected ? SELECT_RADIO_CHECKED_CLASSES : SELECT_RADIO_UNCHECKED_CLASSES
                   )}
                 >
-                  {isSelected && <span className="h-1.5 w-1.5 rounded-full bg-glob-primary-foreground" />}
+                  {isSelected && <span className={SELECT_RADIO_DOT_CLASSES} />}
                 </span>
                 <span>{option.label}</span>
               </div>
@@ -270,7 +270,7 @@ export function Select({
           })}
         </div>
         {filtered.length === 0 && (
-          <div role="status" className="px-3 py-4 text-center text-sm text-glob-text-secondary">
+          <div role="status" className={LISTBOX_EMPTY_CLASSES}>
             No results found
           </div>
         )}

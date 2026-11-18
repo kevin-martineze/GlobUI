@@ -6,6 +6,7 @@ import { matchesSearch, normalizeText } from "@glob-ui/core"
 import { useControllableState, useFloatingPanel, useListbox, isPrintable } from "@glob-ui/hooks"
 import { inputVariants } from "@glob-ui/input"
 import { Spinner } from "@glob-ui/spinner"
+import { COMBOBOX_CLEAR_CLASSES, COMBOBOX_DESCRIPTION_CLASSES, COMBOBOX_EMPTY_CLASSES, COMBOBOX_INPUT_CLASSES, COMBOBOX_LISTBOX_CLASSES, COMBOBOX_LOADING_CLASSES, COMBOBOX_MARK_CLASSES, COMBOBOX_OPTION_CLASSES, COMBOBOX_STATUS_CLASSES, COMBOBOX_TOGGLE_CLASSES, COMBOBOX_TOGGLE_ICON_CLASSES, FLOATING_TRANSITION_CLASSES, LISTBOX_CHEVRON_OPEN_CLASSES, LISTBOX_OPTION_ACTIVE_CLASSES, LISTBOX_OPTION_DISABLED_CLASSES, LISTBOX_OPTION_SELECTED_CLASSES, LISTBOX_PANEL_CLASSES } from "@glob-ui/recipes"
 
 export interface ComboboxOption {
   value: string
@@ -61,7 +62,7 @@ function highlight(label: string, query: string) {
   return (
     <>
       {label.slice(0, index)}
-      <mark className="bg-transparent font-semibold text-glob-text">{label.slice(index, index + q.length)}</mark>
+      <mark className={COMBOBOX_MARK_CLASSES}>{label.slice(index, index + q.length)}</mark>
       {label.slice(index + q.length)}
     </>
   )
@@ -255,7 +256,7 @@ export function Combobox({
           }}
           onKeyDown={onKeyDown}
           onBlur={onBlur}
-          className={cn(inputVariants({ size }), "pr-16")}
+          className={cn(inputVariants({ size }), COMBOBOX_INPUT_CLASSES)}
         />
         {clearable && hasText && !disabled && (
           <button
@@ -264,7 +265,7 @@ export function Combobox({
             // Keep focus in the input while clicking.
             onMouseDown={(e) => e.preventDefault()}
             onClick={clear}
-            className="absolute right-8 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-glob-sm text-glob-text-secondary hover:bg-glob-surface-hover hover:text-glob-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring"
+            className={COMBOBOX_CLEAR_CLASSES}
           >
             <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3.5 w-3.5">
               <path d="M18 6L6 18M6 6l12 12" />
@@ -282,7 +283,7 @@ export function Combobox({
             else openList(selected)
             inputRef.current?.focus()
           }}
-          className="absolute right-2 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center text-glob-text-secondary disabled:opacity-50"
+          className={COMBOBOX_TOGGLE_CLASSES}
         >
           <svg
             aria-hidden="true"
@@ -290,7 +291,7 @@ export function Combobox({
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
-            className={cn("h-4 w-4 transition-transform", open && "rotate-180")}
+            className={cn(COMBOBOX_TOGGLE_ICON_CLASSES, open && LISTBOX_CHEVRON_OPEN_CLASSES)}
           >
             <path d="M6 9l6 6 6-6" />
           </svg>
@@ -305,11 +306,11 @@ export function Combobox({
         style={floatingStyles}
         className={cn(
           // Reset the UA popover box (inset:0 + margin:auto would center it).
-          "m-0 overflow-visible rounded-glob-md border border-glob-border bg-glob-surface text-sm text-glob-text shadow-glob-md outline-none",
-          "opacity-0 transition-[opacity,overlay,display] transition-discrete duration-150 open:opacity-100 starting:open:opacity-0 motion-reduce:transition-none"
+          LISTBOX_PANEL_CLASSES,
+          FLOATING_TRANSITION_CLASSES
         )}
       >
-        <div id={listId} role="listbox" aria-labelledby={ariaLabelledBy ?? inputId} className="max-h-60 overflow-y-auto p-1">
+        <div id={listId} role="listbox" aria-labelledby={ariaLabelledBy ?? inputId} className={COMBOBOX_LISTBOX_CLASSES}>
           {rows.map((row) => {
             const isSelected = row.key !== CUSTOM_KEY && row.key === selected
             const isActive = listbox.activeKey === row.key
@@ -329,10 +330,10 @@ export function Combobox({
                   if (!row.disabled) commitRow(row)
                 }}
                 className={cn(
-                  "flex w-full cursor-pointer items-center gap-2 rounded-glob-sm px-2 py-2 text-left text-sm select-none",
-                  row.disabled && "cursor-not-allowed opacity-50",
-                  isActive && !row.disabled && "bg-glob-surface-hover",
-                  isSelected && "font-medium"
+                  COMBOBOX_OPTION_CLASSES,
+                  row.disabled && LISTBOX_OPTION_DISABLED_CLASSES,
+                  isActive && !row.disabled && LISTBOX_OPTION_ACTIVE_CLASSES,
+                  isSelected && LISTBOX_OPTION_SELECTED_CLASSES
                 )}
               >
                 <span className="min-w-0 flex-1">
@@ -340,7 +341,7 @@ export function Combobox({
                     {isCustom ? `Use "${row.label}"` : highlight(row.label, query)}
                   </span>
                   {row.option?.description && (
-                    <span className="block truncate text-xs text-glob-text-secondary">{row.option.description}</span>
+                    <span className={COMBOBOX_DESCRIPTION_CLASSES}>{row.option.description}</span>
                   )}
                 </span>
               </div>
@@ -348,14 +349,14 @@ export function Combobox({
           })}
         </div>
         {/* Always mounted, so screen readers hear loading and empty states as they appear. */}
-        <div role="status" aria-live="polite" className="empty:hidden">
+        <div role="status" aria-live="polite" className={COMBOBOX_STATUS_CLASSES}>
           {loading ? (
-            <div className="flex items-center gap-2 px-3 py-3 text-sm text-glob-text-secondary">
+            <div className={COMBOBOX_LOADING_CLASSES}>
               <Spinner size="sm" aria-hidden="true" />
               <span>Loading…</span>
             </div>
           ) : rows.length === 0 ? (
-            <div className="px-3 py-3 text-sm text-glob-text-secondary">{emptyMessage}</div>
+            <div className={COMBOBOX_EMPTY_CLASSES}>{emptyMessage}</div>
           ) : null}
         </div>
       </div>

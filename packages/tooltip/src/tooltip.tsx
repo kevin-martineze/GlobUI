@@ -4,6 +4,7 @@ import { Children, isValidElement, useCallback, useEffect, useId, useRef, useSta
 import { cn } from "@glob-ui/utils"
 import { Slot } from "@glob-ui/slot"
 import { useFloatingPanel, type Placement } from "@glob-ui/hooks"
+import { TOOLTIP_ARROW_CLASSES, TOOLTIP_CLASSES, TOOLTIP_TRANSITION_CLASSES } from "@glob-ui/recipes"
 
 const oppositeSide = { top: "bottom", right: "left", bottom: "top", left: "right" } as const
 
@@ -111,8 +112,8 @@ function Tooltip({
         onPointerEnter={() => clearTimeout(timer.current)}
         onPointerLeave={() => hide(closeDelay)}
         className={cn(
-          "m-0 overflow-visible rounded-glob-sm border-0 bg-glob-text px-2 py-1 text-xs text-glob-surface shadow-glob-md",
-          "opacity-0 transition-[opacity,overlay,display] transition-discrete duration-100 open:opacity-100 starting:open:opacity-0 motion-reduce:transition-none",
+          TOOLTIP_CLASSES,
+          TOOLTIP_TRANSITION_CLASSES,
           className
         )}
       >
@@ -121,7 +122,7 @@ function Tooltip({
           <div
             ref={setArrowEl}
             aria-hidden="true"
-            className="absolute h-2 w-2 rotate-45 bg-glob-text"
+            className={TOOLTIP_ARROW_CLASSES}
             style={{
               left: arrowData?.x != null ? `${arrowData.x}px` : undefined,
               top: arrowData?.y != null ? `${arrowData.y}px` : undefined,

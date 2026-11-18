@@ -9,11 +9,12 @@ import angular from "angular-eslint";
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
-  // Svelte and Vue single-file components: the framework rules, and TypeScript in <script lang="ts">.
+  // Svelte and Vue single-file components: the framework rules, and TypeScript in <script lang="ts">. Svelte modules
+  // that use runes (*.svelte.ts) go through the Svelte parser too, so they need the TypeScript parser as well.
   ...svelte.configs["flat/recommended"],
   ...vue.configs["flat/recommended"],
   {
-    files: ["**/*.svelte", "**/*.vue"],
+    files: ["**/*.svelte", "**/*.svelte.ts", "**/*.vue"],
     languageOptions: { parserOptions: { parser: tseslint.parser } },
   },
   // The Angular package: the Angular rules for components, directives and their templates.

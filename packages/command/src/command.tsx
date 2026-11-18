@@ -5,6 +5,7 @@ import { cn } from "@glob-ui/utils"
 import { matchesSearch } from "@glob-ui/core"
 import { useControllableState, useListbox } from "@glob-ui/hooks"
 import { Dialog, DialogContentBase, DialogTitle } from "@glob-ui/dialog"
+import { COMMAND_CLASSES, COMMAND_DIALOG_CLASSES, COMMAND_EMPTY_CLASSES, COMMAND_GROUP_CLASSES, COMMAND_GROUP_HEADING_CLASSES, COMMAND_INPUT_CLASSES, COMMAND_INPUT_WRAPPER_CLASSES, COMMAND_ITEM_CLASSES, COMMAND_LIST_CLASSES, COMMAND_SEARCH_ICON_CLASSES, COMMAND_SEPARATOR_CLASSES, COMMAND_SHORTCUT_CLASSES, LISTBOX_OPTION_ACTIVE_CLASSES, LISTBOX_OPTION_DISABLED_CLASSES } from "@glob-ui/recipes"
 
 /** One item as the root knows it. Items register themselves; the root decides what is visible. */
 interface Entry {
@@ -143,7 +144,7 @@ const Command = forwardRef<HTMLDivElement, CommandProps>(
 
     return (
       <CommandContext.Provider value={ctx}>
-        <div ref={ref} className={cn("flex min-h-0 flex-col overflow-hidden text-glob-text", className)} {...props}>
+        <div ref={ref} className={cn(COMMAND_CLASSES, className)} {...props}>
           {children}
         </div>
       </CommandContext.Provider>
@@ -182,8 +183,8 @@ const CommandInput = forwardRef<HTMLInputElement, CommandInputProps>(({ classNam
   }
 
   return (
-    <div className="flex items-center gap-2 border-b border-glob-border px-3">
-      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4 shrink-0 text-glob-text-secondary">
+    <div className={COMMAND_INPUT_WRAPPER_CLASSES}>
+      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={COMMAND_SEARCH_ICON_CLASSES}>
         <circle cx="11" cy="11" r="7" />
         <path d="M20 20l-4-4" />
       </svg>
@@ -210,7 +211,7 @@ const CommandInput = forwardRef<HTMLInputElement, CommandInputProps>(({ classNam
           if (!e.defaultPrevented) handleKeyDown(e)
         }}
         className={cn(
-          "h-11 w-full min-w-0 bg-transparent text-sm text-glob-text placeholder:text-glob-text-secondary outline-none",
+          COMMAND_INPUT_CLASSES,
           className
         )}
       />
@@ -229,7 +230,7 @@ const CommandList = forwardRef<HTMLDivElement, CommandListProps>(({ className, .
       id={ctx.listId}
       role="listbox"
       aria-label={ctx.label}
-      className={cn("max-h-80 overflow-y-auto overscroll-contain p-1", className)}
+      className={cn(COMMAND_LIST_CLASSES, className)}
       {...props}
     />
   )
@@ -243,7 +244,7 @@ const CommandEmpty = forwardRef<HTMLDivElement, CommandEmptyProps>(({ className,
   const ctx = useCommandContext("CommandEmpty")
   if (ctx.listItems.length > 0) return null
   return (
-    <div ref={ref} role="status" className={cn("px-3 py-6 text-center text-sm text-glob-text-secondary", className)} {...props}>
+    <div ref={ref} role="status" className={cn(COMMAND_EMPTY_CLASSES, className)} {...props}>
       {children ?? "No results."}
     </div>
   )
@@ -262,9 +263,9 @@ const CommandGroup = forwardRef<HTMLDivElement, CommandGroupProps>(({ heading, c
   const headingId = `${groupId}-heading`
   const anyVisible = ctx.listItems.some((item) => item.groupId === groupId)
   return (
-    <div ref={ref} role="group" aria-labelledby={heading ? headingId : undefined} hidden={!anyVisible} className={cn("py-1", className)} {...props}>
+    <div ref={ref} role="group" aria-labelledby={heading ? headingId : undefined} hidden={!anyVisible} className={cn(COMMAND_GROUP_CLASSES, className)} {...props}>
       {heading && (
-        <div id={headingId} className="px-2 py-1.5 text-xs font-medium text-glob-text-secondary">
+        <div id={headingId} className={COMMAND_GROUP_HEADING_CLASSES}>
           {heading}
         </div>
       )}
@@ -346,9 +347,9 @@ const CommandItem = forwardRef<HTMLDivElement, CommandItemProps>(
           if (!disabled && !e.defaultPrevented) select()
         }}
         className={cn(
-          "flex cursor-pointer select-none items-center gap-2 rounded-glob-sm px-2 py-2 text-sm text-glob-text",
-          isActive && !disabled && "bg-glob-surface-hover",
-          disabled && "cursor-not-allowed opacity-50",
+          COMMAND_ITEM_CLASSES,
+          isActive && !disabled && LISTBOX_OPTION_ACTIVE_CLASSES,
+          disabled && LISTBOX_OPTION_DISABLED_CLASSES,
           className
         )}
         {...props}
@@ -365,7 +366,7 @@ export type CommandSeparatorProps = React.HTMLAttributes<HTMLDivElement>
 /** A rule between groups. Hidden while the user is searching. */
 const CommandSeparator = forwardRef<HTMLDivElement, CommandSeparatorProps>(({ className, ...props }, ref) => {
   const ctx = useCommandContext("CommandSeparator")
-  return <div ref={ref} role="none" hidden={ctx.search !== ""} className={cn("my-1 h-px bg-glob-border", className)} {...props} />
+  return <div ref={ref} role="none" hidden={ctx.search !== ""} className={cn(COMMAND_SEPARATOR_CLASSES, className)} {...props} />
 })
 CommandSeparator.displayName = "CommandSeparator"
 
@@ -373,7 +374,7 @@ export type CommandShortcutProps = React.HTMLAttributes<HTMLSpanElement>
 
 /** A keyboard hint on the right of an item. Hidden from assistive technology: put the shortcut in the item's text if it matters. */
 const CommandShortcut = forwardRef<HTMLSpanElement, CommandShortcutProps>(({ className, ...props }, ref) => (
-  <span ref={ref} aria-hidden="true" className={cn("ml-auto text-xs tracking-widest text-glob-text-secondary", className)} {...props} />
+  <span ref={ref} aria-hidden="true" className={cn(COMMAND_SHORTCUT_CLASSES, className)} {...props} />
 ))
 CommandShortcut.displayName = "CommandShortcut"
 
@@ -432,7 +433,7 @@ function CommandDialog({
   return (
     <Dialog open={isOpen} onOpenChange={setOpen}>
       {/* open:flex, not flex: a closed dialog must keep the browser default (display: none), or it renders as a stray line. */}
-      <DialogContentBase className="m-auto open:flex max-h-[min(70dvh,32rem)] w-[calc(100%-2rem)] max-w-lg flex-col overflow-hidden rounded-glob-lg border border-glob-border bg-glob-surface p-0 text-glob-text shadow-glob-md backdrop:bg-glob-overlay">
+      <DialogContentBase className={COMMAND_DIALOG_CLASSES}>
         <DialogTitle className="sr-only">{label}</DialogTitle>
         {/* Mounted only while open, so every opening starts with an empty search. */}
         {isOpen && (

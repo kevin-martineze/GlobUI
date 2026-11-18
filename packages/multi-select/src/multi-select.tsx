@@ -3,6 +3,7 @@
 import { useCallback, useId, useMemo, useRef, useState } from "react"
 import { cn } from "@glob-ui/utils"
 import { useControllableState, useFloatingPanel, useListbox, isPrintable } from "@glob-ui/hooks"
+import { FLOATING_TRANSITION_CLASSES, LISTBOX_CHEVRON_OPEN_CLASSES, LISTBOX_CLASSES, LISTBOX_EMPTY_CLASSES, LISTBOX_OPTION_ACTIVE_CLASSES, LISTBOX_OPTION_CLASSES, LISTBOX_OPTION_DISABLED_CLASSES, LISTBOX_OPTION_ENABLED_CLASSES, LISTBOX_PANEL_CLASSES, LISTBOX_SEARCH_INPUT_CLASSES, LISTBOX_SEARCH_WRAPPER_CLASSES, MULTI_SELECT_CHECK_CHECKED_CLASSES, MULTI_SELECT_CHECK_CLASSES, MULTI_SELECT_CHEVRON_CLASSES, MULTI_SELECT_CHIP_CLASSES, MULTI_SELECT_CHIP_REMOVE_CLASSES, MULTI_SELECT_COMBO_CLASSES, MULTI_SELECT_TRIGGER_CLASSES, SELECT_PLACEHOLDER_CLASSES, SELECT_RADIO_UNCHECKED_CLASSES, MULTI_SELECT_CHIP_SIZE, MULTI_SELECT_TRIGGER_SIZE } from "@glob-ui/recipes"
 
 export interface MultiSelectOption {
   value: string
@@ -30,18 +31,6 @@ export interface MultiSelectProps
   /** Maximum number of selected options. Further options are disabled until one is removed. */
   max?: number
   className?: string
-}
-
-const triggerSizeStyles = {
-  sm: "min-h-8 text-xs",
-  md: "min-h-10 text-sm",
-  lg: "min-h-12 text-base",
-}
-
-const chipSizeStyles = {
-  sm: "h-6 text-xs",
-  md: "h-7 text-sm",
-  lg: "h-8 text-sm",
 }
 
 export function MultiSelect({
@@ -178,17 +167,17 @@ export function MultiSelect({
     <div className={cn("relative", className)}>
       <div
         className={cn(
-          "flex w-full flex-wrap items-center gap-1.5 rounded-glob-md border border-glob-border bg-glob-surface px-3 py-1.5 text-sm transition-colors focus-within:ring-2 focus-within:ring-glob-ring has-[[aria-invalid=true]]:border-glob-danger has-[[aria-invalid=true]]:focus-within:ring-glob-danger",
-          disabled && "cursor-not-allowed opacity-50",
-          triggerSizeStyles[size]
+          MULTI_SELECT_TRIGGER_CLASSES,
+          disabled && LISTBOX_OPTION_DISABLED_CLASSES,
+          MULTI_SELECT_TRIGGER_SIZE[size]
         )}
       >
         {selectedItems.map((item) => (
           <span
             key={item.value}
             className={cn(
-              "inline-flex items-center gap-1 rounded-glob-sm bg-glob-primary-light px-2 text-glob-primary-text",
-              chipSizeStyles[size]
+              MULTI_SELECT_CHIP_CLASSES,
+              MULTI_SELECT_CHIP_SIZE[size]
             )}
           >
             {item.label}
@@ -197,7 +186,7 @@ export function MultiSelect({
               aria-label={`Remove ${item.label}`}
               disabled={disabled}
               onClick={() => removeChip(item.value)}
-              className="inline-flex rounded-glob-sm hover:text-glob-primary-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed"
+              className={MULTI_SELECT_CHIP_REMOVE_CLASSES}
             >
               <svg className="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                 <path d="M18 6L6 18M6 6l12 12" />
@@ -229,11 +218,11 @@ export function MultiSelect({
             triggerHandlers.onClick()
           }}
           onKeyDown={onComboKeyDown}
-          className="flex min-h-6 min-w-16 flex-1 cursor-pointer items-center justify-between gap-2 outline-none"
+          className={MULTI_SELECT_COMBO_CLASSES}
         >
-          {selectedItems.length === 0 ? <span className="text-glob-text-secondary">{placeholder}</span> : <span className="sr-only">{selectedItems.length} selected</span>}
+          {selectedItems.length === 0 ? <span className={SELECT_PLACEHOLDER_CLASSES}>{placeholder}</span> : <span className="sr-only">{selectedItems.length} selected</span>}
           <svg
-            className={cn("ml-auto h-4 w-4 shrink-0 text-glob-text-secondary transition-transform", open && "rotate-180")}
+            className={cn(MULTI_SELECT_CHEVRON_CLASSES, open && LISTBOX_CHEVRON_OPEN_CLASSES)}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -253,12 +242,12 @@ export function MultiSelect({
         popover="auto"
         style={floatingStyles}
         className={cn(
-          "m-0 overflow-visible rounded-glob-md border border-glob-border bg-glob-surface text-sm text-glob-text shadow-glob-md outline-none",
-          "opacity-0 transition-[opacity,overlay,display] transition-discrete duration-150 open:opacity-100 starting:open:opacity-0 motion-reduce:transition-none"
+          LISTBOX_PANEL_CLASSES,
+          FLOATING_TRANSITION_CLASSES
         )}
       >
         {searchable && (
-          <div className="border-b border-glob-border p-2">
+          <div className={LISTBOX_SEARCH_WRAPPER_CLASSES}>
             <input
               ref={searchRef}
               type="text"
@@ -271,7 +260,7 @@ export function MultiSelect({
               aria-autocomplete="list"
               aria-activedescendant={listbox.activeDescendant}
               autoComplete="off"
-              className="w-full rounded-glob-sm border border-glob-border bg-glob-surface-secondary px-2 py-1.5 text-sm text-glob-text placeholder:text-glob-text-secondary outline-none focus:ring-1 focus:ring-glob-ring"
+              className={LISTBOX_SEARCH_INPUT_CLASSES}
             />
           </div>
         )}
@@ -280,7 +269,7 @@ export function MultiSelect({
           role="listbox"
           aria-multiselectable="true"
           aria-labelledby={ariaLabelledBy ?? id}
-          className="relative max-h-60 overflow-y-auto p-1"
+          className={LISTBOX_CLASSES}
         >
           {filtered.map((option) => {
             const isSelected = current.includes(option.value)
@@ -301,17 +290,17 @@ export function MultiSelect({
                   if (!isDisabled) toggle(option.value)
                 }}
                 className={cn(
-                  "flex w-full items-center gap-2 rounded-glob-sm px-2 py-2 text-left text-sm select-none",
-                  isDisabled ? "cursor-not-allowed opacity-50" : "cursor-pointer",
-                  isActive && !isDisabled && "bg-glob-surface-hover",
+                  LISTBOX_OPTION_CLASSES,
+                  isDisabled ? LISTBOX_OPTION_DISABLED_CLASSES : LISTBOX_OPTION_ENABLED_CLASSES,
+                  isActive && !isDisabled && LISTBOX_OPTION_ACTIVE_CLASSES,
                   // The check mark shows the selection; the fill colour as text fails contrast on white.
                 )}
               >
                 <span
                   aria-hidden="true"
                   className={cn(
-                    "flex h-4 w-4 shrink-0 items-center justify-center rounded-sm border transition-colors",
-                    isSelected ? "border-glob-primary bg-glob-primary text-glob-primary-foreground" : "border-glob-border"
+                    MULTI_SELECT_CHECK_CLASSES,
+                    isSelected ? MULTI_SELECT_CHECK_CHECKED_CLASSES : SELECT_RADIO_UNCHECKED_CLASSES
                   )}
                 >
                   {isSelected && (
@@ -326,7 +315,7 @@ export function MultiSelect({
           })}
         </div>
         {filtered.length === 0 && (
-          <div role="status" className="px-3 py-4 text-center text-sm text-glob-text-secondary">
+          <div role="status" className={LISTBOX_EMPTY_CLASSES}>
             No results found
           </div>
         )}

@@ -127,3 +127,90 @@ export interface AvatarGroupContext {
 export function getAvatarGroupContext(): AvatarGroupContext | undefined {
   return getContext<AvatarGroupContext | undefined>(AVATAR_GROUP_KEY)
 }
+
+// Phase 10d-2: overlays.
+export const POPOVER_KEY = Symbol("glob-ui-popover")
+export const MENU_KEY = Symbol("glob-ui-dropdown-menu")
+export const MENU_RADIO_GROUP_KEY = Symbol("glob-ui-dropdown-menu-radio-group")
+export const COMMAND_KEY = Symbol("glob-ui-command")
+export const COMMAND_GROUP_KEY = Symbol("glob-ui-command-group")
+
+/** Shared by Popover and DropdownMenu: the panel, its ids, and the open state. */
+export interface FloatingContext {
+  readonly open: boolean
+  setOpen(open: boolean): void
+  readonly triggerId: string
+  readonly contentId: string
+  readonly panel: import("./floating.svelte").FloatingPanel
+}
+
+export function getPopoverContext(part: string): FloatingContext {
+  const ctx = getContext<FloatingContext | undefined>(POPOVER_KEY)
+  if (!ctx) throw new Error(`${part} must be used inside Popover`)
+  return ctx
+}
+
+export type MenuFocusIntent = "first" | "last" | "content"
+
+export interface MenuContext extends FloatingContext {
+  /** Opens the menu and chooses what receives focus once it is shown. */
+  openWith(intent: MenuFocusIntent): void
+}
+
+export function getMenuContext(part: string): MenuContext {
+  const ctx = getContext<MenuContext | undefined>(MENU_KEY)
+  if (!ctx) throw new Error(`${part} must be used inside DropdownMenu`)
+  return ctx
+}
+
+export interface MenuRadioGroupContext {
+  readonly value: string | undefined
+  setValue(value: string): void
+}
+
+export function getMenuRadioGroupContext(): MenuRadioGroupContext {
+  const ctx = getContext<MenuRadioGroupContext | undefined>(MENU_RADIO_GROUP_KEY)
+  if (!ctx) throw new Error("DropdownMenuRadioItem must be used inside DropdownMenuRadioGroup")
+  return ctx
+}
+
+/** One Command item as the root knows it. Items register themselves; the root decides what is visible. */
+export interface CommandEntry {
+  id: string
+  value: string
+  keywords: string[]
+  disabled: boolean
+  groupId?: string
+  getElement(): HTMLElement | null
+  select(): void
+}
+
+export interface CommandContext {
+  readonly search: string
+  setSearch(next: string): void
+  /** Visible items in DOM order. Disabled ones are included and skipped by the keyboard. */
+  readonly listItems: CommandEntry[]
+  isVisible(value: string, keywords: string[]): boolean
+  register(entry: CommandEntry): () => void
+  readonly activeKey: string | null
+  setActiveKey(key: string | null): void
+  readonly activeDescendant: string | undefined
+  optionId(id: string): string
+  /** Keyboard handling for the search field: arrows, Home, End, Enter. */
+  onInputKeyDown(e: KeyboardEvent): void
+  readonly listId: string
+  readonly inputId: string
+  readonly label: string
+  /** Runs after an item's onSelect: CommandDialog closes itself here. */
+  itemSelect(): void
+}
+
+export function getCommandContext(part: string): CommandContext {
+  const ctx = getContext<CommandContext | undefined>(COMMAND_KEY)
+  if (!ctx) throw new Error(`${part} must be used inside Command`)
+  return ctx
+}
+
+export function getCommandGroupId(): string | undefined {
+  return getContext<string | undefined>(COMMAND_GROUP_KEY)
+}

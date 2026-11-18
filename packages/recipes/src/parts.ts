@@ -135,3 +135,129 @@ export const SEGMENTED_ITEM_CLASSES =
 export const SEGMENTED_ITEM_SIZE = { sm: "h-8 text-xs px-3", md: "h-10 text-sm px-4", lg: "h-12 text-base px-5" } as const
 export const SEGMENTED_ITEM_CHECKED_CLASSES = "bg-glob-primary text-glob-primary-foreground shadow-sm"
 export const SEGMENTED_ITEM_UNCHECKED_CLASSES = "text-glob-text-secondary hover:text-glob-text"
+
+// Phase 10d-2: overlays.
+
+// Floating panels (Popover, DropdownMenu, Select, Combobox, MultiSelect): fade with the popover's open state.
+export const FLOATING_TRANSITION_CLASSES =
+  "opacity-0 transition-[opacity,overlay,display] transition-discrete duration-150 open:opacity-100 starting:open:opacity-0 motion-reduce:transition-none"
+
+// Popover. The m-0 resets the UA popover box (inset:0 + margin:auto would center it).
+export const POPOVER_CONTENT_CLASSES =
+  "m-0 overflow-auto rounded-glob-md border border-glob-border bg-glob-surface p-4 text-sm text-glob-text shadow-glob-md outline-none"
+
+// Tooltip
+export const TOOLTIP_CLASSES = "m-0 overflow-visible rounded-glob-sm border-0 bg-glob-text px-2 py-1 text-xs text-glob-surface shadow-glob-md"
+export const TOOLTIP_TRANSITION_CLASSES =
+  "opacity-0 transition-[opacity,overlay,display] transition-discrete duration-100 open:opacity-100 starting:open:opacity-0 motion-reduce:transition-none"
+export const TOOLTIP_ARROW_CLASSES = "absolute h-2 w-2 rotate-45 bg-glob-text"
+
+// DropdownMenu
+export const MENU_CONTENT_CLASSES =
+  "m-0 min-w-[8rem] overflow-auto rounded-glob-md border border-glob-border bg-glob-surface p-1 text-sm text-glob-text shadow-glob-md outline-none"
+export const MENU_ITEM_INDICATOR_CLASSES = "absolute left-2 flex h-4 w-4 items-center justify-center"
+export const MENU_CHECK_ICON_CLASSES = "h-3.5 w-3.5"
+export const MENU_RADIO_DOT_CLASSES = "h-2 w-2 rounded-full bg-current"
+export const MENU_LABEL_CLASSES = "px-2 py-1.5 text-xs font-medium text-glob-text-secondary"
+export const MENU_LABEL_INSET_CLASSES = "pl-8"
+export const MENU_SEPARATOR_CLASSES = "-mx-1 my-1 h-px bg-glob-border"
+export const MENU_SHORTCUT_CLASSES = "ml-auto pl-4 text-xs tracking-widest text-glob-text-secondary"
+
+// AlertDialog
+export const ALERT_DIALOG_BODY_CLASSES = "relative flex max-h-[calc(100dvh-2rem)] flex-col gap-4 overflow-y-auto p-6"
+
+// Toast. The container ignores the pointer; the list and its toasts do not.
+export const TOASTER_CLASSES =
+  "pointer-events-none fixed inset-auto m-0 w-full max-w-sm overflow-visible border-0 bg-transparent p-4"
+export const TOASTER_TRANSITION_CLASSES = "transition-[display,overlay] transition-discrete duration-200"
+export const TOASTER_POSITION_CLASSES = {
+  "top-left": "top-0 left-0",
+  "top-center": "top-0 left-1/2 -translate-x-1/2",
+  "top-right": "top-0 right-0",
+  "bottom-left": "bottom-0 left-0",
+  "bottom-center": "bottom-0 left-1/2 -translate-x-1/2",
+  "bottom-right": "bottom-0 right-0",
+} as const
+export const TOAST_LIST_CLASSES = "pointer-events-auto flex flex-col gap-2"
+export const TOAST_CLASSES = "items-start pr-10 shadow-glob-md"
+export const TOAST_TRANSITION_CLASSES = "transition-[opacity,translate] transition-discrete duration-200 ease-out"
+export const TOAST_ENTER_FROM = { top: "starting:-translate-y-2", bottom: "starting:translate-y-2" } as const
+export const TOAST_FADE_CLASSES = "starting:opacity-0 data-leaving:opacity-0 motion-reduce:transition-none"
+export const TOAST_BODY_CLASSES = "flex min-w-0 flex-1 flex-col gap-1"
+export const TOAST_TITLE_CLASSES = "font-medium leading-5"
+export const TOAST_DESCRIPTION_CLASSES = "leading-5 text-glob-text-secondary"
+export const TOAST_ACTION_CLASSES =
+  "mt-1 self-start rounded-glob-sm border border-glob-border bg-glob-surface px-2 py-1 text-xs font-medium text-glob-text hover:bg-glob-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring"
+export const TOAST_CLOSE_CLASSES =
+  "absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-glob-sm text-glob-text-secondary hover:bg-glob-surface-hover hover:text-glob-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring"
+export const TOAST_CLOSE_ICON_CLASSES = "h-3.5 w-3.5"
+
+// Listboxes (Select, Combobox, MultiSelect)
+export const LISTBOX_PANEL_CLASSES =
+  "m-0 overflow-visible rounded-glob-md border border-glob-border bg-glob-surface text-sm text-glob-text shadow-glob-md outline-none"
+export const LISTBOX_SEARCH_WRAPPER_CLASSES = "border-b border-glob-border p-2"
+export const LISTBOX_SEARCH_INPUT_CLASSES =
+  "w-full rounded-glob-sm border border-glob-border bg-glob-surface-secondary px-2 py-1.5 text-sm text-glob-text placeholder:text-glob-text-secondary outline-none focus:ring-1 focus:ring-glob-ring"
+export const LISTBOX_CLASSES = "relative max-h-60 overflow-y-auto p-1"
+export const LISTBOX_EMPTY_CLASSES = "px-3 py-4 text-center text-sm text-glob-text-secondary"
+export const LISTBOX_OPTION_CLASSES = "flex w-full items-center gap-2 rounded-glob-sm px-2 py-2 text-left text-sm select-none"
+export const LISTBOX_OPTION_ENABLED_CLASSES = "cursor-pointer"
+export const LISTBOX_OPTION_DISABLED_CLASSES = "cursor-not-allowed opacity-50"
+export const LISTBOX_OPTION_ACTIVE_CLASSES = "bg-glob-surface-hover"
+export const LISTBOX_OPTION_SELECTED_CLASSES = "font-medium"
+export const LISTBOX_CHEVRON_CLASSES = "h-4 w-4 shrink-0 text-glob-text-secondary transition-transform"
+export const LISTBOX_CHEVRON_OPEN_CLASSES = "rotate-180"
+
+// Select
+export const SELECT_PLACEHOLDER_CLASSES = "text-glob-text-secondary"
+export const SELECT_VALUE_CLASSES = "truncate"
+export const SELECT_RADIO_CLASSES = "flex h-4 w-4 shrink-0 items-center justify-center rounded-full border transition-colors"
+export const SELECT_RADIO_CHECKED_CLASSES = "border-glob-primary bg-glob-primary"
+export const SELECT_RADIO_UNCHECKED_CLASSES = "border-glob-border"
+export const SELECT_RADIO_DOT_CLASSES = "h-1.5 w-1.5 rounded-full bg-glob-primary-foreground"
+
+// Combobox
+export const COMBOBOX_INPUT_CLASSES = "pr-16"
+export const COMBOBOX_CLEAR_CLASSES =
+  "absolute right-8 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-glob-sm text-glob-text-secondary hover:bg-glob-surface-hover hover:text-glob-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring"
+export const COMBOBOX_TOGGLE_CLASSES =
+  "absolute right-2 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center text-glob-text-secondary disabled:opacity-50"
+export const COMBOBOX_TOGGLE_ICON_CLASSES = "h-4 w-4 transition-transform"
+export const COMBOBOX_LISTBOX_CLASSES = "max-h-60 overflow-y-auto p-1"
+export const COMBOBOX_OPTION_CLASSES =
+  "flex w-full cursor-pointer items-center gap-2 rounded-glob-sm px-2 py-2 text-left text-sm select-none"
+export const COMBOBOX_MARK_CLASSES = "bg-transparent font-semibold text-glob-text"
+export const COMBOBOX_DESCRIPTION_CLASSES = "block truncate text-xs text-glob-text-secondary"
+export const COMBOBOX_STATUS_CLASSES = "empty:hidden"
+export const COMBOBOX_LOADING_CLASSES = "flex items-center gap-2 px-3 py-3 text-sm text-glob-text-secondary"
+export const COMBOBOX_EMPTY_CLASSES = "px-3 py-3 text-sm text-glob-text-secondary"
+
+// MultiSelect
+export const MULTI_SELECT_TRIGGER_CLASSES =
+  "flex w-full flex-wrap items-center gap-1.5 rounded-glob-md border border-glob-border bg-glob-surface px-3 py-1.5 text-sm transition-colors focus-within:ring-2 focus-within:ring-glob-ring has-[[aria-invalid=true]]:border-glob-danger has-[[aria-invalid=true]]:focus-within:ring-glob-danger"
+export const MULTI_SELECT_TRIGGER_SIZE = { sm: "min-h-8 text-xs", md: "min-h-10 text-sm", lg: "min-h-12 text-base" } as const
+export const MULTI_SELECT_CHIP_CLASSES = "inline-flex items-center gap-1 rounded-glob-sm bg-glob-primary-light px-2 text-glob-primary-text"
+export const MULTI_SELECT_CHIP_SIZE = { sm: "h-6 text-xs", md: "h-7 text-sm", lg: "h-8 text-sm" } as const
+export const MULTI_SELECT_CHIP_REMOVE_CLASSES =
+  "inline-flex rounded-glob-sm hover:text-glob-primary-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed"
+export const MULTI_SELECT_COMBO_CLASSES = "flex min-h-6 min-w-16 flex-1 cursor-pointer items-center justify-between gap-2 outline-none"
+export const MULTI_SELECT_CHEVRON_CLASSES = "ml-auto h-4 w-4 shrink-0 text-glob-text-secondary transition-transform"
+export const MULTI_SELECT_CHECK_CLASSES = "flex h-4 w-4 shrink-0 items-center justify-center rounded-sm border transition-colors"
+export const MULTI_SELECT_CHECK_CHECKED_CLASSES = "border-glob-primary bg-glob-primary text-glob-primary-foreground"
+
+// Command
+export const COMMAND_CLASSES = "flex min-h-0 flex-col overflow-hidden text-glob-text"
+export const COMMAND_INPUT_WRAPPER_CLASSES = "flex items-center gap-2 border-b border-glob-border px-3"
+export const COMMAND_SEARCH_ICON_CLASSES = "h-4 w-4 shrink-0 text-glob-text-secondary"
+export const COMMAND_INPUT_CLASSES =
+  "h-11 w-full min-w-0 bg-transparent text-sm text-glob-text placeholder:text-glob-text-secondary outline-none"
+export const COMMAND_LIST_CLASSES = "max-h-80 overflow-y-auto overscroll-contain p-1"
+export const COMMAND_EMPTY_CLASSES = "px-3 py-6 text-center text-sm text-glob-text-secondary"
+export const COMMAND_GROUP_CLASSES = "py-1"
+export const COMMAND_GROUP_HEADING_CLASSES = "px-2 py-1.5 text-xs font-medium text-glob-text-secondary"
+export const COMMAND_ITEM_CLASSES = "flex cursor-pointer select-none items-center gap-2 rounded-glob-sm px-2 py-2 text-sm text-glob-text"
+export const COMMAND_SEPARATOR_CLASSES = "my-1 h-px bg-glob-border"
+export const COMMAND_SHORTCUT_CLASSES = "ml-auto text-xs tracking-widest text-glob-text-secondary"
+// open:flex, not flex: a closed dialog must keep the browser default (display: none), or it renders as a stray line.
+export const COMMAND_DIALOG_CLASSES =
+  "m-auto open:flex max-h-[min(70dvh,32rem)] w-[calc(100%-2rem)] max-w-lg flex-col overflow-hidden rounded-glob-lg border border-glob-border bg-glob-surface p-0 text-glob-text shadow-glob-md backdrop:bg-glob-overlay"
