@@ -129,3 +129,114 @@ export interface FormsAdapter {
     onChange?: (value: string) => void
   }): Promise<void>
 }
+
+// Phase 10d-2: overlays. One adapter for the whole batch; each method mounts one fixture.
+
+export interface OverlayOption {
+  value: string
+  label: string
+  disabled?: boolean
+  description?: string
+}
+
+export type ContractToastVariant = "default" | "success" | "warning" | "danger" | "info"
+
+export interface ContractToastOptions {
+  id?: string
+  title?: string
+  description?: string
+  variant?: ContractToastVariant
+  duration?: number
+  action?: { label: string; onClick: (event: MouseEvent) => void }
+}
+
+/** The framework's `toast` function: same overloads and shortcuts in every framework. */
+export interface ContractToast {
+  (options: ContractToastOptions): string
+  (title: string, options?: Omit<ContractToastOptions, "title">): string
+  success(title: string): string
+  info(title: string): string
+  warning(title: string): string
+  error(title: string): string
+  dismiss(id?: string): void
+}
+
+export type ContractToasterPosition = "top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right"
+
+export interface OverlaysAdapter {
+  readonly name: string
+  /** The class-parity gallery (see overlays-parity.contract.ts). */
+  overlaysGallery(): Promise<void>
+  /** The framework's toast function. Its store is module state, shared by every test. */
+  readonly toast: ContractToast
+  /**
+   * A Popover: trigger "Filters" (a Button), content with an "Apply" button, then an "Outside text" paragraph.
+   * With `autofocus`: open from the start, content "First" and "Chosen" (data-autofocus).
+   */
+  popover(fixture: { onOpenChange?: (open: boolean) => void; autofocus?: boolean }): Promise<void>
+  /** A Tooltip with `content` over a Button labelled `label`, then an "Elsewhere" paragraph. */
+  tooltip(fixture: { content: string; label: string }): Promise<void>
+  /**
+   * A DropdownMenu: trigger "Actions" (a Button); content with the label "My account", Profile (shortcut ⇧⌘P),
+   * Billing, "Disabled item" (disabled), "Keep open" (prevents closing when `keepOpen`), a separator, the checkbox
+   * item "Status bar", the radio group Light / Dark / System (System checked), a separator and Delete (danger).
+   * An "After" button follows the menu.
+   */
+  dropdownMenu(fixture: {
+    onSelect?: (label: string) => void
+    onRadio?: (value: string) => void
+    keepOpen?: boolean
+    onCheckedChange?: (checked: boolean) => void
+  }): Promise<void>
+  /**
+   * An AlertDialog: trigger "Delete account", title "Delete your account?", description "This cannot be undone.",
+   * Cancel, and the danger action "Delete" with `onConfirm` as its click handler.
+   */
+  alertDialog(fixture: { onConfirm?: (event: MouseEvent) => void }): Promise<void>
+  /** A Toaster. With `inDialog`: a Dialog "Settings" (trigger "Open dialog") whose "Save draft" button runs `onSave`. */
+  toaster(fixture: { max?: number; position?: ContractToasterPosition; inDialog?: { onSave: () => void } }): Promise<void>
+  /** A Select named "Fruit". */
+  select(fixture: {
+    options: OverlayOption[]
+    defaultValue?: string
+    onChange?: (value: string) => void
+    name?: string
+    inForm?: boolean
+    /** A "Next" button after the select. */
+    withNext?: boolean
+  }): Promise<void>
+  /** A Combobox inside a Field labelled "Framework", with a value the fixture keeps in sync with onChange. */
+  combobox(fixture: {
+    options: OverlayOption[]
+    defaultValue?: string
+    onChange?: (value: string | null) => void
+    allowCustomValue?: boolean
+    loading?: boolean
+  }): Promise<void>
+  /** A MultiSelect named "Tags". */
+  multiSelect(fixture: {
+    options: OverlayOption[]
+    defaultValue?: string[]
+    onChange?: (value: string[]) => void
+    max?: number
+    name?: string
+    inForm?: boolean
+    withNext?: boolean
+  }): Promise<void>
+  /**
+   * A Command labelled "Command menu": input "Type a command", the empty text "Nothing found.", a group "Suggestions"
+   * (Calendar with keywords events/schedule and shortcut ⌘C, Canción, Archive disabled), a separator and a group
+   * "Settings" (Theme with keyword "dark mode", Profile).
+   */
+  command(fixture: { onSelect?: (value: string) => void; filter?: false }): Promise<void>
+  /**
+   * An "Open" button and a CommandDialog with the items "Open docs" and "Toggle theme".
+   * With `withField`: an "Other field" text input before them.
+   */
+  commandDialog(fixture: {
+    shortcut?: string | false
+    closeOnSelect?: boolean
+    onSelect?: (value: string) => void
+    withField?: boolean
+  }): Promise<void>
+}
