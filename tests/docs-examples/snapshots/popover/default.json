@@ -1,0 +1,11 @@
+[
+  "button inline-flex items-center justify-center gap-2 rounded-glob-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 border border-glob-border text-glob-text hover:bg-glob-surface-hover h-10 px-4 text-sm",
+  "div m-0 overflow-auto rounded-glob-md border border-glob-border bg-glob-surface p-4 text-sm text-glob-text shadow-glob-md outline-none opacity-0 transition-[opacity,overlay,display] transition-discrete duration-150 open:opacity-100 starting:open:opacity-0 motion-reduce:transition-none w-64",
+  "div flex flex-col gap-3",
+  "div flex flex-col gap-1.5",
+  "label inline-flex items-center gap-1 font-medium text-glob-text peer-disabled:cursor-not-allowed peer-disabled:opacity-50 text-sm",
+  "input w-full rounded-glob-md border border-glob-border bg-glob-surface px-3 py-2 text-glob-text placeholder:text-glob-text-secondary transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50 aria-[invalid=true]:border-glob-danger aria-[invalid=true]:focus-visible:ring-glob-danger h-10 text-sm",
+  "div flex flex-col gap-1.5",
+  "label inline-flex items-center gap-1 font-medium text-glob-text peer-disabled:cursor-not-allowed peer-disabled:opacity-50 text-sm",
+  "input w-full rounded-glob-md border border-glob-border bg-glob-surface px-3 py-2 text-glob-text placeholder:text-glob-text-secondary transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50 aria-[invalid=true]:border-glob-danger aria-[invalid=true]:focus-visible:ring-glob-danger h-10 text-sm"
+]

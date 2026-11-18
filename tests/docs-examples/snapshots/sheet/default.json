@@ -1,0 +1,17 @@
+[
+  "button inline-flex items-center justify-center gap-2 rounded-glob-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 border border-glob-border text-glob-text hover:bg-glob-surface-hover h-10 px-4 text-sm",
+  "dialog m-0 h-full max-h-none w-[calc(100%-3rem)] overflow-visible rounded-none border-glob-border bg-glob-surface p-0 text-glob-text shadow-glob-md transition-[translate,overlay,display] transition-discrete duration-300 ease-out backdrop:bg-glob-overlay backdrop:opacity-0 backdrop:transition-[opacity,overlay,display] backdrop:transition-discrete backdrop:duration-200 open:backdrop:opacity-100 starting:open:backdrop:opacity-0 motion-reduce:transition-none motion-reduce:backdrop:transition-none border-l inset-y-0 left-auto right-0 translate-x-full open:translate-x-0 starting:open:translate-x-full max-w-sm",
+  "div relative flex h-full flex-col gap-4 overflow-y-auto p-6",
+  "div flex flex-col gap-1.5 pr-8",
+  "h2 text-lg font-semibold leading-none tracking-tight",
+  "p text-sm text-glob-text-secondary",
+  "div flex flex-col gap-1.5",
+  "label inline-flex items-center gap-1 font-medium text-glob-text peer-disabled:cursor-not-allowed peer-disabled:opacity-50 text-sm",
+  "input w-full rounded-glob-md border border-glob-border bg-glob-surface px-3 py-2 text-glob-text placeholder:text-glob-text-secondary transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50 aria-[invalid=true]:border-glob-danger aria-[invalid=true]:focus-visible:ring-glob-danger h-10 text-sm",
+  "div flex flex-col-reverse gap-2 sm:flex-row sm:justify-end mt-auto",
+  "button inline-flex items-center justify-center gap-2 rounded-glob-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 text-glob-text hover:bg-glob-surface-hover h-10 px-4 text-sm",
+  "button inline-flex items-center justify-center gap-2 rounded-glob-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 bg-glob-primary text-glob-primary-foreground hover:bg-glob-primary-hover h-10 px-4 text-sm",
+  "button absolute right-4 top-4 inline-flex h-8 w-8 items-center justify-center rounded-glob-sm text-glob-text-secondary transition-colors hover:bg-glob-surface-hover hover:text-glob-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring",
+  "svg h-4 w-4",
+  "path"
+]

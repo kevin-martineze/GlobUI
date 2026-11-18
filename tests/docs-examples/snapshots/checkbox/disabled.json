@@ -1,0 +1,19 @@
+[
+  "div flex flex-col gap-2",
+  "span inline-flex items-center gap-2",
+  "span relative inline-flex shrink-0",
+  "input peer shrink-0 cursor-pointer appearance-none rounded-glob-sm border border-glob-border-strong bg-glob-surface transition-colors checked:border-glob-primary checked:bg-glob-primary indeterminate:border-glob-primary indeterminate:bg-glob-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50 aria-[invalid=true]:border-glob-danger h-5 w-5",
+  "svg pointer-events-none absolute inset-0 m-auto hidden h-3/4 w-3/4 text-glob-primary-foreground peer-[:checked:not(:indeterminate)]:block",
+  "path",
+  "svg pointer-events-none absolute inset-0 m-auto hidden h-3/4 w-3/4 text-glob-primary-foreground peer-indeterminate:block",
+  "path",
+  "label text-glob-text text-sm cursor-not-allowed opacity-50",
+  "span inline-flex items-center gap-2",
+  "span relative inline-flex shrink-0",
+  "input peer shrink-0 cursor-pointer appearance-none rounded-glob-sm border border-glob-border-strong bg-glob-surface transition-colors checked:border-glob-primary checked:bg-glob-primary indeterminate:border-glob-primary indeterminate:bg-glob-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50 aria-[invalid=true]:border-glob-danger h-5 w-5",
+  "svg pointer-events-none absolute inset-0 m-auto hidden h-3/4 w-3/4 text-glob-primary-foreground peer-[:checked:not(:indeterminate)]:block",
+  "path",
+  "svg pointer-events-none absolute inset-0 m-auto hidden h-3/4 w-3/4 text-glob-primary-foreground peer-indeterminate:block",
+  "path",
+  "label text-glob-text text-sm cursor-not-allowed opacity-50"
+]

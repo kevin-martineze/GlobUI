@@ -1,0 +1,12 @@
+[
+  "div flex flex-col items-center gap-3",
+  "button inline-flex items-center justify-center gap-2 rounded-glob-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 border border-glob-border text-glob-text hover:bg-glob-surface-hover h-10 px-4 text-sm",
+  "dialog m-auto max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] overflow-visible rounded-glob-lg border border-glob-border bg-glob-surface p-0 text-glob-text shadow-glob-md scale-95 opacity-0 transition-[opacity,scale,overlay,display] transition-discrete duration-200 ease-out open:scale-100 open:opacity-100 starting:open:scale-95 starting:open:opacity-0 backdrop:bg-glob-overlay backdrop:opacity-0 backdrop:transition-[opacity,overlay,display] backdrop:transition-discrete backdrop:duration-200 open:backdrop:opacity-100 starting:open:backdrop:opacity-0 motion-reduce:transition-none motion-reduce:backdrop:transition-none max-w-sm",
+  "div relative flex max-h-[calc(100dvh-2rem)] flex-col gap-4 overflow-y-auto p-6",
+  "h2 text-lg font-semibold leading-none tracking-tight",
+  "p text-sm text-glob-text-secondary",
+  "div flex flex-col-reverse gap-2 sm:flex-row sm:justify-end",
+  "button inline-flex items-center justify-center gap-2 rounded-glob-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 text-glob-text hover:bg-glob-surface-hover h-10 px-4 text-sm",
+  "button inline-flex items-center justify-center gap-2 rounded-glob-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 bg-glob-primary text-glob-primary-foreground hover:bg-glob-primary-hover h-10 px-4 text-sm",
+  "p text-sm text-fd-muted-foreground"
+]

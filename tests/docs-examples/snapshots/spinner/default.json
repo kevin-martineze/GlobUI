@@ -1,0 +1,12 @@
+[
+  "div flex items-center gap-4",
+  "svg shrink-0 animate-spin h-4 w-4",
+  "circle opacity-25",
+  "path",
+  "svg shrink-0 animate-spin h-5 w-5",
+  "circle opacity-25",
+  "path",
+  "svg shrink-0 animate-spin h-6 w-6",
+  "circle opacity-25",
+  "path"
+]

@@ -1,0 +1,4 @@
+[
+  "button inline-flex items-center justify-center gap-2 rounded-glob-md font-medium text-glob-text transition-colors hover:bg-glob-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 motion-reduce:transition-none data-[state=on]:bg-glob-primary-light data-[state=on]:text-glob-text border border-glob-border bg-transparent data-[state=on]:border-glob-primary h-10 px-3 text-sm",
+  "span font-bold"
+]

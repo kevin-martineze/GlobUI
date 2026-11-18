@@ -1,0 +1,11 @@
+[
+  "div flex items-center -space-x-2",
+  "span relative inline-flex shrink-0 select-none items-center justify-center overflow-hidden bg-glob-surface-hover font-medium text-glob-text h-10 w-10 text-sm rounded-full ring-2 ring-glob-surface",
+  "span flex h-full w-full items-center justify-center",
+  "span relative inline-flex shrink-0 select-none items-center justify-center overflow-hidden bg-glob-surface-hover font-medium text-glob-text h-10 w-10 text-sm rounded-full ring-2 ring-glob-surface",
+  "span flex h-full w-full items-center justify-center",
+  "span relative inline-flex shrink-0 select-none items-center justify-center overflow-hidden bg-glob-surface-hover font-medium text-glob-text h-10 w-10 text-sm rounded-full ring-2 ring-glob-surface",
+  "span flex h-full w-full items-center justify-center",
+  "span relative inline-flex shrink-0 select-none items-center justify-center overflow-hidden bg-glob-surface-hover font-medium text-glob-text h-10 w-10 text-sm rounded-full ring-2 ring-glob-surface",
+  "span"
+]

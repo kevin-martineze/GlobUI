@@ -1,0 +1,12 @@
+[
+  "div flex flex-wrap items-center gap-3",
+  "div inline-flex rounded-glob-md border border-glob-border bg-glob-surface-secondary p-0.5",
+  "button rounded-glob-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50 h-8 text-xs px-3 bg-glob-primary text-glob-primary-foreground shadow-sm",
+  "button rounded-glob-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50 h-8 text-xs px-3 text-glob-text-secondary hover:text-glob-text",
+  "div inline-flex rounded-glob-md border border-glob-border bg-glob-surface-secondary p-0.5",
+  "button rounded-glob-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50 h-10 text-sm px-4 bg-glob-primary text-glob-primary-foreground shadow-sm",
+  "button rounded-glob-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50 h-10 text-sm px-4 text-glob-text-secondary hover:text-glob-text",
+  "div inline-flex rounded-glob-md border border-glob-border bg-glob-surface-secondary p-0.5",
+  "button rounded-glob-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50 h-12 text-base px-5 bg-glob-primary text-glob-primary-foreground shadow-sm",
+  "button rounded-glob-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50 h-12 text-base px-5 text-glob-text-secondary hover:text-glob-text"
+]

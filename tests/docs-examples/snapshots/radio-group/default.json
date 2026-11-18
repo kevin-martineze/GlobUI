@@ -1,0 +1,18 @@
+[
+  "div flex flex-col gap-2",
+  "span inline-flex items-center gap-2",
+  "span relative inline-flex shrink-0",
+  "input peer shrink-0 cursor-pointer appearance-none rounded-full border border-glob-border-strong bg-glob-surface transition-colors checked:border-glob-primary checked:bg-glob-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50 h-5 w-5",
+  "span pointer-events-none absolute inset-0 m-auto hidden rounded-full bg-glob-primary-foreground peer-checked:block h-2 w-2",
+  "label cursor-pointer text-glob-text text-sm",
+  "span inline-flex items-center gap-2",
+  "span relative inline-flex shrink-0",
+  "input peer shrink-0 cursor-pointer appearance-none rounded-full border border-glob-border-strong bg-glob-surface transition-colors checked:border-glob-primary checked:bg-glob-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50 h-5 w-5",
+  "span pointer-events-none absolute inset-0 m-auto hidden rounded-full bg-glob-primary-foreground peer-checked:block h-2 w-2",
+  "label cursor-pointer text-glob-text text-sm",
+  "span inline-flex items-center gap-2",
+  "span relative inline-flex shrink-0",
+  "input peer shrink-0 cursor-pointer appearance-none rounded-full border border-glob-border-strong bg-glob-surface transition-colors checked:border-glob-primary checked:bg-glob-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50 h-5 w-5",
+  "span pointer-events-none absolute inset-0 m-auto hidden rounded-full bg-glob-primary-foreground peer-checked:block h-2 w-2",
+  "label cursor-pointer text-glob-text text-sm"
+]

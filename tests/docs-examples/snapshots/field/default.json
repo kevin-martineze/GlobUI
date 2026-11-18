@@ -1,0 +1,6 @@
+[
+  "div flex flex-col gap-1.5",
+  "label inline-flex items-center gap-1 font-medium text-glob-text peer-disabled:cursor-not-allowed peer-disabled:opacity-50 text-sm",
+  "input w-full rounded-glob-md border border-glob-border bg-glob-surface px-3 py-2 text-glob-text placeholder:text-glob-text-secondary transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50 aria-[invalid=true]:border-glob-danger aria-[invalid=true]:focus-visible:ring-glob-danger h-10 text-sm",
+  "p text-glob-text-secondary text-sm"
+]

@@ -1,0 +1,11 @@
+[
+  "div flex flex-wrap gap-2",
+  "span inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border font-medium border-glob-border bg-glob-surface-secondary text-glob-text h-6 px-2.5 text-sm",
+  "span inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border font-medium border-transparent bg-glob-primary text-glob-primary-foreground h-6 px-2.5 text-sm",
+  "span inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border font-medium border-transparent bg-glob-text text-glob-surface h-6 px-2.5 text-sm",
+  "span inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border font-medium border-glob-border bg-transparent text-glob-text h-6 px-2.5 text-sm",
+  "span inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border font-medium border-transparent bg-glob-success-light text-glob-success h-6 px-2.5 text-sm",
+  "span inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border font-medium border-transparent bg-glob-warning-light text-glob-warning h-6 px-2.5 text-sm",
+  "span inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border font-medium border-transparent bg-glob-danger-light text-glob-danger h-6 px-2.5 text-sm",
+  "span inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border font-medium border-transparent bg-glob-info-light text-glob-info h-6 px-2.5 text-sm"
+]

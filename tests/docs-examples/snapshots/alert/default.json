@@ -1,0 +1,10 @@
+[
+  "div relative flex w-full gap-3 rounded-glob-lg border p-4 text-sm text-glob-text border-glob-border bg-glob-surface",
+  "span mt-0.5 flex shrink-0 text-glob-text-secondary",
+  "svg h-4 w-4",
+  "circle",
+  "path",
+  "div flex min-w-0 flex-1 flex-col gap-1",
+  "div font-medium leading-5",
+  "div leading-5 text-glob-text-secondary"
+]
