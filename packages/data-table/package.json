@@ -36,6 +36,7 @@
     "@glob-ui/dropdown-menu": "workspace:*",
     "@glob-ui/hooks": "workspace:*",
     "@glob-ui/input": "workspace:*",
+    "@glob-ui/recipes": "workspace:*",
     "@glob-ui/select": "workspace:*",
     "@glob-ui/skeleton": "workspace:*",
     "@glob-ui/table": "workspace:*",

@@ -295,3 +295,141 @@ export const PAGINATION_PREVIOUS_CLASSES = "gap-1 pl-2.5"
 export const PAGINATION_NEXT_CLASSES = "gap-1 pr-2.5"
 export const PAGINATION_ICON_CLASSES = "h-4 w-4"
 export const PAGINATION_ELLIPSIS_CLASSES = "flex h-9 w-9 items-center justify-center text-glob-text-secondary"
+
+// Table. Padding is set on the table with descendant selectors, so the cells need no context.
+export const TABLE_CONTAINER_CLASSES = "relative w-full overflow-x-auto rounded-glob-md border border-glob-border"
+export const TABLE_CONTAINER_FOCUSABLE_CLASSES = "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring"
+export const TABLE_CLASSES = "w-full caption-bottom border-collapse text-sm text-glob-text"
+export const TABLE_DENSITY_CLASSES = {
+  compact: "[&_th]:px-2 [&_th]:py-1 [&_td]:px-2 [&_td]:py-1",
+  default: "[&_th]:px-3 [&_th]:py-2 [&_td]:px-3 [&_td]:py-2",
+  comfortable: "[&_th]:px-4 [&_th]:py-3 [&_td]:px-4 [&_td]:py-3",
+} as const
+export const TABLE_STRIPED_CLASSES = "[&_tbody>tr:nth-child(even)]:bg-glob-surface-secondary"
+/** The wrapper is the scroll container, so the header sticks inside it. */
+export const TABLE_STICKY_HEADER_CLASSES = "[&_thead]:sticky [&_thead]:top-0 [&_thead]:z-10 [&_thead]:bg-glob-surface"
+export const TABLE_HEADER_CLASSES = "border-b border-glob-border"
+export const TABLE_BODY_CLASSES = "[&_tr:last-child]:border-0"
+export const TABLE_FOOTER_CLASSES = "border-t border-glob-border bg-glob-surface-secondary font-medium"
+export const TABLE_ROW_CLASSES =
+  "border-b border-glob-border transition-colors hover:bg-glob-surface-hover data-[state=selected]:bg-glob-primary-light"
+export const TABLE_HEAD_CLASSES = "px-3 py-2 font-medium text-glob-text-secondary [&:has([role=checkbox])]:pr-0"
+export const TABLE_CELL_CLASSES = "px-3 py-2 align-middle [&:has([role=checkbox])]:pr-0"
+export const TABLE_ALIGN_CLASSES = { left: "text-left", center: "text-center", right: "text-right" } as const
+export const TABLE_CAPTION_CLASSES = "mt-4 text-sm text-glob-text-secondary"
+
+// DataTable
+export const DATA_TABLE_CLASSES = "flex flex-col gap-3"
+export const DATA_TABLE_TOOLBAR_CLASSES = "flex flex-wrap items-center justify-between gap-2"
+export const DATA_TABLE_TOOLBAR_START_CLASSES = "flex min-w-0 flex-1 flex-wrap items-center gap-2"
+export const DATA_TABLE_SEARCH_CLASSES = "w-full sm:w-64"
+export const DATA_TABLE_SORT_BUTTON_CLASSES =
+  "inline-flex items-center gap-1 rounded-glob-sm font-medium hover:text-glob-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring"
+export const DATA_TABLE_SORT_ICON_CLASSES = "h-3.5 w-3.5 shrink-0"
+export const DATA_TABLE_SORT_ICON_IDLE_CLASSES = "opacity-40"
+export const DATA_TABLE_SKELETON_CLASSES = "h-4 w-full"
+export const DATA_TABLE_EMPTY_CLASSES = "py-8 text-center text-glob-text-secondary"
+export const DATA_TABLE_ROW_CLICKABLE_CLASSES = "cursor-pointer"
+export const DATA_TABLE_FOOTER_CLASSES = "flex flex-wrap items-center justify-between gap-3 text-sm text-glob-text-secondary"
+export const DATA_TABLE_PAGINATION_CLASSES = "flex flex-wrap items-center gap-3"
+export const DATA_TABLE_PAGE_SIZE_CLASSES = "flex items-center gap-2"
+export const DATA_TABLE_PAGE_SIZE_LABEL_CLASSES = "whitespace-nowrap"
+export const DATA_TABLE_PAGE_BUTTONS_CLASSES = "flex items-center gap-1"
+
+// Calendar
+export const CALENDAR_CLASSES = "flex flex-col gap-3 text-sm text-glob-text"
+export const CALENDAR_NAV_CLASSES = "flex items-center justify-between"
+export const CALENDAR_NAV_BUTTON_CLASSES =
+  "inline-flex size-8 items-center justify-center rounded-glob-sm text-glob-text-secondary transition-colors hover:bg-glob-surface-hover hover:text-glob-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:pointer-events-none disabled:opacity-40"
+export const CALENDAR_NAV_ICON_CLASSES = "h-4 w-4"
+export const CALENDAR_MONTHS_CLASSES = "flex gap-4"
+/** Two months sit side by side from `sm` up, and stack on small screens. */
+export const CALENDAR_MONTHS_LAYOUT_CLASSES = { 1: "flex-col", 2: "flex-col sm:flex-row" } as const
+export const CALENDAR_MONTH_CLASSES = "flex flex-col gap-2"
+export const CALENDAR_HEADING_CLASSES = "text-center text-sm font-semibold"
+export const CALENDAR_GRID_CLASSES = "border-separate border-spacing-0.5"
+export const CALENDAR_WEEKDAY_CLASSES = "size-9 p-0 text-center text-xs font-medium text-glob-text-secondary"
+export const CALENDAR_EMPTY_CELL_CLASSES = "size-9 p-0"
+export const CALENDAR_CELL_CLASSES = "p-0"
+export const CALENDAR_DAY_CLASSES =
+  "inline-flex size-9 items-center justify-center rounded-glob-md text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring motion-reduce:transition-none"
+export const CALENDAR_DAY_SELECTED_CLASSES = "bg-glob-primary font-medium text-glob-primary-foreground hover:opacity-90"
+export const CALENDAR_DAY_IN_RANGE_CLASSES = "bg-glob-primary-light text-glob-text"
+export const CALENDAR_DAY_RANGE_MIDDLE_CLASSES = "rounded-none"
+export const CALENDAR_DAY_DEFAULT_CLASSES = "text-glob-text hover:bg-glob-surface-hover"
+export const CALENDAR_DAY_TODAY_CLASSES = "font-semibold ring-1 ring-inset ring-glob-border"
+/** Muted, not faded: the text stays above 4.5:1. */
+export const CALENDAR_DAY_OUTSIDE_CLASSES = "text-glob-text-secondary"
+/** Disabled days are struck through. */
+export const CALENDAR_DAY_DISABLED_CLASSES = "cursor-not-allowed text-glob-text-secondary line-through hover:bg-transparent"
+
+export interface CalendarDayState {
+  selected: boolean
+  inRange: boolean
+  rangeEdge: boolean
+  today: boolean
+  disabled: boolean
+  outside: boolean
+}
+
+/** The classes of one day button, in order. Pass them to cn(), which resolves the conflicts. */
+export function calendarDayClasses({ selected, inRange, rangeEdge, today, disabled, outside }: CalendarDayState) {
+  return [
+    CALENDAR_DAY_CLASSES,
+    selected ? CALENDAR_DAY_SELECTED_CLASSES : inRange ? CALENDAR_DAY_IN_RANGE_CLASSES : CALENDAR_DAY_DEFAULT_CLASSES,
+    !selected && inRange && !rangeEdge && CALENDAR_DAY_RANGE_MIDDLE_CLASSES,
+    today && !selected && CALENDAR_DAY_TODAY_CLASSES,
+    outside && CALENDAR_DAY_OUTSIDE_CLASSES,
+    disabled && CALENDAR_DAY_DISABLED_CLASSES,
+  ]
+}
+
+// DatePicker
+export const DATE_PICKER_CLASSES = "relative w-full"
+export const DATE_PICKER_TRIGGER_CLASSES =
+  "flex w-full cursor-pointer items-center justify-between gap-2 rounded-glob-md border px-3 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50 data-[invalid=true]:border-glob-danger"
+export const DATE_PICKER_SIZE = { sm: "h-8 text-xs", md: "h-10 text-sm", lg: "h-12 text-base" } as const
+export const DATE_PICKER_VARIANT = {
+  default: "border-glob-border bg-glob-surface",
+  ghost: "border-transparent bg-transparent hover:bg-glob-surface-hover",
+  outline: "border-glob-border bg-transparent hover:bg-glob-surface-hover",
+} as const
+/** Room for the clear button, which sits beside the trigger (never inside it). */
+export const DATE_PICKER_TRIGGER_CLEARABLE_CLASSES = "pr-16"
+export const DATE_PICKER_VALUE_CLASSES = "truncate"
+export const DATE_PICKER_PLACEHOLDER_CLASSES = "text-glob-text-secondary"
+export const DATE_PICKER_ICON_CLASSES = "h-4 w-4 shrink-0 text-glob-text-secondary"
+export const DATE_PICKER_CLEAR_CLASSES =
+  "absolute right-9 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-glob-sm text-glob-text-secondary hover:bg-glob-surface-hover hover:text-glob-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring"
+export const DATE_PICKER_CLEAR_ICON_CLASSES = "h-3.5 w-3.5"
+export const DATE_PICKER_CONTENT_CLASSES = "w-fit p-3"
+export const DATE_PICKER_BODY_CLASSES = "flex flex-col gap-3 sm:flex-row"
+export const DATE_PICKER_PRESETS_CLASSES = "flex flex-wrap gap-1 sm:w-36 sm:flex-col"
+export const DATE_PICKER_PRESET_CLASSES =
+  "rounded-glob-sm px-2 py-1.5 text-left text-sm text-glob-text transition-colors hover:bg-glob-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring"
+
+// PhoneInput and its country list. The wrapper variants are in phone-input.ts.
+export const PHONE_INPUT_DIVIDER_CLASSES = "h-5 w-px bg-glob-border"
+export const PHONE_INPUT_FIELD_WRAPPER_CLASSES = "flex flex-1 items-center pl-2"
+export const PHONE_INPUT_FIELD_CLASSES = "h-full flex-1 bg-transparent text-glob-text outline-none placeholder:text-glob-text-secondary"
+export const PHONE_INPUT_TEXT_SIZE = { sm: "text-xs", md: "text-sm", lg: "text-base" } as const
+export const COUNTRY_SELECT_CLASSES = "relative"
+export const COUNTRY_TRIGGER_CLASSES =
+  "flex cursor-pointer items-center gap-1 rounded-l-glob-md border border-r-0 border-glob-border bg-glob-surface px-2 text-glob-text transition-colors hover:bg-glob-surface-hover outline-none focus-visible:ring-2 focus-visible:ring-glob-ring aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
+export const COUNTRY_TRIGGER_SIZE = { sm: "h-8 text-xs", md: "h-10 text-sm", lg: "h-12 text-base" } as const
+export const COUNTRY_FLAG_CLASSES = "text-base leading-none"
+export const COUNTRY_TRIGGER_CODE_CLASSES = "text-glob-text-secondary"
+export const COUNTRY_CHEVRON_CLASSES = "h-3 w-3 text-glob-text-secondary transition-transform"
+export const COUNTRY_PANEL_CLASSES =
+  "m-0 w-72 overflow-visible rounded-glob-md border border-glob-border bg-glob-surface text-sm text-glob-text shadow-glob-md outline-none"
+export const COUNTRY_SEARCH_WRAPPER_CLASSES = "border-b border-glob-border p-2"
+export const COUNTRY_SEARCH_INPUT_CLASSES =
+  "w-full rounded-glob-sm border border-glob-border bg-glob-surface-secondary px-2 py-1.5 text-sm text-glob-text placeholder:text-glob-text-secondary outline-none focus:ring-1 focus:ring-glob-ring"
+export const COUNTRY_LIST_CLASSES = "relative max-h-60 overflow-y-auto p-1"
+export const COUNTRY_OPTION_CLASSES = "flex w-full cursor-pointer items-center gap-3 rounded-glob-sm px-2 py-2 text-left text-sm select-none"
+export const COUNTRY_OPTION_ACTIVE_CLASSES = "bg-glob-surface-hover"
+/** The selected row is marked by font weight; the fill colour as text fails contrast on white. */
+export const COUNTRY_OPTION_SELECTED_CLASSES = "font-medium"
+export const COUNTRY_NAME_CLASSES = "flex-1"
+export const COUNTRY_DIAL_CLASSES = "text-glob-text"
+export const COUNTRY_EMPTY_CLASSES = "px-3 py-4 text-center text-sm text-glob-text-secondary"

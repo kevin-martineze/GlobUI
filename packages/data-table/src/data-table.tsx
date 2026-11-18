@@ -24,6 +24,23 @@ import {
 } from "@tanstack/react-table"
 import { cn } from "@glob-ui/utils"
 import { matchesSearch } from "@glob-ui/core"
+import {
+  DATA_TABLE_CLASSES,
+  DATA_TABLE_EMPTY_CLASSES,
+  DATA_TABLE_FOOTER_CLASSES,
+  DATA_TABLE_PAGE_BUTTONS_CLASSES,
+  DATA_TABLE_PAGE_SIZE_CLASSES,
+  DATA_TABLE_PAGE_SIZE_LABEL_CLASSES,
+  DATA_TABLE_PAGINATION_CLASSES,
+  DATA_TABLE_ROW_CLICKABLE_CLASSES,
+  DATA_TABLE_SEARCH_CLASSES,
+  DATA_TABLE_SKELETON_CLASSES,
+  DATA_TABLE_SORT_BUTTON_CLASSES,
+  DATA_TABLE_SORT_ICON_CLASSES,
+  DATA_TABLE_SORT_ICON_IDLE_CLASSES,
+  DATA_TABLE_TOOLBAR_CLASSES,
+  DATA_TABLE_TOOLBAR_START_CLASSES,
+} from "@glob-ui/recipes"
 import { useControllableState } from "@glob-ui/hooks"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@glob-ui/table"
 import { Button, buttonVariants } from "@glob-ui/button"
@@ -115,7 +132,7 @@ const resolve = <T,>(updater: Updater<T>, current: T): T => (typeof updater === 
 
 function SortIndicator({ direction }: { direction: false | "asc" | "desc" }) {
   return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={cn("h-3.5 w-3.5 shrink-0", !direction && "opacity-40")}>
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={cn(DATA_TABLE_SORT_ICON_CLASSES, !direction && DATA_TABLE_SORT_ICON_IDLE_CLASSES)}>
       {direction === "desc" ? <path d="M6 9l6 6 6-6" /> : direction === "asc" ? <path d="M6 15l6-6 6 6" /> : <path d="M7 10l5-5 5 5M7 14l5 5 5-5" />}
     </svg>
   )
@@ -241,10 +258,10 @@ export function DataTable<TData extends RowData>({
   const hideable = visibilityEnabled ? table.getAllLeafColumns().filter((column) => column.getCanHide()) : []
 
   return (
-    <div className={cn("flex flex-col gap-3", className)}>
+    <div className={cn(DATA_TABLE_CLASSES, className)}>
       {showToolbar && (
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
+        <div className={DATA_TABLE_TOOLBAR_CLASSES}>
+          <div className={DATA_TABLE_TOOLBAR_START_CLASSES}>
             {filterEnabled && (
               <Input
                 type="search"
@@ -255,7 +272,7 @@ export function DataTable<TData extends RowData>({
                   setFilterState(e.target.value)
                   if (paginationEnabled) setPaginationState({ ...paginationState, pageIndex: 0 })
                 }}
-                className="w-full sm:w-64"
+                className={DATA_TABLE_SEARCH_CLASSES}
               />
             )}
             {toolbar}
@@ -304,7 +321,7 @@ export function DataTable<TData extends RowData>({
                       <button
                         type="button"
                         onClick={header.column.getToggleSortingHandler()}
-                        className="inline-flex items-center gap-1 rounded-glob-sm font-medium hover:text-glob-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring"
+                        className={DATA_TABLE_SORT_BUTTON_CLASSES}
                       >
                         <table.FlexRender header={header} />
                         <SortIndicator direction={direction} />
@@ -324,14 +341,14 @@ export function DataTable<TData extends RowData>({
               <TableRow key={`skeleton-${i}`} aria-hidden="true">
                 {Array.from({ length: Math.max(visibleColumnCount, 1) }, (_, c) => (
                   <TableCell key={c}>
-                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className={DATA_TABLE_SKELETON_CLASSES} />
                   </TableCell>
                 ))}
               </TableRow>
             ))
           ) : rows.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={Math.max(visibleColumnCount, 1)} className="py-8 text-center text-glob-text-secondary">
+              <TableCell colSpan={Math.max(visibleColumnCount, 1)} className={DATA_TABLE_EMPTY_CLASSES}>
                 {emptyState}
               </TableCell>
             </TableRow>
@@ -341,7 +358,7 @@ export function DataTable<TData extends RowData>({
                 key={row.id}
                 data-state={row.getIsSelected() ? "selected" : undefined}
                 onClick={onRowClick ? () => onRowClick(row.original) : undefined}
-                className={onRowClick ? "cursor-pointer" : undefined}
+                className={onRowClick ? DATA_TABLE_ROW_CLICKABLE_CLASSES : undefined}
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
@@ -360,12 +377,12 @@ export function DataTable<TData extends RowData>({
       </div>
 
       {(paginationEnabled || selectionEnabled) && (
-        <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-glob-text-secondary">
+        <div className={DATA_TABLE_FOOTER_CLASSES}>
           <div>{selectionEnabled ? `${selectedCount} of ${total} row${total === 1 ? "" : "s"} selected` : null}</div>
           {paginationEnabled && (
-            <div className="flex flex-wrap items-center gap-3">
-              <div className="flex items-center gap-2">
-                <span className="whitespace-nowrap">Rows per page</span>
+            <div className={DATA_TABLE_PAGINATION_CLASSES}>
+              <div className={DATA_TABLE_PAGE_SIZE_CLASSES}>
+                <span className={DATA_TABLE_PAGE_SIZE_LABEL_CLASSES}>Rows per page</span>
                 <Select
                   aria-label="Rows per page"
                   size="sm"
@@ -377,7 +394,7 @@ export function DataTable<TData extends RowData>({
               <span>
                 Page {pageIndex + 1} of {pageCount}
               </span>
-              <div className="flex items-center gap-1">
+              <div className={DATA_TABLE_PAGE_BUTTONS_CLASSES}>
                 <Button variant="outline" size="sm" aria-label="Previous page" disabled={pageIndex <= 0} onClick={() => goToPage(pageIndex - 1)}>
                   Previous
                 </Button>

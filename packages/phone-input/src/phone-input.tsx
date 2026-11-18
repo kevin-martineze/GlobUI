@@ -4,13 +4,13 @@ import { forwardRef, useState, useCallback } from "react"
 import type { VariantProps } from "class-variance-authority"
 import { cn } from "@glob-ui/utils"
 import { CountrySelect } from "./country-select"
-import { phoneInputVariants } from "@glob-ui/recipes"
-
-const inputSizeStyles = {
-  sm: "text-xs",
-  md: "text-sm",
-  lg: "text-base",
-}
+import {
+  PHONE_INPUT_DIVIDER_CLASSES,
+  PHONE_INPUT_FIELD_CLASSES,
+  PHONE_INPUT_FIELD_WRAPPER_CLASSES,
+  PHONE_INPUT_TEXT_SIZE,
+  phoneInputVariants,
+} from "@glob-ui/recipes"
 
 export interface PhoneInputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">,
@@ -41,9 +41,9 @@ const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
           disabled={disabled}
         />
 
-        <div className="h-5 w-px bg-glob-border" />
+        <div className={PHONE_INPUT_DIVIDER_CLASSES} />
 
-        <div className="flex flex-1 items-center pl-2">
+        <div className={PHONE_INPUT_FIELD_WRAPPER_CLASSES}>
           <input
             ref={ref}
             type="tel"
@@ -51,10 +51,7 @@ const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
             onChange={onChange}
             disabled={disabled}
             placeholder={placeholder ?? "555 000 0000"}
-            className={cn(
-              "h-full flex-1 bg-transparent text-glob-text outline-none placeholder:text-glob-text-secondary",
-              inputSizeStyles[size ?? "md"]
-            )}
+            className={cn(PHONE_INPUT_FIELD_CLASSES, PHONE_INPUT_TEXT_SIZE[size ?? "md"])}
             {...props}
           />
         </div>
