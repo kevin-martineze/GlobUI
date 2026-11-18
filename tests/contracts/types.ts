@@ -276,3 +276,61 @@ export interface NavigationAdapter {
    */
   paginationControlled(fixture: { pageCount: number; onPage?: (page: number) => void }): Promise<void>
 }
+
+// Phase 10d-4: data and dates (Table, DataTable, Calendar, DatePicker, PhoneInput).
+
+export type ContractUser = { id: string; name: string; city: string; role: string }
+export type ContractDateRange = { from: string | null; to: string | null }
+
+export interface DataAdapter {
+  readonly name: string
+  /** The class-parity gallery (see data-parity.contract.ts). */
+  dataGallery(): Promise<void>
+  /**
+   * The invoices Table: caption "Invoices, November", the heads Invoice and Amount (right-aligned), the rows INV-001
+   * $120 and INV-002 $80, a footer Total $200, and `containerClassName="max-h-48"`.
+   */
+  table(fixture: { scrollLabel?: string; striped?: boolean; stickyHeader?: boolean }): Promise<void>
+  /** A DataTable labelled "Users" over `data`, with the accessor columns name ("Name"), city ("City") and role ("Role"). */
+  dataTable(fixture: {
+    data: ContractUser[]
+    sorting?: boolean
+    globalFilter?: boolean
+    pagination?: boolean
+    pageSize?: number
+    pageSizeOptions?: number[]
+    rowSelection?: boolean
+    columnVisibility?: boolean
+    emptyState?: string
+    manual?: boolean
+    state?: { sorting?: { id: string; desc: boolean }[] }
+    onSortingChange?: (sorting: { id: string; desc: boolean }[]) => void
+    loading?: boolean
+  }): Promise<void>
+  /** A Calendar with these props. `value` is passed as is (controlled when defined), never updated by the fixture. */
+  calendar(fixture: {
+    mode?: "single" | "range"
+    month?: string
+    defaultMonth?: string
+    value?: string | null | ContractDateRange
+    defaultValue?: string | null | ContractDateRange
+    onChange?: (value: string | null | ContractDateRange) => void
+    min?: string
+    max?: string
+    isDateDisabled?: (iso: string) => boolean
+    locale?: string
+  }): Promise<void>
+  /**
+   * A DatePicker with locale "en-US" inside a Field labelled "Due date". The fixture holds the value and passes it back
+   * (controlled), and calls `onChange` too. Single mode is named "due" and starts from `value`; range mode is named
+   * "stay", starts empty and takes `presets`.
+   */
+  datePicker(fixture: {
+    mode?: "single" | "range"
+    value?: string | null
+    onChange?: (value: string | null | ContractDateRange) => void
+    presets?: { label: string; value: string | ContractDateRange }[]
+  }): Promise<void>
+  /** A PhoneInput labelled "Phone" (aria-label on the number input), country "US" unless given. */
+  phoneInput(fixture: { country?: string; onCountryChange?: (iso: string) => void }): Promise<void>
+}
