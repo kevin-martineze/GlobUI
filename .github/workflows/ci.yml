@@ -73,5 +73,10 @@ jobs:
       - name: shadcn registry end-to-end
         run: node scripts/shadcn-e2e.mjs
 
+      # The same for the Svelte registry: installs items with the shadcn-svelte CLI into a fresh Vite + Svelte app,
+      # then runs svelte-check and vite build on it.
+      - name: shadcn-svelte registry end-to-end
+        run: node scripts/shadcn-svelte-e2e.mjs
+
       - name: Test
         run: pnpm test
