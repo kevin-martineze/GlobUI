@@ -77,6 +77,14 @@ const svelteApp = makeApp("svelte-consumer", {
   import { Toaster, toast } from "@glob-ui/svelte/toast"
   import { Tabs, TabsList, TabsTrigger, TabsContent } from "@glob-ui/svelte/tabs"
   import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationEllipsis, getPageRange } from "@glob-ui/svelte/pagination"
+  import { DataTable, createDataTableColumnHelper } from "@glob-ui/svelte/data-table"
+  import { DatePicker } from "@glob-ui/svelte/date-picker"
+  import { PhoneInput } from "@glob-ui/svelte/phone-input"
+
+  type Order = { id: string; customer: string; total: number }
+  const helper = createDataTableColumnHelper<Order>()
+  const columns = [helper.accessor("customer", { header: "Customer" }), helper.accessor("total", { header: "Total" })]
+  const orders: Order[] = [{ id: "1", customer: "Ana", total: 120 }, { id: "2", customer: "Benito", total: 80 }]
 </script>
 
 <AppShellLayout>
@@ -124,6 +132,9 @@ const svelteApp = makeApp("svelte-consumer", {
       {/each}
     </PaginationContent>
   </Pagination>
+  <DataTable aria-label="Orders" {columns} data={orders} sorting globalFilter pagination rowSelection />
+  <Field label="Due date"><DatePicker /></Field>
+  <PhoneInput aria-label="Phone" />
   <Toaster />
 </AppShellLayout>
 `,
@@ -255,4 +266,4 @@ for (const [dir, tool] of apps) {
   if (!out) throw new Error(`${dir}: no dist after build`)
 }
 
-log(`OK: AppShellLayout with a Sheet built for Svelte (plus Field, Input, Checkbox, Button, Select, DropdownMenu, Toaster, Tabs, Pagination), Vue, and Angular 22.2.5 and 21.2.26 (${work})`)
+log(`OK: AppShellLayout with a Sheet built for Svelte (plus Field, Input, Checkbox, Button, Select, DropdownMenu, Toaster, Tabs, Pagination, DataTable, DatePicker, PhoneInput), Vue, and Angular 22.2.5 and 21.2.26 (${work})`)

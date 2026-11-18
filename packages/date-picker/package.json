@@ -31,8 +31,10 @@
   },
   "dependencies": {
     "@glob-ui/calendar": "workspace:*",
+    "@glob-ui/core": "workspace:*",
     "@glob-ui/hooks": "workspace:*",
     "@glob-ui/popover": "workspace:*",
+    "@glob-ui/recipes": "workspace:*",
     "@glob-ui/slot": "workspace:*",
     "@glob-ui/utils": "workspace:*"
   },

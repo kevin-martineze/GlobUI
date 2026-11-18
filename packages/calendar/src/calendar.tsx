@@ -3,13 +3,35 @@
 import { forwardRef, useEffect, useId, useRef, useState } from "react"
 import { cn } from "@glob-ui/utils"
 import { useControllableState } from "@glob-ui/hooks"
-import { addDays, addMonths, compareISODate, daysInMonth, parseISODate, todayISODate } from "@glob-ui/core"
+import {
+  buildCalendarWeeks,
+  calendarKeyTarget,
+  compareISODate,
+  monthKey,
+  monthStart,
+  parseISODate,
+  shiftMonth,
+  todayISODate,
+  type DateRange,
+} from "@glob-ui/core"
+import {
+  CALENDAR_CELL_CLASSES,
+  CALENDAR_CLASSES,
+  CALENDAR_EMPTY_CELL_CLASSES,
+  CALENDAR_GRID_CLASSES,
+  CALENDAR_HEADING_CLASSES,
+  CALENDAR_MONTH_CLASSES,
+  CALENDAR_MONTHS_CLASSES,
+  CALENDAR_MONTHS_LAYOUT_CLASSES,
+  CALENDAR_NAV_BUTTON_CLASSES,
+  CALENDAR_NAV_CLASSES,
+  CALENDAR_NAV_ICON_CLASSES,
+  CALENDAR_WEEKDAY_CLASSES,
+  calendarDayClasses,
+} from "@glob-ui/recipes"
 import { defaultWeekStart, useHydrated, useResolvedLocale, weekdayNames } from "./locale"
 
-export interface DateRange {
-  from: string | null
-  to: string | null
-}
+export type { DateRange }
 
 interface CalendarBaseProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "defaultValue" | "onChange"> {
   /** The first day of the week, 0 (Sunday) to 6. Default: from the locale. */
@@ -54,66 +76,6 @@ export interface CalendarRangeProps extends CalendarBaseProps {
 }
 
 export type CalendarProps = CalendarSingleProps | CalendarRangeProps
-
-const monthKey = (iso: string) => iso.slice(0, 7)
-const monthStart = (key: string) => `${key}-01`
-const shiftMonth = (key: string, n: number) => monthKey(addMonths(monthStart(key), n))
-
-/** Start of the week that contains `iso`. */
-function startOfWeek(iso: string, weekStart: number) {
-  const offset = (parseISODate(iso).getDay() - weekStart + 7) % 7
-  return addDays(iso, -offset)
-}
-
-interface Cell {
-  iso: string
-  inMonth: boolean
-}
-
-/** The weeks of a month, as rows of seven cells. Cells from the adjacent months are marked `inMonth: false`. */
-function buildWeeks(key: string, weekStart: number): Cell[][] {
-  const first = monthStart(key)
-  const offset = (parseISODate(first).getDay() - weekStart + 7) % 7
-  const total = Math.ceil((offset + daysInMonth(key)) / 7) * 7
-  const start = addDays(first, -offset)
-  const cells = Array.from({ length: total }, (_, i) => {
-    const iso = addDays(start, i)
-    return { iso, inMonth: monthKey(iso) === key }
-  })
-  const weeks: Cell[][] = []
-  for (let i = 0; i < cells.length; i += 7) weeks.push(cells.slice(i, i + 7))
-  return weeks
-}
-
-/** Classes of one day button. Exported for DatePicker's styling of the same states. */
-function dayClasses({
-  selected,
-  inRange,
-  rangeEdge,
-  today,
-  disabled,
-  outside,
-}: {
-  selected: boolean
-  inRange: boolean
-  rangeEdge: boolean
-  today: boolean
-  disabled: boolean
-  outside: boolean
-}) {
-  return cn(
-    "inline-flex size-9 items-center justify-center rounded-glob-md text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring motion-reduce:transition-none",
-    selected
-      ? "bg-glob-primary font-medium text-glob-primary-foreground hover:opacity-90"
-      : inRange
-        ? cn("bg-glob-primary-light text-glob-text", !rangeEdge && "rounded-none")
-        : "text-glob-text hover:bg-glob-surface-hover",
-    today && !selected && "font-semibold ring-1 ring-inset ring-glob-border",
-    // Muted, not faded: the text stays above 4.5:1. Disabled days are struck through.
-    outside && "text-glob-text-secondary",
-    disabled && "cursor-not-allowed text-glob-text-secondary line-through hover:bg-transparent"
-  )
-}
 
 /**
  * A month grid for picking one day, or a range of days. Values are "YYYY-MM-DD" strings.
@@ -228,35 +190,8 @@ const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) => {
     if (e.defaultPrevented) return
     const iso = (e.target as HTMLElement).dataset.iso
     if (!iso) return
-    let next: string
-    switch (e.key) {
-      case "ArrowLeft":
-        next = addDays(iso, -1)
-        break
-      case "ArrowRight":
-        next = addDays(iso, 1)
-        break
-      case "ArrowUp":
-        next = addDays(iso, -7)
-        break
-      case "ArrowDown":
-        next = addDays(iso, 7)
-        break
-      case "Home":
-        next = startOfWeek(iso, weekStart)
-        break
-      case "End":
-        next = addDays(startOfWeek(iso, weekStart), 6)
-        break
-      case "PageUp":
-        next = addMonths(iso, e.shiftKey ? -12 : -1)
-        break
-      case "PageDown":
-        next = addMonths(iso, e.shiftKey ? 12 : 1)
-        break
-      default:
-        return
-    }
+    const next = calendarKeyTarget(e.key, iso, { shiftKey: e.shiftKey, weekStart })
+    if (next === null) return
     e.preventDefault()
     moveFocus(next)
   }
@@ -285,7 +220,7 @@ const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) => {
         else if (ref) ref.current = node
       }}
       role="group"
-      className={cn("flex flex-col gap-3 text-sm text-glob-text", className)}
+      className={cn(CALENDAR_CLASSES, className)}
       onKeyDown={onGridKeyDown}
       {...rest}
       onPointerLeave={(e) => {
@@ -293,15 +228,15 @@ const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) => {
         setHoverISO(null)
       }}
     >
-      <div className="flex items-center justify-between">
+      <div className={CALENDAR_NAV_CLASSES}>
         <button
           type="button"
           aria-label="Previous month"
           disabled={prevDisabled}
           onClick={() => setVisibleKey(clampKey(shiftMonth(visibleKey, -1)))}
-          className="inline-flex size-8 items-center justify-center rounded-glob-sm text-glob-text-secondary transition-colors hover:bg-glob-surface-hover hover:text-glob-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:pointer-events-none disabled:opacity-40"
+          className={CALENDAR_NAV_BUTTON_CLASSES}
         >
-          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={CALENDAR_NAV_ICON_CLASSES}>
             <path d="M15 18l-6-6 6-6" />
           </svg>
         </button>
@@ -310,40 +245,40 @@ const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) => {
           aria-label="Next month"
           disabled={nextDisabled}
           onClick={() => setVisibleKey(clampKey(shiftMonth(visibleKey, 1)))}
-          className="inline-flex size-8 items-center justify-center rounded-glob-sm text-glob-text-secondary transition-colors hover:bg-glob-surface-hover hover:text-glob-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:pointer-events-none disabled:opacity-40"
+          className={CALENDAR_NAV_BUTTON_CLASSES}
         >
-          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={CALENDAR_NAV_ICON_CLASSES}>
             <path d="M9 18l6-6-6-6" />
           </svg>
         </button>
       </div>
 
-      <div className={cn("flex gap-4", numberOfMonths === 2 ? "flex-col sm:flex-row" : "flex-col")}>
+      <div className={cn(CALENDAR_MONTHS_CLASSES, CALENDAR_MONTHS_LAYOUT_CLASSES[numberOfMonths])}>
         {months.map((key) => {
           const headingId = `${baseId}-${key}`
           const [year, monthNumber] = key.split("-").map(Number)
           const heading = headingFormat.format(new Date(year, monthNumber - 1, 1))
           return (
-            <div key={key} className="flex flex-col gap-2">
-              <div id={headingId} aria-live="polite" className="text-center text-sm font-semibold">
+            <div key={key} className={CALENDAR_MONTH_CLASSES}>
+              <div id={headingId} aria-live="polite" className={CALENDAR_HEADING_CLASSES}>
                 {heading}
               </div>
-              <table role="grid" aria-labelledby={headingId} className="border-separate border-spacing-0.5">
+              <table role="grid" aria-labelledby={headingId} className={CALENDAR_GRID_CLASSES}>
                 <thead>
                   <tr role="row">
                     {names.map((name) => (
-                      <th key={name.long} role="columnheader" scope="col" aria-label={name.long} className="size-9 p-0 text-center text-xs font-medium text-glob-text-secondary">
+                      <th key={name.long} role="columnheader" scope="col" aria-label={name.long} className={CALENDAR_WEEKDAY_CLASSES}>
                         {name.short}
                       </th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
-                  {buildWeeks(key, weekStart).map((week) => (
+                  {buildCalendarWeeks(key, weekStart).map((week) => (
                     <tr key={week[0].iso} role="row">
                       {week.map(({ iso, inMonth }) => {
                         if (!inMonth && !showOutsideDays) {
-                          return <td key={iso} role="gridcell" className="size-9 p-0" />
+                          return <td key={iso} role="gridcell" className={CALENDAR_EMPTY_CELL_CLASSES} />
                         }
                         const day = Number(iso.slice(8))
                         const disabled = isDisabledDay(iso)
@@ -352,7 +287,7 @@ const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) => {
                         const rangeEdge = iso === shadeStart || iso === shadeEnd
                         const isStop = inMonth && iso === tabStop
                         return (
-                          <td key={iso} role="gridcell" aria-selected={selected} className="p-0">
+                          <td key={iso} role="gridcell" aria-selected={selected} className={CALENDAR_CELL_CLASSES}>
                             <button
                               type="button"
                               data-iso={iso}
@@ -378,7 +313,7 @@ const Calendar = forwardRef<HTMLDivElement, CalendarProps>((props, ref) => {
                               onPointerEnter={() => {
                                 if (isRange && rangeValue.from !== null && rangeValue.to === null) setHoverISO(iso)
                               }}
-                              className={dayClasses({ selected, inRange: inShade, rangeEdge, today: iso === today, disabled, outside: !inMonth })}
+                              className={cn(...calendarDayClasses({ selected, inRange: inShade, rangeEdge, today: iso === today, disabled, outside: !inMonth }))}
                             >
                               {day}
                             </button>

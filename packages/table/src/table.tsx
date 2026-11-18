@@ -1,16 +1,25 @@
 import { forwardRef } from "react"
 import { cn } from "@glob-ui/utils"
+import {
+  TABLE_ALIGN_CLASSES,
+  TABLE_BODY_CLASSES,
+  TABLE_CAPTION_CLASSES,
+  TABLE_CELL_CLASSES,
+  TABLE_CLASSES,
+  TABLE_CONTAINER_CLASSES,
+  TABLE_CONTAINER_FOCUSABLE_CLASSES,
+  TABLE_DENSITY_CLASSES,
+  TABLE_FOOTER_CLASSES,
+  TABLE_HEAD_CLASSES,
+  TABLE_HEADER_CLASSES,
+  TABLE_ROW_CLASSES,
+  TABLE_STICKY_HEADER_CLASSES,
+  TABLE_STRIPED_CLASSES,
+} from "@glob-ui/recipes"
 
 type Density = "compact" | "default" | "comfortable"
 
 // Padding is set on the table with descendant selectors, so the cells need no context: this module stays server-safe.
-const densityClasses: Record<Density, string> = {
-  compact: "[&_th]:px-2 [&_th]:py-1 [&_td]:px-2 [&_td]:py-1",
-  default: "[&_th]:px-3 [&_th]:py-2 [&_td]:px-3 [&_td]:py-2",
-  comfortable: "[&_th]:px-4 [&_th]:py-3 [&_td]:px-4 [&_td]:py-3",
-}
-
-const alignClass = { left: "text-left", center: "text-center", right: "text-right" } as const
 
 export interface TableProps extends React.TableHTMLAttributes<HTMLTableElement> {
   /** Cell padding. Default "default". */
@@ -40,20 +49,15 @@ const Table = forwardRef<HTMLTableElement, TableProps>(
           role={focusable ? "region" : undefined}
           aria-label={scrollLabel}
           tabIndex={focusable ? 0 : undefined}
-          className={cn(
-            "relative w-full overflow-x-auto rounded-glob-md border border-glob-border",
-            focusable && "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring",
-            containerClassName
-          )}
+          className={cn(TABLE_CONTAINER_CLASSES, focusable && TABLE_CONTAINER_FOCUSABLE_CLASSES, containerClassName)}
         >
           <table
             ref={ref}
             className={cn(
-              "w-full caption-bottom border-collapse text-sm text-glob-text",
-              densityClasses[density],
-              striped && "[&_tbody>tr:nth-child(even)]:bg-glob-surface-secondary",
-              // Sticky header: the wrapper is the scroll container, so the header sticks inside it.
-              stickyHeader && "[&_thead]:sticky [&_thead]:top-0 [&_thead]:z-10 [&_thead]:bg-glob-surface",
+              TABLE_CLASSES,
+              TABLE_DENSITY_CLASSES[density],
+              striped && TABLE_STRIPED_CLASSES,
+              stickyHeader && TABLE_STICKY_HEADER_CLASSES,
               className
             )}
             {...props}
@@ -65,17 +69,17 @@ const Table = forwardRef<HTMLTableElement, TableProps>(
 Table.displayName = "Table"
 
 const TableHeader = forwardRef<HTMLTableSectionElement, React.HTMLAttributes<HTMLTableSectionElement>>(({ className, ...props }, ref) => (
-  <thead ref={ref} className={cn("border-b border-glob-border", className)} {...props} />
+  <thead ref={ref} className={cn(TABLE_HEADER_CLASSES, className)} {...props} />
 ))
 TableHeader.displayName = "TableHeader"
 
 const TableBody = forwardRef<HTMLTableSectionElement, React.HTMLAttributes<HTMLTableSectionElement>>(({ className, ...props }, ref) => (
-  <tbody ref={ref} className={cn("[&_tr:last-child]:border-0", className)} {...props} />
+  <tbody ref={ref} className={cn(TABLE_BODY_CLASSES, className)} {...props} />
 ))
 TableBody.displayName = "TableBody"
 
 const TableFooter = forwardRef<HTMLTableSectionElement, React.HTMLAttributes<HTMLTableSectionElement>>(({ className, ...props }, ref) => (
-  <tfoot ref={ref} className={cn("border-t border-glob-border bg-glob-surface-secondary font-medium", className)} {...props} />
+  <tfoot ref={ref} className={cn(TABLE_FOOTER_CLASSES, className)} {...props} />
 ))
 TableFooter.displayName = "TableFooter"
 
@@ -85,10 +89,7 @@ export type TableRowProps = React.HTMLAttributes<HTMLTableRowElement>
 const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(({ className, ...props }, ref) => (
   <tr
     ref={ref}
-    className={cn(
-      "border-b border-glob-border transition-colors hover:bg-glob-surface-hover data-[state=selected]:bg-glob-primary-light",
-      className
-    )}
+    className={cn(TABLE_ROW_CLASSES, className)}
     {...props}
   />
 ))
@@ -102,7 +103,7 @@ export interface TableHeadProps extends React.ThHTMLAttributes<HTMLTableCellElem
 const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(({ className, align = "left", ...props }, ref) => (
   <th
     ref={ref}
-    className={cn("px-3 py-2 font-medium text-glob-text-secondary [&:has([role=checkbox])]:pr-0", alignClass[align], className)}
+    className={cn(TABLE_HEAD_CLASSES, TABLE_ALIGN_CLASSES[align], className)}
     {...props}
   />
 ))
@@ -115,14 +116,14 @@ export interface TableCellProps extends React.TdHTMLAttributes<HTMLTableCellElem
 const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(({ className, align = "left", ...props }, ref) => (
   <td
     ref={ref}
-    className={cn("px-3 py-2 align-middle [&:has([role=checkbox])]:pr-0", alignClass[align], className)}
+    className={cn(TABLE_CELL_CLASSES, TABLE_ALIGN_CLASSES[align], className)}
     {...props}
   />
 ))
 TableCell.displayName = "TableCell"
 
 const TableCaption = forwardRef<HTMLTableCaptionElement, React.HTMLAttributes<HTMLTableCaptionElement>>(({ className, ...props }, ref) => (
-  <caption ref={ref} className={cn("mt-4 text-sm text-glob-text-secondary", className)} {...props} />
+  <caption ref={ref} className={cn(TABLE_CAPTION_CLASSES, className)} {...props} />
 ))
 TableCaption.displayName = "TableCaption"
 

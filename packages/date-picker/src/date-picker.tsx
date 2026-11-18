@@ -3,7 +3,24 @@
 import { forwardRef, useId, useMemo, useRef, useState } from "react"
 import { cn } from "@glob-ui/utils"
 import { useControllableState } from "@glob-ui/hooks"
-import { Calendar, parseISODate, useResolvedLocale, type DateRange } from "@glob-ui/calendar"
+import { Calendar, useResolvedLocale, type DateRange } from "@glob-ui/calendar"
+import { formatDateValue } from "@glob-ui/core"
+import {
+  DATE_PICKER_BODY_CLASSES,
+  DATE_PICKER_CLASSES,
+  DATE_PICKER_CLEAR_CLASSES,
+  DATE_PICKER_CLEAR_ICON_CLASSES,
+  DATE_PICKER_CONTENT_CLASSES,
+  DATE_PICKER_ICON_CLASSES,
+  DATE_PICKER_PLACEHOLDER_CLASSES,
+  DATE_PICKER_PRESET_CLASSES,
+  DATE_PICKER_PRESETS_CLASSES,
+  DATE_PICKER_SIZE,
+  DATE_PICKER_TRIGGER_CLASSES,
+  DATE_PICKER_TRIGGER_CLEARABLE_CLASSES,
+  DATE_PICKER_VALUE_CLASSES,
+  DATE_PICKER_VARIANT,
+} from "@glob-ui/recipes"
 import { Popover, PopoverContent, PopoverTrigger } from "@glob-ui/popover"
 import { composeRefs } from "@glob-ui/slot"
 
@@ -56,28 +73,6 @@ export interface DatePickerRangeProps extends DatePickerBaseProps {
 
 export type DatePickerProps = DatePickerSingleProps | DatePickerRangeProps
 
-const sizeClasses = { sm: "h-8 text-xs", md: "h-10 text-sm", lg: "h-12 text-base" }
-const variantClasses = {
-  default: "border-glob-border bg-glob-surface",
-  ghost: "border-transparent bg-transparent hover:bg-glob-surface-hover",
-  outline: "border-glob-border bg-transparent hover:bg-glob-surface-hover",
-}
-
-/** The text shown in the trigger: "Nov 9, 2026", or "Nov 3 – Nov 9, 2026" for a range. */
-function formatValue(value: string | DateRange | null, isRange: boolean, locale: string): string | null {
-  const format = new Intl.DateTimeFormat(locale, { dateStyle: "medium" })
-  if (!isRange) return typeof value === "string" ? format.format(parseISODate(value)) : null
-  const range = value as DateRange | null
-  if (!range?.from) return null
-  const from = format.format(parseISODate(range.from))
-  if (!range.to) return `${from} – …`
-  const to = parseISODate(range.to)
-  const fromDate = parseISODate(range.from)
-  // formatRange collapses shared parts ("Nov 3 – 9, 2026"); fall back to two dates where it is missing.
-  const withRange = format as Intl.DateTimeFormat & { formatRange?: (a: Date, b: Date) => string }
-  return typeof withRange.formatRange === "function" ? withRange.formatRange(fromDate, to) : `${from} – ${format.format(to)}`
-}
-
 /** A date field. The value is an ISO date ("YYYY-MM-DD") or a range of them, and the calendar opens in a popover. */
 const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>((props, ref) => {
   const {
@@ -128,7 +123,7 @@ const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>((props, ref) =
   )
 
   const current: string | DateRange | null = isRange ? range : single
-  const text = formatValue(current, isRange, locale)
+  const text = formatDateValue(current, isRange, locale)
   const hasValue = isRange ? range.from !== null : single !== null
   const months = numberOfMonths ?? (isRange ? 2 : 1)
 
@@ -156,7 +151,7 @@ const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>((props, ref) =
   const hiddenValue = isRange ? (range.from && range.to ? `${range.from}/${range.to}` : "") : (single ?? "")
 
   return (
-    <div className="relative w-full">
+    <div className={DATE_PICKER_CLASSES}>
       {/* One Popover for the trigger and the content: they share its context. */}
       <Popover open={open} onOpenChange={setOpen} placement="bottom-start" offset={6}>
         {/* PopoverTrigger renders the button and forwards these props (no asChild: the registry transform rewrites it). */}
@@ -171,18 +166,17 @@ const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>((props, ref) =
             aria-labelledby={[ariaLabelledBy, valueId].filter(Boolean).join(" ")}
             aria-label={ariaLabel}
             className={cn(
-              "flex w-full cursor-pointer items-center justify-between gap-2 rounded-glob-md border px-3 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50 data-[invalid=true]:border-glob-danger",
-              sizeClasses[size],
-              variantClasses[variant],
-              // Room for the clear button, which sits beside the trigger (never inside it).
-              hasValue && clearable && "pr-16",
+              DATE_PICKER_TRIGGER_CLASSES,
+              DATE_PICKER_SIZE[size],
+              DATE_PICKER_VARIANT[variant],
+              hasValue && clearable && DATE_PICKER_TRIGGER_CLEARABLE_CLASSES,
               className
             )}
           >
-            <span id={valueId} className={cn("truncate", text === null && "text-glob-text-secondary")}>
+            <span id={valueId} className={cn(DATE_PICKER_VALUE_CLASSES, text === null && DATE_PICKER_PLACEHOLDER_CLASSES)}>
               {text ?? placeholder ?? (isRange ? "Pick a date range" : "Pick a date")}
             </span>
-            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4 shrink-0 text-glob-text-secondary">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={DATE_PICKER_ICON_CLASSES}>
               <rect x="3" y="4" width="18" height="18" rx="2" />
               <path d="M16 2v4M8 2v4M3 10h18" />
             </svg>
@@ -193,26 +187,26 @@ const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>((props, ref) =
           type="button"
           aria-label="Clear date"
           onClick={clear}
-          className="absolute right-9 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-glob-sm text-glob-text-secondary hover:bg-glob-surface-hover hover:text-glob-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring"
+          className={DATE_PICKER_CLEAR_CLASSES}
         >
-          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3.5 w-3.5">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={DATE_PICKER_CLEAR_ICON_CLASSES}>
             <path d="M18 6L6 18M6 6l12 12" />
           </svg>
         </button>
       )}
 
         {/* Named explicitly: the Popover's default name points at its own trigger id, which Field may replace. */}
-        <PopoverContent className="w-fit p-3" aria-labelledby={undefined} aria-label={isRange ? "Choose a date range" : "Choose a date"}>
+        <PopoverContent className={DATE_PICKER_CONTENT_CLASSES} aria-labelledby={undefined} aria-label={isRange ? "Choose a date range" : "Choose a date"}>
           {open && (
-            <div className="flex flex-col gap-3 sm:flex-row">
+            <div className={DATE_PICKER_BODY_CLASSES}>
               {presets && presets.length > 0 && (
-                <div role="group" aria-label="Presets" className="flex flex-wrap gap-1 sm:w-36 sm:flex-col">
+                <div role="group" aria-label="Presets" className={DATE_PICKER_PRESETS_CLASSES}>
                   {presets.map((preset) => (
                     <button
                       key={preset.label}
                       type="button"
                       onClick={() => applyPreset(preset)}
-                      className="rounded-glob-sm px-2 py-1.5 text-left text-sm text-glob-text transition-colors hover:bg-glob-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring"
+                      className={DATE_PICKER_PRESET_CLASSES}
                     >
                       {preset.label}
                     </button>

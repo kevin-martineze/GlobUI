@@ -32,6 +32,7 @@
   "dependencies": {
     "@glob-ui/core": "workspace:*",
     "@glob-ui/hooks": "workspace:*",
+    "@glob-ui/recipes": "workspace:*",
     "@glob-ui/utils": "workspace:*"
   },
   "devDependencies": {

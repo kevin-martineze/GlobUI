@@ -1,6 +1,6 @@
 # @glob-ui/svelte
 
-Svelte 5 components for GlobUI: forms and primitives, overlays, navigation, dialog, sheet and layouts, with the same API and behaviour as the React packages.
+Svelte 5 components for GlobUI: forms and primitives, overlays, navigation, data and dates, dialog, sheet and layouts, with the same API and behaviour as the React packages.
 
 ## Install
 
@@ -18,11 +18,14 @@ Each component family is its own subpath, for example `@glob-ui/svelte/button`.
 - Display: `badge`, `card`, `alert`, `avatar` (Avatar and AvatarGroup), `progress`, `separator`, `skeleton`, `spinner`.
 - Overlays: `dialog`, `sheet`, `alert-dialog`, `popover`, `tooltip`, `dropdown-menu`, `toast`, `select`, `combobox`, `multi-select`, `command`.
 - Navigation: `tabs`, `accordion`, `pagination` (with `getPageRange`).
+- Data and dates: `table`, `data-table`, `calendar`, `date-picker`, `phone-input`.
 - Layouts: `layout`, `app-shell-layout`, `page-layout`, `stacked-layout`.
 
 Two-way state uses `bind:`, for example `<Checkbox bind:checked />`, `<Slider bind:value />` or `<RadioGroup bind:value>`, `<Tabs bind:value>` or `<Accordion bind:value>`. Without a binding, Switch, RadioGroup, Slider, Toggle, ToggleGroup and Segmented keep their own state, starting from `defaultChecked`, `defaultValue` or `defaultPressed`. A control inside a `Field` takes its id, label, description and error from the field.
 
-Triggers that render your own element take a `child` snippet that receives the attributes to spread, a ref included: `{#snippet child(props)}<Button {...props}>Filters</Button>{/snippet}`. The Tooltip always takes one. Pagination links take one too, for router links or buttons. `toast()` works from anywhere once a `<Toaster />` is mounted.
+Triggers that render your own element take a `child` snippet that receives the attributes to spread, a ref included: `{#snippet child(props)}<Button {...props}>Filters</Button>{/snippet}`. The Tooltip always takes one. Pagination links take one too, for router links or buttons.
+
+`DataTable` runs on `@tanstack/svelte-table`. Build its columns with `createDataTableColumnHelper`, and render a component or snippet in a cell with `renderComponent` or `renderSnippet`, both exported from `@glob-ui/svelte/data-table`. Extra classes for the table's scroll wrapper go in `containerClass` (React's `containerClassName`). `toast()` works from anywhere once a `<Toaster />` is mounted.
 
 ## Tailwind
 

@@ -4,18 +4,32 @@ import { useId, useMemo, useRef, useState } from "react"
 import { cn } from "@glob-ui/utils"
 import { useFloatingPanel, useListbox } from "@glob-ui/hooks"
 import { countries } from "@glob-ui/core"
+import {
+  COUNTRY_CHEVRON_CLASSES,
+  COUNTRY_DIAL_CLASSES,
+  COUNTRY_EMPTY_CLASSES,
+  COUNTRY_FLAG_CLASSES,
+  COUNTRY_LIST_CLASSES,
+  COUNTRY_NAME_CLASSES,
+  COUNTRY_OPTION_ACTIVE_CLASSES,
+  COUNTRY_OPTION_CLASSES,
+  COUNTRY_OPTION_SELECTED_CLASSES,
+  COUNTRY_PANEL_CLASSES,
+  COUNTRY_SEARCH_INPUT_CLASSES,
+  COUNTRY_SEARCH_WRAPPER_CLASSES,
+  COUNTRY_SELECT_CLASSES,
+  COUNTRY_TRIGGER_CLASSES,
+  COUNTRY_TRIGGER_CODE_CLASSES,
+  COUNTRY_TRIGGER_SIZE,
+  FLOATING_TRANSITION_CLASSES,
+  LISTBOX_CHEVRON_OPEN_CLASSES,
+} from "@glob-ui/recipes"
 
 interface CountrySelectProps {
   value: string
   onChange: (iso: string) => void
   size?: "sm" | "md" | "lg"
   disabled?: boolean
-}
-
-const sizeStyles = {
-  sm: "h-8 text-xs",
-  md: "h-10 text-sm",
-  lg: "h-12 text-base",
 }
 
 export function CountrySelect({ value, onChange, size = "md", disabled }: CountrySelectProps) {
@@ -95,7 +109,7 @@ export function CountrySelect({ value, onChange, size = "md", disabled }: Countr
   }
 
   return (
-    <div className="relative">
+    <div className={COUNTRY_SELECT_CLASSES}>
       <div
         ref={setTrigger}
         role="combobox"
@@ -114,15 +128,12 @@ export function CountrySelect({ value, onChange, size = "md", disabled }: Countr
           triggerHandlers.onClick()
         }}
         onKeyDown={onTriggerKeyDown}
-        className={cn(
-          "flex cursor-pointer items-center gap-1 rounded-l-glob-md border border-r-0 border-glob-border bg-glob-surface px-2 text-glob-text transition-colors hover:bg-glob-surface-hover outline-none focus-visible:ring-2 focus-visible:ring-glob-ring aria-disabled:cursor-not-allowed aria-disabled:opacity-50",
-          sizeStyles[size]
-        )}
+        className={cn(COUNTRY_TRIGGER_CLASSES, COUNTRY_TRIGGER_SIZE[size])}
       >
-        <span className="text-base leading-none" aria-hidden="true">{selected.flag}</span>
-        <span className="text-glob-text-secondary">{selected.code}</span>
+        <span className={COUNTRY_FLAG_CLASSES} aria-hidden="true">{selected.flag}</span>
+        <span className={COUNTRY_TRIGGER_CODE_CLASSES}>{selected.code}</span>
         <svg
-          className={cn("h-3 w-3 text-glob-text-secondary transition-transform", open && "rotate-180")}
+          className={cn(COUNTRY_CHEVRON_CLASSES, open && LISTBOX_CHEVRON_OPEN_CLASSES)}
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -137,12 +148,9 @@ export function CountrySelect({ value, onChange, size = "md", disabled }: Countr
         ref={setPanel}
         popover="auto"
         style={floatingStyles}
-        className={cn(
-          "m-0 w-72 overflow-visible rounded-glob-md border border-glob-border bg-glob-surface text-sm text-glob-text shadow-glob-md outline-none",
-          "opacity-0 transition-[opacity,overlay,display] transition-discrete duration-150 open:opacity-100 starting:open:opacity-0 motion-reduce:transition-none"
-        )}
+        className={cn(COUNTRY_PANEL_CLASSES, FLOATING_TRANSITION_CLASSES)}
       >
-        <div className="border-b border-glob-border p-2">
+        <div className={COUNTRY_SEARCH_WRAPPER_CLASSES}>
           <input
             ref={searchRef}
             type="text"
@@ -155,10 +163,10 @@ export function CountrySelect({ value, onChange, size = "md", disabled }: Countr
             aria-autocomplete="list"
             aria-activedescendant={listbox.activeDescendant}
             autoComplete="off"
-            className="w-full rounded-glob-sm border border-glob-border bg-glob-surface-secondary px-2 py-1.5 text-sm text-glob-text placeholder:text-glob-text-secondary outline-none focus:ring-1 focus:ring-glob-ring"
+            className={COUNTRY_SEARCH_INPUT_CLASSES}
           />
         </div>
-        <div id={listId} role="listbox" aria-label="Countries" className="relative max-h-60 overflow-y-auto p-1">
+        <div id={listId} role="listbox" aria-label="Countries" className={COUNTRY_LIST_CLASSES}>
           {filtered.map((country) => {
             const isSelected = country.iso === selected.iso
             const isActive = listbox.activeKey === country.iso
@@ -171,22 +179,17 @@ export function CountrySelect({ value, onChange, size = "md", disabled }: Countr
                 onMouseDown={(e) => e.preventDefault()}
                 onPointerMove={() => listbox.setActiveKey(country.iso)}
                 onClick={() => commit(country.iso)}
-                className={cn(
-                  "flex w-full cursor-pointer items-center gap-3 rounded-glob-sm px-2 py-2 text-left text-sm select-none",
-                  isActive && "bg-glob-surface-hover",
-                  // The selected row is marked by font weight; the fill colour as text fails contrast on white.
-                  isSelected && "font-medium"
-                )}
+                className={cn(COUNTRY_OPTION_CLASSES, isActive && COUNTRY_OPTION_ACTIVE_CLASSES, isSelected && COUNTRY_OPTION_SELECTED_CLASSES)}
               >
-                <span className="text-base leading-none" aria-hidden="true">{country.flag}</span>
-                <span className="flex-1">{country.name}</span>
-                <span className="text-glob-text">{country.code}</span>
+                <span className={COUNTRY_FLAG_CLASSES} aria-hidden="true">{country.flag}</span>
+                <span className={COUNTRY_NAME_CLASSES}>{country.name}</span>
+                <span className={COUNTRY_DIAL_CLASSES}>{country.code}</span>
               </div>
             )
           })}
         </div>
         {filtered.length === 0 && (
-          <div role="status" className="px-3 py-4 text-center text-sm text-glob-text-secondary">
+          <div role="status" className={COUNTRY_EMPTY_CLASSES}>
             No countries found
           </div>
         )}

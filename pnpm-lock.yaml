@@ -792,6 +792,9 @@ importers:
       '@glob-ui/hooks':
         specifier: workspace:*
         version: link:../hooks
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -924,6 +927,9 @@ importers:
       '@glob-ui/input':
         specifier: workspace:*
         version: link:../input
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/select':
         specifier: workspace:*
         version: link:../select
@@ -952,12 +958,18 @@ importers:
       '@glob-ui/calendar':
         specifier: workspace:*
         version: link:../calendar
+      '@glob-ui/core':
+        specifier: workspace:*
+        version: link:../core
       '@glob-ui/hooks':
         specifier: workspace:*
         version: link:../hooks
       '@glob-ui/popover':
         specifier: workspace:*
         version: link:../popover
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/slot':
         specifier: workspace:*
         version: link:../slot
@@ -1489,6 +1501,9 @@ importers:
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
+      '@tanstack/svelte-table':
+        specifier: 9.3.1
+        version: 9.3.1(svelte@5.57.3(@typescript-eslint/types@8.60.0))
     devDependencies:
       '@sveltejs/package':
         specifier: ^3.0.2
@@ -1524,6 +1539,9 @@ importers:
 
   packages/table:
     dependencies:
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -4452,6 +4470,17 @@ packages:
 
   '@tanstack/store@0.11.2':
     resolution: {integrity: sha512-sJ4mjol8uQsHV0gOJzzjwXfh2Fwm+Sz0+8deqiTm4jGbMdjzNSW+xZCFm0kUa870uhd8yi+DpKnZb5Kc4apa0Q==}
+
+  '@tanstack/svelte-store@0.12.3':
+    resolution: {integrity: sha512-mF0Pe+OUmhMYjbX6jm0Ox6Zdhloi28piFekz6BWJn6oDhEY8SzJsjJKTfcT5/4JS0TSi74tDVWlF/NTM+jtfDw==}
+    peerDependencies:
+      svelte: ^5.0.0
+
+  '@tanstack/svelte-table@9.3.1':
+    resolution: {integrity: sha512-4GenQN3ymVTJvsoRTzK64IlponjX17Db9FL2A+07kjdZBvHqhZiOFspsRqwN4QBmI1+yycnBH5k9w73z8ocUrg==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      svelte: ^5.0.0
 
   '@tanstack/table-core@9.3.1':
     resolution: {integrity: sha512-zQvlxSNi2qGM3L4jh85Z6hqMfdIR5qOfD9KHOU32nuKFJGN0RlJ7UvV1lsPb1fPVhpFYI0VP3jJGxLdLDpTKjQ==}
@@ -11150,6 +11179,17 @@ snapshots:
       - react-dom
 
   '@tanstack/store@0.11.2': {}
+
+  '@tanstack/svelte-store@0.12.3(svelte@5.57.3(@typescript-eslint/types@8.60.0))':
+    dependencies:
+      '@tanstack/store': 0.11.2
+      svelte: 5.57.3(@typescript-eslint/types@8.60.0)
+
+  '@tanstack/svelte-table@9.3.1(svelte@5.57.3(@typescript-eslint/types@8.60.0))':
+    dependencies:
+      '@tanstack/svelte-store': 0.12.3(svelte@5.57.3(@typescript-eslint/types@8.60.0))
+      '@tanstack/table-core': 9.3.1
+      svelte: 5.57.3(@typescript-eslint/types@8.60.0)
 
   '@tanstack/table-core@9.3.1':
     dependencies:
