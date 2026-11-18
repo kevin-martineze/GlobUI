@@ -449,6 +449,9 @@ importers:
       '@glob-ui/hooks':
         specifier: workspace:*
         version: link:../hooks
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/utils':
         specifier: workspace:*
         version: link:../utils
@@ -1169,6 +1172,12 @@ importers:
 
   packages/pagination:
     dependencies:
+      '@glob-ui/core':
+        specifier: workspace:*
+        version: link:../core
+      '@glob-ui/recipes':
+        specifier: workspace:*
+        version: link:../recipes
       '@glob-ui/slot':
         specifier: workspace:*
         version: link:../slot

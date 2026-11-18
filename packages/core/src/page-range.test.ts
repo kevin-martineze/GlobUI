@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest"
-import { getPageRange } from "./get-page-range"
+import { getPageRange } from "./page-range"
 
 describe("getPageRange", () => {
   it("shows the first and last pages with an ellipsis for the hidden middle", () => {

@@ -214,3 +214,47 @@ export function getCommandContext(part: string): CommandContext {
 export function getCommandGroupId(): string | undefined {
   return getContext<string | undefined>(COMMAND_GROUP_KEY)
 }
+
+// Phase 10d-3: navigation.
+export const TABS_KEY = Symbol("glob-ui-tabs")
+export const ACCORDION_KEY = Symbol("glob-ui-accordion")
+export const ACCORDION_ITEM_KEY = Symbol("glob-ui-accordion-item")
+
+export interface TabsContext {
+  readonly value: string | undefined
+  setValue(value: string): void
+  readonly orientation: "horizontal" | "vertical"
+  readonly variant: "underline" | "pill"
+  baseId: string
+}
+
+export function getTabsContext(part: string): TabsContext {
+  const ctx = getContext<TabsContext | undefined>(TABS_KEY)
+  if (!ctx) throw new Error(`${part} must be used inside Tabs`)
+  return ctx
+}
+
+export interface AccordionContext {
+  isOpen(value: string): boolean
+  toggle(value: string): void
+}
+
+export function getAccordionContext(part: string): AccordionContext {
+  const ctx = getContext<AccordionContext | undefined>(ACCORDION_KEY)
+  if (!ctx) throw new Error(`${part} must be used inside Accordion`)
+  return ctx
+}
+
+export interface AccordionItemContext {
+  readonly value: string
+  readonly open: boolean
+  readonly disabled: boolean
+  triggerId: string
+  contentId: string
+}
+
+export function getAccordionItemContext(part: string): AccordionItemContext {
+  const ctx = getContext<AccordionItemContext | undefined>(ACCORDION_ITEM_KEY)
+  if (!ctx) throw new Error(`${part} must be used inside AccordionItem`)
+  return ctx
+}
