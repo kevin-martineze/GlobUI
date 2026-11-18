@@ -1,6 +1,6 @@
 # @glob-ui/svelte
 
-Svelte 5 components for GlobUI: forms and primitives, dialog, sheet and layouts, with the same API and behaviour as the React packages.
+Svelte 5 components for GlobUI: forms and primitives, overlays, dialog, sheet and layouts, with the same API and behaviour as the React packages.
 
 ## Install
 
@@ -16,10 +16,12 @@ Each component family is its own subpath, for example `@glob-ui/svelte/button`.
 
 - Forms: `button`, `input`, `textarea`, `label`, `field`, `checkbox`, `switch`, `radio-group`, `slider`, `toggle` (Toggle and ToggleGroup), `segmented`.
 - Display: `badge`, `card`, `alert`, `avatar` (Avatar and AvatarGroup), `progress`, `separator`, `skeleton`, `spinner`.
-- Overlays: `dialog`, `sheet`.
+- Overlays: `dialog`, `sheet`, `alert-dialog`, `popover`, `tooltip`, `dropdown-menu`, `toast`, `select`, `combobox`, `multi-select`, `command`.
 - Layouts: `layout`, `app-shell-layout`, `page-layout`, `stacked-layout`.
 
 Two-way state uses `bind:`, for example `<Checkbox bind:checked />`, `<Slider bind:value />` or `<RadioGroup bind:value>`. Without a binding, Switch, RadioGroup, Slider, Toggle, ToggleGroup and Segmented keep their own state, starting from `defaultChecked`, `defaultValue` or `defaultPressed`. A control inside a `Field` takes its id, label, description and error from the field.
+
+Triggers that render your own element take a `child` snippet that receives the attributes to spread, a ref included: `{#snippet child(props)}<Button {...props}>Filters</Button>{/snippet}`. The Tooltip always takes one. `toast()` works from anywhere once a `<Toaster />` is mounted.
 
 ## Tailwind
 
