@@ -1,7 +1,7 @@
 {
   "name": "@glob-ui/svelte",
   "version": "0.3.0",
-  "description": "Svelte 5 components for GlobUI: forms, primitives, overlays, navigation, dialog, sheet and layouts, with the same API and behaviour as the React packages.",
+  "description": "Svelte 5 components for GlobUI: forms, primitives, overlays, navigation, data and dates, dialog, sheet and layouts, with the same API and behaviour as the React packages.",
   "type": "module",
   "exports": {
     "./accordion": {
@@ -39,6 +39,11 @@
       "svelte": "./dist/button/index.js",
       "default": "./dist/button/index.js"
     },
+    "./calendar": {
+      "types": "./dist/calendar/index.d.ts",
+      "svelte": "./dist/calendar/index.js",
+      "default": "./dist/calendar/index.js"
+    },
     "./card": {
       "types": "./dist/card/index.d.ts",
       "svelte": "./dist/card/index.js",
@@ -58,6 +63,16 @@
       "types": "./dist/command/index.d.ts",
       "svelte": "./dist/command/index.js",
       "default": "./dist/command/index.js"
+    },
+    "./data-table": {
+      "types": "./dist/data-table/index.d.ts",
+      "svelte": "./dist/data-table/index.js",
+      "default": "./dist/data-table/index.js"
+    },
+    "./date-picker": {
+      "types": "./dist/date-picker/index.d.ts",
+      "svelte": "./dist/date-picker/index.js",
+      "default": "./dist/date-picker/index.js"
     },
     "./dialog": {
       "types": "./dist/dialog/index.d.ts",
@@ -103,6 +118,11 @@
       "types": "./dist/pagination/index.d.ts",
       "svelte": "./dist/pagination/index.js",
       "default": "./dist/pagination/index.js"
+    },
+    "./phone-input": {
+      "types": "./dist/phone-input/index.d.ts",
+      "svelte": "./dist/phone-input/index.js",
+      "default": "./dist/phone-input/index.js"
     },
     "./popover": {
       "types": "./dist/popover/index.d.ts",
@@ -163,6 +183,11 @@
       "types": "./dist/switch/index.d.ts",
       "svelte": "./dist/switch/index.js",
       "default": "./dist/switch/index.js"
+    },
+    "./table": {
+      "types": "./dist/table/index.d.ts",
+      "svelte": "./dist/table/index.js",
+      "default": "./dist/table/index.js"
     },
     "./tabs": {
       "types": "./dist/tabs/index.d.ts",
@@ -232,7 +257,8 @@
   "dependencies": {
     "@glob-ui/core": "workspace:*",
     "@glob-ui/recipes": "workspace:*",
-    "@glob-ui/utils": "workspace:*"
+    "@glob-ui/utils": "workspace:*",
+    "@tanstack/svelte-table": "9.3.1"
   },
   "devDependencies": {
     "@sveltejs/package": "^3.0.2",
