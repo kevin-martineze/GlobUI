@@ -240,3 +240,39 @@ export interface OverlaysAdapter {
     withField?: boolean
   }): Promise<void>
 }
+
+// Phase 10d-3: navigation (Tabs, Accordion, Pagination).
+
+export interface NavigationAdapter {
+  readonly name: string
+  /** The class-parity gallery (see navigation-parity.contract.ts). */
+  navigationGallery(): Promise<void>
+  /**
+   * Tabs with a list labelled "Settings": Account, Password (disabled), Billing and Team, and a panel for each enabled
+   * tab ("Account panel", "Billing panel", "Team panel").
+   */
+  tabs(fixture: {
+    value?: string
+    defaultValue?: string
+    orientation?: "horizontal" | "vertical"
+    onValueChange?: (value: string) => void
+  }): Promise<void>
+  /**
+   * An Accordion with the items Shipping ("Ships in 2 days."), Returns ("30 days.") and Disabled ("Hidden.", disabled),
+   * with the values a, b and c.
+   */
+  accordion(fixture: {
+    type: "single" | "multiple"
+    collapsible?: boolean
+    onValueChange?: (value: string | string[]) => void
+  }): Promise<void>
+  /** Pagination links: Previous (href "/a"), page 1 (href "/a", current), an ellipsis, and Next (href "/b"). */
+  paginationLinks(): Promise<void>
+  /** Pagination with a disabled Previous link whose href would be "/prev". */
+  paginationDisabledPrevious(): Promise<void>
+  /**
+   * Pagination built from buttons (the `asChild` / `child` form) over `pageCount` pages, starting on page 1, with the
+   * page numbers from getPageRange. Previous and Next are disabled at the ends.
+   */
+  paginationControlled(fixture: { pageCount: number; onPage?: (page: number) => void }): Promise<void>
+}
