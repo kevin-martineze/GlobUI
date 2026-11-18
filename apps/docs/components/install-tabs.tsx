@@ -13,9 +13,42 @@ export function registryName(pkg: string) {
   return pkg === "utils" ? "glob-ui-utils" : pkg
 }
 
-/** The copy-code command for one registry item, for example `npx shadcn@latest add .../r/button.json`. */
-export function RegistryCommand({ name }: { name: string }) {
-  return <DynamicCodeBlock lang="bash" code={`npx shadcn@latest add ${siteUrl()}/r/${name}.json`} />
+/**
+ * The copy-code command for one registry item: `npx shadcn@latest add .../r/button.json` for React, or
+ * `npx shadcn-svelte@latest add .../r/svelte/button.json` for the Svelte registry.
+ */
+export function RegistryCommand({ name, framework = "react" }: { name: string; framework?: "react" | "svelte" }) {
+  const code =
+    framework === "svelte"
+      ? `npx shadcn-svelte@latest add ${siteUrl()}/r/svelte/${name}.json`
+      : `npx shadcn@latest add ${siteUrl()}/r/${name}.json`
+  return <DynamicCodeBlock lang="bash" code={code} />
+}
+
+/** What the Svelte copy-code command does, under it. */
+function SvelteCopyNote({ path }: { path: string }) {
+  return (
+    <p className="mt-2 text-sm text-fd-muted-foreground">
+      Copies the source into <code>{path}</code> (shadcn-svelte, after <code>npx shadcn-svelte@latest init</code>).
+      The GlobUI theme and dependencies come with it.
+    </p>
+  )
+}
+
+/** The copy-code command of a template, for React and Svelte. */
+export function TemplateRegistryCommand({ name, slug }: { name: string; slug: string }) {
+  return (
+    <FrameworkTabs
+      react={<RegistryCommand name={name} />}
+      svelte={
+        <>
+          <RegistryCommand name={name} framework="svelte" />
+          <SvelteCopyNote path={`$lib/components/templates/${slug}/`} />
+        </>
+      }
+      className="my-4"
+    />
+  )
 }
 
 const MANAGERS = [
@@ -54,12 +87,18 @@ export function InstallTabs({ pkg }: { pkg: string }) {
     </Tabs>
   )
   const svelte = hasSvelte(pkg) ? (
-    <>
-      <PackageManagerTabs pkg="@glob-ui/svelte" />
-      <p className="mt-2 text-sm text-fd-muted-foreground">
-        One package for every Svelte component. Import this one from <code>@glob-ui/svelte/{pkg}</code>.
-      </p>
-    </>
+    <Tabs items={["Packages", "Copy code"]} defaultValue="Packages">
+      <Tab value="Packages">
+        <PackageManagerTabs pkg="@glob-ui/svelte" />
+        <p className="mt-2 text-sm text-fd-muted-foreground">
+          One package for every Svelte component. Import this one from <code>@glob-ui/svelte/{pkg}</code>.
+        </p>
+      </Tab>
+      <Tab value="Copy code">
+        <RegistryCommand name={pkg} framework="svelte" />
+        <SvelteCopyNote path={`$lib/components/ui/glob-ui/${pkg}/`} />
+      </Tab>
+    </Tabs>
   ) : undefined
   return <FrameworkTabs react={react} svelte={svelte} className="my-4" />
 }

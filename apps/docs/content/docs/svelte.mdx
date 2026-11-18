@@ -32,6 +32,26 @@ Then set up Tailwind v4 once, in the global stylesheet (for example `src/app.css
 
 `@glob-ui/styles` and `@glob-ui/recipes` come with `@glob-ui/svelte`. Adjust the paths to where `node_modules` is, relative to the CSS file.
 
+### Or copy the code
+
+The Svelte copy-code registry works with the [shadcn-svelte](https://shadcn-svelte.com) CLI. Each component is copied into your project as source, with the GlobUI theme tokens and the components it depends on. Set up the CLI once, then add components:
+
+```bash
+npx shadcn-svelte@latest init
+```
+
+<RegistryCommand name="dialog" framework="svelte" />
+
+The components go to `$lib/components/ui/glob-ui/<name>/`, next to one another, and `cn()`, `core` and `recipes` to `$lib/glob-ui/`. Import from there:
+
+```svelte
+<script lang="ts">
+  import { Button } from "$lib/components/ui/glob-ui/button"
+</script>
+```
+
+Copied code needs no `@source` line: Tailwind scans `src/` already.
+
 ## From React to Svelte
 
 The props have the same names and values. Where React and Svelte differ, the Svelte version uses the Svelte way:
@@ -90,4 +110,4 @@ The components render on the server in SvelteKit and hydrate in the browser. Lik
 
 ## Templates
 
-The Dashboard, List page and Detail page [templates](/docs/templates/dashboard) have Svelte versions too. Each template page shows both. A Svelte template is one `.svelte` file: copy it into your project (for example `src/lib/components/templates/`) and edit the constants at the top.
+The Dashboard, List page and Detail page [templates](/docs/templates/dashboard) have Svelte versions too. Each template page shows both. A Svelte template is one `.svelte` file. Add it with the command on its page, which copies it to `$lib/components/templates/<name>/` with the components it uses, then edit the constants at the top.
