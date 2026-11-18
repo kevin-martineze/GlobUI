@@ -4,7 +4,7 @@ import { createContext, forwardRef, useContext, useId, useLayoutEffect, useMemo,
 import { cn } from "@glob-ui/utils"
 import { useControllableState, useRovingFocus } from "@glob-ui/hooks"
 import { composeRefs } from "@glob-ui/slot"
-import { listVariants, triggerVariants } from "@glob-ui/recipes"
+import { listVariants, TABS_CLASSES, TABS_CONTENT_CLASSES, TABS_ORIENTATION_CLASSES, triggerVariants } from "@glob-ui/recipes"
 
 type Orientation = "horizontal" | "vertical"
 type Variant = "underline" | "pill"
@@ -50,7 +50,7 @@ const Tabs = forwardRef<HTMLDivElement, TabsProps>(
         <div
           ref={ref}
           data-orientation={orientation}
-          className={cn("flex gap-4", orientation === "horizontal" ? "flex-col" : "flex-row", className)}
+          className={cn(TABS_CLASSES, TABS_ORIENTATION_CLASSES[orientation], className)}
           {...props}
         />
       </TabsContext.Provider>
@@ -152,7 +152,7 @@ const TabsContent = forwardRef<HTMLDivElement, TabsContentProps>(({ value, class
       // Lets keyboard users reach panels that have no focusable content.
       tabIndex={0}
       data-state={selected ? "active" : "inactive"}
-      className={cn("text-sm text-glob-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring rounded-glob-sm", className)}
+      className={cn(TABS_CONTENT_CLASSES, className)}
       {...props}
     >
       {selected && children}

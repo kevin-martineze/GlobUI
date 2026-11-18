@@ -3,6 +3,18 @@
 import { createContext, forwardRef, useContext, useId, useState } from "react"
 import { cn } from "@glob-ui/utils"
 import { useRovingFocus } from "@glob-ui/hooks"
+import {
+  ACCORDION_CHEVRON_CLASSES,
+  ACCORDION_CLASSES,
+  ACCORDION_CONTENT_BODY_CLASSES,
+  ACCORDION_CONTENT_CLASSES,
+  ACCORDION_CONTENT_CLIP_CLASSES,
+  ACCORDION_CONTENT_CLOSED_CLASSES,
+  ACCORDION_CONTENT_OPEN_CLASSES,
+  ACCORDION_HEADING_CLASSES,
+  ACCORDION_ITEM_CLASSES,
+  ACCORDION_TRIGGER_CLASSES,
+} from "@glob-ui/recipes"
 
 interface AccordionContextValue {
   isOpen: (value: string) => boolean
@@ -84,7 +96,7 @@ const Accordion = forwardRef<HTMLDivElement, AccordionProps>((props, ref) => {
     <AccordionContext.Provider value={{ isOpen: (v) => openValues.includes(v), toggle }}>
       <div
         ref={ref}
-        className={cn("flex flex-col", className)}
+        className={cn(ACCORDION_CLASSES, className)}
         {...roving.rootProps}
         onKeyDown={(e) => {
           onKeyDown?.(e)
@@ -114,7 +126,7 @@ const AccordionItem = forwardRef<HTMLDivElement, AccordionItemProps>(
         <div
           ref={ref}
           data-state={open ? "open" : "closed"}
-          className={cn("border-b border-glob-border", className)}
+          className={cn(ACCORDION_ITEM_CLASSES, className)}
           {...props}
         />
       </ItemContext.Provider>
@@ -135,7 +147,7 @@ const AccordionTrigger = forwardRef<HTMLButtonElement, AccordionTriggerProps>(
     const ctx = useRequired(useContext(AccordionContext), "AccordionTrigger", "Accordion")
     const item = useRequired(useContext(ItemContext), "AccordionTrigger", "AccordionItem")
     return (
-      <Heading className="flex">
+      <Heading className={ACCORDION_HEADING_CLASSES}>
         <button
           ref={ref}
           type="button"
@@ -145,10 +157,7 @@ const AccordionTrigger = forwardRef<HTMLButtonElement, AccordionTriggerProps>(
           disabled={item.disabled}
           data-accordion-trigger=""
           data-state={item.open ? "open" : "closed"}
-          className={cn(
-            "group flex flex-1 items-center justify-between gap-4 py-4 text-left text-sm font-medium text-glob-text transition-colors hover:text-glob-primary-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50",
-            className
-          )}
+          className={cn(ACCORDION_TRIGGER_CLASSES, className)}
           onClick={(e) => {
             onClick?.(e)
             if (!e.defaultPrevented) ctx.toggle(item.value)
@@ -162,7 +171,7 @@ const AccordionTrigger = forwardRef<HTMLButtonElement, AccordionTriggerProps>(
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
-            className="h-4 w-4 shrink-0 text-glob-text-secondary transition-transform duration-200 group-data-[state=open]:rotate-180 motion-reduce:transition-none"
+            className={ACCORDION_CHEVRON_CLASSES}
           >
             <path d="M6 9l6 6 6-6" />
           </svg>
@@ -187,14 +196,11 @@ const AccordionContent = forwardRef<HTMLDivElement, AccordionContentProps>(
         data-state={item.open ? "open" : "closed"}
         // Closed content stays mounted for the animation; inert keeps it out of focus and the a11y tree.
         inert={!item.open}
-        className={cn(
-          "grid transition-[grid-template-rows] duration-200 ease-out motion-reduce:transition-none",
-          item.open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-        )}
+        className={cn(ACCORDION_CONTENT_CLASSES, item.open ? ACCORDION_CONTENT_OPEN_CLASSES : ACCORDION_CONTENT_CLOSED_CLASSES)}
         {...props}
       >
-        <div className="overflow-hidden">
-          <div className={cn("pb-4 text-sm text-glob-text-secondary", className)}>{children}</div>
+        <div className={ACCORDION_CONTENT_CLIP_CLASSES}>
+          <div className={cn(ACCORDION_CONTENT_BODY_CLASSES, className)}>{children}</div>
         </div>
       </div>
     )

@@ -261,3 +261,37 @@ export const COMMAND_SHORTCUT_CLASSES = "ml-auto text-xs tracking-widest text-gl
 // open:flex, not flex: a closed dialog must keep the browser default (display: none), or it renders as a stray line.
 export const COMMAND_DIALOG_CLASSES =
   "m-auto open:flex max-h-[min(70dvh,32rem)] w-[calc(100%-2rem)] max-w-lg flex-col overflow-hidden rounded-glob-lg border border-glob-border bg-glob-surface p-0 text-glob-text shadow-glob-md backdrop:bg-glob-overlay"
+
+// Tabs. The list and trigger variants are in tabs.ts.
+export const TABS_CLASSES = "flex gap-4"
+/** A horizontal list sits above the panels; a vertical one beside them. */
+export const TABS_ORIENTATION_CLASSES = { horizontal: "flex-col", vertical: "flex-row" } as const
+export const TABS_CONTENT_CLASSES =
+  "text-sm text-glob-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring rounded-glob-sm"
+
+// Accordion
+export const ACCORDION_CLASSES = "flex flex-col"
+export const ACCORDION_ITEM_CLASSES = "border-b border-glob-border"
+export const ACCORDION_HEADING_CLASSES = "flex"
+export const ACCORDION_TRIGGER_CLASSES =
+  "group flex flex-1 items-center justify-between gap-4 py-4 text-left text-sm font-medium text-glob-text transition-colors hover:text-glob-primary-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring disabled:cursor-not-allowed disabled:opacity-50"
+export const ACCORDION_CHEVRON_CLASSES =
+  "h-4 w-4 shrink-0 text-glob-text-secondary transition-transform duration-200 group-data-[state=open]:rotate-180 motion-reduce:transition-none"
+/** The content animates its height through grid rows: 0fr closed, 1fr open. */
+export const ACCORDION_CONTENT_CLASSES = "grid transition-[grid-template-rows] duration-200 ease-out motion-reduce:transition-none"
+export const ACCORDION_CONTENT_OPEN_CLASSES = "grid-rows-[1fr]"
+export const ACCORDION_CONTENT_CLOSED_CLASSES = "grid-rows-[0fr]"
+export const ACCORDION_CONTENT_CLIP_CLASSES = "overflow-hidden"
+export const ACCORDION_CONTENT_BODY_CLASSES = "pb-4 text-sm text-glob-text-secondary"
+
+// Pagination
+export const PAGINATION_CLASSES = "mx-auto flex w-full justify-center"
+export const PAGINATION_CONTENT_CLASSES = "flex flex-row flex-wrap items-center gap-1"
+export const PAGINATION_ITEM_CLASSES = "list-none"
+export const PAGINATION_LINK_CLASSES =
+  "inline-flex h-9 min-w-9 items-center justify-center gap-1 rounded-glob-md px-3 text-sm text-glob-text transition-colors hover:bg-glob-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring aria-disabled:pointer-events-none aria-disabled:opacity-50"
+export const PAGINATION_LINK_ACTIVE_CLASSES = "border border-glob-border bg-glob-surface font-medium"
+export const PAGINATION_PREVIOUS_CLASSES = "gap-1 pl-2.5"
+export const PAGINATION_NEXT_CLASSES = "gap-1 pr-2.5"
+export const PAGINATION_ICON_CLASSES = "h-4 w-4"
+export const PAGINATION_ELLIPSIS_CLASSES = "flex h-9 w-9 items-center justify-center text-glob-text-secondary"

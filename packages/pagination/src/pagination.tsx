@@ -1,25 +1,33 @@
 import { forwardRef } from "react"
 import { cn } from "@glob-ui/utils"
 import { Slot } from "@glob-ui/slot"
+import {
+  PAGINATION_CLASSES,
+  PAGINATION_CONTENT_CLASSES,
+  PAGINATION_ELLIPSIS_CLASSES,
+  PAGINATION_ICON_CLASSES,
+  PAGINATION_ITEM_CLASSES,
+  PAGINATION_LINK_ACTIVE_CLASSES,
+  PAGINATION_LINK_CLASSES,
+  PAGINATION_NEXT_CLASSES,
+  PAGINATION_PREVIOUS_CLASSES,
+} from "@glob-ui/recipes"
 
 /** The page navigation landmark. */
 const Pagination = forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>>(({ className, ...props }, ref) => (
-  <nav ref={ref} aria-label="Pagination" className={cn("mx-auto flex w-full justify-center", className)} {...props} />
+  <nav ref={ref} aria-label="Pagination" className={cn(PAGINATION_CLASSES, className)} {...props} />
 ))
 Pagination.displayName = "Pagination"
 
 const PaginationContent = forwardRef<HTMLUListElement, React.HTMLAttributes<HTMLUListElement>>(({ className, ...props }, ref) => (
-  <ul ref={ref} className={cn("flex flex-row flex-wrap items-center gap-1", className)} {...props} />
+  <ul ref={ref} className={cn(PAGINATION_CONTENT_CLASSES, className)} {...props} />
 ))
 PaginationContent.displayName = "PaginationContent"
 
 const PaginationItem = forwardRef<HTMLLIElement, React.LiHTMLAttributes<HTMLLIElement>>(({ className, ...props }, ref) => (
-  <li ref={ref} className={cn("list-none", className)} {...props} />
+  <li ref={ref} className={cn(PAGINATION_ITEM_CLASSES, className)} {...props} />
 ))
 PaginationItem.displayName = "PaginationItem"
-
-const linkBase =
-  "inline-flex h-9 min-w-9 items-center justify-center gap-1 rounded-glob-md px-3 text-sm text-glob-text transition-colors hover:bg-glob-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring aria-disabled:pointer-events-none aria-disabled:opacity-50"
 
 export interface PaginationLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   /** The current page: sets `aria-current="page"` and a bordered look. */
@@ -36,7 +44,7 @@ const PaginationLink = forwardRef<HTMLAnchorElement, PaginationLinkProps>(
       <Comp
         ref={ref}
         aria-current={isActive ? "page" : undefined}
-        className={cn(linkBase, isActive && "border border-glob-border bg-glob-surface font-medium", className)}
+        className={cn(PAGINATION_LINK_CLASSES, isActive && PAGINATION_LINK_ACTIVE_CLASSES, className)}
         {...props}
       />
     )
@@ -64,14 +72,14 @@ const PaginationPrevious = forwardRef<HTMLAnchorElement, PaginationPreviousProps
       role={asChild ? undefined : disabled ? "link" : undefined}
       tabIndex={disabled ? -1 : undefined}
       {...asChildProp(asChild)}
-      className={cn("gap-1 pl-2.5", className)}
+      className={cn(PAGINATION_PREVIOUS_CLASSES, className)}
       {...props}
     >
       {asChild ? (
         children
       ) : (
         <>
-          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={PAGINATION_ICON_CLASSES}>
             <path d="M15 18l-6-6 6-6" />
           </svg>
           {children ?? <span>Previous</span>}
@@ -93,7 +101,7 @@ const PaginationNext = forwardRef<HTMLAnchorElement, PaginationPreviousProps>(
       role={asChild ? undefined : disabled ? "link" : undefined}
       tabIndex={disabled ? -1 : undefined}
       {...asChildProp(asChild)}
-      className={cn("gap-1 pr-2.5", className)}
+      className={cn(PAGINATION_NEXT_CLASSES, className)}
       {...props}
     >
       {asChild ? (
@@ -101,7 +109,7 @@ const PaginationNext = forwardRef<HTMLAnchorElement, PaginationPreviousProps>(
       ) : (
         <>
           {children ?? <span>Next</span>}
-          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={PAGINATION_ICON_CLASSES}>
             <path d="M9 18l6-6-6-6" />
           </svg>
         </>
@@ -115,8 +123,8 @@ export type PaginationEllipsisProps = React.HTMLAttributes<HTMLSpanElement>
 
 /** Stands for hidden pages. Its dots are decorative; a screen reader hears "More pages". */
 const PaginationEllipsis = forwardRef<HTMLSpanElement, PaginationEllipsisProps>(({ className, ...props }, ref) => (
-  <span ref={ref} className={cn("flex h-9 w-9 items-center justify-center text-glob-text-secondary", className)} {...props}>
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
+  <span ref={ref} className={cn(PAGINATION_ELLIPSIS_CLASSES, className)} {...props}>
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" className={PAGINATION_ICON_CLASSES}>
       <circle cx="5" cy="12" r="1.5" />
       <circle cx="12" cy="12" r="1.5" />
       <circle cx="19" cy="12" r="1.5" />
