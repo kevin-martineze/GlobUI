@@ -75,6 +75,8 @@ const svelteApp = makeApp("svelte-consumer", {
   import { Select } from "@glob-ui/svelte/select"
   import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@glob-ui/svelte/dropdown-menu"
   import { Toaster, toast } from "@glob-ui/svelte/toast"
+  import { Tabs, TabsList, TabsTrigger, TabsContent } from "@glob-ui/svelte/tabs"
+  import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationEllipsis, getPageRange } from "@glob-ui/svelte/pagination"
 </script>
 
 <AppShellLayout>
@@ -105,6 +107,23 @@ const svelteApp = makeApp("svelte-consumer", {
     </DropdownMenuContent>
   </DropdownMenu>
   <Button>Apply</Button>
+  <Tabs defaultValue="all">
+    <TabsList aria-label="Orders view">
+      <TabsTrigger value="all">All</TabsTrigger>
+      <TabsTrigger value="open">Open</TabsTrigger>
+    </TabsList>
+    <TabsContent value="all">All orders</TabsContent>
+    <TabsContent value="open">Open orders</TabsContent>
+  </Tabs>
+  <Pagination>
+    <PaginationContent>
+      {#each getPageRange({ page: 1, pageCount: 10 }) as item, i (i)}
+        <PaginationItem>
+          {#if item === "ellipsis"}<PaginationEllipsis />{:else}<PaginationLink href="#orders" isActive={item === 1}>{item}</PaginationLink>{/if}
+        </PaginationItem>
+      {/each}
+    </PaginationContent>
+  </Pagination>
   <Toaster />
 </AppShellLayout>
 `,
@@ -236,4 +255,4 @@ for (const [dir, tool] of apps) {
   if (!out) throw new Error(`${dir}: no dist after build`)
 }
 
-log(`OK: AppShellLayout with a Sheet built for Svelte (plus Field, Input, Checkbox, Button, Select, DropdownMenu, Toaster), Vue, and Angular 22.2.5 and 21.2.26 (${work})`)
+log(`OK: AppShellLayout with a Sheet built for Svelte (plus Field, Input, Checkbox, Button, Select, DropdownMenu, Toaster, Tabs, Pagination), Vue, and Angular 22.2.5 and 21.2.26 (${work})`)
