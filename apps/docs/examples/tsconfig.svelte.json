@@ -1,0 +1,8 @@
+{
+  "extends": "../../../packages/svelte/tsconfig.json",
+  "compilerOptions": {
+    // The docs app does not depend on @glob-ui/svelte: its subpaths resolve to the package source.
+    "paths": { "@glob-ui/svelte/*": ["../../../packages/svelte/src/*/index.ts"] }
+  },
+  "include": ["**/*.svelte"]
+}
