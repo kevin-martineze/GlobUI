@@ -1,5 +1,12 @@
 # @glob-ui/slot
 
+## 0.4.0
+
+### Patch Changes
+
+- Updated dependencies [ca8bcbf]
+  - @glob-ui/utils@0.4.0
+
 ## 0.3.0
 
 ### Minor Changes

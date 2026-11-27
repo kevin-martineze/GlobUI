@@ -1,5 +1,22 @@
 # @glob-ui/pagination
 
+## 0.4.0
+
+### Patch Changes
+
+- 50e2d63: Adds the navigation components to `@glob-ui/svelte`: Tabs, Accordion and Pagination, at `@glob-ui/svelte/tabs`, `@glob-ui/svelte/accordion` and `@glob-ui/svelte/pagination`. `getPageRange` moved into `@glob-ui/core`, so every framework computes the same pages; `@glob-ui/pagination` still exports it. The class strings these components share moved into `@glob-ui/recipes`. The rendered classes are unchanged in React.
+- Updated dependencies [ca8bcbf]
+- Updated dependencies [7ff18f7]
+- Updated dependencies [83a6e1a]
+- Updated dependencies [78e6f6e]
+- Updated dependencies [5a81367]
+- Updated dependencies [50e2d63]
+- Updated dependencies [bc61015]
+  - @glob-ui/core@0.4.0
+  - @glob-ui/recipes@0.4.0
+  - @glob-ui/utils@0.4.0
+  - @glob-ui/slot@0.4.0
+
 ## 0.3.0
 
 ### Minor Changes
