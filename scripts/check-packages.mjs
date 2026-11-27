@@ -12,6 +12,10 @@ const packagesDir = path.join(root, "packages")
 const license = readFileSync(path.join(root, "LICENSE"), "utf8")
 const problems = []
 const checked = []
+// Kept off npm on purpose: work on Vue and Angular is paused, and they have only the layouts and Sheet (see
+// RELEASING.md). They are still checked, so they are ready when they are made public. Remove a package from this
+// list when it is made public; a listed package that is not private fails, so the list stays current.
+const heldBack = new Set(["@glob-ui/vue", "@glob-ui/angular"])
 
 for (const dir of readdirSync(packagesDir)) {
   const pkgDir = path.join(packagesDir, dir)
@@ -22,7 +26,9 @@ for (const dir of readdirSync(packagesDir)) {
   checked.push(label)
 
   // Release metadata.
-  if (pkg.private) problems.push(`${label}: still private`)
+  if (heldBack.has(label)) {
+    if (!pkg.private) problems.push(`${label}: public, so remove it from heldBack`)
+  } else if (pkg.private) problems.push(`${label}: still private`)
   if (pkg.license !== "MIT") problems.push(`${label}: license must be MIT`)
   if (pkg.publishConfig?.access !== "public") problems.push(`${label}: publishConfig.access must be public`)
   if (pkg.publishConfig?.provenance !== true) problems.push(`${label}: publishConfig.provenance must be true`)
