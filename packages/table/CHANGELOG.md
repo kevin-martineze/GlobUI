@@ -1,5 +1,19 @@
 # @glob-ui/table
 
+## 0.4.0
+
+### Patch Changes
+
+- bc61015: Adds the data and date components to `@glob-ui/svelte`: Table, DataTable (on `@tanstack/svelte-table`), Calendar, DatePicker and PhoneInput, each at its own subpath. The calendar grid helpers (`buildCalendarWeeks`, `calendarKeyTarget`, `monthKey`, `shiftMonth`, `startOfWeek`) and `formatDateValue` moved into `@glob-ui/core`, so every framework builds the same months. The class strings these components share moved into `@glob-ui/recipes`. The rendered classes are unchanged in React.
+- Updated dependencies [ca8bcbf]
+- Updated dependencies [83a6e1a]
+- Updated dependencies [78e6f6e]
+- Updated dependencies [5a81367]
+- Updated dependencies [50e2d63]
+- Updated dependencies [bc61015]
+  - @glob-ui/recipes@0.4.0
+  - @glob-ui/utils@0.4.0
+
 ## 0.3.0
 
 ### Minor Changes

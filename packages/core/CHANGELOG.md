@@ -1,0 +1,10 @@
+# @glob-ui/core
+
+## 0.4.0
+
+### Minor Changes
+
+- ca8bcbf: Internal refactor for multi-framework support (phase 10a). The behaviour of the components moved into the new framework-free `@glob-ui/core` package (focus, keyboard, floating positioning, scroll lock, layout scroll, typeahead, calendar and locale helpers, text matching, toast store, country data). The `cva` variants and shared class strings moved into the new `@glob-ui/recipes` package. The React components keep their exports and behaviour: no public API change and no visual change.
+- 7ff18f7: Introduces `@glob-ui/svelte` (Svelte 5) and `@glob-ui/vue` (Vue 3.5+): the Dialog and Sheet families, the layout primitives (`LayoutSlot`, `SkipLink`, `LayoutNavTrigger`, `LayoutMobileNav`, `useLayoutScroll`), `AppShellLayout`, `PageLayout` with `PageHeader`, and `StackedLayout`. Each has one subpath per component family, for example `@glob-ui/svelte/dialog` and `@glob-ui/vue/sheet`. Behaviour matches the React packages, and the contract tests pass in all three frameworks. `@glob-ui/core` gains `createModal`, the modal behaviour (native `<dialog>`, scroll lock, Escape, backdrop, focus return) shared by the Svelte and Vue adapters.
+- 50e2d63: Adds the navigation components to `@glob-ui/svelte`: Tabs, Accordion and Pagination, at `@glob-ui/svelte/tabs`, `@glob-ui/svelte/accordion` and `@glob-ui/svelte/pagination`. `getPageRange` moved into `@glob-ui/core`, so every framework computes the same pages; `@glob-ui/pagination` still exports it. The class strings these components share moved into `@glob-ui/recipes`. The rendered classes are unchanged in React.
+- bc61015: Adds the data and date components to `@glob-ui/svelte`: Table, DataTable (on `@tanstack/svelte-table`), Calendar, DatePicker and PhoneInput, each at its own subpath. The calendar grid helpers (`buildCalendarWeeks`, `calendarKeyTarget`, `monthKey`, `shiftMonth`, `startOfWeek`) and `formatDateValue` moved into `@glob-ui/core`, so every framework builds the same months. The class strings these components share moved into `@glob-ui/recipes`. The rendered classes are unchanged in React.

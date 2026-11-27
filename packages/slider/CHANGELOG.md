@@ -1,5 +1,23 @@
 # @glob-ui/slider
 
+## 0.4.0
+
+### Minor Changes
+
+- ca8bcbf: Internal refactor for multi-framework support (phase 10a). The behaviour of the components moved into the new framework-free `@glob-ui/core` package (focus, keyboard, floating positioning, scroll lock, layout scroll, typeahead, calendar and locale helpers, text matching, toast store, country data). The `cva` variants and shared class strings moved into the new `@glob-ui/recipes` package. The React components keep their exports and behaviour: no public API change and no visual change.
+
+### Patch Changes
+
+- Updated dependencies [ca8bcbf]
+- Updated dependencies [83a6e1a]
+- Updated dependencies [78e6f6e]
+- Updated dependencies [5a81367]
+- Updated dependencies [50e2d63]
+- Updated dependencies [bc61015]
+  - @glob-ui/hooks@0.4.0
+  - @glob-ui/recipes@0.4.0
+  - @glob-ui/utils@0.4.0
+
 ## 0.3.0
 
 ### Minor Changes

@@ -1,6 +1,7 @@
 {
   "name": "@glob-ui/vue",
-  "version": "0.3.0",
+  "version": "0.4.0",
+  "private": true,
   "description": "Vue 3 components for GlobUI: dialog, sheet and layouts, with the same API and behaviour as the React packages.",
   "type": "module",
   "exports": {
