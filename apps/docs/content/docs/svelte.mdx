@@ -8,7 +8,7 @@ description: GlobUI for Svelte 5. The same components, classes and behaviour as 
 ## Install
 
 ```bash
-pnpm add @glob-ui/svelte
+pnpm add @glob-ui/svelte @glob-ui/styles
 ```
 
 Peer dependency: `svelte` 5. One package holds every component. Each component is its own subpath, so you load only what you import:
@@ -30,7 +30,7 @@ Then set up Tailwind v4 once, in the global stylesheet (for example `src/app.css
 @source "../node_modules/@glob-ui/recipes";
 ```
 
-`@glob-ui/styles` and `@glob-ui/recipes` come with `@glob-ui/svelte`. Adjust the paths to where `node_modules` is, relative to the CSS file.
+`@glob-ui/recipes` comes with `@glob-ui/svelte`; `@glob-ui/styles` is the package installed next to it, above. Adjust the paths to where `node_modules` is, relative to the CSS file.
 
 ### Or copy the code
 

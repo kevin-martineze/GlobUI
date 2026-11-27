@@ -17,8 +17,8 @@ Published on npm. Every `@glob-ui/*` package shares one version (the badge above
 ## Install
 
 ```bash
-pnpm add @glob-ui/button        # one component
-pnpm add @glob-ui/all           # every component
+pnpm add @glob-ui/styles @glob-ui/button   # one component, plus the design tokens
+pnpm add @glob-ui/styles @glob-ui/all      # every component
 ```
 
 npm, yarn and bun work too (`npm install`, `yarn add`, `bun add`). Then set up Tailwind: see the [installation guide](apps/docs/content/docs/installation.mdx).
