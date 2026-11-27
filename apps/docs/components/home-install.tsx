@@ -4,8 +4,8 @@ import { useSyncExternalStore } from "react"
 import { CopyCommand } from "@/components/copy-command"
 
 const frameworks = [
-  { value: "react", label: "React", command: "pnpm add @glob-ui/all" },
-  { value: "svelte", label: "Svelte", command: "pnpm add @glob-ui/svelte" },
+  { value: "react", label: "React", command: "pnpm add @glob-ui/all @glob-ui/styles" },
+  { value: "svelte", label: "Svelte", command: "pnpm add @glob-ui/svelte @glob-ui/styles" },
 ] as const
 
 type Framework = (typeof frameworks)[number]["value"]

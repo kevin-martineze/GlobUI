@@ -5,7 +5,7 @@ Svelte 5 components for GlobUI: forms and primitives, overlays, navigation, data
 ## Install
 
 ```bash
-pnpm add @glob-ui/svelte
+pnpm add @glob-ui/svelte @glob-ui/styles
 ```
 
 Peer dependency: `svelte` (^5).

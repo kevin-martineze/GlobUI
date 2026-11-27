@@ -13,42 +13,42 @@ description: Install GlobUI packages and set up Tailwind so the components are s
 <Tabs items={["React", "Svelte"]} groupId="framework" persist>
   <Tab value="React">
 
-Install one package per component, or everything at once. Pick your package manager:
+Install one package per component, or everything at once, plus `@glob-ui/styles` (the design tokens). Pick your package manager:
 
 <Tabs items={["pnpm", "npm", "yarn", "bun"]} defaultValue="pnpm" groupId="package-manager" persist>
   <Tab value="pnpm">
 
 ```bash
-pnpm add @glob-ui/button
+pnpm add @glob-ui/styles @glob-ui/button
 # or every component
-pnpm add @glob-ui/all
+pnpm add @glob-ui/styles @glob-ui/all
 ```
 
   </Tab>
   <Tab value="npm">
 
 ```bash
-npm install @glob-ui/button
+npm install @glob-ui/styles @glob-ui/button
 # or every component
-npm install @glob-ui/all
+npm install @glob-ui/styles @glob-ui/all
 ```
 
   </Tab>
   <Tab value="yarn">
 
 ```bash
-yarn add @glob-ui/button
+yarn add @glob-ui/styles @glob-ui/button
 # or every component
-yarn add @glob-ui/all
+yarn add @glob-ui/styles @glob-ui/all
 ```
 
   </Tab>
   <Tab value="bun">
 
 ```bash
-bun add @glob-ui/button
+bun add @glob-ui/styles @glob-ui/button
 # or every component
-bun add @glob-ui/all
+bun add @glob-ui/styles @glob-ui/all
 ```
 
   </Tab>
@@ -66,34 +66,34 @@ Then set up Tailwind v4 once, in the global stylesheet. The first line brings in
   </Tab>
   <Tab value="Svelte">
 
-One package holds every component, with a subpath per component (`@glob-ui/svelte/button`). Peer dependency: `svelte` 5.
+One package holds every component, with a subpath per component (`@glob-ui/svelte/button`). Install it with `@glob-ui/styles` (the design tokens). Peer dependency: `svelte` 5.
 
 <Tabs items={["pnpm", "npm", "yarn", "bun"]} defaultValue="pnpm" groupId="package-manager" persist>
   <Tab value="pnpm">
 
 ```bash
-pnpm add @glob-ui/svelte
+pnpm add @glob-ui/svelte @glob-ui/styles
 ```
 
   </Tab>
   <Tab value="npm">
 
 ```bash
-npm install @glob-ui/svelte
+npm install @glob-ui/svelte @glob-ui/styles
 ```
 
   </Tab>
   <Tab value="yarn">
 
 ```bash
-yarn add @glob-ui/svelte
+yarn add @glob-ui/svelte @glob-ui/styles
 ```
 
   </Tab>
   <Tab value="bun">
 
 ```bash
-bun add @glob-ui/svelte
+bun add @glob-ui/svelte @glob-ui/styles
 ```
 
   </Tab>
