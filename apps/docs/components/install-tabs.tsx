@@ -73,8 +73,10 @@ function PackageManagerTabs({ pkg }: { pkg: string }) {
 
 /** npm and copy-code installation for one component page, for React and, when the Svelte package has it, Svelte. */
 export function InstallTabs({ pkg }: { pkg: string }) {
+  // No defaultValue on these Tabs: fumadocs lowercases each Tab's value but not defaultValue, so "Packages" would
+  // select no tab and the install commands would not show. The first item is the default.
   const react = (
-    <Tabs items={["Packages", "Copy code"]} defaultValue="Packages">
+    <Tabs items={["Packages", "Copy code"]}>
       <Tab value="Packages">
         <PackageManagerTabs pkg={`@glob-ui/${pkg}`} />
       </Tab>
@@ -87,7 +89,7 @@ export function InstallTabs({ pkg }: { pkg: string }) {
     </Tabs>
   )
   const svelte = hasSvelte(pkg) ? (
-    <Tabs items={["Packages", "Copy code"]} defaultValue="Packages">
+    <Tabs items={["Packages", "Copy code"]}>
       <Tab value="Packages">
         <PackageManagerTabs pkg="@glob-ui/svelte" />
         <p className="mt-2 text-sm text-fd-muted-foreground">
