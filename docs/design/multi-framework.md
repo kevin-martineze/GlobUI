@@ -66,8 +66,10 @@ together with the layouts.
 
 ### Copy-code (registry)
 
-The shadcn registry stays React-only for now. shadcn-svelte and shadcn-vue have their own registry formats. Decide in
-phase 10h, after the npm packages exist.
+Each framework gets its own registry, in its CLI's format, built from the same theme. React: `public/r/*.json` for
+the shadcn CLI. Svelte (10h): `public/r/svelte/*.json` for the shadcn-svelte CLI, written by
+`apps/docs/scripts/build-registry-svelte.mjs` and tested end to end by `scripts/shadcn-svelte-e2e.mjs`. Vue
+(shadcn-vue) waits until the Vue components exist; 10e, 10f and Vue copy-code are paused.
 
 ## Phases
 

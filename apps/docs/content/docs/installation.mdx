@@ -65,13 +65,32 @@ Adjust the `@source` path to where `node_modules` is relative to this CSS file.
   </Tab>
   <Tab value="Copy code">
 
-The copy-code registry is shadcn-compatible: each component is copied into your project as source, so you own the code. The first command sets up shadcn for your project (one time). The second adds a component; it also adds the GlobUI theme tokens and the components it depends on.
+Each component is copied into your project as source, so you own the code. The first command sets up the CLI for your project (one time). The second adds a component; it also adds the GlobUI theme tokens and the components it depends on.
+
+<Tabs items={["React", "Svelte"]} groupId="framework" persist>
+  <Tab value="React">
+
+The React registry works with the shadcn CLI.
 
 ```bash
 npx shadcn@latest init
 ```
 
 <RegistryCommand name="button" />
+
+  </Tab>
+  <Tab value="Svelte">
+
+The Svelte registry works with the shadcn-svelte CLI. Components go to `$lib/components/ui/glob-ui/`, and `cn()`, `core` and `recipes` to `$lib/glob-ui/`.
+
+```bash
+npx shadcn-svelte@latest init
+```
+
+<RegistryCommand name="button" framework="svelte" />
+
+  </Tab>
+</Tabs>
 
 Replace `button` with any component name. The command for each component is on its page.
 

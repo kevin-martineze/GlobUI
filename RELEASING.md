@@ -2,7 +2,7 @@
 
 Every `@glob-ui/*` package is published at **one shared version** (the `fixed` group in `.changeset/config.json`). Changesets bumps them together, and CI publishes them with npm **trusted publishing** (OIDC): there is no `NPM_TOKEN` secret, and each release carries provenance.
 
-Status: all 30 packages are published at `0.1.0`. The first publish was done by hand (step 2); the CI release workflow is on once `NPM_PUBLISH_ENABLED` is set (step 5 below).
+Status: the React packages are published at `0.3.0`. Five packages are new since then and not on npm yet: `@glob-ui/core`, `@glob-ui/recipes`, `@glob-ui/svelte`, `@glob-ui/vue` and `@glob-ui/angular`. The next release needs a first publish by hand for them; see [New packages](#new-packages-the-next-release) below. The CI release workflow is on once `NPM_PUBLISH_ENABLED` is set (step 5 below).
 
 TODO after the docs site is deployed: update the homepage and docs links in the package READMEs and `package.json`, then run `pnpm sync:packages`.
 
@@ -57,6 +57,31 @@ With the variable set, `.github/workflows/release.yml` runs on every push to `ma
 - When that PR is merged, it publishes the new versions with `pnpm release` (provenance and OIDC, no token).
 
 Optional, once the first publish works: on each package's npm settings choose **Require two-factor authentication and disallow tokens**. Trusted publishing is not affected by it.
+
+## New packages (the next release)
+
+Trusted publishing cannot create a package, so a package's first version is always published by hand. The next release adds five:
+
+| Package | What it is |
+| --- | --- |
+| `@glob-ui/core` | Framework-free behaviour (focus, keyboard, positioning, scroll lock). |
+| `@glob-ui/recipes` | The class strings and `cva` variants. |
+| `@glob-ui/svelte` | Every component, layout and template for Svelte 5. |
+| `@glob-ui/vue` | Vue 3: the layouts and `Sheet` only, for now. |
+| `@glob-ui/angular` | Angular: the layouts and `Sheet` only, for now. |
+
+49 of the React packages now depend on `@glob-ui/core` or `@glob-ui/recipes`. So the next React release only installs once those two are on npm. Publish them in the same run as the React packages.
+
+Before that run, decide about `@glob-ui/vue` and `@glob-ui/angular`. Work on both is paused, and they have only the layouts and `Sheet`. To keep them off npm for now, set `"private": true` in their `package.json`. `changeset publish` skips private packages, and the shared version still applies when they are made public later.
+
+Then:
+
+1. Merge the **Version Packages** PR, or run `pnpm changeset version` locally and commit it, so every `package.json` has the new version.
+2. Publish from your machine, as in step 2: `npm login`, then `pnpm build:packages && pnpm check:packages`, then `npm_config_provenance=false pnpm release`. Packages already on npm at that version are skipped.
+3. Check the new packages, for example `npm view @glob-ui/svelte version`.
+4. Add the trusted publisher (step 3) to each new package, so later releases go through CI.
+
+The Svelte copy-code registry (`/r/svelte/*.json`, for the shadcn-svelte CLI) ships with the docs deploy, like the React one. It needs no npm step.
 
 ## Day to day
 

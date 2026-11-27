@@ -10,10 +10,14 @@
 //   @glob-ui/<pkg>    -> @/components/glob-ui/<pkg>
 // Each item's registryDependencies are absolute URLs, because shadcn only resolves
 // plain names against the registries the consumer configured.
+//
+// The Svelte registry (public/r/svelte/, for the shadcn-svelte CLI) is written at the end by
+// build-registry-svelte.mjs, with the same theme.
 import { mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
 import { components, utilities, layouts, layoutCore, templates } from "./docs-data.mjs"
+import { buildSvelteRegistry } from "./build-registry-svelte.mjs"
 
 const here = path.dirname(fileURLToPath(import.meta.url))
 const repo = path.resolve(here, "../../..")
@@ -280,3 +284,17 @@ writeFileSync(
   JSON.stringify({ $schema: "https://ui.shadcn.com/schema/registry.json", name: "glob-ui", homepage: SITE, items: items.map((i) => ({ name: i.name, type: i.type, title: i.title })) }, null, 2) + "\n"
 )
 console.log(`registry: ${items.length} items written to public/r (site ${SITE})`)
+
+const svelteCount = buildSvelteRegistry({
+  site: SITE,
+  outDir,
+  theme: {
+    description: "GlobUI design tokens (--glob-*) in light and dark, and the Tailwind colour, radius and shadow utilities.",
+    cssVars: themeVars,
+    ...(Object.keys(keyframesCss).length > 0 ? { css: keyframesCss } : {}),
+  },
+  templates,
+  titles,
+  descriptions,
+})
+console.log(`registry: ${svelteCount} Svelte items written to public/r/svelte`)
