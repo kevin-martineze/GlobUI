@@ -4,11 +4,14 @@ description: Install GlobUI packages and set up Tailwind so the components are s
 ---
 
 <Callout title="Versions">
-  All `@glob-ui/*` packages share one version (currently 0.1.0). Install the same version of every package you use, or install `@glob-ui/all`, which brings in every component at the matching version.
+  All `@glob-ui/*` packages share one version. In React, install the same version of every package you use, or install `@glob-ui/all`, which brings in every component at the matching version. In Svelte, one package, `@glob-ui/svelte`, holds every component.
 </Callout>
 
 <Tabs items={["Packages", "Copy code"]}>
   <Tab value="Packages">
+
+<Tabs items={["React", "Svelte"]} groupId="framework" persist>
+  <Tab value="React">
 
 Install one package per component, or everything at once. Pick your package manager:
 
@@ -60,7 +63,56 @@ Then set up Tailwind v4 once, in the global stylesheet. The first line brings in
 @source "../node_modules/@glob-ui/*/dist/**/*.{js,mjs,svelte}";
 ```
 
-Adjust the `@source` path to where `node_modules` is relative to this CSS file.
+  </Tab>
+  <Tab value="Svelte">
+
+One package holds every component, with a subpath per component (`@glob-ui/svelte/button`). Peer dependency: `svelte` 5.
+
+<Tabs items={["pnpm", "npm", "yarn", "bun"]} defaultValue="pnpm" groupId="package-manager" persist>
+  <Tab value="pnpm">
+
+```bash
+pnpm add @glob-ui/svelte
+```
+
+  </Tab>
+  <Tab value="npm">
+
+```bash
+npm install @glob-ui/svelte
+```
+
+  </Tab>
+  <Tab value="yarn">
+
+```bash
+yarn add @glob-ui/svelte
+```
+
+  </Tab>
+  <Tab value="bun">
+
+```bash
+bun add @glob-ui/svelte
+```
+
+  </Tab>
+</Tabs>
+
+Then set up Tailwind v4 once, in the global stylesheet (for example `src/app.css` in SvelteKit). Tailwind skips `node_modules` by default, so the `@source` lines are required.
+
+```css title="src/app.css"
+@import "tailwindcss";
+@import "@glob-ui/styles";
+
+@source "../node_modules/@glob-ui/svelte";
+@source "../node_modules/@glob-ui/recipes";
+```
+
+  </Tab>
+</Tabs>
+
+Adjust the `@source` paths to where `node_modules` is relative to the CSS file.
 
   </Tab>
   <Tab value="Copy code">
