@@ -4,7 +4,7 @@ import { registry } from "@/examples/registry"
 import { GITHUB_URL } from "@/lib/layout.shared"
 import { packageStats } from "@/lib/package-stats"
 import { LayoutPreviewFrame } from "@/components/layout-preview-frame"
-import { CopyCommand } from "@/components/copy-command"
+import { HomeInstall } from "@/components/home-install"
 
 // The version and the package count are read from packages/ at build time (lib/package-stats.ts).
 // Every demo is an existing example from examples/, so the home never shows code that is not tested.
@@ -115,7 +115,7 @@ export default function Home() {
         </p>
         <h1 className="text-4xl font-semibold tracking-tight text-fd-foreground sm:text-5xl">Pages that never fight the scroll.</h1>
         <p className="max-w-2xl text-lg text-fd-muted-foreground">
-          Accessible React components, plus layouts that own the scroll and templates that fix what repeats. Your page only fills the
+          Accessible React and Svelte components, plus layouts that own the scroll and templates that fix what repeats. Your page only fills the
           slots.
         </p>
         <div className="flex flex-wrap justify-center gap-3">
@@ -126,7 +126,7 @@ export default function Home() {
             See layouts
           </Link>
         </div>
-        <CopyCommand command="pnpm add @glob-ui/all" />
+        <HomeInstall />
       </section>
 
       <section className="mx-auto flex w-full max-w-5xl flex-col gap-6 px-4 pb-20">

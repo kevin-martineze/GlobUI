@@ -60,7 +60,7 @@
   "td p-0",
   "button inline-flex size-9 items-center justify-center rounded-glob-md text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring motion-reduce:transition-none text-glob-text hover:bg-glob-surface-hover",
   "td p-0",
-  "button inline-flex size-9 items-center justify-center rounded-glob-md text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring motion-reduce:transition-none text-glob-text hover:bg-glob-surface-hover font-semibold ring-1 ring-inset ring-glob-border",
+  "button inline-flex size-9 items-center justify-center rounded-glob-md text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring motion-reduce:transition-none text-glob-text hover:bg-glob-surface-hover",
   "td p-0",
   "button inline-flex size-9 items-center justify-center rounded-glob-md text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-glob-ring motion-reduce:transition-none text-glob-text hover:bg-glob-surface-hover",
   "td p-0",
